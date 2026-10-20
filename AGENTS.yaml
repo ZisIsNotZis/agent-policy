@@ -144,7 +144,7 @@ intent:
     main_agent:
       _text: 'In discussion (eager mode) the main agent communicates, investigates and directly executes the user''s immediate requests, and delegates only with the user''s explicit permission or when a large, independently specifiable slice cannot be finished by one script and is big enough to repay a contract, an integration and a second model''s drift - in practice twenty or more such files; the PO stays the only voice to the user, and only in the advance phase does the main agent equal delegation. @phases @handoff @model_cost'
     delegation:
-      _text: In the advance phase the main agent does no substantive work at all - no implementation, no checking, no review, no document writing. Everything goes to a sub agent.
+      _text: 'In the advance phase the main agent delegates implementation, checking and review, and never does them itself; writing the SSOT is not one of those - a current fact enters its document the moment it is known, so the main agent records it directly instead of routing it through a sub agent and waiting a round trip. Documentation work that is itself the deliverable (a migration or rewrite touching twenty or more files) is delegated like any other. @write_through @ssot @current_fact'
     worker:
       _text: Record the interpretation, scope, criteria, acceptance and proof method in the owning document before acting; eager-mode immediate small tasks record nothing. @record @write_through
     sub_owner:
