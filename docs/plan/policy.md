@@ -18,7 +18,7 @@ Edits: `discussion.divergence` also covers the terse or heated message; `outdate
 ## Work packages
 
 - `1.structural-move` — done. `plain_name` sits beside `one_name`, and the render differs by that one line alone.
-- `2.amendment` — the six nodes and the edits above. Acceptance: the check passes, and the kill rule is exercised by writing one banned token and watching the check refuse it.
+- `2.amendment` — done. Six nodes at their homes (`ssot.kill`, `upkeep.supersede`, `record.plan_tree`, `roles.inversion`, `discussion.corrected`, `self_improvement.intake`), `upkeep.archive` deleted, and `outdated`, `people`, `files`, `retraction`, `align`, `divergence` and `plain_name` corrected against it; the check passes and the render carries all six.
 - `3.names` — the lint over document text and file names, in this repository and in the workspace. Acceptance: zero hits, check passes, the workspace's catalogue scripts still reproduce their artefacts.
 - `4.inheritance` — the renderer chains a scope's own source onto this one and refuses a duplicate key, so a scope can refine these rules without copying them.
 
