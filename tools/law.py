@@ -94,9 +94,15 @@ def rule_text(node: dict, lang: str = "en") -> str:
         return band.get(lang) or band["en"]
     goal = node["_goal"].get(lang) or node["_goal"]["en"]
     how = node.get("_how")
-    if not how:
-        return goal
-    return goal + " " + (how.get(lang) or how["en"])
+    when = node.get("_when")
+    head = ""
+    if when:
+        w = (when.get(lang) or when["en"]).rstrip(". ")
+        head = w[0].lower() + w[1:] + " → "
+    body = goal[0].lower() + goal[1:].rstrip(". ") + "."
+    if how:
+        body += " " + (how.get(lang) or how["en"])
+    return head + body
 
 
 def render(role: str) -> str:
