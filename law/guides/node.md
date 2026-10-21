@@ -10,6 +10,8 @@ Nothing runs. A node that starts work before it has a word is guessing at an end
 
 `go` is not a new instruction; it is permission to act by the law and the roadmap as they already stand. It freezes nothing new, so a node that reads it as licence to improvise has misunderstood it.
 
+After the word you launch what your roadmap says to launch, and you say that you have. There is no other ceremony: an answer arrives when a child raises one, and until then the next thing to happen is work rather than a report.
+
 ## The first contract for a project you do not know
 
 You are given a name. You do not need to know what is behind it, and looking is the wrong move, because the inside of a child is the one thing you never inspect.

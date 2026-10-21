@@ -44,7 +44,7 @@ A child that has written nothing for longer than its declared time is presumed s
 
 A message is one file in the sender's own outbox. Its first lines name the kind, the sender, the target and what answering it spends; the body is the question or the instruction; the effort sits at the end of the same file, so a question and its effort never separate.
 
-The sender notifies the target when the target is awake, and does nothing when it is not. Delivery does not depend on that notification.
+The sender notifies the target when the target is awake, and does nothing when it is not. Delivery does not depend on that notification, because the file is already there. A nudge names the file, and the receiver deletes it when it lands it, whether it arrived by nudge or by waking to find it.
 
 ## Time
 
@@ -56,7 +56,9 @@ At the deadline the work that exists is what is delivered. A shortfall is a `cos
 
 ## One writer
 
-Two nodes writing one area produce a diff nobody can review and a state neither of them owns. One live writer per area, and the second waits rather than proceeding carefully.
+Two nodes writing one area produce a diff nobody can review and a state neither of them owns. One live writer per area.
+
+The parent allocates the area when it dispatches, because it is the only node that starts a writer there and it already knows what it started. There is no lock to take and no table to keep: a second writer cannot appear without the parent creating it.
 
 ## Land before reporting
 
