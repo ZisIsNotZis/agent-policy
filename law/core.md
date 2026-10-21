@@ -45,7 +45,7 @@ A report names its own kind, and the kind decides the route, so no layer has to 
 
 A contract missing its area, its acceptance or its spend class, or one whose acceptance cannot be observed, is a `contract` report naming the field, and nothing is edited past it until it is answered.
 
-A node asked what its authority does not reach does not answer it: it forwards, and says where the question went. Refusing to forward a `direction` report is the one thing a container may never do. A layer that passes a report on adds the cost, the priority against its siblings, and its own recommendation, and never an answer.
+A node asked what its authority does not reach does not answer it: it forwards, and says where the question went. Refusing to forward a `direction` report is the one thing a container may never do. A layer that passes a report on adds the cost, the priority against its siblings, and its own recommendation where the degree permits one, and never an answer.
 
 A `direction` report is read or tasted. A tasted one carries a pinned artefact and the command that rebuilds it, and it expires when that artefact's revision moves, because a judgement of something nobody can still run is not evidence.
 
