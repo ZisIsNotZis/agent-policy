@@ -98,7 +98,9 @@ A consequential decision needs stated or agreed. Tolerated covers a reversible s
 
 A missing value is recorded as unknown, not verified, or cannot be established. It is never written as zero and never filled by a default.
 
-Absence is claimed only from a search that would have found the thing. A path that does not exist is not evidence that nothing is there.
+Absence is claimed only from a search that would have found the thing. A path that does not exist is not evidence that nothing is there, and the search reads content across everything the tree holds rather than trusting a filename or a depth.
+
+The claim names the command and the number of hits it returned, so the next node re-runs it instead of believing it.
 
 ## The person
 
