@@ -38,6 +38,16 @@ def main() -> int:
     print(f"\n{head[2]}\n")
 
     drawn = {k for row in p["_test"] for k in p["_states"][row["_state"]]["_steps"]}
+    drawn |= set(proc["procedure"].get("_invariants", []))
+    inv = proc["procedure"].get("_invariants", [])
+    if inv:
+        head_inv = {"en": "These hold in every state, so no step below repeats them:",
+                    "zh": "下面这些在每一步里都成立，所以每一节不再重复它们："}[lang]
+        print(head_inv + "\n")
+        for key in inv:
+            node = flat[key]
+            print(f"- {key}: {pick(node['_goal'], lang)}")
+        print("")
     for row in p["_test"]:
         st = p["_states"][row["_state"]]
         print(f"## {pick(st['_name'], lang)}\n")

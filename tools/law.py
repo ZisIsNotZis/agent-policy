@@ -26,8 +26,8 @@ import yaml
 HERE = Path(__file__).resolve().parent.parent
 LAW = HERE / "law"
 CORPUS = HERE / "AGENTS.yaml"
-RENDER_ROOT = HERE / "corpus.md"
 RENDER_DIR = HERE / "agents"
+RENDER_ROOT = RENDER_DIR / "root.md"
 
 ROLES = ("root", "manager", "worker")
 TITLES = {
@@ -80,10 +80,15 @@ def resolve(key: str, nodes: dict) -> list[str]:
     return out
 
 
+def reads(role: str, scope: list) -> bool:
+    """The root is a manager: a rule addressed to every manager reaches it too."""
+    return role in scope or (role == "root" and "manager" in scope)
+
+
 def rule_text(node: dict, lang: str = "en") -> str:
     """A rule's text: the goal, then the how. _text is gone and is never a fallback."""
     if "_goal" not in node:
-        return node["_text"]
+        raise SystemExit(f"{node.get('_name', 'a rule')} has no _goal; _text is gone")
     goal = node["_goal"].get(lang) or node["_goal"]["en"]
     how = node.get("_how")
     if not how:
@@ -96,7 +101,7 @@ def render(role: str) -> str:
     drawn: set[str] = set()
     out = [f"# Law, as {role} reads it\n"]
     for name, body in corpus().items():
-        rows = [(k, v) for k, v in body.items() if role in v.get("scope", ["manager", "worker"])]
+        rows = [(k, v) for k, v in body.items() if reads(role, v.get("scope", ["manager", "worker"]))]
         rows = [(k, v) for k, v in rows]
         if not rows:
             continue
@@ -111,6 +116,7 @@ def render(role: str) -> str:
 
 
 def main() -> int:
+    flat_all = {k: v for b in corpus().values() for k, v in b.items()}
     args = sys.argv[1:]
     check = "--check" in args
     failures: list[str] = []
@@ -154,6 +160,29 @@ def main() -> int:
     n = prohibitions(views["root"])
     if n > ceiling():
         failures.append(f"the root view states {n} prohibitions against a ceiling of {ceiling()}")
+
+    proc_path = LAW / "procedure.yaml"
+    if proc_path.exists():
+        proc = yaml.safe_load(proc_path.read_text(encoding="utf-8"))
+        flat_all = {k: v for b in corpus().values() for k, v in b.items()}
+        for role, spec in proc.get("procedure", {}).items():
+            if not isinstance(spec, dict) or "_test" not in spec:
+                continue
+            for row in spec["_test"]:
+                st = spec["_states"][row["_state"]]
+                for key in st["_steps"]:
+                    if key not in flat_all:
+                        failures.append(f"procedure {role}/{row['_state']} uses {key}, which does not exist")
+                    elif not reads(role, flat_all[key].get("scope", [])):
+                        failures.append(f"procedure {role}/{row['_state']} uses {key}, which {role} may not read")
+                if not st.get("_criterion", {}).get("_by"):
+                    failures.append(f"procedure {role}/{row['_state']} has no command for its criterion")
+    for key, node in flat_all.items():
+        for dep in node.get("_depends", []):
+            if dep not in flat_all:
+                failures.append(f"{key} depends on {dep}, which does not exist")
+            elif not set(flat_all[dep].get("scope", [])) >= set(node.get("scope", [])):
+                failures.append(f"{key} depends on {dep}, which some of its readers may not read")
 
     if failures:
         print("\n".join(f"FAIL {f}" for f in failures))
