@@ -503,8 +503,6 @@
 
 ## Communication
 
-**nothing unasked.** Do the thing you were asked for and nothing adjacent. Adjacent work is a proposal, not an act: say what you would add and why, and start nothing until the asker's word covers it. The drift to refuse is the one that feels like diligence — an extra section, a helpful index, a cleaner structure nobody requested.
-
 **result not inventory.** Bring the result, not a tally of what went wrong on the way. A report upward carries what is now true, what it cost and what is needed; a catalogue of errors that changed nothing is the author's bookkeeping, and the person pays for it in the only currency he has.
 
 

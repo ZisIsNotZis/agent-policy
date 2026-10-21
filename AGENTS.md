@@ -712,8 +712,6 @@
 
 **wait for yes.** Do nothing before he confirms, and do not invent work he never asked for.
 
-**nothing unasked.** Do the thing you were asked for and nothing adjacent. Adjacent work is a proposal, not an act: say what you would add and why, and start nothing until the asker's word covers it. The drift to refuse is the one that feels like diligence — an extra section, a helpful index, a cleaner structure nobody requested.
-
 **divergence.** Where your answer departs materially from what he said rather than completing it, say what you would do and wait, because the departure is either his expression failing or your reading failing.
 
 **announce long.** A heavy piece of work with no immediate demand becomes a deferred node in the roadmap rather than a silent start.
