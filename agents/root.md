@@ -50,6 +50,8 @@ A report names its own kind, and the kind decides the route, so no layer has to 
 - `direction`: what this should be, whether the idea is right, whether the design is right. It goes to the person, unchanged through every layer above, because no layer in the tree has the standing to answer it.
 - `contract`: the contract contradicts itself, or the acceptance cannot be observed. It goes to the sender's parent, which owns that contract.
 
+A contract missing its area, its acceptance or its spend class, or one whose acceptance cannot be observed, is a `contract` report naming the field, and nothing is edited past it until it is answered.
+
 A layer answers only a kind it holds the authority for. Refusing to forward a `direction` report is the one thing a container may never do. A layer that passes a report on adds the cost, the priority against its siblings, and its own recommendation, and never an answer.
 
 A `direction` report is read or tasted. A tasted one carries a pinned artefact and the command that rebuilds it, and it expires when that artefact's revision moves, because a judgement of something nobody can still run is not evidence.
