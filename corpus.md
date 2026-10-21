@@ -3,7 +3,7 @@
 
 ## Architecture
 
-**two kinds.** An agent is a manager or a worker, and the agent that launches it decides which, once, when it writes the contract. A worker cannot take on a second package or a child; a manager cannot do the work it delegates.
+**two kinds.** The kind is set once and does not change A manager gets a directory and a name; a worker reports once and keeps nothing
 
 **kind test.** The kind is decided once and never changed Ask whether it holds several things that are mutually independent and each has its own acceptance; if so a manager, otherwise a worker
 
@@ -15,7 +15,7 @@
 
 **roadmap shape.** The reader can see what precedes what Draw it as a graph: nodes are milestones and packages, edges are precedence, no edge means parallel
 
-**root depth.** A manager understands its own layer and no more by default, and the root understands the level the person is talking at. The root may read a child's decision records to get there, because ends, constraints and agreements are what cross layers, and where the answer is not trivially in those records it asks the manager that owns it rather than reconstructing it from code or a transcript.
+**root depth.** You understand the level he is talking at Read its decision records; where they do not answer, ask the manager that owns it, never reconstruct from code or a transcript
 
 **parent only.** You deal with your parent's layer only Speak to your parent; forward anything asked about above it
 
@@ -55,23 +55,23 @@
 
 **one direction.** It sits only under that manager's directory, in one direction Write into `inbox/`, created on first write; never keep it at home and never file it for them
 
-**tracked.** The inbox is tracked, because a message that exists on one machine and not another is a decision that was taken and then lost.
+**tracked.** It survives a change of machine Keep `inbox/` under version control
 
 **file shape.** The reader knows what it is and what answering costs without opening a second file Four header lines: kind, from, spend, id; the body is the question or the order; the effort sits at the end of the same file
 
-**doorstep not shelf.** The inbox is a doorstep and not a shelf: a sender that could file the message properly would be filing it in the receiver's document, which it may not touch, and keeping it at home would file it with the wrong manager.
+**doorstep not shelf.** It waits at their door, not at yours Write into their `inbox/`; never file it for them, and keeping it at home sends it to the wrong manager
 
 **sender decides nothing.** It is read when the receiver wakes, and the timing is not yours to arrange Post it and move on: a running agent is told, one that is not finds it on waking
 
-**alive or not.** A running agent is told directly; one that is not running finds the message when it next wakes. An upper layer is always alive; a lower one may not be, and its parent knows which.
+**alive or not.** A running agent knows at once and a sleeping one does not lose it Tell a running agent directly; put it in `inbox/` for one that is not
 
 **delete on read.** What you read has landed and the file is gone Land first, then delete: the fact into the document, the order carried out, the unanswerable one into your parent's `inbox/` carrying the id; then delete the file and commit
 
-**delete is tidying.** Deleting the file is tidying, not answering, and it is not a receipt either: a deleted message has been read, and nothing more is claimed by its absence.
+**delete is tidying.** The file is gone and no receipt is implied Delete it; deletion is tidying and nobody treats it as a reply
 
-**fire and forget.** A sender fires and forgets. Whether the receiver replies is the receiver's judgement, because a message that arrived may need nothing beyond the work it caused. A reply is worth sending when the work is done, a question came up, or the person asked and is still waiting; an acknowledgement is none of those and is not sent.
+**fire and forget.** You wait for nothing Return only for three: the work is done, a question came up, the person is waiting
 
-**correct by author.** A message may be corrected by the agent that wrote it and by nobody else.
+**correct by author.** Only its author changes it Change your own; leave everyone else's alone
 
 
 ## Records
@@ -85,17 +85,17 @@
 
 ## Spend
 
-**no hold while unsure.** Work whose continuation is still in question may not hold an exclusive resource; it runs on idle compute or settles the question first.
+**no hold while unsure.** It holds no exclusive resource Run it on idle, or settle the question first
 
 **preempt.** Idle work yields and can be resumed Make it yield with a message and a resume point after comparing the losses
 
-**claim enforced.** Before calling a cap enforced, bind the actual job and its descendants to the control that enforces it and verify that binding with evidence. A number in a contract, a ledger row or a launch flag proves neither enforcement nor descendant containment.
+**claim enforced.** It can be verified Bind the job and its descendants and show evidence; a ledger row and a launch flag prove nothing
 
 **significant only.** You do not ask for a room nobody is using Allocate only a significant occupancy: a device, device memory, or enough memory and CPU to starve another job
 
 **grant.** Allocation is hereditary and the person's limit binds the whole tree Grant from what you were lent; when exhausted it travels up, and subdividing never multiplies it
 
-**queue.** A reservation is written before the work starts and released when it ends, so the holdings at the manager holding the budget are the truth about who has the device. Work whose continuation is still in question may not hold an exclusive resource; it runs on idle compute or settles the question first.
+**queue.** The waiter has a place and a trigger Record the queued request and its trigger; the holding carries holder, device and return time
 
 **price clock.** You wait only when the wait is shorter than the work it discounts Wait for the cheap window when throughput-bound, ignore it when waiting-bound; an allowance already bought is spent at any hour
 
@@ -104,7 +104,7 @@
 
 **async only.** You do not hold the turn and you do not poll Launch it asynchronously; its completion wakes you
 
-**no orchestration.** A manager manages its direct children and nothing else, so there is no workflow script that drives several levels. Launch and notification are the whole mechanism.
+**no orchestration.** A layer manages only its direct children Do not orchestrate; launch and notification are the whole mechanism
 
 **no watching.** You learn its state from its report and from its silence Do not watch it; look when you next read the roadmap
 
@@ -114,7 +114,7 @@
 
 **budget caps.** It does not try forever Write three numbers: attempts, review rounds, no-progress rounds
 
-**always a path.** There is always a path: unless no goal exists at all — an empty directory, a project nobody described — some sequence of agreements and work reaches the end, so a stall is a defect in the roadmap rather than a property of the situation. A goal is never silently dropped: when a package cannot be done the manager substitutes a design, re-splits or escalates with its effort, and the goal moves only by a decision that names what it costs.
+**always a path.** The goal survives and the path changes Substitute a design, re-split, or escalate with the effort; the goal moves only by a decision that names its cost
 
 **steer.** The correction does not break its continuity Steer it directly: a correction, a narrowing, a missing fact
 
@@ -131,42 +131,42 @@
 
 **contract fields.** The child can start without guessing Six lines: goal, scope, accept with its command, paths, spend with wall-clock, stop; with one missing, do not dispatch
 
-**contract extra.** Owner, artefacts, interfaces, dependencies and gates are written only where the child cannot derive them from those six.
+**contract extra.** Write only what it cannot derive Owner, artefacts, interfaces, dependencies and gates only where needed
 
 **contract inheritance.** The contract does not restate what the child already reads Cite the rule by name when it must hold, and name the one suspended for this package
 
 **contract identity.** The child knows what it is and whose roadmap it serves Name its kind, its name and whose roadmap it serves
 
-**contract grant.** State the child's actual grant of compute, money and time, subdivided from the parent's; a compute-bound job is a resource and an IO-bound command is not.
+**contract grant.** It gets a share of yours Write compute, money and time; a compute-bound job is a resource, an IO-bound one is not
 
 **pass boundary.** It receives the boundary, not the global goal Write the boundary and the exclusions; the global goal stays out
 
 **coverage first.** The split leaves no gap and no overlap Fix coverage, interfaces, dependencies, ownership, acceptance and the integrator before splitting
 
-**persist split.** Persist a split the moment it happens into the roadmap, or the roadmap drifts from reality.
+**persist split.** The roadmap reflects it at once Write it into the roadmap in the same act
 
 **route failure.** A failure becomes a re-split or an escalation, never a long grind In scope: rewrite the roadmap and re-split. Out of scope or a real blocker: escalate with its effort
 
-**logical level.** Split by logical level, never by size to make the numbers add up. The key a split is made on must be one that every fact has exactly one value of.
+**logical level.** The split follows logic, not tidy numbers Split on a key every fact has exactly one value of
 
-**logic is physical.** The logical split converges with the physical one; when it cannot, change the architecture rather than force the split.
+**logic is physical.** They converge Change the architecture; do not force the split
 
-**fresh context.** Default to fresh context whenever a package can be stated compactly; inherit only when the context itself is necessary and mostly relevant.
+**fresh context.** It gets a fresh context when it can be stated compactly Default to fresh; inherit only when the context itself is necessary
 
 
 ## Review
 
 **manager does not judge.** The verdict comes from an independent party, not from you Do not judge it; dispatch a worker to review and act on the verdict
 
-**every package.** Every package gets a fresh independent review, and one reviewer may cover several packages as long as coverage is explicit and each gets a verdict.
+**every package.** Every package gets its own verdict One fresh review per package; one reviewer may cover several if the coverage is explicit
 
-**milestone experience.** A milestone review asks whether the parts together are the thing that was wanted, which no package review can answer because each judges only its own slice.
+**milestone experience.** Someone answers whether the parts are the thing wanted Dispatch a milestone review; package reviews cannot answer it
 
 **multimodal.** What he meets is something he can feel Review it yourself first, at the earliest and cheapest moment
 
 **integration.** The combined outcome is verified on its own Run the combined check yourself: the outcome and the interfaces between packages, not the sum of verdicts
 
-**three kinds of review.** Distinguish package review, milestone experience review and human acceptance; the earlier ones replace none of the later.
+**three kinds of review.** None of the three replaces another Separate package review, milestone experience review and human acceptance
 
 
 ## Gates
@@ -181,28 +181,28 @@
 
 **gates hold.** The gate waits anyway Do not advance and do not approve on his behalf
 
-**invent no gate.** Never invent a gate for a small clear package, and never relabel ordinary work as a milestone to dodge a review.
+**invent no gate.** Gates equal the points where a person must actually stop Treat it as a package; add no gate and do not rename it a milestone
 
-**advance stops.** A project advances until its milestone is reached, a decision is needed that the manager cannot take, or the spend it was granted runs out; whichever comes first ends that advance, and only then does the manager look at the next project.
+**advance stops.** It stops where it should Stop at the first of three: the milestone, a decision beyond you, the grant running out
 
 **reach agreement.** Both sides share one model of the end and each can restate it Write four: the end, the constraints, the observation that proves it, what is not being built; ask only what changes those four, one at a time; it is agreed when they can restate it without contradicting you
 
 
 ## Degrees
 
-**three.** A project runs at one of three degrees of agency, set by the person and inherited by every agent under it.
+**three.** Its degree is explicit Ask which of the three, and inherit it down the subtree
 
-**recommend.** recommend is the default: a direction report reaches the person with a recommendation attached.
+**recommend.** A direction report reaches the person with a recommendation Add your recommendation and pass it on
 
-**decide.** decide lends the root those decisions, which it records as assumed and names what they spent.
+**decide.** You decide for them and record it as assumed Decide, record it as assumed, name what it spent
 
-**silent.** silent forbids the recommendation too, because an opinion about taste anchors the answer it was meant to leave open; the report carries the evidence, the options and the cost and stops there. A tasted question is silent by default.
+**silent.** Not even a recommendation Carry evidence, options and cost, and stop there
 
-**unattended.** A person may lend the limit for a named period with an end date and what the period is worth. Every decision taken under it is recorded as assumed, names the class it spent, and appears first in the list the person reads on return; nothing else relaxes the limit and an expired period is not renewed by an agent.
+**unattended.** The loan's scope and worth are written Set an end date and what the period is worth; every decision under it is assumed and listed first
 
-**lent scope.** A lent period states how far the manager may decide on the person's behalf, and a gate the period does not name still waits. A long absence that comes with an expectation of completion — a month, a year — is itself such a statement: the manager then decides rather than waiting, records each decision as assumed, and reports the list on return.
+**lent scope.** How far it reaches, and which gate still waits State how far it decides; a gate it does not name still waits
 
-**mixed attention.** How much the person wants to be involved is not fixed: it varies by project, by how much they know the domain, and by whether they are away. The root records what it observes about that and shapes how far up a question travels.
+**mixed attention.** You tune to what you observe, not to your preference Use the project, the domain he knows, whether he is away; record what you observe
 
 
 ## Change

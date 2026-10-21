@@ -42,9 +42,9 @@
 
 ## Architecture
 
-**two kinds.** An agent is a manager or a worker, and the agent that launches it decides which, once, when it writes the contract. A worker cannot take on a second package or a child; a manager cannot do the work it delegates.
+**two kinds.** The kind is set once and does not change A manager gets a directory and a name; a worker reports once and keeps nothing
 
-**worker.** A worker executes exactly one package inside its parent's directory and reports once. It keeps no directory, no document and no roadmap of its own.
+**worker.** It executes one package and reports once Say in the contract that it holds no directory, document or roadmap
 
 **kind test.** The kind is decided once and never changed Ask whether it holds several things that are mutually independent and each has its own acceptance; if so a manager, otherwise a worker
 
@@ -122,23 +122,23 @@
 
 **one direction.** It sits only under that manager's directory, in one direction Write into `inbox/`, created on first write; never keep it at home and never file it for them
 
-**tracked.** The inbox is tracked, because a message that exists on one machine and not another is a decision that was taken and then lost.
+**tracked.** It survives a change of machine Keep `inbox/` under version control
 
 **file shape.** The reader knows what it is and what answering costs without opening a second file Four header lines: kind, from, spend, id; the body is the question or the order; the effort sits at the end of the same file
 
-**doorstep not shelf.** The inbox is a doorstep and not a shelf: a sender that could file the message properly would be filing it in the receiver's document, which it may not touch, and keeping it at home would file it with the wrong manager.
+**doorstep not shelf.** It waits at their door, not at yours Write into their `inbox/`; never file it for them, and keeping it at home sends it to the wrong manager
 
 **sender decides nothing.** It is read when the receiver wakes, and the timing is not yours to arrange Post it and move on: a running agent is told, one that is not finds it on waking
 
-**alive or not.** A running agent is told directly; one that is not running finds the message when it next wakes. An upper layer is always alive; a lower one may not be, and its parent knows which.
+**alive or not.** A running agent knows at once and a sleeping one does not lose it Tell a running agent directly; put it in `inbox/` for one that is not
 
 **delete on read.** What you read has landed and the file is gone Land first, then delete: the fact into the document, the order carried out, the unanswerable one into your parent's `inbox/` carrying the id; then delete the file and commit
 
-**delete is tidying.** Deleting the file is tidying, not answering, and it is not a receipt either: a deleted message has been read, and nothing more is claimed by its absence.
+**delete is tidying.** The file is gone and no receipt is implied Delete it; deletion is tidying and nobody treats it as a reply
 
-**fire and forget.** A sender fires and forgets. Whether the receiver replies is the receiver's judgement, because a message that arrived may need nothing beyond the work it caused. A reply is worth sending when the work is done, a question came up, or the person asked and is still waiting; an acknowledgement is none of those and is not sent.
+**fire and forget.** You wait for nothing Return only for three: the work is done, a question came up, the person is waiting
 
-**correct by author.** A message may be corrected by the agent that wrote it and by nobody else.
+**correct by author.** Only its author changes it Change your own; leave everyone else's alone
 
 
 ## Records
@@ -188,37 +188,37 @@
 
 **classes.** Two packages of equal size are not priced as if they cost the same State the class, not a number
 
-**time.** time — how long it holds its own manager. The cost is the person's latency.
+**time.** The person knows how long they wait Write how long it holds you
 
-**idle.** idle-compute — a local device nothing else wants. The cost is the power, and a site declares once whether that is counted.
+**idle.** The person knows whether power counts Write idle-compute and say whether the site counts power
 
-**metered.** metered-compute — a rented device. The cost is money per unit.
+**metered.** The person knows the money per unit Write metered-compute with its unit price
 
-**exclusive.** exclusive — a device, a slice of its memory, or a port another package cannot share. The cost is the other package's time.
+**exclusive.** Others know what they are waiting for Write exclusive and say whether it is a device, memory or a port
 
-**unrecoverable.** unrecoverable — work whose result is not stored, so a lost run is redone from the start. The cost is the time again, and the money again if the compute was rented.
+**unrecoverable.** The cost of losing it is counted Write unrecoverable: the time again, and the money if it was rented
 
 **class decides.** What may be released follows the class, never the confidence Idle runs; metered, exclusive and unrecoverable take their grant first
 
-**unknown class.** Where the spend is not known the contract says unknown and names how the class will be settled before the work starts, because a default class is a permission nobody granted.
+**unknown class.** Unknown is written, not defaulted Write unknown and say how it will be settled before the work starts
 
-**no hold while unsure.** Work whose continuation is still in question may not hold an exclusive resource; it runs on idle compute or settles the question first.
+**no hold while unsure.** It holds no exclusive resource Run it on idle, or settle the question first
 
 **vram.** It does not crash together with what is already running Check against what is held, leave headroom for the driver and fragmentation; if it does not fit, do not dispatch
 
 **preempt.** Idle work yields and can be resumed Make it yield with a message and a resume point after comparing the losses
 
-**missing infra is not missing permission.** Missing allocators, admission ledgers or runtime containment do not revoke the default permission to use local resources, and by themselves they block nothing; describe an advisory limit honestly rather than claiming enforcement.
+**missing infra is not missing permission.** Local resources stay usable Use them; describe an advisory limit as advisory
 
-**advisory limits.** When a limit is advisory, say so; never let a launch flag stand as evidence that a cap is enforced.
+**advisory limits.** It is described as advisory Say so; never let a launch flag pass as enforcement
 
-**claim enforced.** Before calling a cap enforced, bind the actual job and its descendants to the control that enforces it and verify that binding with evidence. A number in a contract, a ledger row or a launch flag proves neither enforcement nor descendant containment.
+**claim enforced.** It can be verified Bind the job and its descendants and show evidence; a ledger row and a launch flag prove nothing
 
 **significant only.** You do not ask for a room nobody is using Allocate only a significant occupancy: a device, device memory, or enough memory and CPU to starve another job
 
 **grant.** Allocation is hereditary and the person's limit binds the whole tree Grant from what you were lent; when exhausted it travels up, and subdividing never multiplies it
 
-**queue.** A reservation is written before the work starts and released when it ends, so the holdings at the manager holding the budget are the truth about who has the device. Work whose continuation is still in question may not hold an exclusive resource; it runs on idle compute or settles the question first.
+**queue.** The waiter has a place and a trigger Record the queued request and its trigger; the holding carries holder, device and return time
 
 **price clock.** You wait only when the wait is shorter than the work it discounts Wait for the cheap window when throughput-bound, ignore it when waiting-bound; an allowance already bought is spent at any hour
 
@@ -227,17 +227,17 @@
 
 **async only.** You do not hold the turn and you do not poll Launch it asynchronously; its completion wakes you
 
-**no orchestration.** A manager manages its direct children and nothing else, so there is no workflow script that drives several levels. Launch and notification are the whole mechanism.
+**no orchestration.** A layer manages only its direct children Do not orchestrate; launch and notification are the whole mechanism
 
-**steerable.** Keep the turn steerable: a long command is bounded by a timeout or detached behind a named log and an identifier, and the state that names the job is written before it starts.
+**steerable.** The turn can always be interrupted Give it a timeout or detach it behind a named log; write the naming state first
 
 **no long in turn.** The turn stays interruptible Keep it out of the turn: give it a timeout, or detach it behind a named log
 
-**timeout is not a guard.** A timeout kills the process it started and not the processes that process started, and it does not survive a process that ignores it. It is not evidence that something stopped.
+**timeout is not a guard.** You know what it does not guard Treat it as killing the process it started and no further
 
 **no sleep.** The wait never appears as a block Never write sleep; go do the next thing that can be done
 
-**client budget.** An unbounded retry count and a disabled idle timeout turn one stalled connection into a permanent block, whatever the command was doing.
+**client budget.** A stalled connection cannot become a permanent block Bound the retries and set an idle timeout
 
 **no watching.** You learn its state from its report and from its silence Do not watch it; look when you next read the roadmap
 
@@ -245,17 +245,17 @@
 
 **stuck disposal.** Disposing costs less than waiting Cancel when the loss is smaller; otherwise report a cost
 
-**own effort.** Planning mistakes, small obstacles, independent validation and a changed approach are the manager's own responsibility and never a reason to escalate.
+**own effort.** You absorb it Fix the roadmap or change the approach; do not escalate
 
-**change hypothesis.** When attempts yield no useful evidence, change the hypothesis or the check rather than repeating the attempt.
+**change hypothesis.** The hypothesis or the check changes Change the hypothesis or the check; do not repeat a third time
 
 **budget caps.** It does not try forever Write three numbers: attempts, review rounds, no-progress rounds
 
-**always a path.** There is always a path: unless no goal exists at all — an empty directory, a project nobody described — some sequence of agreements and work reaches the end, so a stall is a defect in the roadmap rather than a property of the situation. A goal is never silently dropped: when a package cannot be done the manager substitutes a design, re-splits or escalates with its effort, and the goal moves only by a decision that names what it costs.
+**always a path.** The goal survives and the path changes Substitute a design, re-split, or escalate with the effort; the goal moves only by a decision that names its cost
 
 **steer.** The correction does not break its continuity Steer it directly: a correction, a narrowing, a missing fact
 
-**async continuation.** An internal async yield counts as continuing only with a verifiable continuation trigger; a detached job alone is not continuation.
+**async continuation.** It carries a verifiable continuation trigger Write the trigger; a detached job alone is not continuation
 
 **deadline.** What exists at the deadline is what is delivered Send an instruction at half and at three quarters, naming what remains, in what order, and what to drop
 
@@ -270,27 +270,27 @@
 
 **contract fields.** The child can start without guessing Six lines: goal, scope, accept with its command, paths, spend with wall-clock, stop; with one missing, do not dispatch
 
-**contract extra.** Owner, artefacts, interfaces, dependencies and gates are written only where the child cannot derive them from those six.
+**contract extra.** Write only what it cannot derive Owner, artefacts, interfaces, dependencies and gates only where needed
 
 **contract inheritance.** The contract does not restate what the child already reads Cite the rule by name when it must hold, and name the one suspended for this package
 
 **contract identity.** The child knows what it is and whose roadmap it serves Name its kind, its name and whose roadmap it serves
 
-**contract grant.** State the child's actual grant of compute, money and time, subdivided from the parent's; a compute-bound job is a resource and an IO-bound command is not.
+**contract grant.** It gets a share of yours Write compute, money and time; a compute-bound job is a resource, an IO-bound one is not
 
 **pass boundary.** It receives the boundary, not the global goal Write the boundary and the exclusions; the global goal stays out
 
 **coverage first.** The split leaves no gap and no overlap Fix coverage, interfaces, dependencies, ownership, acceptance and the integrator before splitting
 
-**persist split.** Persist a split the moment it happens into the roadmap, or the roadmap drifts from reality.
+**persist split.** The roadmap reflects it at once Write it into the roadmap in the same act
 
 **route failure.** A failure becomes a re-split or an escalation, never a long grind In scope: rewrite the roadmap and re-split. Out of scope or a real blocker: escalate with its effort
 
-**logical level.** Split by logical level, never by size to make the numbers add up. The key a split is made on must be one that every fact has exactly one value of.
+**logical level.** The split follows logic, not tidy numbers Split on a key every fact has exactly one value of
 
-**logic is physical.** The logical split converges with the physical one; when it cannot, change the architecture rather than force the split.
+**logic is physical.** They converge Change the architecture; do not force the split
 
-**fresh context.** Default to fresh context whenever a package can be stated compactly; inherit only when the context itself is necessary and mostly relevant.
+**fresh context.** It gets a fresh context when it can be stated compactly Default to fresh; inherit only when the context itself is necessary
 
 
 ## Review
@@ -309,27 +309,27 @@
 
 **no commit.** The review changes nothing it reviews The reviewer commits nothing; evidence is bound to the revision and dies with it
 
-**every package.** Every package gets a fresh independent review, and one reviewer may cover several packages as long as coverage is explicit and each gets a verdict.
+**every package.** Every package gets its own verdict One fresh review per package; one reviewer may cover several if the coverage is explicit
 
-**milestone experience.** A milestone review asks whether the parts together are the thing that was wanted, which no package review can answer because each judges only its own slice.
+**milestone experience.** Someone answers whether the parts are the thing wanted Dispatch a milestone review; package reviews cannot answer it
 
 **multimodal.** What he meets is something he can feel Review it yourself first, at the earliest and cheapest moment
 
 **integration.** The combined outcome is verified on its own Run the combined check yourself: the outcome and the interfaces between packages, not the sum of verdicts
 
-**self test.** A self-test is the in-slice loop and never independent acceptance.
+**self test.** It is not acceptance Self-test as usual, never report it as independent acceptance
 
-**evidence at source.** The check consumes the artefact the consumer consumes, because checking a copy only proves the copy.
+**evidence at source.** You check what the consumer consumes Check it, not a copy
 
 **bind to revision.** It is bound to a revision that can be named Name the commit or worktree hash, the commands and the results; when the revision moves, rerun the checks it invalidated
 
-**defect evidence.** A defect records its location, the criterion it violates, and a reproduction or evidence.
+**defect evidence.** Three things are present Location, the criterion violated, a reproduction or evidence
 
-**falsify.** Actively falsify through missing scope, safety, regressions and stale evidence.
+**falsify.** You look for the counterexample Hunt missing scope, safety, regressions, stale evidence
 
-**scoped review.** Read the contract's scoped artefacts at the revision under review, and open a source only when the view cannot settle the question.
+**scoped review.** What you read matches the contract's scope Read the scoped artefacts; open a source only when the view cannot settle it
 
-**three kinds of review.** Distinguish package review, milestone experience review and human acceptance; the earlier ones replace none of the later.
+**three kinds of review.** None of the three replaces another Separate package review, milestone experience review and human acceptance
 
 
 ## Gates
@@ -344,47 +344,47 @@
 
 **gates hold.** The gate waits anyway Do not advance and do not approve on his behalf
 
-**invent no gate.** Never invent a gate for a small clear package, and never relabel ordinary work as a milestone to dodge a review.
+**invent no gate.** Gates equal the points where a person must actually stop Treat it as a package; add no gate and do not rename it a milestone
 
-**advance stops.** A project advances until its milestone is reached, a decision is needed that the manager cannot take, or the spend it was granted runs out; whichever comes first ends that advance, and only then does the manager look at the next project.
+**advance stops.** It stops where it should Stop at the first of three: the milestone, a decision beyond you, the grant running out
 
 **reach agreement.** Both sides share one model of the end and each can restate it Write four: the end, the constraints, the observation that proves it, what is not being built; ask only what changes those four, one at a time; it is agreed when they can restate it without contradicting you
 
 
 ## Degrees
 
-**high risk.** Destruction, rewriting published history, dependency swaps, interface contract changes, large spending, privacy or legal exposure, and anything irreversible all require consent.
+**high risk.** Consent comes first Ask before destruction, rewriting published history, dependency swaps, interface changes, large spending, exposure, anything irreversible
 
-**absorb risk.** Defuse the risk yourself when you can; do not ask merely because the word risk appeared.
+**absorb risk.** It is defused and nobody is interrupted Defuse it; do not ask merely because the word risk appeared
 
-**secrets.** Secrets are never committed, and on exposure they are contained and rotated. Do not ask just because a credential appeared.
+**secrets.** The price follows what it is worth now A rotated, placeholder or dead-server one costs nothing; a live one is the person's to pay, so ask
 
-**covered once.** An action already covered by a grant needs no repeated permission.
+**covered once.** It is not asked about again Do it
 
 
 ## Writing
 
-**rule form.** Front-load the triggering situation, then the action, then the observable completion and the failure route. Name a section after the situation that fires it, so the whole reads as a list of triggers rather than a table of contents. A leading word aids attention and never replaces a criterion.
+**rule form.** The reader knows when, what, and when it is done Situation first, then the act, the observable completion, the failure route; name the section after the situation
 
-**prose.** Prose is for the person deciding: name the stake before the detail, then the actor, the number and the thing rather than the category word, cut every word and clause whose deletion removes no fact, and stop when the point is made.
+**prose.** He sees the stake first Name the stake, then the detail, then the actor, the number and the thing; cut what can be deleted without losing a fact
 
-**no significance clause.** Write no significance clause, no "not only X but Y", and no three-part list for rhythm; those fill space and the reader pays for them in trust.
+**no significance clause.** The file carries no filler Write no significance clause, no not-only-but, no three-part list for rhythm
 
-**conclusion first.** When writing to the person, lead with the conclusion or the decision, then its effects, the material tradeoffs, and evidence versus inference. Keep it self-contained and omit the process dump.
+**conclusion first.** He gets the conclusion first Conclusion, effects, tradeoffs, evidence versus inference; no process dump
 
-**no hedging known.** Never soften a known fact with may, might or possibly. Mark an uncertainty once, where the decision turns on it.
+**no hedging known.** It is not softened No may, might or possibly; mark an uncertainty once where the decision turns on it
 
-**concrete.** Name the file, the command, the number and the commit, and use one name for one thing: a name drifting from A to B to C is the worst cognitive trap. Name anything referred to again with the words that say what it is and let a number only order it; define a term only when the reader cannot resolve it. A pronoun whose referent is a paragraph away is a defect, and so is a sentence that would read the same if the thing it was about were different.
+**concrete.** It points at something Name the file, the command, the number, the commit; one name per thing; a pronoun whose referent is a paragraph away is a defect
 
-**user language.** Reuse the person's words verbatim, in the language they used. A word they use loosely is corrected once, at the point where it would otherwise be repeated, and the correction is recorded as an expression gap.
+**user language.** Use his spelling and his language Keep it verbatim; correct a loose word once and record it as an expression gap
 
-**human shape and rule shape.** The same fact often needs a human shape for a person and a rule shape for an agent. The person decides, so what he reads leads with the stake; an agent acts, so what it reads leads with the trigger.
+**human shape and rule shape.** Each shape fits its reader The person's version leads with the stake, the agent's with the trigger
 
-**no enumeration invoice.** An enumeration the person dictated is intent, not a specification: it repeats, it omits whole areas, and it must be re-derived before it becomes a rule.
+**no enumeration invoice.** It is treated as intent, not specification Re-derive it: it repeats and it omits whole areas
 
-**sop form.** 'A procedure is a loop over states, not a list of topics. It opens by testing which state the agent is in: an ordered list of observables, the first one that holds names the state, and each observable is something the agent can check right now. Under each state sits exactly one action and the reference that action needs, and the action ends by returning to the test. Material a single state needs sits under that state; material several states need sits behind a pointer, named where it fires. A step that cannot name the observation that ends it is a topic, not a step.'
+**sop form.** The reader goes from the first act to the last Open with the state test, one act per state with the material it needs, each act returning to the test; a step that cannot name its completion is a topic
 
-**how not what.** 'A step says what you do and in what order — the file, the command, the check — not what must end up true. "Reach an agreement" is a wish; "write these four things, then ask only the questions that change them" is a step. Where a line states a target, rewrite it as the acts that produce the target, because a target you cannot turn into acts is a target you have not understood.'
+**how not what.** It says how Write the file, the command, the check, in order; turn a target-only sentence into the acts that produce it
 
 
 ## Change
