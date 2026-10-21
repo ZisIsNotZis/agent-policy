@@ -40,15 +40,11 @@ A grant that cannot be given stops the package at that line and becomes a `resou
 
 A child that has written nothing for longer than its declared time is presumed stuck. That is noticed when the node next reads its own roadmap, never by watching it.
 
-## Raising
+## Messages
 
-A question that needs a layer above is a directory that moves, not a message that is retyped.
+A message is one file in the sender's own outbox. Its first lines name the kind, the sender, the target and what answering it spends; the body is the question or the instruction; the effort sits at the end of the same file, so a question and its effort never separate.
 
-`ask.md` is written once, by the node that raised it, and is never rewritten. `effort.md` carries the attempts and the closures. `notes.tsv` gains one row from each layer that touches it: the node, its opinion, the time.
-
-Raising it is a move into the next layer's inbox and one appended row, so no layer pays to restate the question and nothing is lost in the restating.
-
-The root renders the inbox for the person and adds nothing to it.
+The sender notifies the target when the target is awake, and does nothing when it is not. Delivery does not depend on that notification.
 
 ## Time
 

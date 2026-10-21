@@ -12,6 +12,10 @@ A node whose entries are children and whose roadmap holds one milestone is a con
 
 A node may execute and may also split. What it may not do is split, and then execute the piece it just split off.
 
+Everything about a node lives under that node's own directory. The only trace it leaves above is its name and the path that name resolves to, because a noun has to resolve somewhere.
+
+The interface is two fixed paths and nothing else: a node's inbox, which others write, and its outbox, which others read.
+
 ## Speech
 
 Exactly one node speaks to a person: the root. Every other node speaks to the layer above it and to nobody else, so a node that wants a person is a node that has not found the right layer.
@@ -92,9 +96,13 @@ A node with no entrance, or an empty directory, or no idea what its own project 
 
 ## The inbox
 
-Every node has one inbox at a fixed path, and a message to a node is a file written there.
+Every node has an inbox and an outbox at fixed paths. A message to a node is a file in that node's inbox, and a message from it is a file in its own outbox, so nothing about a node ever leaves the directory that node owns.
 
-Nothing waits for the node to be running. A node that is not running finds its inbox when it wakes, and one that is running is woken. The sender writes the file and does nothing else, because delivery is the path rather than an act.
+Nothing waits for a node to be awake. A node that is not running finds its inbox when it wakes, and one that is running is woken. The sender writes the file and nothing else, because delivery is the path rather than an act.
+
+Reading deletes. The inbox is transport and not a home, so the first thing a reader does is land what it read: a fact goes into its own document, an instruction is acted on, and a question it cannot answer goes into its own outbox addressed further up, carrying the id it came from. Deleting before landing loses the message and the loss is invisible, which is why the two are one act.
+
+Deletion is the only receipt there is. A sender that needs an answer sends again, and a sender that finds its file gone knows it was read. A message may be corrected by the node that wrote it and by nobody else.
 
 ## Coordinates
 
@@ -161,15 +169,11 @@ A grant that cannot be given stops the package at that line and becomes a `resou
 
 A child that has written nothing for longer than its declared time is presumed stuck. That is noticed when the node next reads its own roadmap, never by watching it.
 
-## Raising
+## Messages
 
-A question that needs a layer above is a directory that moves, not a message that is retyped.
+A message is one file in the sender's own outbox. Its first lines name the kind, the sender, the target and what answering it spends; the body is the question or the instruction; the effort sits at the end of the same file, so a question and its effort never separate.
 
-`ask.md` is written once, by the node that raised it, and is never rewritten. `effort.md` carries the attempts and the closures. `notes.tsv` gains one row from each layer that touches it: the node, its opinion, the time.
-
-Raising it is a move into the next layer's inbox and one appended row, so no layer pays to restate the question and nothing is lost in the restating.
-
-The root renders the inbox for the person and adds nothing to it.
+The sender notifies the target when the target is awake, and does nothing when it is not. Delivery does not depend on that notification.
 
 ## Time
 

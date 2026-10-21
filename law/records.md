@@ -24,9 +24,13 @@ A node with no entrance, or an empty directory, or no idea what its own project 
 
 ## The inbox
 
-Every node has one inbox at a fixed path, and a message to a node is a file written there.
+Every node has an inbox and an outbox at fixed paths. A message to a node is a file in that node's inbox, and a message from it is a file in its own outbox, so nothing about a node ever leaves the directory that node owns.
 
-Nothing waits for the node to be running. A node that is not running finds its inbox when it wakes, and one that is running is woken. The sender writes the file and does nothing else, because delivery is the path rather than an act.
+Nothing waits for a node to be awake. A node that is not running finds its inbox when it wakes, and one that is running is woken. The sender writes the file and nothing else, because delivery is the path rather than an act.
+
+Reading deletes. The inbox is transport and not a home, so the first thing a reader does is land what it read: a fact goes into its own document, an instruction is acted on, and a question it cannot answer goes into its own outbox addressed further up, carrying the id it came from. Deleting before landing loses the message and the loss is invisible, which is why the two are one act.
+
+Deletion is the only receipt there is. A sender that needs an answer sends again, and a sender that finds its file gone knows it was read. A message may be corrected by the node that wrote it and by nobody else.
 
 ## Coordinates
 
