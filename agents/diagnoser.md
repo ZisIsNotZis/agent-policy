@@ -27,6 +27,8 @@ Everything about a node lives under that node's own directory. The only trace it
 
 The interface is two fixed paths and nothing else: a node's inbox, which others write, and its outbox, which others read.
 
+A judgement that compares siblings cannot be made by any one of them, because a comparison needs all of them at once. That is the only thing that lives above a node and is not its name.
+
 ## Speech
 
 Exactly one node speaks to a person: the root. Every other node speaks to the layer above it and to nobody else, so a node that wants a person is a node that has not found the right layer.
@@ -113,7 +115,11 @@ Nothing waits for a node to be awake. A node that is not running finds its inbox
 
 Reading deletes. The inbox is transport and not a home, so the first thing a reader does is land what it read: a fact goes into its own document, an instruction is acted on, and a question it cannot answer goes into its own outbox addressed further up, carrying the id it came from. Deleting before landing loses the message and the loss is invisible, which is why the two are one act.
 
-Deletion is the only receipt there is. A sender that needs an answer sends again, and a sender that finds its file gone knows it was read. A message may be corrected by the node that wrote it and by nobody else.
+Deleting the file is tidying, not answering.
+
+A sender fires and forgets. Whether the receiver replies, and what it says, is the receiver's judgement, because a message that arrived may need nothing beyond the work it caused. A reply is worth sending when there is something to say: the work is done, a question came up, or the person asked and is still waiting. An acknowledgement is none of those and is not sent.
+
+A message may be corrected by the node that wrote it and by nobody else.
 
 ## Coordinates
 

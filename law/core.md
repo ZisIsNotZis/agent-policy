@@ -16,6 +16,8 @@ Everything about a node lives under that node's own directory. The only trace it
 
 The interface is two fixed paths and nothing else: a node's inbox, which others write, and its outbox, which others read.
 
+A judgement that compares siblings cannot be made by any one of them, because a comparison needs all of them at once. That is the only thing that lives above a node and is not its name.
+
 ## Speech
 
 Exactly one node speaks to a person: the root. Every other node speaks to the layer above it and to nobody else, so a node that wants a person is a node that has not found the right layer.
