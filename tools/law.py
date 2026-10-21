@@ -184,6 +184,12 @@ def main() -> int:
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(frontmatter(role) + views[role], encoding="utf-8")
 
+    for role in yaml.safe_load((LAW / "roles.yaml").read_text(encoding="utf-8")):
+        for needed in ("systemPromptMode: replace", "inheritProjectContext: false",
+                       "inheritGlobalContext: false"):
+            if needed not in frontmatter(role):
+                failures.append(f"role {role} would not be shielded: {needed} missing")
+
     n = prohibitions(views["root"])
     if n > ceiling():
         failures.append(f"the root view states {n} prohibitions against a ceiling of {ceiling()}")

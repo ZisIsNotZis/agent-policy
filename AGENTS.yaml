@@ -1721,6 +1721,22 @@ dispatch:
       zh: 默认新上下文；只有上下文本身必要且相关时才继承
       en: Default to fresh; inherit only when the context itself is necessary
     scope: *id002
+  child_context:
+    _kind: act
+    _when:
+      zh: 你要派一个孩子
+      en: You dispatch a child
+    _goal:
+      zh: 孩子拿到的是它自己那一份，不是你的整段上下文
+      en: The child gets its own share of the context, not yours
+    _how:
+      zh: 用你手上那两个角色之一（manager、worker），用 fresh 上下文；不用 pi 的内置角色或现造一个，因为内置角色默认会继承 AGENTS.md，fork 则把你的整段系统设定一起送过去
+      en: Launch one of your two roles — manager or worker — with fresh context; never a builtin or an ad-hoc agent, because builtins inherit AGENTS.md by default and a fork sends your whole system setting with it
+    _depends:
+    - two_kinds
+    scope:
+    - root
+    - manager
 review:
   manager_does_not_judge:
     _kind: act

@@ -305,6 +305,10 @@ inheritSkills: false
 
 **fresh context.** you dispatch a package → it gets a fresh context when it can be stated compactly. Default to fresh; inherit only when the context itself is necessary
 
+**child context.** you dispatch a child → the child gets its own share of the context, not yours. Launch one of your two roles — manager or worker — with fresh context; never a builtin or an ad-hoc agent, because builtins inherit AGENTS.md by default and a fork sends your whole system setting with it
+
+  depends on **two kinds**: you dispatch something → the kind is set once and does not change. A manager gets a directory and a name; a worker reports once and keeps nothing
+
 
 ## Review
 
