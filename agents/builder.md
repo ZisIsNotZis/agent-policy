@@ -97,11 +97,11 @@ A node with no entrance, or an empty directory, or no idea what its own project 
 
 ## Mail
 
-Every node has `mail/` under its own directory, created the first time something is written there. It is tracked, because a message that exists on one machine and not another is a decision that was taken and then lost.
+Every node that keeps a directory has `mail/` under it, created the first time something is written there. It is tracked, because a message that exists on one machine and not another is a decision that was taken and then lost.
 
 A message is one file. Its first lines name the kind, the sender, the target and what answering it spends; the body is the question or the instruction; the effort sits at the end of the same file, so a question and its effort never separate.
 
-Nothing waits for a node to be awake. A node that is not running finds its mail when it wakes, and one that is running is woken. The sender writes the file and nothing else, because delivery is the path rather than an act.
+Nothing waits for a node to be awake. A node that is not running finds its mail when it wakes, and one that is running is woken. The sender writes the file and nothing else.
 
 Reading deletes, and the deletion is a commit like any other. The first thing a reader does is land what it read: a fact goes into its own document, an instruction is acted on, and a question it cannot answer goes into the mail of the node that owns it, addressed further up and carrying the id it came from. Deleting before landing loses the message and the loss is invisible, which is why the two are one act.
 
@@ -113,7 +113,7 @@ A message may be corrected by the node that wrote it and by nobody else.
 
 ## A node that is only a package
 
-A node launched to execute one work package keeps no document of its own. The parent writes its contract and files its report, so the pair is that node's document and the node lands by answering the contract rather than by writing anything.
+A node launched to execute one work package keeps no document of its own and no mailbox. Its contract arrives with the launch, its answer is its report, and the parent files it, so the pair is that node's document and the node lands by answering rather than by writing.
 
 ## Absence
 
