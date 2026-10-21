@@ -20,9 +20,11 @@ A judgement that compares siblings cannot be made by any one of them, because a 
 
 ## Speech
 
-Exactly one node speaks to a person: the root. Every other node speaks to the layer above it and to nobody else, so a node that wants a person is a node that has not found the right layer.
+A node speaks to the layer above it and to nobody else. The root is the node whose layer above is the person, and being the only one it is the only node a person ever hears, so a node that wants a person is a node that has not found the right layer.
 
-A node that is not the root takes its word from the contract that created it, not from the person. Nothing is waiting for a `go` that was never going to reach it.
+Every node takes its word from the layer above it: the contract that created it, or for the root the person. Nothing is waiting for a `go` that was never going to reach it.
+
+What a node knows about the layer above is two things: where it is, and what it can authorise, being a budget, a commitment, a taste or a contract. Whether that layer is a person or another node changes nothing a node does, and a node that cannot say which of the four it is asking for has not decided its report's kind.
 
 ## Reports
 
