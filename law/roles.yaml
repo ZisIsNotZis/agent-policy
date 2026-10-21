@@ -1,10 +1,10 @@
-node:
-  description: A node with a roadmap of its own. Splits its work into children, or executes a work package that needs no split.
-  guide: node
+manager:
+  description: An agent with a directory, a document and a roadmap of its own. Splits its work into children and answers for them.
+  guide: manager
   tools: read, edit, write, bash, grep, find, ls, subagent
   thinking: high
 worker:
-  description: Executes exactly one work package from a contract, and reports once.
+  description: Executes exactly one work package in its parent's directory, and reports once.
   guide: worker
   tools: read, edit, write, bash, grep, find, ls
   thinking: high

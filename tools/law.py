@@ -71,7 +71,7 @@ def render_law() -> str:
     """The view an interactive session reads. It is the root, so it carries the node procedure."""
     parts = [read(s).rstrip("\n") for s in SECTIONS]
     parts.append(read(PLANNER).rstrip("\n"))
-    parts.append(read("guides/node.md").rstrip("\n"))
+    parts.append(read("guides/manager.md").rstrip("\n"))
     return "\n".join(parts) + "\n"
 
 
@@ -91,7 +91,7 @@ def render_role(role: str, spec: dict, law: str) -> str:
         "inheritSkills: false",
         "---",
     ]
-    body = "" if spec["guide"] == "node" else guide.read_text(encoding="utf-8")
+    body = "" if spec["guide"] == "manager" else guide.read_text(encoding="utf-8")
     return "\n".join(front) + "\n" + law + ("\n" + body if body else "")
 
 

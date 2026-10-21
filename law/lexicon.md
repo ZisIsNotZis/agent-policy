@@ -4,11 +4,11 @@ One word per concept. A banned word is refused by the check in every file this r
 
 | concept | word | banned |
 |---|---|---|
-| the ordered list a node owns | roadmap | plan, backlog, sprint, epic |
-| a point a node reports upward | milestone | phase, gate, checkpoint |
+| the ordered list a manager owns | roadmap | plan, backlog, sprint, epic |
+| a point a manager reports upward | milestone | phase, gate, checkpoint |
 | a unit executed without reporting | work package | task, ticket, story, subtask |
-| one agent with one directory | node | role tier, agent type |
-| the node that advances several children under one milestone | container | meta node, aggregator, orchestrator |
+| an agent that keeps a directory, a document and a roadmap | manager | node, role tier, agent type |
+| an agent that executes one package in its parent's directory | worker | subagent, executor, task runner |
 | the three-field upward message | report | update, summary, status report |
 | a path, command or hash proving a claim | evidence pointer | proof, citation |
 | the record of where each old rule went | ledger | mapping, inventory |
@@ -16,7 +16,7 @@ One word per concept. A banned word is refused by the check in every file this r
 
 ## Words the field owns
 
-A version, a hash, a path, a port, a seed, a temporary path, and the ordinary names of the tools.
+A version, a hash, a path, a port, a seed, a temporary path, an inbox, and the ordinary names of the tools.
 
 ## The person's words
 
