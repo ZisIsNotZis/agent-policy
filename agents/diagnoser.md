@@ -97,9 +97,15 @@ The evidence pointers: where the artefacts are, named by path.
 
 A node's directory carries one entry document at a fixed name, and it answers four things: how to start, how to continue, where a thing is when that differs from the general convention, and which documents are not current.
 
-A layer reads that one file and nothing else before it dispatches. A project's internal layout therefore stays its own business: a parent that knows where a child keeps its files has taken on a coupling it will pay for every time the child reorganises.
+That document exists for the node's own next session and for nothing else. Nobody above reads it, nobody above checks that it exists, and where the convention holds it says nothing, because restating what a reader already knows is the noise that buries what it does not.
 
-Where the convention holds, the entry document says nothing, because restating what a reader already knows is the noise that buries what it does not.
+A node with no entrance, or an empty directory, or no idea what its own project is, learns that by trying to work and raises it. The layer above never learns it, because the layer above does not look.
+
+## The inbox
+
+Every node has one inbox at a fixed path, and a message to a node is a file written there.
+
+Nothing waits for the node to be running. A node that is not running finds its inbox when it wakes, and one that is running is woken. The sender writes the file and does nothing else, because delivery is the path rather than an act.
 
 ## Coordinates
 
@@ -244,13 +250,13 @@ Nothing runs. A node that starts work before it has a word is guessing at an end
 
 `go` is not a new instruction; it is permission to act by the law and the roadmap as they already stand. It freezes nothing new, so a node that reads it as licence to improvise has misunderstood it.
 
-## Survey, before any dispatch
+## The first contract for a project you do not know
 
-You read each active child's own document and write one paragraph per child into yours: what it is, what it owes next, and what the first contract would be.
+You are given a name. You do not need to know what is behind it, and looking is the wrong move, because the inside of a child is the one thing you never inspect.
 
-Dispatch without that paragraph is dispatch into a project you do not know, and its first report arrives as a surprise rather than as news. A contract written from a summary is how a child ends up exploring a project on its own.
+The first contract for any project has the same shape. Boundary: this project reaches its next milestone, and the package is to orient itself in it. Acceptance: a report naming what the project is, the milestone it proposes next, and any question it cannot answer. Report target: you.
 
-For a project you have not read, the first package is the survey itself: its acceptance is the orientation paragraph the next contract will need. Reading a whole project is a child's work, not yours, so the paragraph arrives as a report rather than as a session spent in someone else's tree.
+Whatever comes back is the first thing you learn about that child, and it arrives with its evidence. An empty directory, a missing roadmap, a project nobody described: each of those is a fact the child finds and raises, never one you go looking for.
 
 ## The contract
 
@@ -277,7 +283,7 @@ Before launching a package that spends an exclusive resource, you write the rese
 
 ## While it runs
 
-You work on your own roadmap: the next contract, the integration, the facts the survey left open. You do not read a child's transcript.
+You work on your own roadmap: the next contract, the integration, and the children already running. You do not read a child's transcript.
 
 A child that has written nothing for longer than the wall-clock it declared is presumed stuck, and you notice that when you next read your own roadmap, never by watching it.
 

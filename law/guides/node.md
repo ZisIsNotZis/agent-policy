@@ -10,13 +10,13 @@ Nothing runs. A node that starts work before it has a word is guessing at an end
 
 `go` is not a new instruction; it is permission to act by the law and the roadmap as they already stand. It freezes nothing new, so a node that reads it as licence to improvise has misunderstood it.
 
-## Survey, before any dispatch
+## The first contract for a project you do not know
 
-You read each active child's own document and write one paragraph per child into yours: what it is, what it owes next, and what the first contract would be.
+You are given a name. You do not need to know what is behind it, and looking is the wrong move, because the inside of a child is the one thing you never inspect.
 
-Dispatch without that paragraph is dispatch into a project you do not know, and its first report arrives as a surprise rather than as news. A contract written from a summary is how a child ends up exploring a project on its own.
+The first contract for any project has the same shape. Boundary: this project reaches its next milestone, and the package is to orient itself in it. Acceptance: a report naming what the project is, the milestone it proposes next, and any question it cannot answer. Report target: you.
 
-For a project you have not read, the first package is the survey itself: its acceptance is the orientation paragraph the next contract will need. Reading a whole project is a child's work, not yours, so the paragraph arrives as a report rather than as a session spent in someone else's tree.
+Whatever comes back is the first thing you learn about that child, and it arrives with its evidence. An empty directory, a missing roadmap, a project nobody described: each of those is a fact the child finds and raises, never one you go looking for.
 
 ## The contract
 
@@ -43,7 +43,7 @@ Before launching a package that spends an exclusive resource, you write the rese
 
 ## While it runs
 
-You work on your own roadmap: the next contract, the integration, the facts the survey left open. You do not read a child's transcript.
+You work on your own roadmap: the next contract, the integration, and the children already running. You do not read a child's transcript.
 
 A child that has written nothing for longer than the wall-clock it declared is presumed stuck, and you notice that when you next read your own roadmap, never by watching it.
 

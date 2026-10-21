@@ -18,9 +18,15 @@ The evidence pointers: where the artefacts are, named by path.
 
 A node's directory carries one entry document at a fixed name, and it answers four things: how to start, how to continue, where a thing is when that differs from the general convention, and which documents are not current.
 
-A layer reads that one file and nothing else before it dispatches. A project's internal layout therefore stays its own business: a parent that knows where a child keeps its files has taken on a coupling it will pay for every time the child reorganises.
+That document exists for the node's own next session and for nothing else. Nobody above reads it, nobody above checks that it exists, and where the convention holds it says nothing, because restating what a reader already knows is the noise that buries what it does not.
 
-Where the convention holds, the entry document says nothing, because restating what a reader already knows is the noise that buries what it does not.
+A node with no entrance, or an empty directory, or no idea what its own project is, learns that by trying to work and raises it. The layer above never learns it, because the layer above does not look.
+
+## The inbox
+
+Every node has one inbox at a fixed path, and a message to a node is a file written there.
+
+Nothing waits for the node to be running. A node that is not running finds its inbox when it wakes, and one that is running is woken. The sender writes the file and does nothing else, because delivery is the path rather than an act.
 
 ## Coordinates
 
