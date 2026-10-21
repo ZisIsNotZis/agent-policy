@@ -157,6 +157,12 @@ speech:
   person_may_write_anywhere:
     _text: A person may write to any agent, because the interface lets anyone leave a message. A message from them to a non-root agent is forwarded upward unchanged and not answered, because the agent addressed can no more speak for the tree than a child can.
     scope: root_manager
+  ask_the_owner:
+    _text: When the layer that owns an answer is not running, wake it and ask it. Reconstructing its answer from code, logs or a transcript is a guess wearing evidence's clothes.
+    scope: manager_worker
+  say_that_you_started:
+    _text: After a launch, say once that it has started and then work. A start needs no ceremony, a progress report needs a reason, and silence after a launch leaves the parent unable to tell a start from a failure.
+    scope: root_manager
 inbox:
   one_direction:
     _text: 'Anyone may leave a message for a manager, in inbox/ under that manager''s directory, created the first time something is written there. It is one direction only: what sits there is for the agent whose directory it is.'
@@ -344,12 +350,15 @@ scheduling:
   deadline:
     _text: A long piece of work states its deadline and the condition that cancels it, and both are numbers in the roadmap.
     scope: root_manager
+  pause:
+    _text: A pause is not a kill. When new information changes what a running package should do, stop it at its last write, land what it has, and resume it or re-dispatch it from that point; killing first throws away work a file does not hold.
+    scope: root_manager
 dispatch:
   take_next:
-    _text: A manager takes the first open node in the roadmap's order whose dependencies are all met, writes down that it has taken it, and then dispatches or executes.
+    _text: Walk the roadmap in its order and take every node whose dependencies are all met, writing down that each has been taken; those nodes start together, so the walk decides what is ready rather than what runs alone.
     scope: root_manager
   self_execute:
-    _text: A package whose value is less than about ten times the fixed cost of a dispatch — the contract, the orientation, the guide and the report — is executed by the manager itself instead of dispatched.
+    _text: A split may cost a constant fraction and no more. The fixed cost of a dispatch is the contract, the orientation, the guide and the report, so a package worth less than about ten times that is executed by the manager itself, and a split whose total work doubles is waste and a signal that the piece was too small to split. The test is the total the person pays, not the elegance of the tree.
     scope: root_manager
   contract_fields:
     _text: 'A contract carries six things that the child cannot derive: the goal in one paragraph, the scope with its exclusions, the acceptance with the command that produces the observation, the exact paths it may write, the spend class with its wall-clock, and the stop conditions.'
@@ -366,9 +375,6 @@ dispatch:
   contract_grant:
     _text: State the child's actual grant of compute, money and time, subdivided from the parent's; a compute-bound job is a resource and an IO-bound command is not.
     scope: root_manager
-  split_cost:
-    _text: 'A split may cost a constant fraction and no more: about a tenth of the work on contracts, orientations and reports is expected, while a split that doubles the work is waste and a signal that the piece was too small to split. The test is the total the person pays, not the elegance of the tree.'
-    scope: root_manager
   pass_boundary:
     _text: Pass the boundary and not the global goal, because the global goal pollutes judgement.
     scope: root_manager
@@ -377,9 +383,6 @@ dispatch:
     scope: root_manager
   persist_split:
     _text: Persist a split the moment it happens into the roadmap, or the roadmap drifts from reality.
-    scope: root_manager
-  parallel_by_design:
-    _text: Siblings are concurrent by default; a real ordering gets an edge in the roadmap rather than a pretended serial dependency.
     scope: root_manager
   route_failure:
     _text: In-scope failure means rewrite the roadmap and re-split; out-of-scope or a real blocker means escalate rather than grind.
@@ -593,6 +596,9 @@ change:
   scope_composition:
     _text: 'Every node declares one of four blocks — root_only, root_manager, manager_worker, worker_only — and a role''s view is the union of its blocks: the root reads all but worker_only, a manager reads root_manager and manager_worker, a worker reads manager_worker and worker_only. There is no fifth block, because a manager is an agent whose parent is a manager and the root is a manager whose parent is the person.'
     scope: every_role
+  write_stricter:
+    _text: Write the rule stricter than the behaviour that would satisfy it. A model trained to be helpful will try to do everything itself, so a rule that leaves room is a rule that will be overrun; the slack is for the reader, not for the actor.
+    scope: manager_worker
 git:
   main_area:
     _text: The main area stays on the integration branch and never on a feature branch or a detached head.
@@ -899,16 +905,16 @@ docs_shape:
     _text: The roadmap, the milestones and the packages live in the manager's own document; a question, a decision to confirm or a review request is a current fact in the document that owns its subject, rewritten in place while it changes and deleted once answered.
     scope: manager_worker
   agreement_state:
-    _text: A milestone carries an agreement state, aligning or agreed. Nothing is dispatched under a milestone that is still aligning, because until the two sides share one model of the end there is nothing to advance toward and any work done is a guess about which end.
+    _text: 'A target carries an agreement state, aligning or agreed: the target is the thing being agreed, whether it came from the person, from a parent, or from a proposal a child put up. Nothing is dispatched while the target is still aligning, because until the two sides share one model of the end there is nothing to advance toward and any work done is a guess about which end. The roadmap is derived from the target after it is agreed, never before.'
     scope: root_manager
   no_agreement_no_work:
-    _text: Without an agreement the only work is to reach one, and that wait has no timeout, because nothing else can be done that would not be thrown away. The agreement covers what the asker actually cares and thinks about, not every detail underneath it.
+    _text: Without an agreement on the target the only work is to reach one, and that wait has no timeout, because nothing else can be done that would not be thrown away. The agreement covers what the asker actually cares and thinks about, not every detail underneath it.
     scope: root_manager
   block_timeout:
     _text: 'A question that blocks advancement while an agreement exists waits for a period sized by what a wrong answer would cost: cheap means decide now and record it as assumed, moderate means wait until the next natural stopping point, and irreversible means never decide at a timeout but keep escalating, while packages that do not depend on the answer keep running.'
     scope: root_manager
   auto_advance:
-    _text: 'Once agreed, advancement is automatic and unconditional and needs no further word: the target exists, so the manager moves toward it as fast as its budget allows, and a person who goes silent has authorised nothing more and nothing less than the agreement already made.'
+    _text: 'Once the target is agreed, advancement is automatic and unconditional and needs no further word: the end exists, so the manager derives the roadmap and moves along it as fast as its budget allows, and a person who goes silent has authorised nothing more and nothing less than the agreement already made.'
     scope: root_manager
   plan_tree:
     _text: 'An agreed thing becomes exactly one node in the roadmap, a milestone or a package with an owner and an acceptance, and never prose that gestures at it: a commitment the tree cannot name has not been planned. Fuzziness has one definition — a settled commitment living outside the tree.'
@@ -1042,6 +1048,9 @@ proof_process:
   external_compute:
     _text: External execution and compute use only provided or authorised resources within spending, privacy and safety bounds, and routine public reading is not authorisation to execute externally.
     scope: manager_worker
+  model_choice:
+    _text: Development uses the strongest model available, because doing the work well beats doing it cheaply and a weaker model's mistakes come back as the person's time. A cheap model serves automation, where success is decided by a check rather than by judgement, and the site's declared table decides which is which.
+    scope: manager_worker
 communication:
   extraction:
     _text: 'Spend his attention on the highest expected information gain: ask one self-contained question at a time in his language and form, and stop when no remaining question changes the outcome, when the attention budget is reached, or when his answers thin out.'
@@ -1087,6 +1096,9 @@ communication:
     scope: root_only
   human_voice:
     _text: 'Text that must not read as machine-made is a separate, explicit mode that he asks for by name: only then remove what survives clean prose and still marks the author, never by default.'
+    scope: root_only
+  standing_list:
+    _text: What waits on the person is one list, and a report of it is one line naming the list and its count plus the thing itself. The queue is never restated, because a message that grows into a restatement is a digest, and a digest is where evidence goes to die.
     scope: root_only
 principles:
   attention_is_a_budget:

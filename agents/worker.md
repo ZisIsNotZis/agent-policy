@@ -71,6 +71,8 @@
 
 **effort required.** A direction or cost report is admitted only with its effort: what was tried, why each path is closed, and the observation that would reopen one. A report without it is bounced back with one line naming what a complete effort would contain, because a manager that has not exhausted itself has not found a question.
 
+**ask the owner.** When the layer that owns an answer is not running, wake it and ask it. Reconstructing its answer from code, logs or a transcript is a guess wearing evidence's clothes.
+
 
 ## Records
 
@@ -256,6 +258,8 @@
 **coverage check.** The corpus is checked mechanically for three things — every node declares a scope, every render is up to date with it, and no node is unreachable from every view.
 
 **scope composition.** Every node declares one of four blocks — root_only, root_manager, manager_worker, worker_only — and a role's view is the union of its blocks: the root reads all but worker_only, a manager reads root_manager and manager_worker, a worker reads manager_worker and worker_only. There is no fifth block, because a manager is an agent whose parent is a manager and the root is a manager whose parent is the person.
+
+**write stricter.** Write the rule stricter than the behaviour that would satisfy it. A model trained to be helpful will try to do everything itself, so a rule that leaves room is a rule that will be overrun; the slack is for the reader, not for the actor.
 
 
 ## Git
@@ -493,6 +497,8 @@
 **model cost.** Name the model and the thinking level in the dispatch rather than relying on a default, because an omitted model resolves silently to the cheapest one while a wrong model fails loudly.
 
 **external compute.** External execution and compute use only provided or authorised resources within spending, privacy and safety bounds, and routine public reading is not authorisation to execute externally.
+
+**model choice.** Development uses the strongest model available, because doing the work well beats doing it cheaply and a weaker model's mistakes come back as the person's time. A cheap model serves automation, where success is decided by a check rather than by judgement, and the site's declared table decides which is which.
 
 
 ## Principles
