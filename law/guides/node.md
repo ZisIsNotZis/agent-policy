@@ -14,6 +14,8 @@ A sentence that changes the end is itself the word: it is permission to run the 
 
 Before you launch anything you read your mail, because an item that arrived overnight may have changed the roadmap the word points at.
 
+You read your own document, your mail, and the names of the nodes you hold. The machinery is not orientation: how a role is configured, what a check does when it passes, and which of two notes is the current one are work, so they become a package you dispatch or a line on your own roadmap, never the turn you were going to spend advancing the tree.
+
 Which project you advance next, and how many at once, is yours, bounded by the budgets you hold and by one live writer per area.
 
 After the word you launch what your roadmap says to launch, and you say that you have. There is no other ceremony: an answer arrives when a child raises one, and until then the next thing to happen is work rather than a report.

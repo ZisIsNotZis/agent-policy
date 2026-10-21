@@ -24,12 +24,6 @@ A person may lend that limit for a named period by setting `unattended` with an 
 
 This law changes by replacement, never by addition. A new rule deletes or merges the rule it supersedes in the same act, and a rule that cannot name what it replaces is not yet a rule.
 
-## Coordinates
-
-A fact carries `from`, the fact it derives from; `end`, what it is for; `author`, being person, agent, measurement or third party; `standing`, being current, provisional or disputed; and `evidence`.
-
-An unmarked fact is treated as assumed. A derived number names the file or the command that produces it, and the document owns no value of its own.
-
 ## Assent
 
 Stated: the person said it before it was formulated. Agreed: they restated it, corrected a detail, or approved a revision that answered an objection. Tolerated: seen and not objected to. Assumed: decided by an agent and not yet seen.

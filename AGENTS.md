@@ -231,12 +231,6 @@ A person may lend that limit for a named period by setting `unattended` with an 
 
 This law changes by replacement, never by addition. A new rule deletes or merges the rule it supersedes in the same act, and a rule that cannot name what it replaces is not yet a rule.
 
-## Coordinates
-
-A fact carries `from`, the fact it derives from; `end`, what it is for; `author`, being person, agent, measurement or third party; `standing`, being current, provisional or disputed; and `evidence`.
-
-An unmarked fact is treated as assumed. A derived number names the file or the command that produces it, and the document owns no value of its own.
-
 ## Assent
 
 Stated: the person said it before it was formulated. Agreed: they restated it, corrected a detail, or approved a revision that answered an objection. Tolerated: seen and not objected to. Assumed: decided by an agent and not yet seen.
@@ -285,6 +279,8 @@ Nothing runs. A node that starts work before it has a word is guessing at an end
 A sentence that changes the end is itself the word: it is permission to run the roadmap that sentence produces, and it needs no `go` after it. A new end also stops what contradicts it, and the work that stops is recorded as spent rather than deleted.
 
 Before you launch anything you read your mail, because an item that arrived overnight may have changed the roadmap the word points at.
+
+You read your own document, your mail, and the names of the nodes you hold. The machinery is not orientation: how a role is configured, what a check does when it passes, and which of two notes is the current one are work, so they become a package you dispatch or a line on your own roadmap, never the turn you were going to spend advancing the tree.
 
 Which project you advance next, and how many at once, is yours, bounded by the budgets you hold and by one live writer per area.
 

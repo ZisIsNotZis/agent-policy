@@ -114,6 +114,9 @@ def main() -> int:
 
     claimed = {s["guide"] for s in roles.values()}
     present = {p.stem for p in (LAW / "guides").glob("*.md")}
+    for stale in OUT_AGENTS.glob("*.md"):
+        if stale.stem not in roles:
+            failures.append(f"agents/{stale.name} is no role")
     for name in sorted(claimed - present):
         failures.append(f"role claims a missing guide: {name}")
     for name in sorted(present - claimed):
