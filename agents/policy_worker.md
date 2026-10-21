@@ -1,6 +1,6 @@
 ---
 name: policy_worker
-description: Changes this law: edits the corpus, re-renders the views, and runs the checks.
+description: "Changes this law: edits the corpus, re-renders the views, and runs the checks."
 tools: read, edit, write, bash, grep, find, ls
 thinking: high
 model: inherit

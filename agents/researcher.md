@@ -1,6 +1,6 @@
 ---
 name: researcher
-description: Answers one bounded question by reading widely and saying what the evidence supports. Writes no files but its own notes, and dispatches nothing.
+description: "Answers one bounded question by reading widely and saying what the evidence supports. Writes no files but its own notes, and dispatches nothing."
 tools: read, bash, grep, find, ls, web_search_ds, web_fetch_ds
 thinking: max
 model: inherit

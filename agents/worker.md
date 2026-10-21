@@ -1,6 +1,6 @@
 ---
 name: worker
-description: Executes exactly one work package in its parent's area, and reports once.
+description: "Executes exactly one work package in its parent's area, and reports once."
 tools: read, edit, write, bash, grep, find, ls
 thinking: low
 model: inherit

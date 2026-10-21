@@ -1,6 +1,6 @@
 ---
 name: manager
-description: An agent with a directory, a document and a roadmap of its own. Splits its work into children and answers for them.
+description: "An agent with a directory, a document and a roadmap of its own. Splits its work into children and answers for them."
 tools: read, edit, write, bash, grep, find, ls, subagent
 thinking: medium
 model: inherit

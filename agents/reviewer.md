@@ -1,6 +1,6 @@
 ---
 name: reviewer
-description: Reads one artefact against its acceptance and returns a verdict with evidence at the source. Never repairs.
+description: "Reads one artefact against its acceptance and returns a verdict with evidence at the source. Never repairs."
 tools: read, bash, grep, find, ls
 thinking: high
 model: inherit
