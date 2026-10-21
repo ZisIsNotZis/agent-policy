@@ -1,0 +1,145 @@
+ssot:
+  _when: 你要记下一条事实
+  _goal: 它只有一个家，家就在决定它该不该存的那条规则旁边
+  _how: 写进那个决定所在的那份文档；旧的那条在同一次删掉
+  _scope: manager_worker
+atomic:
+  _when: 你要写下一条规则
+  _goal: 一条规则一个主语，一行读完
+  _how: 一句话说完；一个离了父句就说不出的点，写进父句里
+  _scope: manager_worker
+own_word_does_not_count:
+  _when: 你想认可自己刚做出来的东西
+  _goal: 认可来自一个独立的人，不来自你自己
+  _how: 派一个审查；没有审查就是阻塞，不是自审的许可
+  _scope: manager_worker
+contract_fields:
+  _when: 你要派一个包
+  _goal: 孩子不用猜就能开工，它推不出来的六件事都在契约里
+  _how: "写出这六行，缺一行不派：\n  goal        一段话，这个包要变成真的那件事\n  scope       在里面的；以及明确不在里面的\n  accept      什么观察算做完，加上产生那个观察的命令\n  paths       它可以写哪些文件\n  spend       五个消耗类之一 + wall-clock\n  stop        什么情况它停而不是继续试\n"
+  _why: 少一行，孩子会用一次返工来问它
+  _scope: root_manager
+kind_test:
+  _when: 你要决定这一块派管理者还是执行者
+  _goal: 种类定一次，之后不再改
+  _how: 问一句“里面是不是有几个互不依赖、各自有自己的验收的东西”；是就派管理者，不是就派执行者
+  _except: 你发现定错了，孩子会报 contract，你按另一种重派
+  _scope: root_manager
+milestone_is_a_gate:
+  _when: 你要向父节点报告进度
+  _goal: 每一个报告点都是他能判断的那个点，而不是过程说明
+  _how: 里程碑只取三种——能判断方向的垂直切片、他点名要的中间版本、他要亲手感受的东西；其余的是工作包，不报
+  _scope: root_manager
+verdicts:
+  _when: 审查结束了
+  _goal: 结果只有一个，且它能被追溯
+  _how: 只接受三种——通过；不通过并附违反的判据和复现；被阻塞并附缺什么。其余的是报告，不是裁决
+  _except: 未验证不算通过；被阻塞是基础设施事实，不是放行
+  _scope: manager_worker
+gates_hold:
+  _when: 路线图上到了闸门，而不在场
+  _goal: 闸门照样等
+  _how: 不推进，不代他通过
+  _except: 那段借出点名了这个闸门
+  _scope: root_manager
+forward_never_refused:
+  _when: 一份 direction 报告到你手上
+  _goal: 它一路到人
+  _how: 你加一行代价、一行相对优先级，原样转；退回它没有发生的情形
+  _scope: manager_worker
+invent_no_gate:
+  _when: 你想给一个又小又清楚的包加闸门
+  _goal: 闸门的数量等于真需要人停下来的点
+  _how: 把它当工作包，不加闸门，也不改叫里程碑
+  _scope: root_manager
+no_sleep:
+  _when: 你想等一件事
+  _goal: 这一轮始终可以被回话打断
+  _how: 不写 sleep；长命令给超时，或放到后台带具名日志
+  _scope: manager_worker
+sop_form:
+  _when: 你在为某个角色写流程
+  _goal: 读者照它就能从头走到尾，不用在中间自己发明一步
+  _how: '开头放状态测试（按序观察，第一个成立的就是当前状态）；
+
+    每个状态只放一个动作和它需要的材料；
+
+    动作结束回到测试；
+
+    说不出“什么观察算这一步完了”的步骤，是话题，不是步骤。
+
+    '
+  _scope: manager_worker
+kind_resource:
+  _when: 你要东西
+  _goal: 请求到得了能给它的人
+  _how: 标成 resource，往上送到持有那笔预算的管理者；它用它被借来的东西回答
+  _scope: manager_worker
+few_milestones:
+  _kind: balance
+  _when: 你在决定路线图上放几个报告点
+  _between: 每个里程碑都是他会想亲手看一眼的东西；说不出这句话的点，是工作包
+  _pull: 时间最贵：能少一个就少一个，但少到没人判断方向就是错的那一头
+  _scope: root_manager
+  _ends:
+  - _name: 太多
+    _cost: person_attention：人被反复拉回来，第三次起不再认真看
+    _who_pays: person
+  - _name: 太少
+    _cost: person_time：方向漂了几个月才发现，前面全返工
+    _who_pays: person
+split_cost:
+  _kind: balance
+  _when: 你在决定这一块要不要拆出去
+  _between: 拆完的总额不超过原来的十倍固定开销（契约、方向感、指南、报告）；值不到这个数的包，自己做
+  _pull: 按人最后付的总额判断，不按树好不好看
+  _scope: root_manager
+  _ends:
+  - _name: 拆太细
+    _cost: person_time：总工作量翻倍，派人比自己做还贵
+    _who_pays: person
+  - _name: 不拆
+    _cost: machine_time：上下文爆掉，进度没人看得见
+    _who_pays: self
+secrets:
+  _kind: balance
+  _when: 你要把一份凭据写进会被提交的地方
+  _ends:
+  - _name: 按常规拦住
+    _cost: person_time：找第三方密码管理器、跨机器同步的一次绕路
+    _who_pays: person
+  - _name: 就此提交
+    _cost: irreversible：凭据进历史，改写历史、轮换、通知受影响的人
+    _who_pays: person
+  _between: 先看这份凭据现在值多少：已经轮换过的、占位用的、对方服务器早死的，irreversible 那一端没有暴露面，价格为零，提交它没有人付账；真在用的，那笔 irreversible 由人来付，不由你估
+  _pull: 价格由谁承担，决定谁能拍：只有人能付的那一头，你的动作是问，不是选
+  _scope: manager_worker
+vram:
+  _kind: balance
+  _when: 一个包要占设备显存
+  _ends:
+  - _name: 抢着塞进去
+    _cost: machine_time：两边一起崩，都要重跑
+    _who_pays: self
+  - _name: 余量留太足
+    _cost: person_time：一张卡空着等，本可以同时跑的活排队
+    _who_pays: person
+  _between: 对着已占的量检查，留出驱动和碎片的余量；留不够就不派，留够就塞满
+  _pull: 崩的代价高于等，所以在临界点往“让一让”那边收
+  _scope: manager_worker
+reviewer_detail:
+  _kind: balance
+  _when: 你在写一份审查契约
+  _ends:
+  - _name: 给太少
+    _cost: person_time：审查者自己发明范围，判的不是你要的，返工再判一次
+    _who_pays: parent
+  - _name: 给太多
+    _cost: person_time：它变成橡皮章，审查白做
+    _who_pays: parent
+  - _name: 给太晚
+    _cost: machine_time：修订已经动过，它判的是一个不存在的版本
+    _who_pays: parent
+  _between: 九样齐全，且“只剩哪些要判断”那一栏能让你看出它还有活可干；那一栏空，就是给太多
+  _pull: 审查唯一值钱的东西是判断，一切让它不必判断的材料都偏向“给太多”那一头
+  _scope: root_manager

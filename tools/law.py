@@ -29,12 +29,7 @@ CORPUS = HERE / "AGENTS.yaml"
 RENDER_ROOT = HERE / "corpus.md"
 RENDER_DIR = HERE / "agents"
 
-BLOCKS = ("root_only", "root_manager", "manager_worker", "worker_only", "every_role")
-VIEWS = {
-    "root": ("root_only", "root_manager", "manager_worker", "every_role"),
-    "manager": ("root_manager", "manager_worker", "every_role"),
-    "worker": ("manager_worker", "worker_only", "every_role"),
-}
+ROLES = ("root", "manager", "worker")
 TITLES = {
     "laws": "Laws", "architecture": "Architecture", "speech": "Speech", "inbox": "Inbox",
     "records": "Records", "spend": "Spend", "scheduling": "Scheduling", "dispatch": "Dispatch",
@@ -74,16 +69,33 @@ def prohibitions(text: str) -> int:
                if re.search(r"\b(must not|may not|never|cannot|refuses? to|is not sent)\b", s))
 
 
+def resolve(key: str, nodes: dict) -> list[str]:
+    """A rule that names what it depends on is rendered with that rule beside it, once."""
+    seen = {key}
+    out = []
+    for dep in nodes.get(key, {}).get("_depends", []):
+        if dep in nodes and dep not in seen:
+            seen.add(dep)
+            out.append(dep)
+    return out
+
+
 def render(role: str) -> str:
-    want = VIEWS[role]
+    flat = {k: v for b in corpus().values() for k, v in b.items()}
+    drawn: set[str] = set()
     out = [f"# Law, as {role} reads it\n"]
     for name, body in corpus().items():
-        rows = [(k, v) for k, v in body.items() if v.get("scope") in want]
+        rows = [(k, v) for k, v in body.items() if role in v.get("scope", ["manager", "worker"])]
+        rows = [(k, v) for k, v in rows]
         if not rows:
             continue
         out.append(f"\n## {TITLES.get(name, name)}\n")
         for key, node in rows:
             out.append(f"**{key.replace('_', ' ')}.** {node['_text'].strip()}\n")
+            for dep in resolve(key, flat):
+                if dep not in drawn:
+                    drawn.add(dep)
+                    out.append(f"  depends on **{dep.replace('_', ' ')}**: {flat[dep]['_text'].strip()}\n")
     return "\n".join(out)
 
 
@@ -95,10 +107,12 @@ def main() -> int:
     for name, body in corpus().items():
         for key, node in body.items():
             scope = node.get("scope")
-            if scope not in BLOCKS:
-                failures.append(f"{name}.{key} has scope {scope!r}")
-            if scope != "every_role" and not any(scope in v for v in VIEWS.values()):
-                failures.append(f"{name}.{key} reaches no agent")
+            if not isinstance(scope, list) or not scope:
+                failures.append(f"{name}.{key} has no scope list")
+            else:
+                unknown = [r for r in scope if r not in ROLES]
+                if unknown:
+                    failures.append(f"{name}.{key} names unknown roles {unknown}")
             text += node["_text"] + "\n"
 
     banned = [w for w in banned_words() if w and re.search(rf"\b{re.escape(w)}\b", text, re.I)]

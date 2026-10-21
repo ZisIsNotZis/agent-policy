@@ -179,6 +179,8 @@
 
 **scratch retired.** .scratch is retired for good: nothing is created, edited or worked in it, it may only shrink or be deleted, and a leftover moves out under migrate_on_touch rather than being read as status.
 
+**ssot.** Single source of truth: every fact has exactly one home, decided by the decision it serves, and a home holds exactly one fact.
+
 
 ## Spend
 
@@ -657,3 +659,20 @@
 **split follows logic.** Splitting is unlimited but must follow logic, and a misaligned split is a design-defect alarm rather than a scheduling choice.
 
 **one loop.** One loop covers every change: find the layer the fact belongs to, write it there, point at the fact it derives from, then re-check. A changed fact is rewritten in place, a dead one is deleted, and either way its dependants are repaired in the same pass.
+
+
+## prices
+
+**intro.** Every rule is a balance, and a balance is priced. These six rules are the whole vocabulary a price may be made of, so that no one invents a currency at the moment of the decision.
+
+**units.** A price is one of seven units: person_attention, person_time, machine_time, money, exclusive, irreversible, trust. A cost names exactly one.
+
+**payers.** A price is paid by exactly one of four: self (this layer's own work), parent (the layer above), person, third_party (someone outside the tree, such as the owner of a repository you do not own).
+
+**order.** Irreversible dominates everything below it, and trust dominates person_time; below that the order is person_time, person_attention, money, machine_time. Two ends are compared by this order, and no other comparison is admitted.
+
+**observable.** A price is a unit plus something you can point at: a command, a measurement, or a named event. An adjective is not a price, and a price you cannot show is the author guessing.
+
+**payer decides.** Who pays decides who may choose: an end paid by self or by this layer's machine is the manager's to buy, an end paid by the person or a third party is asked for rather than taken.
+
+**price changes are edits.** Changing what an end costs is an edit to this corpus with its own record, never something a package renegotiates at the moment it would like the price to be lower.
