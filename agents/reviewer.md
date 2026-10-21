@@ -124,11 +124,6 @@ inheritSkills: false
 **scratch retired.** you reach for .scratch → it is not used. Do not use it; move leftovers out under migrate_on_touch
 
 
-## Spend
-
-**class decides.** you decide whether a package may start → what may be released follows the class, never the confidence. Idle runs; metered, exclusive and unrecoverable take their grant first
-
-
 ## Scheduling
 
 **steerable.** you run a long command → the turn can always be interrupted. Give it a timeout or detach it behind a named log; write the naming state first
@@ -382,16 +377,6 @@ inheritSkills: false
 
 ## prices
 
-**intro.** you price a rule → the vocabulary is closed and cannot be invented at the decision. Use the price table the six rules below make
-
-**units.** you write a cost → it uses one of seven units. person_attention, person_time, machine_time, money, exclusive, irreversible, trust
-
 **payers.** you write who pays → it uses one of four payers. self, parent, person, third_party
-
-**order.** you compare two ends → the comparison follows one order. Irreversible over everything, trust over person_time, then person_time, person_attention, money, machine_time
-
-**observable.** you write a price → it points at something. A unit plus a command, a measurement or a named event; an adjective is not a price
-
-**payer decides.** you decide whether to pay → who pays decides who chooses. Self and this layer's machine are yours to buy; the person and a third party are asked
 
 **price changes are edits.** you want a price to be lower → it is a corpus edit with its own record. Never renegotiate at the moment you would like it cheap

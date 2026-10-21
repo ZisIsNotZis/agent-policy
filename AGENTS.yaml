@@ -1379,7 +1379,6 @@ spend:
     - manager
     - policy
     - researcher
-    - reviewer
     - worker
   unknown_class:
     _kind: act
@@ -2393,16 +2392,15 @@ review:
   review_axes:
     _kind: act
     _when:
-      zh: 你要审一份语料、一份视图或指南
-      en: You review a corpus, a view or a guide
+      zh: 你要审一份语料、一份角色文件或一次改动
+      en: You review a corpus, a role file or a change
     _goal:
       zh: 一次审完六轴，而不是审到哪儿算哪儿，因为换了轴就会换出另一批缺陷
       en: All six axes are run, not whichever ones came to mind, because a different axis finds a different set of defects
     _how:
-      zh: 依序跑完六轴：完整性——读者的动作缺了哪一步；必要性——哪一条不对应任何动作；单一真相来源——重复、冗余、废弃、冲突；写给人看的还是写给 agent 看的；SOP 形态——说不出完成观察的是话题不是步骤；角色相关性——这条对这份视图的读者成立吗。每个轴跑完就落一次发现，六个都跑完再汇总
-      en: 'Run the six in order: completeness — which step of the reader''s action is missing; necessity — which line corresponds to no action; single source — duplication, redundancy, deprecation, conflict; written for an agent rather than for a person; SOP form — a step whose completion cannot be observed is a topic; relevance — does this hold for the reader of this view. Each axis lands its own findings, and all six run before anything is summarised'
+      zh: 依序跑完六轴：完整性——读者的动作缺了哪一步；必要性——哪一条不对应任何动作；单一真相来源——重复、冗余、废弃、冲突；写给人看的还是写给 agent 看的；步骤形态——说不出完成观察的是话题不是步骤；角色相关性——这条对这份视图的读者成立吗。每个轴跑完就落一次发现，六个都跑完再汇总
+      en: 'Run the six in order: completeness — which step of the reader''s action is missing; necessity — which line corresponds to no action; single source — duplication, redundancy, deprecation, conflict; written for an agent rather than for a person; step form — a step whose completion cannot be observed is a topic; relevance — does this hold for the reader of this view. Each axis lands its own findings, and all six run before anything is summarised'
     _depends:
-    - sop_form
     - how_not_what
     scope:
     - policy
@@ -2827,19 +2825,6 @@ writing:
     scope:
     - root
     - manager
-  sop_form:
-    _kind: act
-    _when:
-      zh: 你要为某个角色写流程
-      en: You write a procedure for a role
-    _goal:
-      zh: 读者照它从第一步走到最后一步
-      en: The reader goes from the first act to the last
-    _how:
-      zh: 开头放状态测试，每状态一个动作和它要的材料，动作结束回到测试；说不出完成观察的步骤是话题
-      en: Open with the state test, one act per state with the material it needs, each act returning to the test; a step that cannot name its completion is a topic
-    scope:
-    - policy
   how_not_what:
     _kind: act
     _when:
@@ -4681,19 +4666,6 @@ docs_shape:
     - researcher
     - reviewer
     - worker
-  guide_is_not_a_copy:
-    _kind: act
-    _when:
-      zh: 你要写一份指南
-      en: You write a guide
-    _goal:
-      zh: 它只承载动作和顺序
-      en: It carries acts and their order
-    _how:
-      zh: 规则留在语料；指南只在读者从动作推不出时点名一条
-      en: Leave the rules in the corpus; name one only where the reader cannot infer it from the act
-    scope:
-    - policy
 upkeep:
   checklist:
     _kind: act
@@ -5715,7 +5687,6 @@ prices:
     - manager
     - policy
     - researcher
-    - reviewer
     - worker
   units:
     _kind: act
@@ -5732,7 +5703,6 @@ prices:
     - manager
     - policy
     - researcher
-    - reviewer
     - worker
   payers:
     _kind: act
@@ -5766,7 +5736,6 @@ prices:
     - manager
     - policy
     - researcher
-    - reviewer
     - worker
   observable:
     _kind: act
@@ -5783,7 +5752,6 @@ prices:
     - manager
     - policy
     - researcher
-    - reviewer
     - worker
   payer_decides:
     _kind: act
@@ -5800,7 +5768,6 @@ prices:
     - manager
     - policy
     - researcher
-    - reviewer
     - worker
   price_changes_are_edits:
     _kind: act

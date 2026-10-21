@@ -169,15 +169,13 @@ inheritSkills: false
 
 **defect evidence.** you report a defect → three things are present. Location, the criterion violated, a reproduction or evidence
 
-**review axes.** you review a corpus, a view or a guide → all six axes are run, not whichever ones came to mind, because a different axis finds a different set of defects. Run the six in order: completeness — which step of the reader's action is missing; necessity — which line corresponds to no action; single source — duplication, redundancy, deprecation, conflict; written for an agent rather than for a person; SOP form — a step whose completion cannot be observed is a topic; relevance — does this hold for the reader of this view. Each axis lands its own findings, and all six run before anything is summarised
-
-  depends on **sop form**: you write a procedure for a role → the reader goes from the first act to the last. Open with the state test, one act per state with the material it needs, each act returning to the test; a step that cannot name its completion is a topic
+**review axes.** you review a corpus, a role file or a change → all six axes are run, not whichever ones came to mind, because a different axis finds a different set of defects. Run the six in order: completeness — which step of the reader's action is missing; necessity — which line corresponds to no action; single source — duplication, redundancy, deprecation, conflict; written for an agent rather than for a person; step form — a step whose completion cannot be observed is a topic; relevance — does this hold for the reader of this view. Each axis lands its own findings, and all six run before anything is summarised
 
   depends on **how not what**: you write a step → it says how. Write the file, the command, the check, in order; turn a target-only sentence into the acts that produce it
 
 **review cost.** you judge whether a rule is worth the room it takes → the price is counted in the tokens the reader pays, not in lines or bytes, and blank lines and markup barely cost tokens.
 
-  depends on **review axes**: you review a corpus, a view or a guide → all six axes are run, not whichever ones came to mind, because a different axis finds a different set of defects. Run the six in order: completeness — which step of the reader's action is missing; necessity — which line corresponds to no action; single source — duplication, redundancy, deprecation, conflict; written for an agent rather than for a person; SOP form — a step whose completion cannot be observed is a topic; relevance — does this hold for the reader of this view. Each axis lands its own findings, and all six run before anything is summarised
+  depends on **review axes**: you review a corpus, a role file or a change → all six axes are run, not whichever ones came to mind, because a different axis finds a different set of defects. Run the six in order: completeness — which step of the reader's action is missing; necessity — which line corresponds to no action; single source — duplication, redundancy, deprecation, conflict; written for an agent rather than for a person; step form — a step whose completion cannot be observed is a topic; relevance — does this hold for the reader of this view. Each axis lands its own findings, and all six run before anything is summarised
 
   depends on **units**: you write a cost → it uses one of seven units. person_attention, person_time, machine_time, money, exclusive, irreversible, trust
 
@@ -212,8 +210,6 @@ inheritSkills: false
 **user language.** you write a word he introduced → use his spelling and his language. Keep it verbatim; correct a loose word once and record it as an expression gap
 
 **human shape and rule shape.** one fact goes to a person and to an agent → each shape fits its reader. The person's version leads with the stake, the agent's with the trigger
-
-**sop form.** you write a procedure for a role → the reader goes from the first act to the last. Open with the state test, one act per state with the material it needs, each act returning to the test; a step that cannot name its completion is a topic
 
 **how not what.** you write a step → it says how. Write the file, the command, the check, in order; turn a target-only sentence into the acts that produce it
 
@@ -363,8 +359,6 @@ inheritSkills: false
 **stereotype.** you pick a file pattern for a project → it fits the domain. Choose among layer document, router and render the one that fits
 
 **partition.** you group siblings → they are the values of one field. Split by that field; the home is decided, not chosen
-
-**guide is not a copy.** you write a guide → it carries acts and their order. Leave the rules in the corpus; name one only where the reader cannot infer it from the act
 
 
 ## Upkeep
