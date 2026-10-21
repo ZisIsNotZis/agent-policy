@@ -23,7 +23,7 @@ A node reads one document: itself. It does not read another node's document, and
 python3 tools/law.py --check
 ```
 
-Prints `ok: 7 views, 1287 words, 7153 chars, 23 banned words, 6 roles` and takes about 0.1 s with Python 3.12 and PyYAML. It refuses a view that no longer matches the source, a banned word outside the lexicon table, a role claiming a guide that does not exist, and a guide no role claims.
+Prints `ok: 7 views, 1287 words, 7153 chars, 23 banned words, 6 roles` and takes 0.2 s on a fresh clone with Python 3.12 and PyYAML. It refuses a view that no longer matches the source, a banned word outside the lexicon table, a role claiming a guide that does not exist, and a guide no role claims.
 
 Run it on every commit instead of remembering to:
 
