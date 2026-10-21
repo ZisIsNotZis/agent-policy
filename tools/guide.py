@@ -53,13 +53,17 @@ def main() -> int:
         print(f"## {pick(st['_name'], lang)}\n")
         for n, key in enumerate(st["_steps"], 1):
             node = flat[key]
-            text = pick(node["_goal"], lang) if "_goal" in node else node["_text"]
+            text = pick(node["_between"], lang) if node.get("_kind") == "balance" else pick(node["_goal"], lang)
             # a secondary axis rides along as @name, and only when it is printed in this same file
             extra = [d for d in node.get("_depends", []) if d in drawn]
             tail = (" " + " ".join("@" + d for d in extra)) if extra else ""
             print(f"{n}. {key}: {text}{tail}")
+            for end in flat[key].get("_ends", []):
+                print(f"   - {pick(end['_name'], lang)}: {pick(end['_cost'], lang)} [{end['_who_pays']}]")
             if "_how" in node:
                 print(f"   → {pick(node['_how'], lang)}")
+            elif node.get("_kind") == "balance":
+                print(f"   → {pick(node['_pull'], lang)}")
         if st.get("_artefact") in blocks:
             print(f"\n```\n{pick(blocks[st['_artefact']]['_text'], lang).rstrip()}\n```\n")
         c = st["_criterion"]

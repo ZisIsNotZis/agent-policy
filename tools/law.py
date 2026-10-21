@@ -87,8 +87,11 @@ def reads(role: str, scope: list) -> bool:
 
 def rule_text(node: dict, lang: str = "en") -> str:
     """A rule's text: the goal, then the how. _text is gone and is never a fallback."""
-    if "_goal" not in node:
+    if "_goal" not in node and node.get("_kind") != "balance":
         raise SystemExit(f"{node.get('_name', 'a rule')} has no _goal; _text is gone")
+    if node.get("_kind") == "balance":
+        band = node["_between"]
+        return band.get(lang) or band["en"]
     goal = node["_goal"].get(lang) or node["_goal"]["en"]
     how = node.get("_how")
     if not how:
@@ -135,6 +138,13 @@ def main() -> int:
                 for fld in ("_when", "_goal"):
                     if fld not in node:
                         failures.append(f"{name}.{key} has no {fld}")
+                if node.get("_kind") == "balance":
+                    for fld in ("_between", "_pull"):
+                        if fld not in node:
+                            failures.append(f"{name}.{key} is a balance with no {fld}")
+                    for end in node.get("_ends", []):
+                        if end.get("_who_pays") not in {"self", "parent", "person", "third_party"}:
+                            failures.append(f"{name}.{key} has an end paid by {end.get('_who_pays')!r}")
                 if node.get("_kind", "act") == "act" and "_how" not in node:
                     failures.append(f"{name}.{key} is an act with no _how")
                 for fld in ("_when", "_goal", "_how"):
@@ -181,8 +191,10 @@ def main() -> int:
         for dep in node.get("_depends", []):
             if dep not in flat_all:
                 failures.append(f"{key} depends on {dep}, which does not exist")
-            elif not set(flat_all[dep].get("scope", [])) >= set(node.get("scope", [])):
-                failures.append(f"{key} depends on {dep}, which some of its readers may not read")
+            else:
+                for role in ("root", "manager", "worker"):
+                    if reads(role, node.get("scope", [])) and not reads(role, flat_all[dep].get("scope", [])):
+                        failures.append(f"{key} depends on {dep}, which {role} may not read")
 
     if failures:
         print("\n".join(f"FAIL {f}" for f in failures))

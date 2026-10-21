@@ -1138,16 +1138,33 @@ spend:
       en: Run it on idle, or settle the question first
     scope: *id002
   vram:
-    _kind: act
+    _kind: balance
     _when:
-      zh: 一个包要占显存
+      zh: 一个包要占设备显存
       en: A package wants device memory
-    _goal:
-      zh: 它不和已经在跑的一起崩
-      en: It does not crash together with what is already running
-    _how:
-      zh: 对着已占的量检查，给驱动和碎片留余量；留不够就不派
-      en: Check against what is held, leave headroom for the driver and fragmentation; if it does not fit, do not dispatch
+    _ends:
+    - _name:
+        zh: 抢着塞进去
+        en: Cram it in
+      _cost:
+        zh: machine_time：和已经在跑的包一起崩，两边都要重跑
+        en: 'machine_time: it crashes together with what is running and both rerun'
+      _who_pays: self
+    - _name:
+        zh: 余量留太足
+        en: Leave too much headroom
+      _cost:
+        zh: person_time：一张卡空着等，本可以同时跑的活排队
+        en: 'person_time: a card idles while work that would fit queues'
+      _who_pays: person
+    _between:
+      zh: 对着已占的量检查，留出驱动和碎片的余量；留够就塞满，留不够就不派
+      en: Check against what is held and leave headroom for the driver and fragmentation; if it fits, fill it
+    _pull:
+      zh: 崩的代价高于等，所以临界点往让一让那边收
+      en: A crash costs more than a wait, so at the margin you yield
+    _depends:
+    - units
     scope: &id009
     - root
     - manager
@@ -1502,6 +1519,8 @@ dispatch:
       zh: 值不到一次派发固定开销十倍的自己做；拆完总工作量翻倍的自己做
       en: Do it yourself when it is worth less than about ten times the fixed cost of a dispatch, or when splitting doubles the total work
     scope: *id002
+    _depends:
+    - units
   contract_fields:
     _kind: act
     _when:
@@ -1589,6 +1608,8 @@ dispatch:
       zh: 先定清覆盖、接口、依赖、属主、验收、谁集成，再拆
       en: Fix coverage, interfaces, dependencies, ownership, acceptance and the integrator before splitting
     scope: *id002
+    _depends:
+    - units
   persist_split:
     _kind: act
     _when:
@@ -1954,16 +1975,33 @@ gates:
     - vertical_slice
     scope: *id002
   few_milestones:
-    _kind: act
+    _kind: balance
     _when:
-      zh: 你在排路线图
-      en: You lay out a roadmap
-    _goal:
-      zh: 报告点少而准，每一次回来都值得
-      en: Few report points, each worth the return
-    _how:
-      zh: 每个里程碑都必须是你会想亲手看一眼的东西；说不出这句话的点是工作包
-      en: Each milestone must be something you would want to see with your own eyes; a point you cannot say that about is a package
+      zh: 你在排路线图上的报告点
+      en: You lay out the report points on a roadmap
+    _ends:
+    - _name:
+        zh: 太多
+        en: Too many
+      _cost:
+        zh: person_attention：人被反复拉回来，第三次起不再认真看
+        en: 'person_attention: the person is pulled back until they stop looking'
+      _who_pays: person
+    - _name:
+        zh: 太少
+        en: Too few
+      _cost:
+        zh: person_time：方向漂了几个月才发现，前面全返工
+        en: 'person_time: the direction drifts for months and everything before it is redone'
+      _who_pays: person
+    _between:
+      zh: 每个里程碑都是你会想亲手看一眼的东西；说不出这句话的点是工作包
+      en: A milestone is something you would want to see with your own eyes; a point you cannot say that about is a package
+    _pull:
+      zh: 时间最贵，能少就少；但少到没人判断方向就是错的那一头
+      en: Time is the scarcest, so fewer is better, until nobody judges the direction
+    _depends:
+    - units
     scope: *id002
   ship_at_gate:
     _kind: act
@@ -2135,16 +2173,34 @@ degrees:
       en: Defuse it; do not ask merely because the word risk appeared
     scope: *id001
   secrets:
-    _kind: act
+    _kind: balance
     _when:
-      zh: 你要提交一份凭据
+      zh: 你要把一份凭据写进会被提交的地方
       en: You are about to commit a credential
-    _goal:
-      zh: 价格按它现在值多少算
-      en: The price follows what it is worth now
-    _how:
-      zh: 轮换过的、占位的、对方服务器早死的，价格为零；真在用的由人付，先问
-      en: A rotated, placeholder or dead-server one costs nothing; a live one is the person's to pay, so ask
+    _ends:
+    - _name:
+        zh: 按常规拦住
+        en: Stop it
+      _cost:
+        zh: person_time：找密码管理器、跨机器同步的一次绕路
+        en: 'person_time: a detour through a password manager'
+      _who_pays: person
+    - _name:
+        zh: 就此提交
+        en: Commit it
+      _cost:
+        zh: irreversible：凭据进历史，要改写历史、轮换、通知受影响的人
+        en: 'irreversible: it enters history, so rewrite, rotate, notify'
+      _who_pays: person
+    _between:
+      zh: 先看这份凭据现在值多少：已经轮换过、占位用、对方服务器早死的，那一端没有暴露面，价格为零；真在用的，那笔 irreversible 由人付
+      en: 'Price it by what it is worth now: a rotated, placeholder or dead one carries no exposure and costs nothing; a live one is the person''s irreversible cost'
+    _pull:
+      zh: 价格由谁承担决定谁能拍；只有人能付的那一头，你的动作是问
+      en: Who pays decides who chooses; an end only the person can pay for is asked for
+    _depends:
+    - payers
+    - price_changes_are_edits
     scope: *id001
   covered_once:
     _kind: act

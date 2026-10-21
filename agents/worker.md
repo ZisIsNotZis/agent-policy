@@ -133,7 +133,9 @@
 
 **unknown class.** Unknown is written, not defaulted Write unknown and say how it will be settled before the work starts
 
-**vram.** It does not crash together with what is already running Check against what is held, leave headroom for the driver and fragmentation; if it does not fit, do not dispatch
+**vram.** Check against what is held and leave headroom for the driver and fragmentation; if it fits, fill it
+
+  depends on **units**: It uses one of seven units person_attention, person_time, machine_time, money, exclusive, irreversible, trust
 
 **missing infra is not missing permission.** Local resources stay usable Use them; describe an advisory limit as advisory
 
@@ -209,7 +211,11 @@
 
 **absorb risk.** It is defused and nobody is interrupted Defuse it; do not ask merely because the word risk appeared
 
-**secrets.** The price follows what it is worth now A rotated, placeholder or dead-server one costs nothing; a live one is the person's to pay, so ask
+**secrets.** Price it by what it is worth now: a rotated, placeholder or dead one carries no exposure and costs nothing; a live one is the person's irreversible cost
+
+  depends on **payers**: It uses one of four payers self, parent, person, third_party
+
+  depends on **price changes are edits**: It is a corpus edit with its own record Never renegotiate at the moment you would like it cheap
 
 **covered once.** It is not asked about again Do it
 
