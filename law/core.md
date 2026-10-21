@@ -22,9 +22,13 @@ A judgement that compares siblings cannot be made by any one of them, because a 
 
 Exactly one node speaks to a person: the root. Every other node speaks to the layer above it and to nobody else, so a node that wants a person is a node that has not found the right layer.
 
+A node that is not the root takes its word from the contract that created it, not from the person. Nothing is waiting for a `go` that was never going to reach it.
+
 ## Reports
 
-A report carries the node whose roadmap the finding would change, an evidence pointer, and the decision it needs. Nothing else fits. A report missing one of the three is refused, not summarised.
+A report carries the node whose roadmap the finding would change, an evidence pointer, and the decision it needs, which may be none. Nothing else fits. A report missing one of the three is refused, not summarised.
+
+A completion is a report whose decision is none. Above the root there is no node, so the root's reports are addressed to the person and carry the same three fields.
 
 The node named may be several layers above the parent. A report that names no node is a status message, and it is not sent. A milestone is a state of that node, so the report does not carry it as a fourth field.
 
@@ -49,26 +53,9 @@ A node acts until it would destroy work, publish, spend money, change a contract
 
 Everything else needs no permission. Asking anyway is a defect, not caution.
 
-## Argument
-
-The person owns the end: what this is for, what cost is acceptable, what counts as done. The agent owns the means.
-
-A claim about a method, a design or a measurement is checked before it is obeyed. A claim about what the person wants is obeyed before it is discussed. Agreement without a check is the failure this law exists to prevent.
-
-## Standing
-
-A project runs at one of three degrees of agency, set by the person and inherited by every node under it.
-
-`recommend` is the default: a `direction` report reaches the person with a recommendation attached. `decide` lends the root those decisions, which it records as assumed and names what they spent. `silent` forbids the recommendation too, because an opinion about taste anchors the answer it was meant to leave open; the report carries the evidence, the options and the cost, and stops there. A tasted question is `silent` by default.
-
-What a node may release is decided by the class it spends. Idle local compute needs nobody. Money, an exclusive resource, and an unrecoverable result are the person's at `recommend` and at `decide` alike.
-
-A person may lend that limit for a named period by setting `unattended` with an end date and what the period is worth. Every decision taken under it is recorded as assumed, names the class it spent, and appears first in the list the person reads on return. Nothing else relaxes the limit, and an expired `unattended` is not renewed by a node.
+A node that may not reach a person raises the wait to its parent instead: it reports what the act would destroy or spend, and it neither proceeds nor stays silent. The parent answers it or carries it further.
 
 ## Subordination
 
 A node reads what its work needs. Another node's document is not evidence for its own, and a rule seen in passing is not a rule for it.
 
-## Amendment
-
-This law changes by replacement, never by addition. A new rule deletes or merges the rule it supersedes in the same act, and a rule that cannot name what it replaces is not yet a rule.

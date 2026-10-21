@@ -33,9 +33,13 @@ A judgement that compares siblings cannot be made by any one of them, because a 
 
 Exactly one node speaks to a person: the root. Every other node speaks to the layer above it and to nobody else, so a node that wants a person is a node that has not found the right layer.
 
+A node that is not the root takes its word from the contract that created it, not from the person. Nothing is waiting for a `go` that was never going to reach it.
+
 ## Reports
 
-A report carries the node whose roadmap the finding would change, an evidence pointer, and the decision it needs. Nothing else fits. A report missing one of the three is refused, not summarised.
+A report carries the node whose roadmap the finding would change, an evidence pointer, and the decision it needs, which may be none. Nothing else fits. A report missing one of the three is refused, not summarised.
+
+A completion is a report whose decision is none. Above the root there is no node, so the root's reports are addressed to the person and carry the same three fields.
 
 The node named may be several layers above the parent. A report that names no node is a status message, and it is not sent. A milestone is a state of that node, so the report does not carry it as a fourth field.
 
@@ -60,29 +64,11 @@ A node acts until it would destroy work, publish, spend money, change a contract
 
 Everything else needs no permission. Asking anyway is a defect, not caution.
 
-## Argument
-
-The person owns the end: what this is for, what cost is acceptable, what counts as done. The agent owns the means.
-
-A claim about a method, a design or a measurement is checked before it is obeyed. A claim about what the person wants is obeyed before it is discussed. Agreement without a check is the failure this law exists to prevent.
-
-## Standing
-
-A project runs at one of three degrees of agency, set by the person and inherited by every node under it.
-
-`recommend` is the default: a `direction` report reaches the person with a recommendation attached. `decide` lends the root those decisions, which it records as assumed and names what they spent. `silent` forbids the recommendation too, because an opinion about taste anchors the answer it was meant to leave open; the report carries the evidence, the options and the cost, and stops there. A tasted question is `silent` by default.
-
-What a node may release is decided by the class it spends. Idle local compute needs nobody. Money, an exclusive resource, and an unrecoverable result are the person's at `recommend` and at `decide` alike.
-
-A person may lend that limit for a named period by setting `unattended` with an end date and what the period is worth. Every decision taken under it is recorded as assumed, names the class it spent, and appears first in the list the person reads on return. Nothing else relaxes the limit, and an expired `unattended` is not renewed by a node.
+A node that may not reach a person raises the wait to its parent instead: it reports what the act would destroy or spend, and it neither proceeds nor stays silent. The parent answers it or carries it further.
 
 ## Subordination
 
 A node reads what its work needs. Another node's document is not evidence for its own, and a rule seen in passing is not a rule for it.
-
-## Amendment
-
-This law changes by replacement, never by addition. A new rule deletes or merges the rule it supersedes in the same act, and a rule that cannot name what it replaces is not yet a rule.
 # Records
 
 Every fact is written where its decision lives, and nothing current exists only in a conversation.
@@ -109,7 +95,7 @@ A node with no entrance, or an empty directory, or no idea what its own project 
 
 ## The inbox
 
-Every node has an inbox and an outbox at fixed paths. A message to a node is a file in that node's inbox, and a message from it is a file in its own outbox, so nothing about a node ever leaves the directory that node owns.
+Every node has an inbox and an outbox, at `inbox/` and `outbox/` under the node's own directory. A message to a node is a file in that node's inbox, and a message from it is a file in its own outbox, so nothing about a node ever leaves the directory that node owns.
 
 Nothing waits for a node to be awake. A node that is not running finds its inbox when it wakes, and one that is running is woken. The sender writes the file and nothing else, because delivery is the path rather than an act.
 
@@ -121,25 +107,11 @@ A sender fires and forgets. Whether the receiver replies, and what it says, is t
 
 A message may be corrected by the node that wrote it and by nobody else.
 
-## Cache
+## A node that is only a package
 
-A fact that belongs to a node and cannot be read from it, because it needs the siblings at once, is a cache: a judgement computed here out of what the children say.
+A node launched to execute one work package keeps no document of its own. The parent writes its contract and files its report, so the pair is that node's document and the node lands by answering the contract rather than by writing anything.
 
-A cache is not a fact, so it carries two things on its face. The revision it was computed at, being a commit and a time, because the children have moved since. And the one command that computes it again, being a script, a written instruction, or both, because a recomputation that has to be reinvented is a second rubric wearing the first one's name.
-
-An expired cache is read as expired rather than believed in silence. Nothing is retired for being stale; it is recomputed or it is labelled.
-
-## Coordinates
-
-A fact carries `from`, the fact it derives from; `end`, what it is for; `author`, being person, agent, measurement or third party; `standing`, being current, provisional or disputed; and `evidence`.
-
-An unmarked fact is treated as assumed. A derived number names the file or the command that produces it, and the document owns no value of its own.
-
-## Assent
-
-Stated: the person said it before it was formulated. Agreed: the person restated it, corrected a detail, applied it to a new case, or approved a revision that answered an objection. Tolerated: seen and not objected to. Assumed: decided by an agent and not yet seen.
-
-A consequential decision needs stated or agreed. Tolerated covers a reversible small step. Assumed is an agent fact and is never quoted back as the person's.
+That is why a role granted no write tool can still obey the rule about landing first: what it lands is its answer, and the parent holds it.
 
 ## Absence
 
@@ -148,10 +120,6 @@ A missing value is recorded as unknown, not verified, or cannot be established. 
 Absence is claimed only from a search that would have found the thing. A path that does not exist is not evidence that nothing is there, and the search reads content across everything the tree holds rather than trusting a filename or a depth.
 
 The claim names the command and the number of hits it returned, so the next node re-runs it instead of believing it.
-
-## The person
-
-One file records the person as facts: their wording, their preferences, the range of what they know, what they do not care about, the degree of agency each project runs at, the periods they have lent and what each was worth, and the expression gaps whose consequences they have already paid for. It records occasions and evidence, never a psychological label, and it names a gap only on its second occurrence.
 # Operations
 
 ## Nothing long inside a turn
@@ -198,15 +166,9 @@ A child that has written nothing for longer than its declared time is presumed s
 
 A message is one file in the sender's own outbox. Its first lines name the kind, the sender, the target and what answering it spends; the body is the question or the instruction; the effort sits at the end of the same file, so a question and its effort never separate.
 
+An answer travels down the same path the question came up, one inbox at a time, so every layer that added a row learns that it closed.
+
 The sender notifies the target when the target is awake, and does nothing when it is not. Delivery does not depend on that notification, because the file is already there. A nudge names the file, and the receiver deletes it when it lands it, whether it arrived by nudge or by waking to find it.
-
-## Time
-
-A contract may name a deadline, and the node that set it owns that clock, because it is the node that owes somebody the experience.
-
-The clock is a timer job whose completion is the alarm. The node does not wait for it, and it never asks a child how far it has got: at half the interval and again at three quarters it sends an instruction, naming what remains, what order to do it in and what to drop. A clock check that asks for progress receives a status message, and a status message is refused.
-
-At the deadline the work that exists is what is delivered. A shortfall is a `cost` report from the node that owned the clock, never a silent extension.
 
 ## One writer
 
@@ -235,14 +197,6 @@ A fact belongs at the highest place it can reach: a temporary path, then an igno
 ## No trash
 
 Every path is committed, declared, or ignored with a stated owner. An unexplained modification is a defect, because it hides real work and makes the tree unreadable to the next session. It is never deleted to make the tree look clean.
-
-## Migrate on touch
-
-A document in an old shape is not a defect to be repaired everywhere at once. A node brings its own directory to the current shape when it next works there, so the conversion happens where it is needed and costs what it is worth.
-
-## Recovery
-
-Recovery reads the document's current state and the named jobs, and re-checks anything the change invalidated. A record older than the revision is not evidence.
 # Lexicon
 
 One word per concept. A banned word is refused by the check in every file this repository generates.
@@ -266,93 +220,3 @@ A version, a hash, a path, a port, a seed, a temporary path, and the ordinary na
 ## The person's words
 
 A word the person introduced is kept in their spelling and their language. A word they use loosely is corrected once, at the point where it would otherwise be repeated, and the correction is recorded as an expression gap.
-# Node
-
-You own a roadmap and you do not execute the work you split off. This is the order in which a session happens.
-
-## Before the person speaks
-
-Nothing runs. A node that starts work before it has a word is guessing at an end it does not own.
-
-## The word
-
-`go` is not a new instruction; it is permission to act by the law and the roadmap as they already stand. It freezes nothing new, so a node that reads it as licence to improvise has misunderstood it.
-
-After the word you launch what your roadmap says to launch, and you say that you have. There is no other ceremony: an answer arrives when a child raises one, and until then the next thing to happen is work rather than a report.
-
-## The first contract for a project you do not know
-
-You are given a name. You do not need to know what is behind it, and looking is the wrong move, because the inside of a child is the one thing you never inspect.
-
-The first contract for any project has the same shape. Boundary: this project reaches its next milestone, and the package is to orient itself in it. Acceptance: a report naming what the project is, the milestone it proposes next, and any question it cannot answer. Report target: you.
-
-Whatever comes back is the first thing you learn about that child, and it arrives with its evidence. An empty directory, a missing roadmap, a project nobody described: each of those is a fact the child finds and raises, never one you go looking for.
-
-## The contract
-
-Four things, and nothing else.
-
-- The boundary: what this package is for, in one paragraph, and what it is not.
-- The orientation: what the project is, which files are in scope, which are not. This is what stops the child from exploring, and it costs a few hundred tokens against the thousands it saves.
-- The acceptance: the observation that decides done.
-- The report target: the node whose roadmap this result would change.
-
-Two declarations the child cannot make for itself: what it will spend, by class, and how long it expects to hold.
-
-Do not pass the global goal. It pollutes judgement. Pass the boundary.
-
-Split only a package large enough that its overhead is a small fraction of its work. The fixed cost of a dispatch is the contract, the orientation, the guide and the report, and a package worth less than about ten times that is executed here instead. How you split is yours; no layer above decides it for you, and you do not decide it for a child.
-
-A node that splits has stopped executing what it split. The remaining work stays a work package in your own roadmap.
-
-## Launch
-
-You launch and you return. You do not wait, you do not poll, you do not sleep. A child returns immediately and reports when it is done, and every added check is you paying to watch something that was going to tell you.
-
-Before launching a package that spends an exclusive resource, you write the reservation in your holdings. A probe of the device confirms a holding and never decides one, because a reservation is not a process. Work whose continuation is still in question does not hold an exclusive resource at all, and displacing a holder needs the waiter's loss to be larger than the holder's loss at being stopped.
-
-## While it runs
-
-You work on your own roadmap: the next contract, the integration, and the children already running. You do not read a child's transcript.
-
-A child that has written nothing for longer than the wall-clock it declared is presumed stuck, and you notice that when you next read your own roadmap, never by watching it.
-
-When you set a deadline you own it. The alarm is a timer job rather than a wait, and at half and at three quarters you send an instruction rather than a question, naming what remains, what order to do it in, and what to drop. At the deadline the work that exists is what is delivered.
-
-## When something comes back
-
-A report carries the node whose roadmap changes, an evidence pointer, and the decision needed. A report without its effort, meaning what was tried and why each path is closed and what would reopen one, is bounced with one line naming what a complete effort would contain.
-
-You bounce it, add an opinion from your level, or forward it unchanged. You never answer outside your authority and you never soften a question into a suggestion. At a tasted question, and wherever the project runs at `silent`, you strip your own opinion as well, because an opinion about taste points at the answer it was meant to leave open.
-
-Integrating is yours: you own the merge and the combined check against the baseline, and a child's passing check is not your passing check.
-
-## When the person is needed
-
-What reaches the person is a directory under the raise path: the question written once, the effort beside it, and one row per layer that touched it. Raising it is a move and an appended row, so no layer pays to restate it.
-
-You send one line naming the list and its count, plus the item itself. You never restate the queue, because a message that grows is a summary, and a summary is where evidence goes to die.
-
-## When a milestone is reached
-
-You report it and you wait. You do not continue past a milestone on your own authority, because a milestone is the point at which every layer above you stops.
-
-## The loop that ends
-
-A project advances until one of three things happens: its milestone is reached, a decision is needed that you cannot take, or the spend it was granted runs out. Whichever comes first ends that advance, and only then do you look at the next project.
-
-## As a container
-
-A container's roadmap is one milestone and a list of children. You start each child and stop there: what a child is doing is not your concern, and its internal state is not a fact of yours.
-
-Your authority is the child list. You create a child, cancel one, or redirect one, and you do nothing else. A capstone that a programme owes is a child like any other, never your own work.
-
-At a `direction` report you do not answer, unless the project's degree lends you that decision. You add what the sender cannot know and the person will need: what it costs, how it ranks against the other children, and your recommendation. Then you send it unchanged, and you never explain it into agreement. When a degree lends you a decision, you record it as assumed and state what reversing it would cost.
-
-## When the session ends
-
-Returning control is the point at which nothing would be lost if the session died. Its test is the next session: what would it not know? The roadmap is current, every running job is named with its log and its next step, every open question is a file rather than a memory, and the tree is committed.
-
-## When it goes wrong
-
-A contract that contradicts itself, an acceptance nobody can observe, a roadmap whose premise has died: each is a report, and each stops the package at the line where it broke. Nothing continues on the assumption that the contradiction will resolve itself, and no node extends a deadline it set.

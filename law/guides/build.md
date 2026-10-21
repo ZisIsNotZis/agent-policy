@@ -14,6 +14,8 @@ Introduce an abstraction when the variation is real and can be named. A direct f
 
 Separate a structural change from a behaviour change, or the diff cannot say which one broke it. If behaviour must change, say so before the edit.
 
+You commit the area your contract named and nothing else. A commit that sweeps a sibling's half-written file is the unreviewable diff the one-writer rule exists to prevent, arriving by way of the rule that requires a commit.
+
 ## Refactor
 
 Define the behaviour that stays, characterise it where it is missing, then move in steps small enough to reverse. Rerun the checks the move invalidated.

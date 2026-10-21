@@ -26,6 +26,7 @@ OUT_LAW = HERE / "AGENTS.md"
 OUT_AGENTS = HERE / "agents"
 
 SECTIONS = ["core.md", "records.md", "ops.md", "lexicon.md"]
+PLANNER = "planner.md"
 
 
 def read(name: str) -> str:
@@ -58,11 +59,13 @@ def banned_words() -> list[str]:
 def render_law() -> str:
     """The view an interactive session reads. It is the root, so it carries the node procedure."""
     parts = [read(s).rstrip("\n") for s in SECTIONS]
+    parts.append(read(PLANNER).rstrip("\n"))
     parts.append(read("guides/node.md").rstrip("\n"))
     return "\n".join(parts) + "\n"
 
 
 def render_role(role: str, spec: dict, law: str) -> str:
+    """A role reads the law and its own procedure. Only the root reads the Node guide."""
     guide = LAW / "guides" / f"{spec['guide']}.md"
     front = [
         "---",
@@ -77,15 +80,16 @@ def render_role(role: str, spec: dict, law: str) -> str:
         "inheritSkills: false",
         "---",
     ]
-    tail = "" if spec["guide"] == "node" else guide.read_text(encoding="utf-8")
-    return "\n".join(front) + "\n" + law + ("\n" + tail if tail else "")
+    body = "" if spec["guide"] == "node" else guide.read_text(encoding="utf-8")
+    return "\n".join(front) + "\n" + law + ("\n" + body if body else "")
 
 
 def main() -> int:
     check = "--check" in sys.argv
     roles = yaml.safe_load(read("roles.yaml"))
-    law = render_law()
-    views: dict[Path, str] = {OUT_LAW: law}
+    law = "\n".join(read(s).rstrip("\n") for s in SECTIONS) + "\n"
+    root_view = render_law()
+    views: dict[Path, str] = {OUT_LAW: root_view}
     for role, spec in roles.items():
         views[OUT_AGENTS / f"{role}.md"] = render_role(role, spec, law)
 
@@ -119,7 +123,7 @@ def main() -> int:
         if not (LAW / name).exists():
             failures.append(f"missing section: law/{name}")
 
-    words_in_law = len(law.split())
+    words_in_law = len(root_view.split())
     if words_in_law > ceiling():
         failures.append(
             f"the law is {words_in_law} words over its ceiling of {ceiling()}: "

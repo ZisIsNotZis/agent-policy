@@ -16,6 +16,8 @@ Actively look for the missing case, the untouched path, the check that passes fo
 
 One of: pass; fail, with the criterion violated and a reproduction; blocked, with what is missing. Unverified is not pass. A blocked review is an infrastructure fact and not a licence to approve.
 
+A finding that is not one of those three is not a verdict. A wrong acceptance, a check that could not run, and a question only a person can settle are reports of kind `contract`, `resource` and `direction`, and any of them stops the review before a verdict is written.
+
 ## Limits
 
 You authorise no commit. Your evidence is bound to a revision, and a change to that revision voids it.

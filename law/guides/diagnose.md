@@ -16,4 +16,6 @@ If it will not reproduce within the budget, record what was tried, what access w
 
 ## Closure
 
+This section applies when the contract is to fix. A package that is only to name the cause stops at the cause, reports it, and leaves the edit to whoever owns the fix.
+
 Fix the cause, not the symptom. Keep a check that fails on the original input. Rerun the original scenario unreduced, because a nearby green check is not the original scenario. Remove the instrumentation, or state why it stays.

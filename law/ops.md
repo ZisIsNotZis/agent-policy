@@ -44,15 +44,9 @@ A child that has written nothing for longer than its declared time is presumed s
 
 A message is one file in the sender's own outbox. Its first lines name the kind, the sender, the target and what answering it spends; the body is the question or the instruction; the effort sits at the end of the same file, so a question and its effort never separate.
 
+An answer travels down the same path the question came up, one inbox at a time, so every layer that added a row learns that it closed.
+
 The sender notifies the target when the target is awake, and does nothing when it is not. Delivery does not depend on that notification, because the file is already there. A nudge names the file, and the receiver deletes it when it lands it, whether it arrived by nudge or by waking to find it.
-
-## Time
-
-A contract may name a deadline, and the node that set it owns that clock, because it is the node that owes somebody the experience.
-
-The clock is a timer job whose completion is the alarm. The node does not wait for it, and it never asks a child how far it has got: at half the interval and again at three quarters it sends an instruction, naming what remains, what order to do it in and what to drop. A clock check that asks for progress receives a status message, and a status message is refused.
-
-At the deadline the work that exists is what is delivered. A shortfall is a `cost` report from the node that owned the clock, never a silent extension.
 
 ## One writer
 
@@ -82,10 +76,3 @@ A fact belongs at the highest place it can reach: a temporary path, then an igno
 
 Every path is committed, declared, or ignored with a stated owner. An unexplained modification is a defect, because it hides real work and makes the tree unreadable to the next session. It is never deleted to make the tree look clean.
 
-## Migrate on touch
-
-A document in an old shape is not a defect to be repaired everywhere at once. A node brings its own directory to the current shape when it next works there, so the conversion happens where it is needed and costs what it is worth.
-
-## Recovery
-
-Recovery reads the document's current state and the named jobs, and re-checks anything the change invalidated. A record older than the revision is not evidence.

@@ -24,7 +24,7 @@ A node with no entrance, or an empty directory, or no idea what its own project 
 
 ## The inbox
 
-Every node has an inbox and an outbox at fixed paths. A message to a node is a file in that node's inbox, and a message from it is a file in its own outbox, so nothing about a node ever leaves the directory that node owns.
+Every node has an inbox and an outbox, at `inbox/` and `outbox/` under the node's own directory. A message to a node is a file in that node's inbox, and a message from it is a file in its own outbox, so nothing about a node ever leaves the directory that node owns.
 
 Nothing waits for a node to be awake. A node that is not running finds its inbox when it wakes, and one that is running is woken. The sender writes the file and nothing else, because delivery is the path rather than an act.
 
@@ -36,25 +36,11 @@ A sender fires and forgets. Whether the receiver replies, and what it says, is t
 
 A message may be corrected by the node that wrote it and by nobody else.
 
-## Cache
+## A node that is only a package
 
-A fact that belongs to a node and cannot be read from it, because it needs the siblings at once, is a cache: a judgement computed here out of what the children say.
+A node launched to execute one work package keeps no document of its own. The parent writes its contract and files its report, so the pair is that node's document and the node lands by answering the contract rather than by writing anything.
 
-A cache is not a fact, so it carries two things on its face. The revision it was computed at, being a commit and a time, because the children have moved since. And the one command that computes it again, being a script, a written instruction, or both, because a recomputation that has to be reinvented is a second rubric wearing the first one's name.
-
-An expired cache is read as expired rather than believed in silence. Nothing is retired for being stale; it is recomputed or it is labelled.
-
-## Coordinates
-
-A fact carries `from`, the fact it derives from; `end`, what it is for; `author`, being person, agent, measurement or third party; `standing`, being current, provisional or disputed; and `evidence`.
-
-An unmarked fact is treated as assumed. A derived number names the file or the command that produces it, and the document owns no value of its own.
-
-## Assent
-
-Stated: the person said it before it was formulated. Agreed: the person restated it, corrected a detail, applied it to a new case, or approved a revision that answered an objection. Tolerated: seen and not objected to. Assumed: decided by an agent and not yet seen.
-
-A consequential decision needs stated or agreed. Tolerated covers a reversible small step. Assumed is an agent fact and is never quoted back as the person's.
+That is why a role granted no write tool can still obey the rule about landing first: what it lands is its answer, and the parent holds it.
 
 ## Absence
 
@@ -64,6 +50,3 @@ Absence is claimed only from a search that would have found the thing. A path th
 
 The claim names the command and the number of hits it returned, so the next node re-runs it instead of believing it.
 
-## The person
-
-One file records the person as facts: their wording, their preferences, the range of what they know, what they do not care about, the degree of agency each project runs at, the periods they have lent and what each was worth, and the expression gaps whose consequences they have already paid for. It records occasions and evidence, never a psychological label, and it names a gap only on its second occurrence.
