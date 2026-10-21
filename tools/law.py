@@ -15,6 +15,7 @@ Checks, run with the render and never apart from it:
 """
 from __future__ import annotations
 
+import re
 import sys
 from pathlib import Path
 
@@ -41,7 +42,17 @@ def prose(text: str) -> str:
 
 
 def ceiling() -> int:
-    return int(read("ceiling").strip())
+    """The number the law may not exceed: obligations, because words are explanation."""
+    for line in read("ceiling").splitlines():
+        if line.startswith("obligations"):
+            return int(line.split()[1])
+    raise SystemExit("law/ceiling needs an `obligations N` line")
+
+
+def obligations(text: str) -> int:
+    """Sentences that oblige an act. A word count cannot tell a simplification from a growth."""
+    return sum(1 for s in re.split(r"(?<=[.;:])\s+", text)
+               if re.search(r"\b(must|may|never|nobody|only|cannot)\b", s))
 
 
 def banned_words() -> list[str]:
@@ -127,16 +138,19 @@ def main() -> int:
             failures.append(f"missing section: law/{name}")
 
     words_in_law = len(root_view.split())
-    if words_in_law > ceiling():
+    oblig = obligations(root_view)
+    if oblig > ceiling():
         failures.append(
-            f"the law is {words_in_law} words over its ceiling of {ceiling()}: "
-            "raise law/ceiling in the same commit, or delete what the new rule replaces")
+            f"the law states {oblig} obligations against a ceiling of {ceiling()}: every new "
+            "obligation is a new way to be wrong, so delete the one it replaces, or raise "
+            "law/ceiling in this commit and say what it buys")
     chars = len(law)
     if failures:
         print("\n".join(f"FAIL {f}" for f in failures))
         return 1
     print(f"ok: {len(views)} views, {words_in_law} words, {chars} chars, "
-          f"{len(words)} banned words, {len(roles)} roles")
+          f"{len(words)} banned words, {len(roles)} roles, "
+          f"{obligations(root_view)} obligations")
     return 0
 
 

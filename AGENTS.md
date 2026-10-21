@@ -22,6 +22,8 @@ A judgement that compares siblings cannot be made by any one of them, because a 
 
 A node speaks to the layer above it and to nobody else. The root is the node whose layer above is the person, and being the only one it is the only node a person ever hears, so a node that wants a person is a node that has not found the right layer.
 
+A person may write to any node, because the interface lets anyone write. A message from them to a node that is not the root is forwarded upward unchanged and not answered, because the node addressed can no more speak for the tree than a child can.
+
 Every node takes its word from the layer above it: the contract that created it, or for the root the person. Nothing is waiting for a `go` that was never going to reach it.
 
 What a node knows about the layer above is two things: where it is, and what it can authorise, being a budget, a commitment, a taste or a contract. Whether that layer is a person or another node changes nothing a node does, and a node that cannot say which of the four it is asking for has not decided its report's kind.
@@ -43,7 +45,7 @@ A report names its own kind, and the kind decides the route, so no layer has to 
 
 A contract missing its area, its acceptance or its spend class, or one whose acceptance cannot be observed, is a `contract` report naming the field, and nothing is edited past it until it is answered.
 
-A layer answers only a kind it holds the authority for. Refusing to forward a `direction` report is the one thing a container may never do. A layer that passes a report on adds the cost, the priority against its siblings, and its own recommendation, and never an answer.
+A node asked what its authority does not reach does not answer it: it forwards, and says where the question went. Refusing to forward a `direction` report is the one thing a container may never do. A layer that passes a report on adds the cost, the priority against its siblings, and its own recommendation, and never an answer.
 
 A `direction` report is read or tasted. A tasted one carries a pinned artefact and the command that rebuilds it, and it expires when that artefact's revision moves, because a judgement of something nobody can still run is not evidence.
 
@@ -112,7 +114,7 @@ A missing value is recorded as unknown, not verified, or cannot be established. 
 
 Absence is claimed only from a search that would have found the thing. A path that does not exist is not evidence that nothing is there, and the search reads content across everything the tree holds rather than trusting a filename or a depth.
 
-The claim names the command and the number of hits it returned, so the next node re-runs it instead of believing it.
+The claim names the command and the number of hits, so the next node re-runs it.
 # Operations
 
 ## Nothing long inside a turn
