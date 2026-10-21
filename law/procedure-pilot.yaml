@@ -1,0 +1,84 @@
+# The procedure, as data, bilingual per field: en for the agent, zh for the person reviewing it.
+procedure:
+  manager:
+    _test:
+      - _see: {en: "inbox/ holds a file", zh: "inbox/ 里有文件"}
+        _state: receive
+      - _see: {en: "a package came back with no verdict yet", zh: "有包回来、还没有裁决"}
+        _state: review
+      - _see: {en: "a verdict came back and is not acted on", zh: "有裁决回来、还没处置"}
+        _state: act
+      - _see: {en: "a package's dependencies are met and it is not dispatched", zh: "有工作包依赖满足、还没派"}
+        _state: dispatch
+    _states:
+      receive:
+        _name: {en: Inbox, zh: 收件箱}
+        _steps: [one_direction, file_shape, sender_decides_nothing, person_may_write_anywhere, delete_on_read]
+        _artefact: message_file
+        _criterion:
+          _see: {en: "inbox/ is empty and every message left a trace", zh: "inbox/ 空了，且每条消息都留了痕"}
+          _by: "ls inbox/ | wc -l"
+          _expect: "0"
+      review:
+        _name: {en: Send for review, zh: 送审}
+        _steps: [report_fields, effort_required, reviewer_contract, judgement_only]
+        _artefact: reviewer_contract
+        _criterion:
+          _see: {en: "every package that came back has a review in flight, nine fields complete", zh: "每个回来的包都有一份进行中的审查，九样齐全"}
+          _by: "grep -l '^rev:' */review.md | wc -l"
+          _expect: "same as the number of packages that came back"
+      act:
+        _name: {en: Act on the verdict, zh: 处置}
+        _steps: [verdicts, not_a_verdict, integration, route_failure]
+        _criterion:
+          _see: {en: "every verdict became a merge, a re-dispatch or an escalation", zh: "每个裁决都变成了合并、重派或上报"}
+          _by: "grep -c '^verdict:' */verdicts.tsv"
+          _expect: "no row without an outcome"
+      dispatch:
+        _name: {en: Dispatch, zh: 派活}
+        _steps: [take_next, kind_test, contract_fields, contract_identity, self_execute]
+        _artefact: contract
+        _criterion:
+          _see: {en: "every running child has a six-field contract, an area, a wall-clock and a grant", zh: "每个在跑的孩子都有六项齐全的契约、可写区域、墙钟、分出来的授权"}
+          _by: "ls */contract.md | wc -l"
+          _expect: "same as the number of running children"
+blocks:
+  message_file:
+    _text:
+      en: |
+        kind:    resource | cost | direction | contract
+        from:    the node that wrote it
+        spend:   taste | tokens | money | gpu
+        id:      the message it answers
+
+        body: the question or the instruction.
+      zh: |
+        kind:    resource | cost | direction | contract
+        from:    写它的那个节点
+        spend:   taste | tokens | money | gpu
+        id:      它答复的那条消息
+
+        正文：问题或指令。
+  contract:
+    _text:
+      en: |
+        goal:       one paragraph, the thing this package must make true
+        scope:      what is in it; and what is explicitly not
+        accept:     the observation that ends it, with the command that produces it
+        paths:      which files it may write
+        spend:      one of the five classes + wall-clock
+        stop:       when it stops rather than keeps trying
+      zh: |
+        goal:       一段话，这个包要变成真的那件事
+        scope:      在里面的；以及明确不在里面的
+        accept:     什么观察算做完，加上产生那个观察的命令
+        paths:      它可以写哪些文件
+        spend:      五个消耗类之一 + wall-clock
+        stop:       什么情况它停而不是继续试
+  reviewer_contract:
+    _text:
+      en: |
+        rev / accept / change / ran / judge / blocking / budget / escalate / repair
+      zh: |
+        rev 被审的修订 / accept 完整验收 / change 确切变更集 / ran 已跑的机械结果
+        judge 只剩哪些要判断 / blocking 什么算阻塞 / budget 上限 / escalate 往哪升级 / repair 能不能修

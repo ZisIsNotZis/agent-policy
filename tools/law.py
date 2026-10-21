@@ -80,6 +80,17 @@ def resolve(key: str, nodes: dict) -> list[str]:
     return out
 
 
+def rule_text(node: dict, lang: str = "en") -> str:
+    """A rule's text: the goal, then the how. _text is gone and is never a fallback."""
+    if "_goal" not in node:
+        return node["_text"]
+    goal = node["_goal"].get(lang) or node["_goal"]["en"]
+    how = node.get("_how")
+    if not how:
+        return goal
+    return goal + " " + (how.get(lang) or how["en"])
+
+
 def render(role: str) -> str:
     flat = {k: v for b in corpus().values() for k, v in b.items()}
     drawn: set[str] = set()
@@ -91,11 +102,11 @@ def render(role: str) -> str:
             continue
         out.append(f"\n## {TITLES.get(name, name)}\n")
         for key, node in rows:
-            out.append(f"**{key.replace('_', ' ')}.** {node['_text'].strip()}\n")
+            out.append(f"**{key.replace('_', ' ')}.** {rule_text(node).strip()}\n")
             for dep in resolve(key, flat):
                 if dep not in drawn:
                     drawn.add(dep)
-                    out.append(f"  depends on **{dep.replace('_', ' ')}**: {flat[dep]['_text'].strip()}\n")
+                    out.append(f"  depends on **{dep.replace('_', ' ')}**: {rule_text(flat[dep]).strip()}\n")
     return "\n".join(out)
 
 
@@ -113,7 +124,16 @@ def main() -> int:
                 unknown = [r for r in scope if r not in ROLES]
                 if unknown:
                     failures.append(f"{name}.{key} names unknown roles {unknown}")
-            text += node["_text"] + "\n"
+            text += rule_text(node) + "\n"
+            if "_goal" in node:
+                for fld in ("_when", "_goal"):
+                    if fld not in node:
+                        failures.append(f"{name}.{key} has no {fld}")
+                if node.get("_kind", "act") == "act" and "_how" not in node:
+                    failures.append(f"{name}.{key} is an act with no _how")
+                for fld in ("_when", "_goal", "_how"):
+                    if fld in node and isinstance(node[fld], dict) and "zh" not in node[fld]:
+                        failures.append(f"{name}.{key} {fld} has no zh")
 
     banned = [w for w in banned_words() if w and re.search(rf"\b{re.escape(w)}\b", text, re.I)]
     for w in banned:

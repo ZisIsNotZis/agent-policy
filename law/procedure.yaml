@@ -1,0 +1,351 @@
+procedure:
+  manager:
+    _test:
+    - _see:
+        en: inbox/ holds a file
+        zh: inbox/ 里有文件
+      _state: receive
+    - _see:
+        en: a package came back with no verdict yet
+        zh: 有包回来、还没有裁决
+      _state: review
+    - _see:
+        en: a verdict came back and is not acted on
+        zh: 有裁决回来、还没处置
+      _state: act
+    - _see:
+        en: a target is still aligning
+        zh: 有目标还在对齐中
+      _state: agree
+    - _see:
+        en: a milestone is reached and unreported
+        zh: 有里程碑到点、还没报
+      _state: deliver
+    - _see:
+        en: a package's dependencies are met and it is not dispatched
+        zh: 有工作包依赖都满足、还没派
+      _state: dispatch
+    - _see:
+        en: an exclusive-resource request is unanswered
+        zh: 有独占资源的请求没答
+      _state: resource
+    - _see:
+        en: a package is running and nothing above holds
+        zh: 有包在跑，上面都不成立
+      _state: wait
+    - _see:
+        en: nothing above holds
+        zh: 上面全不成立
+      _state: close
+    _states:
+      receive:
+        _name:
+          en: Inbox
+          zh: 收件箱
+        _steps:
+        - one_direction
+        - file_shape
+        - sender_decides_nothing
+        - person_may_write_anywhere
+        - no_blind_agreement
+        - discussion_record
+        - delete_on_read
+        _artefact: message_file
+        _criterion:
+          _see:
+            en: inbox/ is empty and every message left a trace
+            zh: inbox/ 空了，每条消息都在文档、路线图、work/ 或父节点收件箱里留了痕
+          _by: find inbox -type f | wc -l
+          _expect: '0'
+      review:
+        _name:
+          en: Send for review
+          zh: 送审
+        _steps:
+        - report_fields
+        - effort_required
+        - manager_does_not_judge
+        - fresh
+        - reviewer_contract
+        - judgement_only
+        - no_commit
+        - bind_to_revision
+        _artefact: review_contract
+        _criterion:
+          _see:
+            en: every package that came back has a review in flight, nine fields complete
+            zh: 每个回来的包都有一份进行中的审查，九样齐全
+          _by: grep -L '^rev:' */review-contract.md | wc -l
+          _expect: '0'
+      act:
+        _name:
+          en: Act on the verdict
+          zh: 处置
+        _steps:
+        - verdicts
+        - not_a_verdict
+        - integration
+        - route_failure
+        _criterion:
+          _see:
+            en: every verdict became a merge, a re-dispatch or an escalation
+            zh: 每个裁决都变成了合并、重派或上报之一
+          _by: grep -c '^outcome:' */verdicts.tsv
+          _expect: equal to the number of verdict rows
+      agree:
+        _name:
+          en: Reach agreement
+          zh: 谈协议
+        _steps:
+        - agreement_state
+        - no_agreement_no_work
+        - reach_agreement
+        - auto_advance
+        - block_timeout
+        _criterion:
+          _see:
+            en: every target carries a state, and none is being worked while aligning
+            zh: 每个目标都写着状态，且没有工作在“对齐中”的目标下面跑
+          _by: 'grep -c ''agreement: aligning'' targets.tsv'
+          _expect: no dispatch carries an aligning target
+      deliver:
+        _name:
+          en: Deliver a milestone
+          zh: 交付
+        _steps:
+        - milestone_is_a_gate
+        - vertical_slice
+        - few_milestones
+        - protect_willingness
+        - multimodal
+        - ship_at_gate
+        - gates_hold
+        - completion_proof
+        _artefact: completion_proof
+        _criterion:
+          _see:
+            en: the delivery carries its five pieces of evidence
+            zh: 交付带着那五样证据
+          _by: grep -c '^command:' delivery.md
+          _expect: '>= 1, and the four other lines present'
+      dispatch:
+        _name:
+          en: Dispatch
+          zh: 派活
+        _steps:
+        - take_next
+        - kind_test
+        - coverage_first
+        - contract_fields
+        - contract_identity
+        - contract_inheritance
+        - pass_boundary
+        - self_execute
+        - say_that_you_started
+        _artefact: contract
+        _criterion:
+          _see:
+            en: every running child has a six-field contract, an area, a wall-clock and a grant
+            zh: 每个在跑的孩子都有六项齐全的契约、可写区域、墙钟、分出来的授权
+          _by: grep -L '^stop:' */contract.md | wc -l
+          _expect: '0'
+      resource:
+        _name:
+          en: Resources
+          zh: 资源
+        _steps:
+        - classes
+        - class_decides
+        - significant_only
+        - grant
+        - vram
+        - preempt
+        - price_clock
+        _artefact: resource_table
+        _criterion:
+          _see:
+            en: every row names a holder, a device and a return time
+            zh: 资源表每行都有持有者、设备、归还时间
+          _by: awk -F'\t' 'NF<4' resources.tsv | wc -l
+          _expect: '0'
+      wait:
+        _name:
+          en: Wait
+          zh: 等
+        _steps:
+        - async_only
+        - no_watching
+        - stuck
+        - stuck_disposal
+        - pause
+        - steer
+        - budget_caps
+        - deadline
+        - no_long_in_turn
+        - no_sleep
+        _criterion:
+          _see:
+            en: every blocking question has a tier, and every stuck child was disposed of
+            zh: 每个在等的问题都有档位记录，每个卡住的孩子都被处置过
+          _by: grep -c '^tier:' waiting.tsv
+          _expect: equal to the number of open questions
+      close:
+        _name:
+          en: Close out
+          zh: 收口
+        _steps:
+        - safe_point
+        - intent_before_act
+        - no_trash
+        - commits
+        - pushes_hereditary
+        - no_remote
+        - wind_down
+        - durability
+        - recovery
+        _artefact: close_commands
+        _criterion:
+          _see:
+            en: three commands clean, roadmap current, every running job named
+            zh: 三条命令干净、路线图当前、每个在跑的活有名有日志
+          _by: sh -c 'git status --short; git branch --show-current'
+          _expect: no unexplained path; integration branch
+blocks:
+  message_file:
+    _text:
+      en: 'kind:    resource | cost | direction | contract
+
+        from:    the node that wrote it
+
+        spend:   taste | tokens | money | gpu
+
+        id:      the message it answers
+
+
+        body: the question or the instruction.
+
+        '
+      zh: 'kind:    resource | cost | direction | contract
+
+        from:    写它的那个节点
+
+        spend:   taste | tokens | money | gpu
+
+        id:      它答复的那条消息
+
+
+        正文：问题或指令。
+
+        '
+  contract:
+    _text:
+      en: 'goal:    one paragraph, the thing this package must make true
+
+        scope:   what is in it; and what is explicitly not
+
+        accept:  the observation that ends it, with the command that produces it
+
+        paths:   which files it may write
+
+        spend:   one of the five classes + wall-clock
+
+        stop:    when it stops rather than keeps trying
+
+        '
+      zh: 'goal:    一段话，这个包要变成真的那件事
+
+        scope:   在里面的；以及明确不在里面的
+
+        accept:  什么观察算做完，加上产生那个观察的命令
+
+        paths:   它可以写哪些文件
+
+        spend:   五个消耗类之一 + wall-clock
+
+        stop:    什么情况它停而不是继续试
+
+        '
+  review_contract:
+    _text:
+      en: 'rev:       the revision under review
+
+        accept:    the full acceptance
+
+        change:    the exact change set and scope
+
+        ran:       mechanical results, each with its command
+
+        judge:     what is left to judgement
+
+        blocking:  what counts as blocking
+
+        budget:    the reviewer''s own cap
+
+        escalate:  where it goes
+
+        repair:    may it repair; default no
+
+        '
+      zh: 'rev:       被审的修订
+
+        accept:    完整验收
+
+        change:    确切变更集与范围
+
+        ran:       已跑过的机械结果，各带命令
+
+        judge:     只剩哪些要判断
+
+        blocking:  什么算阻塞
+
+        budget:    审查者自己的上限
+
+        escalate:  往哪升级
+
+        repair:    能不能顺手修；默认不能
+
+        '
+  completion_proof:
+    _text:
+      en: 'end:        the end as it was first given
+
+        changed:    whether it changed, and to what
+
+        exists:     what exists now
+
+        command:    the command that shows it
+
+        reviewed:   which review passed it
+
+        '
+      zh: 'end:        最初给的端
+
+        changed:    改没改，改成什么
+
+        exists:     现在存在的是什么
+
+        command:    能看见它的那条命令
+
+        reviewed:   哪一次审查判过它
+
+        '
+  resource_table:
+    _text:
+      en: "device\tthis\tmemory\treturn_time\tholder\n"
+      zh: "设备\t显存/核心\t内存\t归还时间\t持有者\n"
+  close_commands:
+    _text:
+      en: 'git status --short          # no path you touched and cannot explain
+
+        git branch --show-current   # the integration branch
+
+        grep -rn "session\\|issue#" docs/ # no session or tracker citation
+
+        '
+      zh: 'git status --short          # 没有你碰过却说不清的路径
+
+        git branch --show-current   # 是集成分支
+
+        grep -rn "session\\|issue#" docs/ # 没有 session 或 issue 引用
+
+        '
