@@ -22,6 +22,15 @@ A report carries the node whose roadmap the finding would change, an evidence po
 
 The node named may be several layers above the parent. A report that names no node is a status message, and it is not sent. A milestone is a state of that node, so the report does not carry it as a fourth field.
 
+A report names its own kind, and the kind decides the route, so no layer has to judge whether it understands the question.
+
+- `resource`: a budget, an accelerator, a device or a wall-clock. It goes to the nearest ancestor that holds that budget, and a container can always answer it.
+- `cost`: the work invalidates or reopens a commitment. It goes to the node that owns the commitment.
+- `direction`: what this should be, whether the idea is right, whether the design is right. It goes to the person, unchanged through every layer above, because no layer in the tree has the standing to answer it.
+- `contract`: the contract contradicts itself, or the acceptance cannot be observed. It goes to the sender's parent, which owns that contract.
+
+A layer answers only a kind it holds the authority for. Refusing to forward a `direction` report is the one thing a container may never do. A layer that passes a report on adds the cost, the priority against its siblings, and its own recommendation, and never an answer.
+
 ## Consent
 
 A node acts until it would destroy work, publish, spend money, change a contract another tree depends on, or expose private material. Those wait for a person.

@@ -33,6 +33,15 @@ A report carries the node whose roadmap the finding would change, an evidence po
 
 The node named may be several layers above the parent. A report that names no node is a status message, and it is not sent. A milestone is a state of that node, so the report does not carry it as a fourth field.
 
+A report names its own kind, and the kind decides the route, so no layer has to judge whether it understands the question.
+
+- `resource`: a budget, an accelerator, a device or a wall-clock. It goes to the nearest ancestor that holds that budget, and a container can always answer it.
+- `cost`: the work invalidates or reopens a commitment. It goes to the node that owns the commitment.
+- `direction`: what this should be, whether the idea is right, whether the design is right. It goes to the person, unchanged through every layer above, because no layer in the tree has the standing to answer it.
+- `contract`: the contract contradicts itself, or the acceptance cannot be observed. It goes to the sender's parent, which owns that contract.
+
+A layer answers only a kind it holds the authority for. Refusing to forward a `direction` report is the one thing a container may never do. A layer that passes a report on adds the cost, the priority against its siblings, and its own recommendation, and never an answer.
+
 ## Consent
 
 A node acts until it would destroy work, publish, spend money, change a contract another tree depends on, or expose private material. Those wait for a person.
@@ -103,9 +112,13 @@ The client's own budget belongs here too: an unbounded retry count and a disable
 
 ## Resources
 
-A contract declares what its package will consume: cores, memory, accelerators, and the wall-clock it expects. A node that does not know says so, starts, and asks up the moment it learns.
+A contract distinguishes what it declares from what it reserves. Cores, ordinary memory and accelerator time are declared, and declaring them is enough because they can be overcommitted. A device, a fixed slice of device memory, or a port is reserved, and it is not used until a grant names it.
+
+A reserve that cannot be granted stops the package at that line and becomes a `resource` report. A declaration that turns out wrong is corrected in the contract rather than negotiated.
 
 Allocation is hereditary. The root grants a budget to a container, and the container grants from that budget to its children, so the common case costs no message. Only an exhausted grant travels up.
+
+A node that does not know what it will consume says so, starts, and asks up the moment it learns.
 
 A child that has written nothing for longer than its declared wall-clock is presumed stuck. That is noticed when the node next reads its own roadmap, never by watching it.
 
@@ -194,7 +207,11 @@ You do not poll a child and you do not sleep to wait for one. A launch returns i
 
 ## As a container
 
-A container's roadmap is one milestone and a list of children. You start each child and stop there: what a child is doing is not your concern, and its internal state is not a fact of yours. A child that cannot proceed tells you which of your children it needs changed, and that is the only moment you act.
+A container's roadmap is one milestone and a list of children. You start each child and stop there: what a child is doing is not your concern, and its internal state is not a fact of yours.
+
+Your authority is the child list. You create a child, cancel one, or redirect one, and you do nothing else. A capstone that a programme owes is a child like any other, never your own work.
+
+At a `direction` report you do not answer. You add what the sender cannot know and the person will need: what it costs, how it ranks against the other children, and your recommendation. Then you send it unchanged, and you never explain it into agreement.
 
 You do not watch children. You read your own roadmap and notice which child has written nothing for longer than the wall-clock it declared.
 

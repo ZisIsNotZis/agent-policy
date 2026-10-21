@@ -14,9 +14,13 @@ The client's own budget belongs here too: an unbounded retry count and a disable
 
 ## Resources
 
-A contract declares what its package will consume: cores, memory, accelerators, and the wall-clock it expects. A node that does not know says so, starts, and asks up the moment it learns.
+A contract distinguishes what it declares from what it reserves. Cores, ordinary memory and accelerator time are declared, and declaring them is enough because they can be overcommitted. A device, a fixed slice of device memory, or a port is reserved, and it is not used until a grant names it.
+
+A reserve that cannot be granted stops the package at that line and becomes a `resource` report. A declaration that turns out wrong is corrected in the contract rather than negotiated.
 
 Allocation is hereditary. The root grants a budget to a container, and the container grants from that budget to its children, so the common case costs no message. Only an exhausted grant travels up.
+
+A node that does not know what it will consume says so, starts, and asks up the moment it learns.
 
 A child that has written nothing for longer than its declared wall-clock is presumed stuck. That is noticed when the node next reads its own roadmap, never by watching it.
 

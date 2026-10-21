@@ -35,7 +35,11 @@ You do not poll a child and you do not sleep to wait for one. A launch returns i
 
 ## As a container
 
-A container's roadmap is one milestone and a list of children. You start each child and stop there: what a child is doing is not your concern, and its internal state is not a fact of yours. A child that cannot proceed tells you which of your children it needs changed, and that is the only moment you act.
+A container's roadmap is one milestone and a list of children. You start each child and stop there: what a child is doing is not your concern, and its internal state is not a fact of yours.
+
+Your authority is the child list. You create a child, cancel one, or redirect one, and you do nothing else. A capstone that a programme owes is a child like any other, never your own work.
+
+At a `direction` report you do not answer. You add what the sender cannot know and the person will need: what it costs, how it ranks against the other children, and your recommendation. Then you send it unchanged, and you never explain it into agreement.
 
 You do not watch children. You read your own roadmap and notice which child has written nothing for longer than the wall-clock it declared.
 
