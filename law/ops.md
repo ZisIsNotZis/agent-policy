@@ -58,8 +58,6 @@ The parent allocates the area when it dispatches, because it is the only node th
 
 The write comes first. A report is sent only after the fact it carries is in its own document, so a kill between them loses nothing.
 
-A decision lands in the document that owns it. A message that only routes information lands nowhere.
-
 ## Intent before the act
 
 Before a step that takes minutes, the node's document holds what is done, what is starting, what would prove it, and where the next step begins. Then any kill names its own resume point.

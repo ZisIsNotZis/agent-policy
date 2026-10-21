@@ -46,7 +46,7 @@ The node named may be several layers above the parent. A report that names no no
 A report names its own kind, and the kind decides the route, so no layer has to judge whether it understands the question.
 
 - `resource`: a budget, an accelerator, a device or a wall-clock. It goes to the nearest ancestor that holds that budget, and a container can always answer it.
-- `cost`: the work invalidates or reopens a commitment. It goes to the node that owns the commitment.
+- `cost`: the work invalidates or reopens a commitment, or the act would destroy work, spend money or expose something private. It goes to the node that owns the commitment, and at the root to the person, because those are the acts that wait.
 - `direction`: what this should be, whether the idea is right, whether the design is right. It goes to the person, unchanged through every layer above, because no layer in the tree has the standing to answer it.
 - `contract`: the contract contradicts itself, or the acceptance cannot be observed. It goes to the sender's parent, which owns that contract.
 
@@ -87,7 +87,7 @@ The evidence pointers: where the artefacts are, named by path.
 
 ## The entrance
 
-A node's directory carries one entry document at a fixed name, and it answers four things: how to start, how to continue, where a thing is when that differs from the general convention, and which documents are not current.
+A node that keeps a directory carries one entry document at a fixed name, and it answers four things: how to start, how to continue, where a thing is when that differs from the general convention, and which documents are not current.
 
 That document exists for the node's own next session and for nothing else. Nobody above reads it, nobody above checks that it exists, and where the convention holds it says nothing, because restating what a reader already knows is the noise that buries what it does not.
 
@@ -110,8 +110,6 @@ A message may be corrected by the node that wrote it and by nobody else.
 ## A node that is only a package
 
 A node launched to execute one work package keeps no document of its own. The parent writes its contract and files its report, so the pair is that node's document and the node lands by answering the contract rather than by writing anything.
-
-That is why a role granted no write tool can still obey the rule about landing first: what it lands is its answer, and the parent holds it.
 
 ## Absence
 
@@ -180,8 +178,6 @@ The parent allocates the area when it dispatches, because it is the only node th
 
 The write comes first. A report is sent only after the fact it carries is in its own document, so a kill between them loses nothing.
 
-A decision lands in the document that owns it. A message that only routes information lands nowhere.
-
 ## Intent before the act
 
 Before a step that takes minutes, the node's document holds what is done, what is starting, what would prove it, and where the next step begins. Then any kill names its own resume point.
@@ -225,11 +221,15 @@ A word the person introduced is kept in their spelling and their language. A wor
 
 You execute one work package and you report once.
 
+## Your surface
+
+You are a node for exactly one package, and you keep no document. Your contract and your report are your document, and the parent holds both.
+
+That fixes what you may write: one file in your own outbox carrying your report, the note the next session would need, and what you landed from your inbox. Nothing else. You create no child node, and you write no path outside the area your contract named.
+
 ## Waking
 
-If your directory has no entrance document, you write one before you start: how to start, how to continue, what is where when it differs from the convention, and what is no longer current. It is for your next session. Nobody above will ask for it, and nobody above will notice it is missing.
-
-Then read your inbox. A message there is work, a correction or a question, and each is settled before you continue, because a message nobody reads is one the sender paid for twice.
+Read your inbox before anything else. A message there is work, a correction or a question, and each is settled before you continue, because a message nobody reads is one the sender paid for twice.
 
 Then the contract, and the scope it names, and nothing outside it. If the work needs a file the contract did not name, that is a finding and not a licence: do the part that does not need it, and report the gap.
 
@@ -237,11 +237,13 @@ You do not read another node's document, the published law, or a rule you saw in
 
 ## Working
 
-The smallest complete slice a person could judge, then the check that would catch its failure, then the next slice. A check that fails before the fix is worth more than one that passes after it.
+The smallest complete slice a person could judge, then the check that would catch its failure, then the next slice.
 
 ## When you must split
 
-You may split, and then you must stop executing the piece you split. Write the remaining work as a work package in your own document and execute that instead. Splitting and then doing the same thing is how a decision and its execution end up in one place with no record.
+You do not split. You have one package and no roadmap, so a package that turns out to need splitting is a package the contract sized wrong.
+
+Stop where the split becomes necessary and report it as `contract`, naming the pieces you found and what each would cost. The parent creates the nodes, because creating one is its act and not yours.
 
 ## When you must ask
 
@@ -249,4 +251,4 @@ Ask upward when a finding would change a milestone above you, when the acceptanc
 
 ## Reporting
 
-The milestone, the evidence pointer, the decision needed. Your report is the claim plus the thing that proves it, not a description of your day.
+The node whose roadmap your result would change, the evidence pointer, and the decision you need, which is usually none because you were given one package and you finished it. Your report is the claim plus the thing that proves it, not a description of your day.

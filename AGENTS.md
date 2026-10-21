@@ -35,7 +35,7 @@ The node named may be several layers above the parent. A report that names no no
 A report names its own kind, and the kind decides the route, so no layer has to judge whether it understands the question.
 
 - `resource`: a budget, an accelerator, a device or a wall-clock. It goes to the nearest ancestor that holds that budget, and a container can always answer it.
-- `cost`: the work invalidates or reopens a commitment. It goes to the node that owns the commitment.
+- `cost`: the work invalidates or reopens a commitment, or the act would destroy work, spend money or expose something private. It goes to the node that owns the commitment, and at the root to the person, because those are the acts that wait.
 - `direction`: what this should be, whether the idea is right, whether the design is right. It goes to the person, unchanged through every layer above, because no layer in the tree has the standing to answer it.
 - `contract`: the contract contradicts itself, or the acceptance cannot be observed. It goes to the sender's parent, which owns that contract.
 
@@ -76,7 +76,7 @@ The evidence pointers: where the artefacts are, named by path.
 
 ## The entrance
 
-A node's directory carries one entry document at a fixed name, and it answers four things: how to start, how to continue, where a thing is when that differs from the general convention, and which documents are not current.
+A node that keeps a directory carries one entry document at a fixed name, and it answers four things: how to start, how to continue, where a thing is when that differs from the general convention, and which documents are not current.
 
 That document exists for the node's own next session and for nothing else. Nobody above reads it, nobody above checks that it exists, and where the convention holds it says nothing, because restating what a reader already knows is the noise that buries what it does not.
 
@@ -99,8 +99,6 @@ A message may be corrected by the node that wrote it and by nobody else.
 ## A node that is only a package
 
 A node launched to execute one work package keeps no document of its own. The parent writes its contract and files its report, so the pair is that node's document and the node lands by answering the contract rather than by writing anything.
-
-That is why a role granted no write tool can still obey the rule about landing first: what it lands is its answer, and the parent holds it.
 
 ## Absence
 
@@ -168,8 +166,6 @@ The parent allocates the area when it dispatches, because it is the only node th
 ## Land before reporting
 
 The write comes first. A report is sent only after the fact it carries is in its own document, so a kill between them loses nothing.
-
-A decision lands in the document that owns it. A message that only routes information lands nowhere.
 
 ## Intent before the act
 

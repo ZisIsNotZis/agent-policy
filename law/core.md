@@ -35,7 +35,7 @@ The node named may be several layers above the parent. A report that names no no
 A report names its own kind, and the kind decides the route, so no layer has to judge whether it understands the question.
 
 - `resource`: a budget, an accelerator, a device or a wall-clock. It goes to the nearest ancestor that holds that budget, and a container can always answer it.
-- `cost`: the work invalidates or reopens a commitment. It goes to the node that owns the commitment.
+- `cost`: the work invalidates or reopens a commitment, or the act would destroy work, spend money or expose something private. It goes to the node that owns the commitment, and at the root to the person, because those are the acts that wait.
 - `direction`: what this should be, whether the idea is right, whether the design is right. It goes to the person, unchanged through every layer above, because no layer in the tree has the standing to answer it.
 - `contract`: the contract contradicts itself, or the acceptance cannot be observed. It goes to the sender's parent, which owns that contract.
 

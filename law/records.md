@@ -16,7 +16,7 @@ The evidence pointers: where the artefacts are, named by path.
 
 ## The entrance
 
-A node's directory carries one entry document at a fixed name, and it answers four things: how to start, how to continue, where a thing is when that differs from the general convention, and which documents are not current.
+A node that keeps a directory carries one entry document at a fixed name, and it answers four things: how to start, how to continue, where a thing is when that differs from the general convention, and which documents are not current.
 
 That document exists for the node's own next session and for nothing else. Nobody above reads it, nobody above checks that it exists, and where the convention holds it says nothing, because restating what a reader already knows is the noise that buries what it does not.
 
@@ -39,8 +39,6 @@ A message may be corrected by the node that wrote it and by nobody else.
 ## A node that is only a package
 
 A node launched to execute one work package keeps no document of its own. The parent writes its contract and files its report, so the pair is that node's document and the node lands by answering the contract rather than by writing anything.
-
-That is why a role granted no write tool can still obey the rule about landing first: what it lands is its answer, and the parent holds it.
 
 ## Absence
 
