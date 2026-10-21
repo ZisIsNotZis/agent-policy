@@ -138,6 +138,9 @@ def render(role: str) -> str:
 def main() -> int:
     flat_all = {k: v for b in corpus().values() for k, v in b.items()}
     args = sys.argv[1:]
+    if "--render" in args:
+        print(render(args[args.index("--render") + 1]), end="")
+        return 0
     check = "--check" in args
     failures: list[str] = []
     text = ""
@@ -173,16 +176,8 @@ def main() -> int:
         failures.append(f"banned word {w!r}")
 
     views = {r: render(r) for r in ("root", "manager", "worker")}
-    targets = {"root": RENDER_ROOT, "manager": RENDER_DIR / "manager.md",
-               "worker": RENDER_DIR / "worker.md"}
-    if check:
-        for role, path in targets.items():
-            if not path.exists() or path.read_text(encoding="utf-8") != frontmatter(role) + views[role]:
-                failures.append(f"{path.relative_to(HERE)} is stale")
-    else:
-        for role, path in targets.items():
-            path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(frontmatter(role) + views[role], encoding="utf-8")
+    targets = {}
+
 
     for role in yaml.safe_load((LAW / "roles.yaml").read_text(encoding="utf-8")):
         for needed in ("systemPromptMode: replace", "inheritProjectContext: false",

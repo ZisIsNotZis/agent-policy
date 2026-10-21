@@ -1,0 +1,57 @@
+"""Build one self-contained file per role: the procedure, then the rules that role reads.
+
+    python3 tools/build.py            write agents/{root,manager,worker}.md
+    python3 tools/build.py --check    fail if a file no longer matches its source
+"""
+from __future__ import annotations
+
+import subprocess
+import sys
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent.parent
+OUT = HERE / "agents"
+ROLES = ("root", "manager", "worker")
+TITLES = {"root": "# Root", "manager": "# Manager", "worker": "# Worker"}
+
+
+def fm(role):
+    import yaml
+    spec = yaml.safe_load((HERE / "law" / "roles.yaml").read_text(encoding="utf-8"))[role]
+    return "\n".join(["---", f"name: {role}", f"description: {spec['description']}",
+                      f"tools: {spec['tools']}", f"thinking: {spec['thinking']}",
+                      "model: inherit", "systemPromptMode: replace",
+                      "inheritProjectContext: false", "inheritGlobalContext: false",
+                      "inheritSkills: false", "---", ""])
+
+
+def build(role):
+    proc = subprocess.run([sys.executable, str(HERE / "tools" / "guide.py"), role, "--lang", "en"],
+                          capture_output=True, text=True, check=True).stdout
+    proc = proc.split("\n", 1)[1].lstrip()          # drop guide's own "# role" title
+    law = subprocess.run([sys.executable, str(HERE / "tools" / "law.py"), "--render", role],
+                         capture_output=True, text=True, check=True).stdout
+    head = fm(role) if role != "root" else ""
+    return head + TITLES[role] + "\n\n" + proc + "\n" + law
+
+
+def main():
+    check = "--check" in sys.argv
+    bad = []
+    for role in ROLES:
+        path = OUT / f"{role}.md"
+        text = build(role)
+        if check:
+            if not path.exists() or path.read_text(encoding="utf-8") != text:
+                bad.append(role)
+        else:
+            path.write_text(text, encoding="utf-8")
+    if bad:
+        print("FAIL stale: " + ", ".join(bad))
+        return 1
+    print(f"ok: {len(ROLES)} role files")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

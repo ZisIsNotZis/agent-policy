@@ -1954,6 +1954,37 @@ review:
       zh: 分清包审查、里程碑体验审查、人的接受
       en: Separate package review, milestone experience review and human acceptance
     scope: *id002
+  review_axes:
+    _kind: act
+    _when:
+      zh: 你要审一份语料、一份视图或指南
+      en: You review a corpus, a view or a guide
+    _goal:
+      zh: 一次审完六轴，而不是审到哪儿算哪儿，因为换了轴就会换出另一批缺陷
+      en: All six axes are run, not whichever ones came to mind, because a different axis finds a different set of defects
+    _how:
+      zh: 依序跑完六轴：完整性——读者的动作缺了哪一步；必要性——哪一条不对应任何动作；单一真相来源——重复、冗余、废弃、冲突；写给人看的还是写给 agent 看的；SOP 形态——说不出完成观察的是话题不是步骤；角色相关性——这条对这份视图的读者成立吗。每个轴跑完就落一次发现，六个都跑完再汇总
+      en: 'Run the six in order: completeness — which step of the reader''s action is missing; necessity — which line corresponds to no action; single source — duplication, redundancy, deprecation, conflict; written for an agent rather than for a person; SOP form — a step whose completion cannot be observed is a topic; relevance — does this hold for the reader of this view. Each axis lands its own findings, and all six run before anything is summarised'
+    _depends:
+    - sop_form
+    - how_not_what
+    scope:
+    - root
+    - manager
+  review_cost:
+    _kind: principle
+    _when:
+      zh: 你要判断一条规则值不值它占的地方
+      en: You judge whether a rule is worth the room it takes
+    _goal:
+      zh: 代价按读者付的 token 算，不按行数或字节算，而空白行与排版符号几乎不占 token
+      en: The price is counted in the tokens the reader pays, not in lines or bytes, and blank lines and markup barely cost tokens
+    _depends:
+    - review_axes
+    - units
+    scope:
+    - root
+    - manager
   report_incomplete:
     _kind: act
     _when:
