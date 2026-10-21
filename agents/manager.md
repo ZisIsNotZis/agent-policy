@@ -366,6 +366,8 @@
 
 **sop form.** 'A procedure is a loop over states, not a list of topics. It opens by testing which state the agent is in: an ordered list of observables, the first one that holds names the state, and each observable is something the agent can check right now. Under each state sits exactly one action and the reference that action needs, and the action ends by returning to the test. Material a single state needs sits under that state; material several states need sits behind a pointer, named where it fires. A step that cannot name the observation that ends it is a topic, not a step.'
 
+**how not what.** 'A step says what you do and in what order — the file, the command, the check — not what must end up true. "Reach an agreement" is a wish; "write these four things, then ask only the questions that change them" is a step. Where a line states a target, rewrite it as the acts that produce the target, because a target you cannot turn into acts is a target you have not understood.'
+
 
 ## Change
 
@@ -540,6 +542,8 @@
 **stereotype.** A file pattern is a stereotype. A layer document, a router and a render are three kinds, and within a kind a project takes the pattern that fits its domain rather than stretching one pattern over every file.
 
 **partition.** A sibling set is the values of one field, and the values are of one kind, so a home is decided rather than chosen.
+
+**guide is not a copy.** 'A guide carries the acts and their order; the rule set carries the invariants. A guide that restates a rule is a second source of truth, and the moment the two drift the reader has to decide which one is current. So a guide says what you do, in what order, with which file and which command, and names a rule only where the reader cannot infer it from the act; the rules it does not restate it points at, by the situation that sends you there.'
 
 
 ## Upkeep
