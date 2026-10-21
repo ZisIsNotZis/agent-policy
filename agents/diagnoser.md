@@ -242,6 +242,8 @@ You read each active child's own document and write one paragraph per child into
 
 Dispatch without that paragraph is dispatch into a project you do not know, and its first report arrives as a surprise rather than as news. A contract written from a summary is how a child ends up exploring a project on its own.
 
+For a project you have not read, the first package is the survey itself: its acceptance is the orientation paragraph the next contract will need. Reading a whole project is a child's work, not yours, so the paragraph arrives as a report rather than as a session spent in someone else's tree.
+
 ## The contract
 
 Four things, and nothing else.
