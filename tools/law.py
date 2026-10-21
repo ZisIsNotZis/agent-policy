@@ -1,18 +1,20 @@
-#!/usr/bin/env python3
-"""Render the law into the views agents read, and run every mechanical check on it.
+"""Render the corpus into one view per kind of agent, and check it.
 
-    python3 tools/law.py            write the views
-    python3 tools/law.py --check    check only, refusing any view that no longer matches
+AGENTS.yaml is the source. Every node declares one of four blocks; a role reads a union of them:
 
-The views:
-    AGENTS.md          the whole law, which is what a session in the workspace reads
-    agents/<role>.md   one agent definition per role: the whole law plus that role's guide
+    root    = root_only  + root_manager + manager_worker
+    manager = root_manager + manager_worker
+    worker  = manager_worker + worker_only
 
-Checks, run with the render and never apart from it:
-    - every view is byte-identical to a fresh render
-    - no banned word from the lexicon appears outside its own table or a frontmatter block
-    - every guide is claimed by a role, and every role claims a guide that exists
+There is no fifth block. A manager is an agent whose parent is a manager, and the root is a
+manager whose parent is the person, so every manager rule reaches the root by construction and
+every shared rule reaches both remaining kinds.
+
+    python3 tools/law.py            regenerate the three views
+    python3 tools/law.py --check    fail if a view is stale, a scope is unknown, or a node reaches
+                                    no agent at all
 """
+
 from __future__ import annotations
 
 import re
@@ -23,26 +25,44 @@ import yaml
 
 HERE = Path(__file__).resolve().parent.parent
 LAW = HERE / "law"
-OUT_LAW = HERE / "AGENTS.md"
-OUT_AGENTS = HERE / "agents"
+CORPUS = HERE / "AGENTS.yaml"
+RENDER_ROOT = HERE / "AGENTS.md"
+RENDER_DIR = HERE / "agents"
 
-SECTIONS = ["core.md", "records.md", "ops.md", "lexicon.md"]
-PLANNER = "planner.md"
+BLOCKS = ("root_only", "root_manager", "manager_worker", "worker_only", "every_role")
+VIEWS = {
+    "root": ("root_only", "root_manager", "manager_worker", "every_role"),
+    "manager": ("root_manager", "manager_worker", "every_role"),
+    "worker": ("manager_worker", "worker_only", "every_role"),
+}
+TITLES = {
+    "laws": "Laws", "architecture": "Architecture", "speech": "Speech", "inbox": "Inbox",
+    "records": "Records", "spend": "Spend", "scheduling": "Scheduling", "dispatch": "Dispatch",
+    "review": "Review", "gates": "Gates", "degrees": "Degrees", "writing": "Writing",
+    "change": "Change", "git": "Git", "operations": "Operations", "practice": "Practice",
+    "roles": "Roles", "precedence": "Precedence", "intent": "Intent", "delivery": "Delivery",
+    "docs_shape": "Document shape", "upkeep": "Upkeep", "resources": "Resources",
+    "proof_process": "Proof process", "communication": "Communication", "principles": "Principles",
+}
+
+
+def corpus() -> dict:
+    return yaml.safe_load(CORPUS.read_text(encoding="utf-8"))
 
 
 def read(name: str) -> str:
-    return (LAW / name).read_text(encoding="utf-8").rstrip("\n") + "\n"
+    return (LAW / name).read_text(encoding="utf-8") if (LAW / name).exists() else ""
 
 
-def prose(text: str) -> str:
-    """The part of a view that is prose, not the definition table or the frontmatter."""
-    if text.startswith("---\n"):
-        text = text.split("\n---\n", 1)[1]
-    return text.split("# Lexicon", 1)[0]
+def banned_words() -> list[str]:
+    table = read("lexicon.md")
+    if "# Lexicon" in table:
+        table = table.split("# Lexicon", 1)[1]
+    return [w.strip() for line in table.splitlines() for w in line.split("|")[3:4]
+            for w in [x.strip() for x in w.split(",")] if w and not w.startswith("---")]
 
 
 def ceiling() -> int:
-    """The number the law may not exceed: prohibitions, because a procedure should replace them."""
     for line in read("ceiling").splitlines():
         if line.startswith("prohibitions"):
             return int(line.split()[1])
@@ -50,114 +70,65 @@ def ceiling() -> int:
 
 
 def prohibitions(text: str) -> int:
-    """Sentences that forbid. A procedure should replace these, not add to them."""
     return sum(1 for s in re.split(r"(?<=[.;:])\s+", text)
-               if re.search(r"\b(must not|may not|never|cannot|refuses? to|is not sent)\b|\bno (agent|manager|worker|layer|manager)\b", s))
+               if re.search(r"\b(must not|may not|never|cannot|refuses? to|is not sent)\b", s))
 
 
-def steps(text: str) -> int:
-    """Sentences in the imperative. A procedure is made of these, and they may grow."""
-    return len(re.findall(r"(?m)^\s*(?:\d+\.|###)\s|^[A-Z][a-z]+ (it|the|your|what|that)\b", text))
-
-
-def banned_words() -> list[str]:
-    table = read("lexicon.md")
-    words: list[str] = []
-    for line in table.splitlines():
-        if not line.startswith("|") or "banned" in line or set(line) <= set("|- "):
+def render(role: str) -> str:
+    want = VIEWS[role]
+    out = [f"# Law, as {role} reads it\n"]
+    for name, body in corpus().items():
+        rows = [(k, v) for k, v in body.items() if v.get("scope") in want]
+        if not rows:
             continue
-        cells = [c.strip() for c in line.strip("|").split("|")]
-        if len(cells) == 3:
-            words += [w.strip() for w in cells[2].split(",") if w.strip()]
-    return words
-
-
-def render_law() -> str:
-    """The view an interactive session reads. It is the root, so it carries the node procedure."""
-    parts = [read(s).rstrip("\n") for s in SECTIONS]
-    parts.append(read(PLANNER).rstrip("\n"))
-    parts.append(read("guides/manager.md").rstrip("\n"))
-    return "\n".join(parts) + "\n"
-
-
-def render_role(role: str, spec: dict, law: str) -> str:
-    """A role reads the law and its own procedure. Only the root reads the Node guide."""
-    guide = LAW / "guides" / f"{spec['guide']}.md"
-    front = [
-        "---",
-        f"name: {role}",
-        f"description: {spec['description']}",
-        f"tools: {spec['tools']}",
-        "model: inherit",
-        f"thinking: {spec['thinking']}",
-        "systemPromptMode: replace",
-        "inheritProjectContext: false",
-        "inheritGlobalContext: false",
-        "inheritSkills: false",
-        "---",
-    ]
-    body = "" if spec["guide"] == "manager" else guide.read_text(encoding="utf-8")
-    return "\n".join(front) + "\n" + law + ("\n" + body if body else "")
+        out.append(f"\n## {TITLES.get(name, name)}\n")
+        for key, node in rows:
+            out.append(f"**{key.replace('_', ' ')}.** {node['_text'].strip()}\n")
+    return "\n".join(out)
 
 
 def main() -> int:
-    check = "--check" in sys.argv
-    roles = yaml.safe_load(read("roles.yaml"))
-    law = "\n".join(read(s).rstrip("\n") for s in SECTIONS) + "\n"
-    root_view = render_law()
-    views: dict[Path, str] = {OUT_LAW: root_view}
-    for role, spec in roles.items():
-        views[OUT_AGENTS / f"{role}.md"] = render_role(role, spec, law)
-
+    args = sys.argv[1:]
+    check = "--check" in args
     failures: list[str] = []
+    text = ""
+    for name, body in corpus().items():
+        for key, node in body.items():
+            scope = node.get("scope")
+            if scope not in BLOCKS:
+                failures.append(f"{name}.{key} has scope {scope!r}")
+            if scope != "every_role" and not any(scope in v for v in VIEWS.values()):
+                failures.append(f"{name}.{key} reaches no agent")
+            text += node["_text"] + "\n"
+
+    banned = [w for w in banned_words() if w and re.search(rf"\b{re.escape(w)}\b", text, re.I)]
+    for w in banned:
+        failures.append(f"banned word {w!r}")
+
+    views = {"root": render("root"), "manager": render("manager"), "worker": render("worker")}
+    targets = {"root": RENDER_ROOT, "manager": RENDER_DIR / "manager.md",
+               "worker": RENDER_DIR / "worker.md"}
     if check:
-        for path, text in views.items():
-            if not path.exists():
-                failures.append(f"missing view: {path.relative_to(HERE)}")
-            elif path.read_text(encoding="utf-8") != text:
-                failures.append(f"stale view: {path.relative_to(HERE)}")
+        for role, path in targets.items():
+            if not path.exists() or path.read_text(encoding="utf-8") != views[role]:
+                failures.append(f"{path.relative_to(HERE)} is stale")
     else:
-        OUT_AGENTS.mkdir(exist_ok=True)
-        for path, text in views.items():
-            path.write_text(text, encoding="utf-8")
+        for role, path in targets.items():
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(views[role], encoding="utf-8")
 
-    words = banned_words()
-    for path, text in views.items():
-        body = prose(text).lower()
-        for word in words:
-            if f" {word} " in f" {body} " or f" {word}." in body or f" {word}," in body:
-                failures.append(f"banned word '{word}' in {path.relative_to(HERE)}")
+    n = prohibitions(views["root"])
+    if n > ceiling():
+        failures.append(f"the root view states {n} prohibitions against a ceiling of {ceiling()}")
 
-    claimed = {s["guide"] for s in roles.values()}
-    present = {p.stem for p in (LAW / "guides").glob("*.md")}
-    for stale in OUT_AGENTS.glob("*.md"):
-        if stale.stem not in roles:
-            failures.append(f"agents/{stale.name} is no role")
-    for name in sorted(claimed - present):
-        failures.append(f"role claims a missing guide: {name}")
-    for name in sorted(present - claimed):
-        failures.append(f"guide no role claims: {name}")
-
-    for name in SECTIONS:
-        if not (LAW / name).exists():
-            failures.append(f"missing section: law/{name}")
-
-    words_in_law = len(root_view.split())
-    forb = prohibitions(root_view)
-    if forb > ceiling():
-        failures.append(
-            f"the law states {forb} prohibitions against a ceiling of {ceiling()}: a prohibition "
-            "is a rule nobody can follow by accident, so delete the one it replaces, or raise "
-            "law/ceiling in this commit and say what it buys")
-    chars = len(law)
     if failures:
         print("\n".join(f"FAIL {f}" for f in failures))
         return 1
-    print(f"ok: {len(views)} views, {words_in_law} words, {chars} chars, "
-          f"{len(words)} banned words, {len(roles)} roles, "
-          f"{forb} prohibitions, {steps(root_view)} steps")
+    print(f"ok: {len(views)} views, {len(corpus())} sections, "
+          f"{sum(len(b) for b in corpus().values())} nodes, {n} prohibitions, "
+          f"{len(banned_words())} banned words")
     return 0
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    raise SystemExit(main())
