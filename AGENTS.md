@@ -82,6 +82,14 @@ The current facts: what is decided, and what is still open.
 
 The evidence pointers: where the artefacts are, named by path.
 
+## The entrance
+
+A node's directory carries one entry document at a fixed name, and it answers four things: how to start, how to continue, where a thing is when that differs from the general convention, and which documents are not current.
+
+A layer reads that one file and nothing else before it dispatches. A project's internal layout therefore stays its own business: a parent that knows where a child keeps its files has taken on a coupling it will pay for every time the child reorganises.
+
+Where the convention holds, the entry document says nothing, because restating what a reader already knows is the noise that buries what it does not.
+
 ## Coordinates
 
 A fact carries `from`, the fact it derives from; `end`, what it is for; `author`, being person, agent, measurement or third party; `standing`, being current, provisional or disputed; and `evidence`.
