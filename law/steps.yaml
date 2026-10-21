@@ -1,7 +1,7 @@
 states:
-  1 判断你在哪个状态:
+  0 你是谁:
   - sop_form
-  2 收件箱:
+  1 睁开眼睛:
   - one_direction
   - tracked
   - file_shape
@@ -13,14 +13,13 @@ states:
   - fire_and_forget
   - correct_by_author
   - discussion_record
-  - write_through
   - no_blind_agreement
   - person_may_write_anywhere
-  - ask_the_owner
-  - every_fact_has_a_home
-  - own_inference
-  - untrusted_input
-  3 送审:
+  2 和父节点说话:
+  - upward_reports
+  - word_from_parent
+  - parent_authorises
+  - ask_only_consequential
   - report_fields
   - completion
   - kinds
@@ -30,97 +29,81 @@ states:
   - kind_contract
   - unreadable_contract
   - effort_required
-  - manager_does_not_judge
-  - every_package
-  - fresh
-  - judgement_only
-  - reviewer_contract
-  - no_commit
-  - bind_to_revision
-  - evidence_at_source
-  - scoped_review
-  - falsify
-  - defect_evidence
-  4 处置:
-  - verdicts
-  - not_a_verdict
-  - integration
-  - route_failure
-  5 交付:
-  - milestone_is_a_gate
-  - vertical_slice
-  - milestone_list
-  - hard_metric_end
-  - workset
-  - work_package
-  - few_milestones
-  - ship_at_gate
-  - gates_hold
-  - invent_no_gate
-  - multimodal
-  - milestone_experience
-  - three_kinds_of_review
-  - protect_willingness
-  - completion_proof
-  - advance_stops
   - forward_adds
   - forward_never_refused
   - beyond_authority
   - tasted
   - three_deciders
-  - presentable
-  - readme
-  - orientation
-  - readme_tested
-  - poc
-  - self_test
-  6 谈协议:
+  - ask_the_owner
+  - bidirectional
+  - expression_gap
+  3 谈成之前:
   - agreement_state
   - no_agreement_no_work
   - reach_agreement
   - auto_advance
   - block_timeout
-  - ask_only_consequential
-  - parent_authorises
-  - word_from_parent
+  4 路线图:
+  - milestone_is_a_gate
+  - vertical_slice
+  - hard_metric_end
+  - few_milestones
+  - milestone_list
+  - workset
+  - work_package
+  - roadmap_shape
+  - invent_no_gate
+  - logical_level
+  - logic_is_physical
   - always_a_path
   - plan_tree
   - home
-  - high_risk
-  - absorb_risk
-  - secrets
-  - covered_once
-  7 派活:
+  5 派活:
+  - take_next
+  - kind_test
   - two_kinds
   - worker
-  - kind_test
   - directory
   - work_dir
   - document_parts
-  - roadmap_shape
-  - parent_only
-  - name_is_the_trace
-  - info_ownership
-  - everything_under_itself
-  - recursion_depth
-  - sub_owner
-  - take_next
-  - self_execute
   - contract_fields
   - contract_extra
   - contract_inheritance
   - contract_identity
   - contract_grant
   - pass_boundary
+  - self_execute
+  - say_that_you_started
   - coverage_first
   - persist_split
-  - logical_level
-  - logic_is_physical
-  - fresh_context
   - split_follows_logic
-  - say_that_you_started
-  - subagent_scope
+  - sub_owner
+  - recursion_depth
+  - parent_only
+  - name_is_the_trace
+  - info_ownership
+  - everything_under_itself
+  - fresh_context
   - model_cost
+  - subagent_scope
+  6 送审:
+  - manager_does_not_judge
+  - every_package
+  - fresh
+  - judgement_only
+  - reviewer_contract
+  - verdicts
+  - not_a_verdict
+  - no_commit
+  - bind_to_revision
+  - evidence_at_source
+  - scoped_review
+  - falsify
+  - defect_evidence
+  - self_test
+  7 按裁决处置:
+  - integration
+  - route_failure
   8 等:
   - async_only
   - no_orchestration
@@ -140,6 +123,7 @@ states:
   - own_effort
   - change_hypothesis
   - scheduling_shape
+  9 资源:
   - classes
   - time
   - idle
@@ -148,27 +132,64 @@ states:
   - unrecoverable
   - class_decides
   - unknown_class
-  - no_hold_while_unsure
   - vram
+  - no_hold_while_unsure
   - missing_infra_is_not_missing_permission
   - advisory_limits
-  9 收口:
+  - high_risk
+  - absorb_risk
+  - secrets
+  - covered_once
+  10 交付里程碑:
+  - ship_at_gate
+  - gates_hold
+  - multimodal
+  - milestone_experience
+  - three_kinds_of_review
+  - protect_willingness
+  - completion_proof
+  - advance_stops
+  11 如果你是根: []
+  12 记什么:
+  - ssot
+  - every_fact_has_a_home
+  - write_through
+  - entrance
+  - entrance_for_next_session
+  - missing_entrance
+  - current_fact
+  - retraction
+  - derived_is_not_stored
+  - cache
+  - expired_cache
+  - assent
+  - assumed_is_agent_fact
+  - fact_record
+  - split_authorship
+  - no_mood_labels
+  - absent
+  - absent_claim
+  - no_manual_wrap
+  - scratch_retired
+  - own_inference
+  - untrusted_input
+  13 停手:
   - safe_point
   - intent_before_act
+  - no_trash
+  - main_area
+  - commits
+  - pushes_hereditary
+  - no_remote
   - wind_down
   - durability
   - transient
   - recovery
+  - resume
   - repair_on_sight
-  - commits
-  - pushes_hereditary
-  - no_remote
-  - main_area
-  - one_writer_per_area
   - worktree
-  - integrator
+  - one_writer_per_area
   - untrack
-  - no_trash
   - track_or_ignore
   - structure
   - artefacts_home
@@ -177,11 +198,26 @@ states:
   - preserve_work
   - regeneration_cost
   - cleanup_check
-  - resume
   - keep_evidence
+  - integrator
   - manager_owns
   - nothing_beyond
+  - poc
+  - presentable
+  - readme
+  - orientation
+  - readme_tested
+  14 什么时候算完:
+  - provable_or_not_done
+  - explicit_criteria
+  - own_word_does_not_count
   - result_not_inventory
+  - docs_may_not_be_wrong
+  - true_because_checked
+  - time_is_the_scarce_thing
+  - depth_over_breadth
+  - attention_is_a_budget
+  - risk_is_his_cost
 reference:
 - ssot
 - atomic
