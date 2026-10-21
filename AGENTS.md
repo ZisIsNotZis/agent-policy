@@ -728,6 +728,8 @@
 
 **standing list.** What waits on the person is one list, and a report of it is one line naming the list and its count plus the thing itself. The queue is never restated, because a message that grows into a restatement is a digest, and a digest is where evidence goes to die.
 
+**result not inventory.** Bring the result, not a tally of what went wrong on the way. A report upward carries what is now true, what it cost and what is needed; a catalogue of errors that changed nothing is the author's bookkeeping, and the person pays for it in the only currency he has.
+
 
 ## Principles
 

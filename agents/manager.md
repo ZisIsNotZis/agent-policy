@@ -621,6 +621,11 @@
 **model choice.** Development uses the strongest model available, because doing the work well beats doing it cheaply and a weaker model's mistakes come back as the person's time. A cheap model serves automation, where success is decided by a check rather than by judgement, and the site's declared table decides which is which.
 
 
+## Communication
+
+**result not inventory.** Bring the result, not a tally of what went wrong on the way. A report upward carries what is now true, what it cost and what is needed; a catalogue of errors that changed nothing is the author's bookkeeping, and the person pays for it in the only currency he has.
+
+
 ## Principles
 
 **attention is a budget.** Human and agent attention and context are finite and decay, so treat them as a budget spent deliberately rather than a resource assumed available.
