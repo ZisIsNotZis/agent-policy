@@ -21,8 +21,10 @@ def main() -> int:
     role = args[0] if args and not args[0].startswith("-") else "manager"
     lang = args[args.index("--lang") + 1] if "--lang" in args else "en"
     corpus = yaml.safe_load((HERE / "AGENTS.yaml").read_text(encoding="utf-8"))
-    proc = yaml.safe_load((HERE / "law" / "procedure.yaml").read_text(encoding="utf-8"))
-    flat = {k: v for b in corpus.values() for k, v in b.items()}
+    proc = {"procedure": corpus["procedure"], "blocks": corpus["blocks"]}
+    flat = {k: v for b, sec in corpus.items()
+            if b not in ("procedure", "blocks")
+            for k, v in sec.items() if isinstance(v, dict)}
     blocks = proc.get("blocks", {})
     p = proc["procedure"][role]
 
@@ -65,7 +67,7 @@ def main() -> int:
             elif node.get("_kind") == "balance":
                 print(f"   → {pick(node['_pull'], lang)}")
         if st.get("_artefact") in blocks:
-            print(f"\n```\n{pick(blocks[st['_artefact']]['_text'], lang).rstrip()}\n```\n")
+            print(f"\n```\n{pick(blocks[st['_artefact']]['_form'], lang).rstrip()}\n```\n")
         c = st["_criterion"]
         print(f"**{head[3]}** {pick(c['_see'], lang)}（`{c['_by']}` → {c['_expect']}）\n")
     return 0

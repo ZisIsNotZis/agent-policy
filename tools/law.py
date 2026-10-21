@@ -29,6 +29,7 @@ CORPUS = HERE / "AGENTS.yaml"
 RENDER_DIR = HERE / "agents"
 RENDER_ROOT = RENDER_DIR / "root.md"
 
+DATA = ("procedure", "blocks")
 ROLES = ("root", "manager", "worker")
 TITLES = {
     "laws": "Laws", "architecture": "Architecture", "speech": "Speech", "inbox": "Inbox",
@@ -116,11 +117,16 @@ def frontmatter(role: str) -> str:
     return "\n".join(lines)
 
 
+def sections():
+    """Every section that holds rules; procedure and blocks have their own shapes."""
+    return {n: b for n, b in corpus().items() if n not in DATA}
+
+
 def render(role: str) -> str:
-    flat = {k: v for b in corpus().values() for k, v in b.items()}
+    flat = {k: v for b in sections().values() for k, v in b.items()}
     drawn: set[str] = set()
     out = [f"# Law, as {role} reads it\n"]
-    for name, body in corpus().items():
+    for name, body in sections().items():
         rows = [(k, v) for k, v in body.items() if reads(role, v.get("scope", ["manager", "worker"]))]
         rows = [(k, v) for k, v in rows]
         if not rows:
@@ -136,7 +142,7 @@ def render(role: str) -> str:
 
 
 def main() -> int:
-    flat_all = {k: v for b in corpus().values() for k, v in b.items()}
+    flat_all = {k: v for b in sections().values() for k, v in b.items()}
     args = sys.argv[1:]
     if "--render" in args:
         print(render(args[args.index("--render") + 1]), end="")
@@ -144,8 +150,10 @@ def main() -> int:
     check = "--check" in args
     failures: list[str] = []
     text = ""
-    for name, body in corpus().items():
+    for name, body in sections().items():
         for key, node in body.items():
+            if not isinstance(node, dict) or "_when" not in node and "_kind" not in node:
+                continue
             scope = node.get("scope")
             if not isinstance(scope, list) or not scope:
                 failures.append(f"{name}.{key} has no scope list")
@@ -192,7 +200,7 @@ def main() -> int:
     proc_path = LAW / "procedure.yaml"
     if proc_path.exists():
         proc = yaml.safe_load(proc_path.read_text(encoding="utf-8"))
-        flat_all = {k: v for b in corpus().values() for k, v in b.items()}
+        flat_all = {k: v for b in sections().values() for k, v in b.items()}
         for role, spec in proc.get("procedure", {}).items():
             if not isinstance(spec, dict) or "_test" not in spec:
                 continue
