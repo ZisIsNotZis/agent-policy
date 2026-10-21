@@ -11,8 +11,9 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent.parent
 OUT = HERE / "agents"
-ROLES = ("root", "manager", "worker")
-TITLES = {"root": "# Root", "manager": "# Manager", "worker": "# Worker"}
+import yaml
+ROLES = tuple(yaml.safe_load((HERE / "law" / "roles.yaml").read_text(encoding="utf-8")))
+TITLES = {r: "# " + r.replace("_", " ").title() for r in ROLES}
 
 
 def fm(role):
@@ -26,13 +27,10 @@ def fm(role):
 
 
 def build(role):
-    proc = subprocess.run([sys.executable, str(HERE / "tools" / "guide.py"), role, "--lang", "en"],
-                          capture_output=True, text=True, check=True).stdout
-    proc = proc.split("\n", 1)[1].lstrip()          # drop guide's own "# role" title
     law = subprocess.run([sys.executable, str(HERE / "tools" / "law.py"), "--render", role],
                          capture_output=True, text=True, check=True).stdout
     head = fm(role) if role != "root" else ""
-    return head + TITLES[role] + "\n\n" + proc + "\n" + law
+    return head + law
 
 
 def main():

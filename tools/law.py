@@ -29,8 +29,9 @@ CORPUS = HERE / "AGENTS.yaml"
 RENDER_DIR = HERE / "agents"
 RENDER_ROOT = RENDER_DIR / "root.md"
 
-DATA = ("procedure", "blocks")
-ROLES = ("root", "manager", "worker")
+RULESETS = ("root", "manager", "worker", "reviewer", "policy")
+ROLE_SPECS = yaml.safe_load((HERE / "law" / "roles.yaml").read_text(encoding="utf-8"))
+ROLES = tuple(ROLE_SPECS)
 TITLES = {
     "laws": "Laws", "architecture": "Architecture", "speech": "Speech", "inbox": "Inbox",
     "records": "Records", "spend": "Spend", "scheduling": "Scheduling", "dispatch": "Dispatch",
@@ -81,9 +82,15 @@ def resolve(key: str, nodes: dict) -> list[str]:
     return out
 
 
+def ruleset(role: str) -> str:
+    """A role reads one rule set; a flavour that behaves like a worker says so in law/roles.yaml."""
+    return ROLE_SPECS[role]["ruleset"]
+
+
 def reads(role: str, scope: list) -> bool:
     """The root is a manager: a rule addressed to every manager reaches it too."""
-    return role in scope or (role == "root" and "manager" in scope)
+    rs = ruleset(role)
+    return rs in scope or (rs == "root" and "manager" in scope)
 
 
 def rule_text(node: dict, lang: str = "en") -> str:
@@ -118,8 +125,8 @@ def frontmatter(role: str) -> str:
 
 
 def sections():
-    """Every section that holds rules; procedure and blocks have their own shapes."""
-    return {n: b for n, b in corpus().items() if n not in DATA}
+    """Every section that holds rules."""
+    return dict(corpus())
 
 
 def render(role: str) -> str:
@@ -158,7 +165,7 @@ def main() -> int:
             if not isinstance(scope, list) or not scope:
                 failures.append(f"{name}.{key} has no scope list")
             else:
-                unknown = [r for r in scope if r not in ROLES]
+                unknown = [r for r in scope if r not in RULESETS]
                 if unknown:
                     failures.append(f"{name}.{key} names unknown roles {unknown}")
             text += rule_text(node) + "\n"
@@ -183,8 +190,8 @@ def main() -> int:
     for w in banned:
         failures.append(f"banned word {w!r}")
 
-    views = {r: render(r) for r in ("root", "manager", "worker")}
-    targets = {}
+    views = {r: render(r) for r in ROLES}
+    targets = {r: RENDER_DIR / f"{r}.md" for r in ROLES}
 
 
     for role in yaml.safe_load((LAW / "roles.yaml").read_text(encoding="utf-8")):
@@ -197,28 +204,12 @@ def main() -> int:
     if n > ceiling():
         failures.append(f"the root view states {n} prohibitions against a ceiling of {ceiling()}")
 
-    proc_path = LAW / "procedure.yaml"
-    if proc_path.exists():
-        proc = yaml.safe_load(proc_path.read_text(encoding="utf-8"))
-        flat_all = {k: v for b in sections().values() for k, v in b.items()}
-        for role, spec in proc.get("procedure", {}).items():
-            if not isinstance(spec, dict) or "_test" not in spec:
-                continue
-            for row in spec["_test"]:
-                st = spec["_states"][row["_state"]]
-                for key in st["_steps"]:
-                    if key not in flat_all:
-                        failures.append(f"procedure {role}/{row['_state']} uses {key}, which does not exist")
-                    elif not reads(role, flat_all[key].get("scope", [])):
-                        failures.append(f"procedure {role}/{row['_state']} uses {key}, which {role} may not read")
-                if not st.get("_criterion", {}).get("_by"):
-                    failures.append(f"procedure {role}/{row['_state']} has no command for its criterion")
     for key, node in flat_all.items():
         for dep in node.get("_depends", []):
             if dep not in flat_all:
                 failures.append(f"{key} depends on {dep}, which does not exist")
             else:
-                for role in ("root", "manager", "worker"):
+                for role in ROLES:
                     if reads(role, node.get("scope", [])) and not reads(role, flat_all[dep].get("scope", [])):
                         failures.append(f"{key} depends on {dep}, which {role} may not read")
 

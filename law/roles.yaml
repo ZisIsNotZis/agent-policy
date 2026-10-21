@@ -1,14 +1,30 @@
-manager:
-  description: An agent with a directory, a document and a roadmap of its own. Splits its work into children and answers for them.
-  guide: manager
-  tools: read, edit, write, bash, grep, find, ls, subagent
-  thinking: high
-worker:
-  description: Executes exactly one work package in its parent's directory, and reports once.
-  guide: worker
-  tools: read, edit, write, bash, grep, find, ls
-  thinking: high
 root:
   description: The one node whose parent is the person. Speaks to them and to nobody else, and answers for the whole tree.
+  ruleset: root
   tools: read, edit, write, bash, grep, find, ls, subagent
+  thinking: medium
+manager:
+  description: An agent with a directory, a document and a roadmap of its own. Splits its work into children and answers for them.
+  ruleset: manager
+  tools: read, edit, write, bash, grep, find, ls, subagent
+  thinking: medium
+worker:
+  description: Executes exactly one work package in its parent's area, and reports once.
+  ruleset: worker
+  tools: read, edit, write, bash, grep, find, ls
+  thinking: low
+researcher:
+  description: Answers one bounded question by reading widely and saying what the evidence supports. Writes no files but its own notes, and dispatches nothing.
+  ruleset: worker
+  tools: read, bash, grep, find, ls, web_search_ds, web_fetch_ds
   thinking: max
+reviewer:
+  description: Reads one artefact against its acceptance and returns a verdict with evidence at the source. Never repairs.
+  ruleset: reviewer
+  tools: read, bash, grep, find, ls
+  thinking: high
+policy_worker:
+  description: 'Changes this law: edits the corpus, re-renders the views, and runs the checks.'
+  ruleset: policy
+  tools: read, edit, write, bash, grep, find, ls
+  thinking: high

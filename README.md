@@ -1,59 +1,60 @@
 # agent-policy
 
-Standing law for AI agents working in a repository: who is a node, who speaks to whom, what a report carries, where a fact lives, and who may decide.
+Standing law for AI agents working in a repository: who is a node, who speaks to whom, what a report
+carries, where a fact lives, and who may decide.
 
-**For** someone who wants an agent held to something checkable, and for reading what this author's agents actually work under.
-**Not for** a product, a framework or a promise. It is one author's law, written for one human working with agents. It refuses most of what a coding agent does by default: it kills deprecated material instead of annotating it, it treats a person's words as evidence about the end rather than a specification of the means, and it sends a failure to the layer that should have prevented it.
+**For** someone who wants an agent held to something checkable, and for reading what this author's agents
+actually work under.
+**Not for** a product, a framework or a promise. It is one author's law, written for one human working with
+agents. It refuses most of what a coding agent does by default: it kills deprecated material instead of
+annotating it, it treats a person's words as evidence about the end rather than a specification of the
+means, and it sends a failure to the layer that should have prevented it.
+
+## One source, six projections
+
+[AGENTS.yaml](AGENTS.yaml) is the whole law: 396 rules, each with a trigger, a goal and an action, in
+Chinese and English side by side. Nothing else in this repository is a source.
+
+`python3 tools/build.py` writes one file per role into [agents/](agents): the rules that role reads, and
+nothing else. A role file is generated and never edited, and `--check` fails when one has drifted.
+
+| Role | What it is for | Rules |
+|---|---|---|
+| `root` | the one node whose parent is the person | 339 |
+| `manager` | holds a directory, a document and a roadmap, and dispatches | 288 |
+| `worker` | executes one work package and reports once | 214 |
+| `researcher` | answers one bounded question with max thinking and writes nothing | 214 |
+| `reviewer` | reads one artefact against its acceptance and returns a verdict | 43 |
+| `policy_worker` | changes this law and runs the checks | 55 |
+
+The first two hold a directory and dispatch. The last four are flavours of a worker: they differ in what
+they read, what they produce and how hard they are allowed to think, and none of them dispatches. A
+behaviour that is a matter of subject rather than of interface — holding a GPU, searching the web, writing
+for the public — is not a role. It is a contract that names the rules it needs.
 
 ## Read it
 
-[AGENTS.md](AGENTS.md) is the law plus the node procedure, generated from [law/](law) and never edited. It is four short documents and the six role guides, of which a session reads one. The check prints the exact size; a session reads this instead of a project's instructions.
-
-- [law/core.md](law/core.md) — structure, speech, reports, consent, argument, subordination, amendment.
-- [law/records.md](law/records.md) — the shape of a node's document, and the coordinates a fact carries.
-- [law/ops.md](law/ops.md) — nothing long inside a turn, land before reporting, the safe point, durability, no trash.
-- [law/lexicon.md](law/lexicon.md) — one word per concept, and the banned synonyms a check refuses.
-- [law/guides/](law/guides) — one procedure per role: node, worker, reviewer, diagnoser, builder, researcher.
-
-A node reads one document: itself. It does not read another node's document, and it does not read this law twice.
+[AGENTS.md](AGENTS.md) is a symlink to `agents/root.md`, because a root launched directly by pi loads no role
+file and that is the file it gets. Subagents never see it: each role file turns project context off.
 
 ## Check it
 
 ```sh
-python3 tools/law.py --check
+python3 tools/law.py --check    # the corpus: shape, scope, dependencies, banned words, shields
+python3 tools/build.py --check  # the six role files against the corpus
+sh tools/check.sh               # both
 ```
 
-Prints `ok: 7 views, 1287 words, 7153 chars, 23 banned words, 6 roles` and takes 0.2 s on a fresh clone with Python 3.12 and PyYAML. It refuses a view that no longer matches the source, a banned word outside the lexicon table, a role claiming a guide that does not exist, and a guide no role claims.
+The check also counts prohibitions against `law/ceiling`, so a rule cannot quietly become a ban.
 
-Run it on every commit instead of remembering to:
+## The rest of the repository
 
-```sh
-git config core.hooksPath .githooks
-```
+- `law/roles.yaml` — the six roles, their tools and their thinking level. The only place tuning lives.
+- `law/lexicon.md` — the banned-word table, refused in every generated file.
+- `law/ceiling` — the prohibition budget.
+- `tools/law.py` — renders one role's view out of the corpus, and checks it.
+- `tools/build.py` — writes `agents/*.md`.
+- `tools/check.sh` — one entry point.
 
-## Install it
-
-`tools/law.py` writes `AGENTS.md` and one agent definition per role into `agents/`. In a workspace, link both:
-
-```sh
-ln -s ../../agent-policy/AGENTS.md AGENTS.md
-for r in root worker reviewer diagnoser builder researcher; do
-  ln -s ../../../agent-policy/agents/$r.md .pi/agents/$r.md
-done
-```
-
-Each generated agent carries `inheritProjectContext: false`, so a child gets the law and its own procedure and never a project's instructions or a policy source it met in passing.
-
-## Status and limits
-
-- Status and work in flight live in [docs/plan/policy.md](docs/plan/policy.md); the commitment is [docs/product/policy.md](docs/product/policy.md); the shape of the law is [docs/method/law-shape.md](docs/method/law-shape.md).
-- [docs/result/migration-ledger.tsv](docs/result/migration-ledger.tsv) records where each of the 315 rules of the previous law went, one row each, with the twenty that were retired and what falsified them.
-- The rule a check can enforce is enforced; the rest is prose. Prose is followed unevenly by a cheap model, so any rule here that matters in practice should be moved into a check rather than trusted.
-
-## Report a problem
-
-Open an issue at [ZisIsNotZis/agent-policy/issues](https://github.com/ZisIsNotZis/agent-policy/issues). A defect report is most useful with the rule's name, the situation it fired in, and what the agent did instead.
-
-## Licence
-
-MIT. Take the rules, change them, ship them.
+Historical snapshots of the four-role era and the migration ledger are under [docs/](docs); they are not
+current.
