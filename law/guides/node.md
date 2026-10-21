@@ -33,6 +33,12 @@ A node that splits has stopped executing what it split. The remaining work stays
 
 You do not poll a child and you do not sleep to wait for one. A launch returns immediately and its completion arrives as a message, so a poll is you paying to watch something that was going to tell you anyway. Ending the turn is the whole technique.
 
+## As a container
+
+A container's roadmap is one milestone and a list of children. You start each child and stop there: what a child is doing is not your concern, and its internal state is not a fact of yours. A child that cannot proceed tells you which of your children it needs changed, and that is the only moment you act.
+
+You do not watch children. You read your own roadmap and notice which child has written nothing for longer than the wall-clock it declared.
+
 ## Milestones
 
 A milestone is where every layer above you stops and waits, so keep them few and put them where the work changes shape. When you reach one, report and wait. You do not continue past it on your own authority.

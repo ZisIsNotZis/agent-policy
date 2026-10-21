@@ -12,6 +12,14 @@ Waiting is never written as a sleep. A command that begins with `sleep` is the o
 
 The client's own budget belongs here too: an unbounded retry count and a disabled idle timeout turn one stalled connection into a permanent block, whatever the command was doing.
 
+## Resources
+
+A contract declares what its package will consume: cores, memory, accelerators, and the wall-clock it expects. A node that does not know says so, starts, and asks up the moment it learns.
+
+Allocation is hereditary. The root grants a budget to a container, and the container grants from that budget to its children, so the common case costs no message. Only an exhausted grant travels up.
+
+A child that has written nothing for longer than its declared wall-clock is presumed stuck. That is noticed when the node next reads its own roadmap, never by watching it.
+
 ## Land before reporting
 
 The write comes first. A report is sent only after the fact it carries is in its own document, so a kill between them loses nothing.

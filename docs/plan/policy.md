@@ -19,7 +19,7 @@ Edits: `discussion.divergence` also covers the terse or heated message; `outdate
 
 The law changed form: from one 315-node tree read whole by every agent, to four prose documents plus one guide per role, so that a node reads only what its own work needs. `docs/method/law-shape.md` holds the form; `law/` holds the text.
 
-The old tree loaded 97,698 characters into every session, carried the same imperative strength on every node, and could only grow because addition was free and deletion was not. The law is now 9,950 characters, with a banned-word check, a view check and a ledger behind it.
+The old tree loaded 97,698 characters into every session, carried the same imperative strength on every node, and could only grow because addition was free and deletion was not. The law is now 11,205 characters, with a banned-word check, a view check and a ledger behind it.
 
 `milestone` is a relation rather than a category: a milestone is a point a node must report to the layer above, and a work package is a unit it executes without reporting. Both are recursive, so each layer owns its own roadmap, and a work package large enough becomes a child node holding a roadmap of its own. The root's milestones are therefore the only ones a person sees, which is what `milestone_list` already meant.
 

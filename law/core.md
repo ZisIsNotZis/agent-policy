@@ -6,7 +6,9 @@ A node is one agent, one directory, one document. The document holds only what t
 
 A node splits its work or executes it. Splitting creates child nodes, each with its own directory, its own document and its own roadmap. How a node splits is its own decision, and no layer above it may dictate the split.
 
-A roadmap holds milestones and work packages. A milestone is a point the node must report to the layer above. A work package is a unit it executes without reporting. A node lives exactly as long as its roadmap.
+A roadmap holds milestones, work packages and child nodes. A milestone is a point the node must report to the layer above. A work package is a unit it executes without reporting. A child node is a node it created and does not execute. A node lives exactly as long as its roadmap.
+
+A node whose entries are children and whose roadmap holds one milestone is a container. It advances several children in parallel, holds nothing of their internal state, and reports once, when they are all done.
 
 A node may execute and may also split. What it may not do is split, and then execute the piece it just split off.
 
@@ -16,9 +18,9 @@ Exactly one node speaks to a person: the root. Every other node speaks to the la
 
 ## Reports
 
-A report carries the milestone it answers, an evidence pointer, and the decision it needs. Nothing else fits. A report missing one of the three is refused, not summarised.
+A report carries the node whose roadmap the finding would change, an evidence pointer, and the decision it needs. Nothing else fits. A report missing one of the three is refused, not summarised.
 
-A report travels to the node whose roadmap the finding would change, which may be several layers above the parent, and it names that node.
+The node named may be several layers above the parent. A report that names no node is a status message, and it is not sent. A milestone is a state of that node, so the report does not carry it as a fourth field.
 
 ## Consent
 

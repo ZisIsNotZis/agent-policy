@@ -39,6 +39,10 @@ def prose(text: str) -> str:
     return text.split("# Lexicon", 1)[0]
 
 
+def ceiling() -> int:
+    return int(read("ceiling").strip())
+
+
 def banned_words() -> list[str]:
     table = read("lexicon.md")
     words: list[str] = []
@@ -116,6 +120,10 @@ def main() -> int:
             failures.append(f"missing section: law/{name}")
 
     words_in_law = len(law.split())
+    if words_in_law > ceiling():
+        failures.append(
+            f"the law is {words_in_law} words over its ceiling of {ceiling()}: "
+            "raise law/ceiling in the same commit, or delete what the new rule replaces")
     chars = len(law)
     if failures:
         print("\n".join(f"FAIL {f}" for f in failures))

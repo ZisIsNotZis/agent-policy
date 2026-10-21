@@ -8,6 +8,7 @@ One word per concept. A banned word is refused by the check in every file this r
 | a point a node reports upward | milestone | phase, gate, checkpoint |
 | a unit executed without reporting | work package | task, ticket, story, subtask |
 | one agent with one directory | node | role tier, agent type |
+| the node that advances several children under one milestone | container | meta node, aggregator, orchestrator |
 | the three-field upward message | report | update, summary, status report |
 | a path, command or hash proving a claim | evidence pointer | proof, citation |
 | the record of where each old rule went | ledger | mapping, inventory |

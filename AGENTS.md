@@ -6,7 +6,9 @@ A node is one agent, one directory, one document. The document holds only what t
 
 A node splits its work or executes it. Splitting creates child nodes, each with its own directory, its own document and its own roadmap. How a node splits is its own decision, and no layer above it may dictate the split.
 
-A roadmap holds milestones and work packages. A milestone is a point the node must report to the layer above. A work package is a unit it executes without reporting. A node lives exactly as long as its roadmap.
+A roadmap holds milestones, work packages and child nodes. A milestone is a point the node must report to the layer above. A work package is a unit it executes without reporting. A child node is a node it created and does not execute. A node lives exactly as long as its roadmap.
+
+A node whose entries are children and whose roadmap holds one milestone is a container. It advances several children in parallel, holds nothing of their internal state, and reports once, when they are all done.
 
 A node may execute and may also split. What it may not do is split, and then execute the piece it just split off.
 
@@ -16,9 +18,9 @@ Exactly one node speaks to a person: the root. Every other node speaks to the la
 
 ## Reports
 
-A report carries the milestone it answers, an evidence pointer, and the decision it needs. Nothing else fits. A report missing one of the three is refused, not summarised.
+A report carries the node whose roadmap the finding would change, an evidence pointer, and the decision it needs. Nothing else fits. A report missing one of the three is refused, not summarised.
 
-A report travels to the node whose roadmap the finding would change, which may be several layers above the parent, and it names that node.
+The node named may be several layers above the parent. A report that names no node is a status message, and it is not sent. A milestone is a state of that node, so the report does not carry it as a fourth field.
 
 ## Consent
 
@@ -88,6 +90,14 @@ Waiting is never written as a sleep. A command that begins with `sleep` is the o
 
 The client's own budget belongs here too: an unbounded retry count and a disabled idle timeout turn one stalled connection into a permanent block, whatever the command was doing.
 
+## Resources
+
+A contract declares what its package will consume: cores, memory, accelerators, and the wall-clock it expects. A node that does not know says so, starts, and asks up the moment it learns.
+
+Allocation is hereditary. The root grants a budget to a container, and the container grants from that budget to its children, so the common case costs no message. Only an exhausted grant travels up.
+
+A child that has written nothing for longer than its declared wall-clock is presumed stuck. That is noticed when the node next reads its own roadmap, never by watching it.
+
 ## Land before reporting
 
 The write comes first. A report is sent only after the fact it carries is in its own document, so a kill between them loses nothing.
@@ -123,6 +133,7 @@ One word per concept. A banned word is refused by the check in every file this r
 | a point a node reports upward | milestone | phase, gate, checkpoint |
 | a unit executed without reporting | work package | task, ticket, story, subtask |
 | one agent with one directory | node | role tier, agent type |
+| the node that advances several children under one milestone | container | meta node, aggregator, orchestrator |
 | the three-field upward message | report | update, summary, status report |
 | a path, command or hash proving a claim | evidence pointer | proof, citation |
 | the record of where each old rule went | ledger | mapping, inventory |
@@ -169,6 +180,12 @@ A node that splits has stopped executing what it split. The remaining work stays
 ## Waiting
 
 You do not poll a child and you do not sleep to wait for one. A launch returns immediately and its completion arrives as a message, so a poll is you paying to watch something that was going to tell you anyway. Ending the turn is the whole technique.
+
+## As a container
+
+A container's roadmap is one milestone and a list of children. You start each child and stop there: what a child is doing is not your concern, and its internal state is not a fact of yours. A child that cannot proceed tells you which of your children it needs changed, and that is the only moment you act.
+
+You do not watch children. You read your own roadmap and notice which child has written nothing for longer than the wall-clock it declared.
 
 ## Milestones
 
