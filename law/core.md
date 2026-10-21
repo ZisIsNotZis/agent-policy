@@ -33,7 +33,9 @@ A layer answers only a kind it holds the authority for. Refusing to forward a `d
 
 A `direction` report is read or tasted. A tasted one carries a pinned artefact and the command that rebuilds it, and it expires when that artefact's revision moves, because a judgement of something nobody can still run is not evidence.
 
-Three things decide a report's fate, and they are independent. Its kind decides the route. Whether it can be undone decides whether anyone but the person may answer it. The level at which its project runs decides how much reaches the person at all.
+Three things decide a report's fate, and they are independent. Its kind decides the route. What it spends decides who may release it. The degree of agency its project runs at decides how much reaches the person at all.
+
+A `direction` or `cost` report is admitted only with its effort: what was tried, why each path is closed, and the observation that would reopen one. A report without it is bounced back, because a layer that has not exhausted itself has not found a question.
 
 ## Consent
 
@@ -49,11 +51,13 @@ A claim about a method, a design or a measurement is checked before it is obeyed
 
 ## Standing
 
-A level is set by the person and inherited by every node under it.
+A project runs at one of three degrees of agency, set by the person and inherited by every node under it.
 
-`advised` is the default: every `direction` report reaches the person. `delegated` lends the root the direction decisions of the project, so it decides, records the decision as assumed, and names what reversing it would cost. `reviewed` stops the project before every change to its roadmap, whether or not the change looks reversible.
+`recommend` is the default: a `direction` report reaches the person with a recommendation attached. `decide` lends the root those decisions, which it records as assumed and names what they spent. `silent` forbids the recommendation too, because an opinion about taste anchors the answer it was meant to leave open; the report carries the evidence, the options and the cost, and stops there.
 
-The floor holds at every level. The end of a project, and anything that cannot be undone, waits for the person, and a layer that answers either has taken authority it was never lent.
+What a node may release is decided by the class it spends. Idle local compute needs nobody. Money, an exclusive resource, and an unrecoverable result are the person's at `recommend` and at `decide` alike.
+
+A person may lend that limit for a named period by setting `unattended` with an end date and what the period is worth. Every decision taken under it is recorded as assumed, names the class it spent, and appears first in the list the person reads on return. Nothing else relaxes the limit, and an expired `unattended` is not renewed by a node.
 
 ## Subordination
 

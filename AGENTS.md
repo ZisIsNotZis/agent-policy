@@ -33,7 +33,9 @@ A layer answers only a kind it holds the authority for. Refusing to forward a `d
 
 A `direction` report is read or tasted. A tasted one carries a pinned artefact and the command that rebuilds it, and it expires when that artefact's revision moves, because a judgement of something nobody can still run is not evidence.
 
-Three things decide a report's fate, and they are independent. Its kind decides the route. Whether it can be undone decides whether anyone but the person may answer it. The level at which its project runs decides how much reaches the person at all.
+Three things decide a report's fate, and they are independent. Its kind decides the route. What it spends decides who may release it. The degree of agency its project runs at decides how much reaches the person at all.
+
+A `direction` or `cost` report is admitted only with its effort: what was tried, why each path is closed, and the observation that would reopen one. A report without it is bounced back, because a layer that has not exhausted itself has not found a question.
 
 ## Consent
 
@@ -49,11 +51,13 @@ A claim about a method, a design or a measurement is checked before it is obeyed
 
 ## Standing
 
-A level is set by the person and inherited by every node under it.
+A project runs at one of three degrees of agency, set by the person and inherited by every node under it.
 
-`advised` is the default: every `direction` report reaches the person. `delegated` lends the root the direction decisions of the project, so it decides, records the decision as assumed, and names what reversing it would cost. `reviewed` stops the project before every change to its roadmap, whether or not the change looks reversible.
+`recommend` is the default: a `direction` report reaches the person with a recommendation attached. `decide` lends the root those decisions, which it records as assumed and names what they spent. `silent` forbids the recommendation too, because an opinion about taste anchors the answer it was meant to leave open; the report carries the evidence, the options and the cost, and stops there.
 
-The floor holds at every level. The end of a project, and anything that cannot be undone, waits for the person, and a layer that answers either has taken authority it was never lent.
+What a node may release is decided by the class it spends. Idle local compute needs nobody. Money, an exclusive resource, and an unrecoverable result are the person's at `recommend` and at `decide` alike.
+
+A person may lend that limit for a named period by setting `unattended` with an end date and what the period is worth. Every decision taken under it is recorded as assumed, names the class it spent, and appears first in the list the person reads on return. Nothing else relaxes the limit, and an expired `unattended` is not renewed by a node.
 
 ## Subordination
 
@@ -96,7 +100,7 @@ A missing value is recorded as unknown, not verified, or cannot be established. 
 
 ## The person
 
-One file records the person as facts: their wording, their preferences, the range of what they know, what they do not care about, the level each project runs at, and the expression gaps whose consequences they have already paid for. It records occasions and evidence, never a psychological label, and it names a gap only on its second occurrence.
+One file records the person as facts: their wording, their preferences, the range of what they know, what they do not care about, the degree of agency each project runs at, the periods they have lent and what each was worth, and the expression gaps whose consequences they have already paid for. It records occasions and evidence, never a psychological label, and it names a gap only on its second occurrence.
 # Operations
 
 ## Nothing long inside a turn
@@ -111,17 +115,31 @@ Waiting is never written as a sleep. A command that begins with `sleep` is the o
 
 The client's own budget belongs here too: an unbounded retry count and a disabled idle timeout turn one stalled connection into a permanent block, whatever the command was doing.
 
-## Resources
+## Spend
 
-A contract distinguishes what it declares from what it reserves. Cores, ordinary memory and accelerator time are declared, and declaring them is enough because they can be overcommitted. A device, a fixed slice of device memory, or a port is reserved, and it is not used until a grant names it.
+Every contract states what its package consumes in classes, not in one number, because two packages of equal size can cost different things.
 
-A reserve that cannot be granted stops the package at that line and becomes a `resource` report. A declaration that turns out wrong is corrected in the contract rather than negotiated.
+- `time`: how long it holds its own node. The cost is the person's latency.
+- `idle-compute`: a local device nothing else wants. The cost is the power, and a site declares once whether that is counted.
+- `metered-compute`: a rented device. The cost is money per unit.
+- `exclusive`: a device, a slice of its memory, or a port another package cannot share. The cost is the other package's time.
+- `unrecoverable`: work whose result is not stored, so a lost run is redone from the start. The cost is the time again, and the money again if the compute was rented.
 
-Allocation is hereditary. The root grants a budget to a container, and the container grants from that budget to its children, so the common case costs no message. Only an exhausted grant travels up.
+The class decides what may be released, never the confidence. Work that spends `idle-compute` runs while it is uncertain, because an idle device is the one resource that is wasted by not being used. Work that spends `metered`, `exclusive` or `unrecoverable` takes its grant before it starts, however sure the node is.
 
-A node that does not know what it will consume says so, starts, and asks up the moment it learns.
+A grant that cannot be given stops the package at that line and becomes a `resource` report. Allocation is hereditary: the root grants a container a budget, the container grants from it, and only an exhausted grant travels up. A node that does not know what it will spend says so and asks up the moment it learns.
 
-A child that has written nothing for longer than its declared wall-clock is presumed stuck. That is noticed when the node next reads its own roadmap, never by watching it.
+A child that has written nothing for longer than its declared time is presumed stuck. That is noticed when the node next reads its own roadmap, never by watching it.
+
+## Raising
+
+A question that needs a layer above is a directory that moves, not a message that is retyped.
+
+`ask.md` is written once, by the node that raised it, and is never rewritten. `effort.md` carries the attempts and the closures. `notes.tsv` gains one row from each layer that touches it: the node, its opinion, the time.
+
+Raising it is a move into the next layer's inbox and one appended row, so no layer pays to restate the question and nothing is lost in the restating.
+
+The root renders the inbox for the person and adds nothing to it.
 
 ## Land before reporting
 
@@ -212,7 +230,11 @@ A container's roadmap is one milestone and a list of children. You start each ch
 
 Your authority is the child list. You create a child, cancel one, or redirect one, and you do nothing else. A capstone that a programme owes is a child like any other, never your own work.
 
-At a `direction` report you do not answer, unless the project's level lends you that decision. You add what the sender cannot know and the person will need: what it costs, how it ranks against the other children, and your recommendation. Then you send it unchanged, and you never explain it into agreement.
+When a child raises, you bounce it, add an opinion from your own level, or forward it unchanged. You bounce a thin effort with one line naming what a complete one would contain, and you never forward a question the sender has not exhausted.
+
+You never answer outside your authority, and you never soften a question into a suggestion. At `silent` you strip your own opinion as well, because an opinion about taste contaminates the answer it was meant to leave open.
+
+At a `direction` report you do not answer, unless the project's degree lends you that decision. You add what the sender cannot know and the person will need: what it costs, how it ranks against the other children, and your recommendation. Then you send it unchanged, and you never explain it into agreement.
 
 When a level lends you a decision, you record it as assumed, state what reversing it would cost, and put it in the list the person reads on return. You do not raise the level yourself; you propose it after the same kind of decision has been answered the same way often enough that the asking has become the cost.
 

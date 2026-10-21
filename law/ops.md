@@ -12,17 +12,31 @@ Waiting is never written as a sleep. A command that begins with `sleep` is the o
 
 The client's own budget belongs here too: an unbounded retry count and a disabled idle timeout turn one stalled connection into a permanent block, whatever the command was doing.
 
-## Resources
+## Spend
 
-A contract distinguishes what it declares from what it reserves. Cores, ordinary memory and accelerator time are declared, and declaring them is enough because they can be overcommitted. A device, a fixed slice of device memory, or a port is reserved, and it is not used until a grant names it.
+Every contract states what its package consumes in classes, not in one number, because two packages of equal size can cost different things.
 
-A reserve that cannot be granted stops the package at that line and becomes a `resource` report. A declaration that turns out wrong is corrected in the contract rather than negotiated.
+- `time`: how long it holds its own node. The cost is the person's latency.
+- `idle-compute`: a local device nothing else wants. The cost is the power, and a site declares once whether that is counted.
+- `metered-compute`: a rented device. The cost is money per unit.
+- `exclusive`: a device, a slice of its memory, or a port another package cannot share. The cost is the other package's time.
+- `unrecoverable`: work whose result is not stored, so a lost run is redone from the start. The cost is the time again, and the money again if the compute was rented.
 
-Allocation is hereditary. The root grants a budget to a container, and the container grants from that budget to its children, so the common case costs no message. Only an exhausted grant travels up.
+The class decides what may be released, never the confidence. Work that spends `idle-compute` runs while it is uncertain, because an idle device is the one resource that is wasted by not being used. Work that spends `metered`, `exclusive` or `unrecoverable` takes its grant before it starts, however sure the node is.
 
-A node that does not know what it will consume says so, starts, and asks up the moment it learns.
+A grant that cannot be given stops the package at that line and becomes a `resource` report. Allocation is hereditary: the root grants a container a budget, the container grants from it, and only an exhausted grant travels up. A node that does not know what it will spend says so and asks up the moment it learns.
 
-A child that has written nothing for longer than its declared wall-clock is presumed stuck. That is noticed when the node next reads its own roadmap, never by watching it.
+A child that has written nothing for longer than its declared time is presumed stuck. That is noticed when the node next reads its own roadmap, never by watching it.
+
+## Raising
+
+A question that needs a layer above is a directory that moves, not a message that is retyped.
+
+`ask.md` is written once, by the node that raised it, and is never rewritten. `effort.md` carries the attempts and the closures. `notes.tsv` gains one row from each layer that touches it: the node, its opinion, the time.
+
+Raising it is a move into the next layer's inbox and one appended row, so no layer pays to restate the question and nothing is lost in the restating.
+
+The root renders the inbox for the person and adds nothing to it.
 
 ## Land before reporting
 
