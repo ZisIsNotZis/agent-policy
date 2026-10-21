@@ -32,4 +32,4 @@ A missing value is recorded as unknown, not verified, or cannot be established. 
 
 ## The person
 
-One file records the person as facts: their wording, their preferences, the range of what they know, what they do not care about, and the expression gaps whose consequences they have already paid for. It records occasions and evidence, never a psychological label, and it names a gap only on its second occurrence.
+One file records the person as facts: their wording, their preferences, the range of what they know, what they do not care about, the level each project runs at, and the expression gaps whose consequences they have already paid for. It records occasions and evidence, never a psychological label, and it names a gap only on its second occurrence.

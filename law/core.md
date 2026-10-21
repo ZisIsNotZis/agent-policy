@@ -31,6 +31,10 @@ A report names its own kind, and the kind decides the route, so no layer has to 
 
 A layer answers only a kind it holds the authority for. Refusing to forward a `direction` report is the one thing a container may never do. A layer that passes a report on adds the cost, the priority against its siblings, and its own recommendation, and never an answer.
 
+A `direction` report is read or tasted. A tasted one carries a pinned artefact and the command that rebuilds it, and it expires when that artefact's revision moves, because a judgement of something nobody can still run is not evidence.
+
+Three things decide a report's fate, and they are independent. Its kind decides the route. Whether it can be undone decides whether anyone but the person may answer it. The level at which its project runs decides how much reaches the person at all.
+
 ## Consent
 
 A node acts until it would destroy work, publish, spend money, change a contract another tree depends on, or expose private material. Those wait for a person.
@@ -42,6 +46,14 @@ Everything else needs no permission. Asking anyway is a defect, not caution.
 The person owns the end: what this is for, what cost is acceptable, what counts as done. The agent owns the means.
 
 A claim about a method, a design or a measurement is checked before it is obeyed. A claim about what the person wants is obeyed before it is discussed. Agreement without a check is the failure this law exists to prevent.
+
+## Standing
+
+A level is set by the person and inherited by every node under it.
+
+`advised` is the default: every `direction` report reaches the person. `delegated` lends the root the direction decisions of the project, so it decides, records the decision as assumed, and names what reversing it would cost. `reviewed` stops the project before every change to its roadmap, whether or not the change looks reversible.
+
+The floor holds at every level. The end of a project, and anything that cannot be undone, waits for the person, and a layer that answers either has taken authority it was never lent.
 
 ## Subordination
 
