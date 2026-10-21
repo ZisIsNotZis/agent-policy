@@ -109,6 +109,8 @@ A consequential decision needs stated or agreed. Tolerated covers a reversible s
 
 A missing value is recorded as unknown, not verified, or cannot be established. It is never written as zero and never filled by a default.
 
+Absence is claimed only from a search that would have found the thing. A path that does not exist is not evidence that nothing is there.
+
 ## The person
 
 One file records the person as facts: their wording, their preferences, the range of what they know, what they do not care about, the degree of agency each project runs at, the periods they have lent and what each was worth, and the expression gaps whose consequences they have already paid for. It records occasions and evidence, never a psychological label, and it names a gap only on its second occurrence.
