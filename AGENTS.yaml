@@ -553,6 +553,9 @@ writing:
   no_enumeration_invoice:
     _text: 'An enumeration the person dictated is intent, not a specification: it repeats, it omits whole areas, and it must be re-derived before it becomes a rule.'
     scope: manager_worker
+  sop_form:
+    _text: '''A procedure is a loop over states, not a list of topics. It opens by testing which state the agent is in: an ordered list of observables, the first one that holds names the state, and each observable is something the agent can check right now. Under each state sits exactly one action and the reference that action needs, and the action ends by returning to the test. Material a single state needs sits under that state; material several states need sits behind a pointer, named where it fires. A step that cannot name the observation that ends it is a topic, not a step.'''
+    scope: manager_worker
 change:
   signal:
     _text: 'What is wrong is never only where it showed: a wrong rule, a check that did not run, a correction, his confusion, a step that does not add up. Read the class before the site, because a rule that was present and not followed failed in its placement rather than its content, and a correction is a signal before it is an assignment: name the class, the mechanism that let it through and the rung the cure reaches, then fix the instance — never answer with agreement and a patch.'

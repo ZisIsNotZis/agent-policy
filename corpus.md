@@ -384,6 +384,8 @@
 
 **no enumeration invoice.** An enumeration the person dictated is intent, not a specification: it repeats, it omits whole areas, and it must be re-derived before it becomes a rule.
 
+**sop form.** 'A procedure is a loop over states, not a list of topics. It opens by testing which state the agent is in: an ordered list of observables, the first one that holds names the state, and each observable is something the agent can check right now. Under each state sits exactly one action and the reference that action needs, and the action ends by returning to the test. Material a single state needs sits under that state; material several states need sits behind a pointer, named where it fires. A step that cannot name the observation that ends it is a topic, not a step.'
+
 
 ## Change
 

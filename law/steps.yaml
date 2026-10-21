@@ -1,0 +1,302 @@
+states:
+  1 判断你在哪个状态:
+  - sop_form
+  2 收件箱:
+  - one_direction
+  - tracked
+  - file_shape
+  - doorstep_not_shelf
+  - sender_decides_nothing
+  - alive_or_not
+  - delete_on_read
+  - delete_is_tidying
+  - fire_and_forget
+  - correct_by_author
+  - discussion_record
+  - write_through
+  - no_blind_agreement
+  - person_may_write_anywhere
+  - ask_the_owner
+  - every_fact_has_a_home
+  - own_inference
+  - untrusted_input
+  3 送审:
+  - report_fields
+  - completion
+  - kinds
+  - kind_resource
+  - kind_cost
+  - kind_direction
+  - kind_contract
+  - unreadable_contract
+  - effort_required
+  - manager_does_not_judge
+  - every_package
+  - fresh
+  - judgement_only
+  - reviewer_contract
+  - no_commit
+  - bind_to_revision
+  - evidence_at_source
+  - scoped_review
+  - falsify
+  - defect_evidence
+  4 处置:
+  - verdicts
+  - not_a_verdict
+  - integration
+  - route_failure
+  5 交付:
+  - milestone_is_a_gate
+  - vertical_slice
+  - milestone_list
+  - hard_metric_end
+  - workset
+  - work_package
+  - few_milestones
+  - ship_at_gate
+  - gates_hold
+  - invent_no_gate
+  - multimodal
+  - milestone_experience
+  - three_kinds_of_review
+  - protect_willingness
+  - completion_proof
+  - advance_stops
+  - forward_adds
+  - forward_never_refused
+  - beyond_authority
+  - tasted
+  - three_deciders
+  - presentable
+  - readme
+  - orientation
+  - readme_tested
+  - poc
+  - self_test
+  6 谈协议:
+  - agreement_state
+  - no_agreement_no_work
+  - reach_agreement
+  - auto_advance
+  - block_timeout
+  - ask_only_consequential
+  - parent_authorises
+  - word_from_parent
+  - always_a_path
+  - plan_tree
+  - home
+  - high_risk
+  - absorb_risk
+  - secrets
+  - covered_once
+  7 派活:
+  - two_kinds
+  - worker
+  - kind_test
+  - directory
+  - work_dir
+  - document_parts
+  - roadmap_shape
+  - parent_only
+  - name_is_the_trace
+  - info_ownership
+  - everything_under_itself
+  - recursion_depth
+  - sub_owner
+  - take_next
+  - self_execute
+  - contract_fields
+  - contract_extra
+  - contract_inheritance
+  - contract_identity
+  - contract_grant
+  - pass_boundary
+  - coverage_first
+  - persist_split
+  - logical_level
+  - logic_is_physical
+  - fresh_context
+  - split_follows_logic
+  - say_that_you_started
+  - subagent_scope
+  - model_cost
+  8 等:
+  - async_only
+  - no_orchestration
+  - steerable
+  - no_long_in_turn
+  - timeout_is_not_a_guard
+  - no_sleep
+  - client_budget
+  - no_watching
+  - stuck
+  - stuck_disposal
+  - pause
+  - steer
+  - deadline
+  - budget_caps
+  - async_continuation
+  - own_effort
+  - change_hypothesis
+  - scheduling_shape
+  - classes
+  - time
+  - idle
+  - metered
+  - exclusive
+  - unrecoverable
+  - class_decides
+  - unknown_class
+  - no_hold_while_unsure
+  - vram
+  - missing_infra_is_not_missing_permission
+  - advisory_limits
+  9 收口:
+  - safe_point
+  - intent_before_act
+  - wind_down
+  - durability
+  - transient
+  - recovery
+  - repair_on_sight
+  - commits
+  - pushes_hereditary
+  - no_remote
+  - main_area
+  - one_writer_per_area
+  - worktree
+  - integrator
+  - untrack
+  - no_trash
+  - track_or_ignore
+  - structure
+  - artefacts_home
+  - store_or_declare
+  - preserve
+  - preserve_work
+  - regeneration_cost
+  - cleanup_check
+  - resume
+  - keep_evidence
+  - manager_owns
+  - nothing_beyond
+  - result_not_inventory
+reference:
+- ssot
+- atomic
+- kill
+- no_op
+- falsifiable
+- top_down
+- absent
+- controlled
+- invalidate
+- specific_wins
+- rule_over_state
+- derived
+- inferable
+- fail_loud
+- levels_in_order
+- upward_reports
+- current_fact
+- retraction
+- derived_is_not_stored
+- cache
+- expired_cache
+- assent
+- assumed_is_agent_fact
+- no_mood_labels
+- absent_claim
+- no_manual_wrap
+- entrance
+- entrance_for_next_session
+- missing_entrance
+- fact_record
+- split_authorship
+- scratch_retired
+- rule_form
+- prose
+- no_significance_clause
+- conclusion_first
+- no_hedging_known
+- concrete
+- user_language
+- human_shape_and_rule_shape
+- no_enumeration_invoice
+- signal
+- bidirectional
+- strongest_cure
+- intake
+- doc_first
+- cut_repetition
+- amend_by_replacement
+- propagate_down
+- supersede
+- migrate_on_touch
+- lossless
+- scope_field
+- coverage_check
+- scope_composition
+- write_stricter
+- trust_is_earned
+- verify_the_fact
+- watch_for_poison
+- source_order
+- user_rank_scope
+- conflict
+- parent_contract
+- chain
+- layout
+- files
+- file_kind
+- granularity
+- rollup
+- people
+- expression_gap
+- layer_and_source
+- stereotype
+- partition
+- checklist
+- resolvable
+- rebuild_after_edit
+- render_is_written_not_read
+- adopt
+- migrate
+- outdated
+- dead_code
+- read_once
+- layout_first
+- defect_surface
+- efficiency
+- start_early
+- concurrency
+- queue_behind
+- overlap_waits
+- bounded_calibration
+- recovery_reserve
+- grant_recovery
+- follow_toolchain
+- bootstrap
+- local_config_first
+- diagnose_network
+- reproduce_or_artefact
+- think_first
+- baseline
+- only_authorized
+- separate_preexisting
+- check_gates
+- anomaly
+- context_pressure
+- model_choice
+- external_compute
+- attention_is_a_budget
+- docs_may_not_be_wrong
+- true_because_checked
+- risk_is_his_cost
+- depth_over_breadth
+- provable_or_not_done
+- explicit_criteria
+- own_word_does_not_count
+- time_is_the_scarce_thing
+- one_loop
