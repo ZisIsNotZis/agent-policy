@@ -110,6 +110,14 @@ A sender fires and forgets. Whether the receiver replies, and what it says, is t
 
 A message may be corrected by the node that wrote it and by nobody else.
 
+## Cache
+
+A fact that belongs to a node and cannot be read from it, because it needs the siblings at once, is a cache: a judgement computed here out of what the children say.
+
+A cache is not a fact, so it carries two things on its face. The revision it was computed at, being a commit and a time, because the children have moved since. And the one command that computes it again, being a script, a written instruction, or both, because a recomputation that has to be reinvented is a second rubric wearing the first one's name.
+
+An expired cache is read as expired rather than believed in silence. Nothing is retired for being stale; it is recomputed or it is labelled.
+
 ## Coordinates
 
 A fact carries `from`, the fact it derives from; `end`, what it is for; `author`, being person, agent, measurement or third party; `standing`, being current, provisional or disputed; and `evidence`.
@@ -216,6 +224,10 @@ A fact belongs at the highest place it can reach: a temporary path, then an igno
 ## No trash
 
 Every path is committed, declared, or ignored with a stated owner. An unexplained modification is a defect, because it hides real work and makes the tree unreadable to the next session. It is never deleted to make the tree look clean.
+
+## Migrate on touch
+
+A document in an old shape is not a defect to be repaired everywhere at once. A node brings its own directory to the current shape when it next works there, so the conversion happens where it is needed and costs what it is worth.
 
 ## Recovery
 

@@ -82,6 +82,10 @@ A fact belongs at the highest place it can reach: a temporary path, then an igno
 
 Every path is committed, declared, or ignored with a stated owner. An unexplained modification is a defect, because it hides real work and makes the tree unreadable to the next session. It is never deleted to make the tree look clean.
 
+## Migrate on touch
+
+A document in an old shape is not a defect to be repaired everywhere at once. A node brings its own directory to the current shape when it next works there, so the conversion happens where it is needed and costs what it is worth.
+
 ## Recovery
 
 Recovery reads the document's current state and the named jobs, and re-checks anything the change invalidated. A record older than the revision is not evidence.
