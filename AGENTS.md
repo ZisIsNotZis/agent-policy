@@ -53,7 +53,7 @@ A claim about a method, a design or a measurement is checked before it is obeyed
 
 A project runs at one of three degrees of agency, set by the person and inherited by every node under it.
 
-`recommend` is the default: a `direction` report reaches the person with a recommendation attached. `decide` lends the root those decisions, which it records as assumed and names what they spent. `silent` forbids the recommendation too, because an opinion about taste anchors the answer it was meant to leave open; the report carries the evidence, the options and the cost, and stops there.
+`recommend` is the default: a `direction` report reaches the person with a recommendation attached. `decide` lends the root those decisions, which it records as assumed and names what they spent. `silent` forbids the recommendation too, because an opinion about taste anchors the answer it was meant to leave open; the report carries the evidence, the options and the cost, and stops there. A tasted question is `silent` by default.
 
 What a node may release is decided by the class it spends. Idle local compute needs nobody. Money, an exclusive resource, and an unrecoverable result are the person's at `recommend` and at `decide` alike.
 
@@ -126,6 +126,8 @@ Every contract states what its package consumes in classes, not in one number, b
 - `unrecoverable`: work whose result is not stored, so a lost run is redone from the start. The cost is the time again, and the money again if the compute was rented.
 
 The class decides what may be released, never the confidence. Work that spends `idle-compute` runs while it is uncertain, because an idle device is the one resource that is wasted by not being used. Work that spends `metered`, `exclusive` or `unrecoverable` takes its grant before it starts, however sure the node is.
+
+Where a site's price follows the clock, metered spend waits for the cheap window while the work is throughput-bound, and ignores the window while the work is waiting-bound, because an idle rented device costs more than the discount it waited for.
 
 A reservation is written before the work starts and released when it ends, so the holdings at the node that holds the budget are the truth about who has the device. A probe of the device confirms a holding and never decides one, because a reservation is not a process.
 

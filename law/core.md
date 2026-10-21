@@ -53,7 +53,7 @@ A claim about a method, a design or a measurement is checked before it is obeyed
 
 A project runs at one of three degrees of agency, set by the person and inherited by every node under it.
 
-`recommend` is the default: a `direction` report reaches the person with a recommendation attached. `decide` lends the root those decisions, which it records as assumed and names what they spent. `silent` forbids the recommendation too, because an opinion about taste anchors the answer it was meant to leave open; the report carries the evidence, the options and the cost, and stops there.
+`recommend` is the default: a `direction` report reaches the person with a recommendation attached. `decide` lends the root those decisions, which it records as assumed and names what they spent. `silent` forbids the recommendation too, because an opinion about taste anchors the answer it was meant to leave open; the report carries the evidence, the options and the cost, and stops there. A tasted question is `silent` by default.
 
 What a node may release is decided by the class it spends. Idle local compute needs nobody. Money, an exclusive resource, and an unrecoverable result are the person's at `recommend` and at `decide` alike.
 

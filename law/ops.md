@@ -24,6 +24,8 @@ Every contract states what its package consumes in classes, not in one number, b
 
 The class decides what may be released, never the confidence. Work that spends `idle-compute` runs while it is uncertain, because an idle device is the one resource that is wasted by not being used. Work that spends `metered`, `exclusive` or `unrecoverable` takes its grant before it starts, however sure the node is.
 
+Where a site's price follows the clock, metered spend waits for the cheap window while the work is throughput-bound, and ignores the window while the work is waiting-bound, because an idle rented device costs more than the discount it waited for.
+
 A reservation is written before the work starts and released when it ends, so the holdings at the node that holds the budget are the truth about who has the device. A probe of the device confirms a holding and never decides one, because a reservation is not a process.
 
 Work whose continuation is still in question may not hold an exclusive resource. It runs on idle compute, or it settles the question first, because holding what another package cannot share is a commitment the work has not yet earned.
