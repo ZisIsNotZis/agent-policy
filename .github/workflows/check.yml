@@ -1,7 +1,7 @@
 name: check
 on: [push, pull_request]
 jobs:
-  policy:
+  law:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -9,4 +9,4 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install pyyaml
-      - run: python3 render_policy.py --check
+      - run: python3 tools/law.py --check

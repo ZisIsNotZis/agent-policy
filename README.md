@@ -1,23 +1,29 @@
 # agent-policy
 
-Standing rules for AI agents working in a repository: what counts as a fact, where it lives, who may decide, and how a mistake becomes a rule instead of a patch.
+Standing law for AI agents working in a repository: who is a node, who speaks to whom, what a report carries, where a fact lives, and who may decide.
 
-**For** someone who wants their agent held to something, and for reading what this author's agents actually work under.
-**Not for** a product, a framework or a promise. It is one author's law, written for one human working with agents, and it refuses most of what a coding agent does by default: it kills deprecated material instead of annotating it, it treats his words as evidence about the end rather than a specification of the means, and it sends a failure back to the layer that should have prevented it.
+**For** someone who wants an agent held to something checkable, and for reading what this author's agents actually work under.
+**Not for** a product, a framework or a promise. It is one author's law, written for one human working with agents. It refuses most of what a coding agent does by default: it kills deprecated material instead of annotating it, it treats a person's words as evidence about the end rather than a specification of the means, and it sends a failure to the layer that should have prevented it.
 
 ## Read it
 
-[AGENTS.md](AGENTS.md) is the whole law, rendered from [AGENTS.yaml](AGENTS.yaml). Any copy of it, wherever you found it, names this repository in its banner, so a reader who lands on a stray copy can find the current one.
+[AGENTS.md](AGENTS.md) is the whole law, generated from [law/](law) and never edited. It is four short documents and six role guides, 7,153 characters, which a node reads instead of a project's instructions.
 
-Two files are not published here because they belong to a scope rather than to the law: the owner's `PEOPLE.md`, and any scope's own `AGENTS.yaml` that refines these rules.
+- [law/core.md](law/core.md) — structure, speech, reports, consent, argument, subordination, amendment.
+- [law/records.md](law/records.md) — the shape of a node's document, and the coordinates a fact carries.
+- [law/ops.md](law/ops.md) — nothing long inside a turn, land before reporting, the safe point, durability, no trash.
+- [law/lexicon.md](law/lexicon.md) — one word per concept, and the banned synonyms a check refuses.
+- [law/guides/](law/guides) — one procedure per role: node, worker, reviewer, diagnoser, builder, researcher.
+
+A node reads one document: itself. It does not read another node's document, and it does not read this law twice.
 
 ## Check it
 
 ```sh
-python3 render_policy.py --check
+python3 tools/law.py --check
 ```
 
-It prints `checks passed; AGENTS.md matches AGENTS.yaml.` and takes about 0.3 s, measured on the author's machine with Python 3.12 and PyYAML. It refuses a duplicate key, two nodes with the same text, an `@ref` that names no node, a manually wrapped line, and a render that no longer matches its source, and it regenerates the view with `python3 render_policy.py`.
+Prints `ok: 7 views, 1287 words, 7153 chars, 23 banned words, 6 roles` and takes about 0.1 s with Python 3.12 and PyYAML. It refuses a view that no longer matches the source, a banned word outside the lexicon table, a role claiming a guide that does not exist, and a guide no role claims.
 
 Run it on every commit instead of remembering to:
 
@@ -25,15 +31,28 @@ Run it on every commit instead of remembering to:
 git config core.hooksPath .githooks
 ```
 
+## Install it
+
+`tools/law.py` writes `AGENTS.md` and one agent definition per role into `agents/`. In a workspace, link both:
+
+```sh
+ln -s ../../agent-policy/AGENTS.md AGENTS.md
+for r in root worker reviewer diagnoser builder researcher; do
+  ln -s ../../../agent-policy/agents/$r.md .pi/agents/$r.md
+done
+```
+
+Each generated agent carries `inheritProjectContext: false`, so a child gets the law and its own procedure and never a project's instructions or a policy source it met in passing.
+
 ## Status and limits
 
-- Status and work in flight live in [docs/plan/policy.md](docs/plan/policy.md); the commitment is [docs/product/policy.md](docs/product/policy.md).
-- The renderer reads one source. A repository that wants to refine these rules and keep them in one rendered file cannot yet; the chaining that would allow it is planned, not shipped.
-- The rules were written from this author's failures. Where a rule is advice rather than a check it says so in its own line, and those are the ones to distrust.
+- Status and work in flight live in [docs/plan/policy.md](docs/plan/policy.md); the commitment is [docs/product/policy.md](docs/product/policy.md); the shape of the law is [docs/method/law-shape.md](docs/method/law-shape.md).
+- [docs/result/migration-ledger.tsv](docs/result/migration-ledger.tsv) records where each of the 315 rules of the previous law went, one row each, with the twenty that were retired and what falsified them.
+- The rule a check can enforce is enforced; the rest is prose. Prose is followed unevenly by a cheap model, so any rule here that matters in practice should be moved into a check rather than trusted.
 
 ## Report a problem
 
-Open an issue at [ZisIsNotZis/agent-policy/issues](https://github.com/ZisIsNotZis/agent-policy/issues). A defect report is most useful with the rule's name, the situation it fired in, and what the agent did instead; a rule that fails in a concrete situation is the only kind of evidence that changes this file.
+Open an issue at [ZisIsNotZis/agent-policy/issues](https://github.com/ZisIsNotZis/agent-policy/issues). A defect report is most useful with the rule's name, the situation it fired in, and what the agent did instead.
 
 ## Licence
 

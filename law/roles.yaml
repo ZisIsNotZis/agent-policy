@@ -1,0 +1,30 @@
+root:
+  description: The only node that speaks to a person. Owns the roadmap and the law.
+  guide: node
+  tools: read, edit, write, bash, grep, find, ls, subagent
+  thinking: max
+worker:
+  description: Executes exactly one work package from a contract, and reports once.
+  guide: worker
+  tools: read, edit, write, bash, grep, find, ls, subagent
+  thinking: high
+reviewer:
+  description: Judges one revision against its acceptance. Repairs nothing.
+  guide: reviewer
+  tools: read, bash, grep, find, ls
+  thinking: high
+diagnoser:
+  description: Finds the cause of a wrong result, then fixes that cause.
+  guide: diagnose
+  tools: read, edit, write, bash, grep, find, ls, subagent
+  thinking: high
+builder:
+  description: Builds one behaviour-complete slice with its check.
+  guide: build
+  tools: read, edit, write, bash, grep, find, ls, subagent
+  thinking: high
+researcher:
+  description: Answers one question from primary evidence.
+  guide: research
+  tools: read, bash, grep, find, ls, subagent
+  thinking: high
