@@ -131,7 +131,7 @@ A reservation is written before the work starts and released when it ends, so th
 
 Work whose continuation is still in question may not hold an exclusive resource. It runs on idle compute, or it settles the question first, because holding what another package cannot share is a commitment the work has not yet earned.
 
-Displacing a holder is allowed when the waiter's loss is larger than the holder's loss at being stopped, and both declare that loss in the contract.
+Displacing a holder is allowed when the waiter's loss is larger than the holder's loss at being stopped. A package is stoppable at its last write unless the contract says otherwise, so the loss of stopping it is the work done since that write, and only a package that cannot be stopped says so.
 
 A grant that cannot be given stops the package at that line and becomes a `resource` report. Allocation is hereditary: the root grants a container a budget, the container grants from it, and only an exhausted grant travels up. A node that does not know what it will spend says so and asks up the moment it learns.
 
