@@ -1,6 +1,6 @@
 # Records
 
-Every fact is written where its decision lives, and nothing current exists only in a conversation.
+Every fact is written where its decision lives, and nothing current exists only in a conversation. A package writes nothing, so its facts are landed by the node that files its report.
 
 ## A node's document
 

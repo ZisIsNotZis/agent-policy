@@ -10,11 +10,11 @@ A roadmap holds milestones, work packages and child nodes. A milestone is a poin
 
 A node whose entries are children and whose roadmap holds one milestone is a container. It advances several children in parallel, holds nothing of their internal state, and reports once, when they are all done.
 
-A node may execute and may also split. What it may not do is split, and then execute the piece it just split off.
+A node that keeps a roadmap may execute and may also split. What it may not do is split, and then execute the piece it just split off. A node that executes one package keeps no roadmap, so it has nothing to split and cannot be asked to.
 
 Everything about a node lives under that node's own directory. The only trace it leaves above is its name and the path that name resolves to, because a noun has to resolve somewhere.
 
-The interface is one fixed path and nothing else: a node's `mail/`, which anyone may write and which holds every message about that node in either direction. A file names its sender and its target, so direction is a field rather than a folder and an answer lands where the question did.
+The interface is one fixed path and nothing else: the `mail/` of the node a message is about, which anyone may write, and which a node that keeps a directory holds. It carries every message about that node in either direction. A file names its sender and its target, so direction is a field rather than a folder and an answer lands where the question did.
 
 A judgement that compares siblings cannot be made by any one of them, because a comparison needs all of them at once. That is the only thing that lives above a node and is not its name.
 
@@ -30,11 +30,11 @@ What a node knows about the layer above is two things: where it is, and what it 
 
 ## Reports
 
-A report carries the node whose roadmap the finding would change, an evidence pointer, and the decision it needs, which may be none. Nothing else fits. A report missing one of the three is refused, not summarised.
+A report carries the node whose roadmap the finding would change, an evidence pointer, and the decision it needs, which may be none. Nothing else fits, so one that is missing a field, or that names no node, is refused rather than summarised.
 
 A completion is a report whose decision is none. Above the root there is no node, so the root's reports are addressed to the person and carry the same three fields.
 
-The node named may be several layers above the parent. A report that names no node is a status message, and it is not sent. A milestone is a state of that node, so the report does not carry it as a fourth field.
+The node named may be several layers above the parent.  A milestone is a state of that node, so the report does not carry it as a fourth field.
 
 A report names its own kind, and the kind decides the route, so no layer has to judge whether it understands the question.
 
@@ -55,7 +55,7 @@ A `direction` or `cost` report is admitted only with its effort: what was tried,
 
 ## Consent
 
-A node acts until it would destroy work, publish, spend money, change a contract another tree depends on, or expose private material. Those wait for a person.
+A node acts until it would destroy work, publish, spend money, change a contract another tree depends on, or expose private material. Those wait for the layer that holds them, which at the root is the person.
 
 Everything else needs no permission. Asking anyway is a defect, not caution.
 
@@ -66,7 +66,7 @@ A node that may not reach a person raises the wait to its parent instead: it rep
 A node reads what its work needs. Another node's document is not evidence for its own, and a rule seen in passing is not a rule for it.
 # Records
 
-Every fact is written where its decision lives, and nothing current exists only in a conversation.
+Every fact is written where its decision lives, and nothing current exists only in a conversation. A package writes nothing, so its facts are landed by the node that files its report.
 
 ## A node's document
 

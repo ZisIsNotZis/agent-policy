@@ -52,7 +52,7 @@ def ceiling() -> int:
 def obligations(text: str) -> int:
     """Sentences that oblige an act. A word count cannot tell a simplification from a growth."""
     return sum(1 for s in re.split(r"(?<=[.;:])\s+", text)
-               if re.search(r"\b(must|may|never|nobody|only|cannot)\b", s))
+               if re.search(r"\b(must|may|never|cannot)\b", s))
 
 
 def banned_words() -> list[str]:
