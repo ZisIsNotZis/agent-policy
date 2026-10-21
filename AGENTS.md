@@ -127,6 +127,12 @@ Every contract states what its package consumes in classes, not in one number, b
 
 The class decides what may be released, never the confidence. Work that spends `idle-compute` runs while it is uncertain, because an idle device is the one resource that is wasted by not being used. Work that spends `metered`, `exclusive` or `unrecoverable` takes its grant before it starts, however sure the node is.
 
+A reservation is written before the work starts and released when it ends, so the holdings at the node that holds the budget are the truth about who has the device. A probe of the device confirms a holding and never decides one, because a reservation is not a process.
+
+Work whose continuation is still in question may not hold an exclusive resource. It runs on idle compute, or it settles the question first, because holding what another package cannot share is a commitment the work has not yet earned.
+
+Displacing a holder is allowed when the waiter's loss is larger than the holder's loss at being stopped, and both declare that loss in the contract.
+
 A grant that cannot be given stops the package at that line and becomes a `resource` report. Allocation is hereditary: the root grants a container a budget, the container grants from it, and only an exhausted grant travels up. A node that does not know what it will spend says so and asks up the moment it learns.
 
 A child that has written nothing for longer than its declared time is presumed stuck. That is noticed when the node next reads its own roadmap, never by watching it.
@@ -140,6 +146,14 @@ A question that needs a layer above is a directory that moves, not a message tha
 Raising it is a move into the next layer's inbox and one appended row, so no layer pays to restate the question and nothing is lost in the restating.
 
 The root renders the inbox for the person and adds nothing to it.
+
+## Time
+
+A contract may name a deadline, and the node that set it owns that clock, because it is the node that owes somebody the experience.
+
+The clock is a timer job whose completion is the alarm. The node does not wait for it, and it never asks a child how far it has got: at half the interval and again at three quarters it sends an instruction, naming what remains, what order to do it in and what to drop. A clock check that asks for progress receives a status message, and a status message is refused.
+
+At the deadline the work that exists is what is delivered. A shortfall is a `cost` report from the node that owned the clock, never a silent extension.
 
 ## Land before reporting
 
@@ -223,6 +237,14 @@ A node that splits has stopped executing what it split. The remaining work stays
 ## Waiting
 
 You do not poll a child and you do not sleep to wait for one. A launch returns immediately and its completion arrives as a message, so a poll is you paying to watch something that was going to tell you anyway. Ending the turn is the whole technique.
+
+## The clock
+
+When you set a deadline you own it. Set the alarm as a timer job, not as a wait, and put the deadline in the contract so a kill still names it.
+
+At half and at three quarters you send an instruction: what is left, what order, what to drop. Asking a child whether it is nearly done buys you a status message and costs you the interval.
+
+At the deadline you take what exists. If it is short of the acceptance, you raise it as `cost` with the clock as the evidence, and you never extend the deadline on your own.
 
 ## As a container
 

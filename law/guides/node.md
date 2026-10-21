@@ -33,6 +33,14 @@ A node that splits has stopped executing what it split. The remaining work stays
 
 You do not poll a child and you do not sleep to wait for one. A launch returns immediately and its completion arrives as a message, so a poll is you paying to watch something that was going to tell you anyway. Ending the turn is the whole technique.
 
+## The clock
+
+When you set a deadline you own it. Set the alarm as a timer job, not as a wait, and put the deadline in the contract so a kill still names it.
+
+At half and at three quarters you send an instruction: what is left, what order, what to drop. Asking a child whether it is nearly done buys you a status message and costs you the interval.
+
+At the deadline you take what exists. If it is short of the acceptance, you raise it as `cost` with the clock as the evidence, and you never extend the deadline on your own.
+
 ## As a container
 
 A container's roadmap is one milestone and a list of children. You start each child and stop there: what a child is doing is not your concern, and its internal state is not a fact of yours.
