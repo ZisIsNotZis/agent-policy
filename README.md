@@ -7,7 +7,7 @@ Standing law for AI agents working in a repository: who is a node, who speaks to
 
 ## Read it
 
-[AGENTS.md](AGENTS.md) is the law plus the node procedure, generated from [law/](law) and never edited. It is four short documents and the six role guides, of which a session reads one, 11,205 characters, which a session reads instead of a project's instructions.
+[AGENTS.md](AGENTS.md) is the law plus the node procedure, generated from [law/](law) and never edited. It is four short documents and the six role guides, of which a session reads one, 11,484 characters, which a session reads instead of a project's instructions.
 
 - [law/core.md](law/core.md) — structure, speech, reports, consent, argument, subordination, amendment.
 - [law/records.md](law/records.md) — the shape of a node's document, and the coordinates a fact carries.
