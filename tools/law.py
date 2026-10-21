@@ -42,17 +42,22 @@ def prose(text: str) -> str:
 
 
 def ceiling() -> int:
-    """The number the law may not exceed: obligations, because words are explanation."""
+    """The number the law may not exceed: prohibitions, because a procedure should replace them."""
     for line in read("ceiling").splitlines():
-        if line.startswith("obligations"):
+        if line.startswith("prohibitions"):
             return int(line.split()[1])
-    raise SystemExit("law/ceiling needs an `obligations N` line")
+    raise SystemExit("law/ceiling needs a `prohibitions N` line")
 
 
-def obligations(text: str) -> int:
-    """Sentences that oblige an act. A word count cannot tell a simplification from a growth."""
+def prohibitions(text: str) -> int:
+    """Sentences that forbid. A procedure should replace these, not add to them."""
     return sum(1 for s in re.split(r"(?<=[.;:])\s+", text)
-               if re.search(r"\b(must|may|never|cannot)\b", s))
+               if re.search(r"\b(must not|may not|never|cannot|refuses? to|is not sent)\b|\bno (agent|manager|worker|layer|manager)\b", s))
+
+
+def steps(text: str) -> int:
+    """Sentences in the imperative. A procedure is made of these, and they may grow."""
+    return len(re.findall(r"(?m)^\s*(?:\d+\.|###)\s|^[A-Z][a-z]+ (it|the|your|what|that)\b", text))
 
 
 def banned_words() -> list[str]:
@@ -138,11 +143,11 @@ def main() -> int:
             failures.append(f"missing section: law/{name}")
 
     words_in_law = len(root_view.split())
-    oblig = obligations(root_view)
-    if oblig > ceiling():
+    forb = prohibitions(root_view)
+    if forb > ceiling():
         failures.append(
-            f"the law states {oblig} obligations against a ceiling of {ceiling()}: every new "
-            "obligation is a new way to be wrong, so delete the one it replaces, or raise "
+            f"the law states {forb} prohibitions against a ceiling of {ceiling()}: a prohibition "
+            "is a rule nobody can follow by accident, so delete the one it replaces, or raise "
             "law/ceiling in this commit and say what it buys")
     chars = len(law)
     if failures:
@@ -150,7 +155,7 @@ def main() -> int:
         return 1
     print(f"ok: {len(views)} views, {words_in_law} words, {chars} chars, "
           f"{len(words)} banned words, {len(roles)} roles, "
-          f"{obligations(root_view)} obligations")
+          f"{forb} prohibitions, {steps(root_view)} steps")
     return 0
 
 

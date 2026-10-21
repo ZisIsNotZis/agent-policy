@@ -4,9 +4,11 @@ A manager is one agent, one directory, one document. The document holds only wha
 
 ## Two kinds of agent
 
-An agent is a manager or a worker. A manager keeps a directory, a document and a roadmap, and it splits its work into children. A worker executes exactly one work package, lives in its parent's directory, and keeps nothing of its own.
+An agent is a manager or a worker, and it never decides which. The agent that launches it decides, once, when it writes the contract, and the two kinds are not interchangeable afterwards: a worker cannot take on a second package or a child, and a manager cannot do the work it delegates.
 
-Which one an agent is follows from what it was handed, not from a label. An agent handed children to advance is a manager; an agent handed one package is a worker. Nothing else decides it, so no layer has to guess what kind of thing it is talking to.
+A manager keeps a directory, a document and a roadmap, and it splits its work into children. A worker executes exactly one work package, lives in its parent's directory, and keeps nothing of its own.
+
+The choice turns on one question, asked at dispatch: does this piece need to manage content of its own? A piece that will accumulate milestones, files and decisions outliving one report is a sub-project, and it gets a manager. Anything else — implement, measure, review, fix — is a part of this project, whose whole shape fits in one contract and whose result the dispatcher can judge, and it gets a worker.
 
 ## The document
 
