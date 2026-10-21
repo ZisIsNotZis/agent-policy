@@ -14,7 +14,7 @@ A node may execute and may also split. What it may not do is split, and then exe
 
 Everything about a node lives under that node's own directory. The only trace it leaves above is its name and the path that name resolves to, because a noun has to resolve somewhere.
 
-The interface is two fixed paths and nothing else: a node's inbox, which others write, and its outbox, which others read.
+The interface is one fixed path and nothing else: a node's `mail/`, which anyone may write and which holds every message about that node in either direction. A file names its sender and its target, so direction is a field rather than a folder and an answer lands where the question did.
 
 A judgement that compares siblings cannot be made by any one of them, because a comparison needs all of them at once. That is the only thing that lives above a node and is not its name.
 

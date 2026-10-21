@@ -42,11 +42,7 @@ A child that has written nothing for longer than its declared time is presumed s
 
 ## Messages
 
-A message is one file in the sender's own outbox. Its first lines name the kind, the sender, the target and what answering it spends; the body is the question or the instruction; the effort sits at the end of the same file, so a question and its effort never separate.
-
-An answer travels down the same path the question came up, one inbox at a time, so every layer that added a row learns that it closed.
-
-The sender notifies the target when the target is awake, and does nothing when it is not. Delivery does not depend on that notification, because the file is already there. A nudge names the file, and the receiver deletes it when it lands it, whether it arrived by nudge or by waking to find it.
+A message is written where the node it is about lives, so nothing about a node is ever filed above it. An answer is written back to the same place with a different target, which is why an answer reaches every layer that added a row without a special route.
 
 ## One writer
 

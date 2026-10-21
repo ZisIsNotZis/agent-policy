@@ -25,7 +25,7 @@ A node may execute and may also split. What it may not do is split, and then exe
 
 Everything about a node lives under that node's own directory. The only trace it leaves above is its name and the path that name resolves to, because a noun has to resolve somewhere.
 
-The interface is two fixed paths and nothing else: a node's inbox, which others write, and its outbox, which others read.
+The interface is one fixed path and nothing else: a node's `mail/`, which anyone may write and which holds every message about that node in either direction. A file names its sender and its target, so direction is a field rather than a folder and an answer lands where the question did.
 
 A judgement that compares siblings cannot be made by any one of them, because a comparison needs all of them at once. That is the only thing that lives above a node and is not its name.
 
@@ -95,13 +95,15 @@ That document exists for the node's own next session and for nothing else. Nobod
 
 A node with no entrance, or an empty directory, or no idea what its own project is, learns that by trying to work and raises it. The layer above never learns it, because the layer above does not look.
 
-## The inbox
+## Mail
 
-Every node has an inbox and an outbox, at `inbox/` and `outbox/` under the node's own directory. A message to a node is a file in that node's inbox, and a message from it is a file in its own outbox, so nothing about a node ever leaves the directory that node owns.
+Every node has `mail/` under its own directory, created the first time something is written there. It is tracked, because a message that exists on one machine and not another is a decision that was taken and then lost.
 
-Nothing waits for a node to be awake. A node that is not running finds its inbox when it wakes, and one that is running is woken. The sender writes the file and nothing else, because delivery is the path rather than an act.
+A message is one file. Its first lines name the kind, the sender, the target and what answering it spends; the body is the question or the instruction; the effort sits at the end of the same file, so a question and its effort never separate.
 
-Reading deletes. The inbox is transport and not a home, so the first thing a reader does is land what it read: a fact goes into its own document, an instruction is acted on, and a question it cannot answer goes into its own outbox addressed further up, carrying the id it came from. Deleting before landing loses the message and the loss is invisible, which is why the two are one act.
+Nothing waits for a node to be awake. A node that is not running finds its mail when it wakes, and one that is running is woken. The sender writes the file and nothing else, because delivery is the path rather than an act.
+
+Reading deletes, and the deletion is a commit like any other. The first thing a reader does is land what it read: a fact goes into its own document, an instruction is acted on, and a question it cannot answer goes into the mail of the node that owns it, addressed further up and carrying the id it came from. Deleting before landing loses the message and the loss is invisible, which is why the two are one act.
 
 Deleting the file is tidying, not answering.
 
@@ -164,11 +166,7 @@ A child that has written nothing for longer than its declared time is presumed s
 
 ## Messages
 
-A message is one file in the sender's own outbox. Its first lines name the kind, the sender, the target and what answering it spends; the body is the question or the instruction; the effort sits at the end of the same file, so a question and its effort never separate.
-
-An answer travels down the same path the question came up, one inbox at a time, so every layer that added a row learns that it closed.
-
-The sender notifies the target when the target is awake, and does nothing when it is not. Delivery does not depend on that notification, because the file is already there. A nudge names the file, and the receiver deletes it when it lands it, whether it arrived by nudge or by waking to find it.
+A message is written where the node it is about lives, so nothing about a node is ever filed above it. An answer is written back to the same place with a different target, which is why an answer reaches every layer that added a row without a special route.
 
 ## One writer
 

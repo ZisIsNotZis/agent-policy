@@ -22,13 +22,15 @@ That document exists for the node's own next session and for nothing else. Nobod
 
 A node with no entrance, or an empty directory, or no idea what its own project is, learns that by trying to work and raises it. The layer above never learns it, because the layer above does not look.
 
-## The inbox
+## Mail
 
-Every node has an inbox and an outbox, at `inbox/` and `outbox/` under the node's own directory. A message to a node is a file in that node's inbox, and a message from it is a file in its own outbox, so nothing about a node ever leaves the directory that node owns.
+Every node has `mail/` under its own directory, created the first time something is written there. It is tracked, because a message that exists on one machine and not another is a decision that was taken and then lost.
 
-Nothing waits for a node to be awake. A node that is not running finds its inbox when it wakes, and one that is running is woken. The sender writes the file and nothing else, because delivery is the path rather than an act.
+A message is one file. Its first lines name the kind, the sender, the target and what answering it spends; the body is the question or the instruction; the effort sits at the end of the same file, so a question and its effort never separate.
 
-Reading deletes. The inbox is transport and not a home, so the first thing a reader does is land what it read: a fact goes into its own document, an instruction is acted on, and a question it cannot answer goes into its own outbox addressed further up, carrying the id it came from. Deleting before landing loses the message and the loss is invisible, which is why the two are one act.
+Nothing waits for a node to be awake. A node that is not running finds its mail when it wakes, and one that is running is woken. The sender writes the file and nothing else, because delivery is the path rather than an act.
+
+Reading deletes, and the deletion is a commit like any other. The first thing a reader does is land what it read: a fact goes into its own document, an instruction is acted on, and a question it cannot answer goes into the mail of the node that owns it, addressed further up and carrying the id it came from. Deleting before landing loses the message and the loss is invisible, which is why the two are one act.
 
 Deleting the file is tidying, not answering.
 
