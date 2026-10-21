@@ -22,10 +22,10 @@ nothing else. A role file is generated and never edited, and `--check` fails whe
 |---|---|---|
 | `root` | the one node whose parent is the person | 339 |
 | `manager` | holds a directory, a document and a roadmap, and dispatches | 288 |
-| `worker` | executes one work package and reports once | 214 |
-| `researcher` | answers one bounded question with max thinking and writes nothing | 214 |
-| `reviewer` | reads one artefact against its acceptance and returns a verdict | 43 |
-| `policy_worker` | changes this law and runs the checks | 55 |
+| `worker` | executes one work package and reports once | 211 |
+| `researcher` | answers one bounded question with max thinking and writes nothing | 151 |
+| `reviewer` | reads one artefact against its acceptance and returns a verdict | 158 |
+| `policy_worker` | changes this law and runs the checks | 187 |
 
 The first two hold a directory and dispatch. The last four are flavours of a worker: they differ in what
 they read, what they produce and how hard they are allowed to think, and none of them dispatches. A

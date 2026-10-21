@@ -29,7 +29,7 @@ CORPUS = HERE / "AGENTS.yaml"
 RENDER_DIR = HERE / "agents"
 RENDER_ROOT = RENDER_DIR / "root.md"
 
-RULESETS = ("root", "manager", "worker", "reviewer", "policy")
+RULESETS = ("root", "manager", "worker", "researcher", "reviewer", "policy")
 ROLE_SPECS = yaml.safe_load((HERE / "law" / "roles.yaml").read_text(encoding="utf-8"))
 ROLES = tuple(ROLE_SPECS)
 TITLES = {

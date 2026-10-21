@@ -302,11 +302,7 @@ inheritSkills: false
 
 **testing.** you write a check → it catches what it targets and you know what it misses. Write at the behaviour interface with expectations independent of the implementation; say what each catches and misses
 
-**research.** you do research → the question, the decision it serves and the criteria come first. Write the three before gathering evidence; a negative result is a result
-
 **primary evidence.** you cite a claim → it traces to the source that owns it. Record version, date and a reproducible query; with secondary evidence only, bound the conclusion
-
-**experiment record.** you run an experiment → it can be reproduced or audited. Bind code, data, configuration, environment and hardware; record seeds and repeats; record failures too
 
 **measurement.** you make a measurement claim → the metric supports the exact claim. Fix workload, correctness and resource conditions; a proxy supports only the narrower claim it measures
 
@@ -327,8 +323,6 @@ inheritSkills: false
 **unavailable repro.** you cannot reproduce → what was tried, what was missing and the confidence are written. After bounded attempts write it down; never call such a fix verified
 
 **caller migration.** you replace an interface or migrate data → affected callers and preserved behaviours are listed. List callers and behaviours, write a reversible or idempotent migration, verify the new use before retiring the old
-
-**evaluation integrity.** you run an evaluation → the baseline is fair and leakage is excluded. Fix population, provenance, metric and a fair baseline; prevent leakage and contamination; keep the held-out set out of selection
 
 
 ## Roles

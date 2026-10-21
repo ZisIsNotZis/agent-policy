@@ -18,15 +18,9 @@ inheritSkills: false
 
   depends on **chain**: you decide which layer a fact belongs to → it lives at the layer that owns its decision.
 
-**atomic.** you write a rule → one subject, read in one line. Say it in one sentence; a point that cannot stand without its parent goes into the parent
-
 **kill.** you change a design → the old one does not exist at the new revision. Kill the sentence, the identifier, the config key, the fixture and the file name in the same act; the evidence is a search for every name it had returning nothing
 
-**no op.** you add a rule → add only what changes behaviour. Ask whether deleting it would materially impair orientation, judgement, coordination, error prevention or recovery; if not, delete it
-
 **falsifiable.** you hand over evidence → it separates success from a relevant alternative. Write the criterion and a safe way to expose failure; a step that did not run did not pass
-
-**top down.** you add a rule → it is derived from the root, not collected from an incident. First tell the whole account: how it ran before, and why that stopped working
 
 **absent.** you meet a missing value → it is recorded as missing, never filled with a number. Write unknown, not verified or cannot be established; never zero, never a default
 
@@ -126,29 +120,7 @@ inheritSkills: false
 
 ## Spend
 
-**classes.** you state what a package spends → two packages of equal size are not priced as if they cost the same. State the class, not a number
-
-**time.** you price time → the person knows how long they wait. Write how long it holds you
-
-**idle.** you price idle compute → the person knows whether power counts. Write idle-compute and say whether the site counts power
-
-**metered.** you price a rented device → the person knows the money per unit. Write metered-compute with its unit price
-
-**exclusive.** you need something exclusively → others know what they are waiting for. Write exclusive and say whether it is a device, memory or a port
-
-**unrecoverable.** the result is not stored → the cost of losing it is counted. Write unrecoverable: the time again, and the money if it was rented
-
 **class decides.** you decide whether a package may start → what may be released follows the class, never the confidence. Idle runs; metered, exclusive and unrecoverable take their grant first
-
-**unknown class.** you do not know what a package spends → unknown is written, not defaulted. Write unknown and say how it will be settled before the work starts
-
-**vram.** Check against what is held and leave headroom for the driver and fragmentation; if it fits, fill it
-
-  depends on **units**: you write a cost → it uses one of seven units. person_attention, person_time, machine_time, money, exclusive, irreversible, trust
-
-**missing infra is not missing permission.** there is no allocator and no ledger → local resources stay usable. Use them; describe an advisory limit as advisory
-
-**advisory limits.** a cap nobody enforces → it is described as advisory. Say so; never let a launch flag pass as enforcement
 
 
 ## Scheduling
@@ -187,11 +159,7 @@ inheritSkills: false
 
 ## Review
 
-**self test.** you self-test inside the slice → it is not acceptance. Self-test as usual, never report it as independent acceptance
-
 **bind to revision.** you hand over evidence → it is bound to a revision that can be named. Name the commit or worktree hash, the commands and the results; when the revision moves, rerun the checks it invalidated
-
-**defect evidence.** you report a defect → three things are present. Location, the criterion violated, a reproduction or evidence
 
 
 ## Degrees
@@ -230,41 +198,6 @@ inheritSkills: false
 **scope composition.** you read a role's view → you know which union it is. The root reads all but worker-only; a manager reads root+manager and manager+worker; a worker reads manager+worker and worker-only
 
 
-## Git
-
-**main area.** you work → the main area stays on the integration branch. Do not work on a feature branch or a detached head
-
-**one writer per area.** two writers want one area → one live writer per area. Allocate the area at dispatch
-
-**worktree.** a writer must run in parallel → it does not touch the main area. Use a worktree from the integration branch, outside the working tree
-
-**commits.** you finish a cohesive step → a kill cannot take this step back. Commit; a local commit is reversible and needs no permission
-
-**integrator.** several packages merge → the combined outcome is verified apart. Own the merge and dispatch the combined check
-
-**pushes hereditary.** you are about to push → the right to push is granted like a budget. The root holds it standing at a safe point; without it, do not push; a package that must push says so in its contract
-
-**no remote.** the repository has no remote → it is not one disk away from nothing. Create one, private, and push the branches
-
-**untrack.** something should not be tracked → it leaves tracking and the history is clean. Untrack and ignore first, then rewrite the history that still carries it
-
-**no trash.** you close out → every path has an owner. Find out what an untracked or unexplained change is: commit it, declare it, or ignore it with a stated owner
-
-**track or ignore.** you see an unclassified path → it lands in a named home. Track by default; keep the ignore list short and categorical, every line owned
-
-**structure.** you see a directory → it can name its owner and purpose. Make it declare owner and purpose; one nobody can explain is a defect
-
-**artefacts home.** you have a durable artefact → it stays in the project. Keep it in the project; recoverable evidence goes to named records
-
-**store or declare.** a file is too large for git → one command tells a clone what is missing. Declare path, size, hash and the nearest durable location in a tracked manifest, and verify it before the work needs it
-
-**preserve.** you touch existing work → unrelated and existing work survives. Do not cover it with a forced reset or checkout
-
-**preserve work.** you want speed over old work → the old work survives. Work around it, never discard it
-
-**regeneration cost.** you decide what ships → what consumers need is there, the rest is a tested recipe. Ship what consumers need; write what maintainers need as a tested recipe
-
-
 ## Operations
 
 **safe point.** you stop or hand control back → a kill loses nothing that was written down. Check that git status shows nothing you touched and cannot explain, the branch is the integration branch, and no document you changed cites a session or an issue
@@ -284,24 +217,6 @@ inheritSkills: false
 
 ## Practice
 
-**design.** you shape an interface → callers know what they must and nothing incidental. Set boundaries from caller scenarios and change locality; the interface includes types, invariants, ordering, configuration, error modes and the performance they may rely on
-
-**abstraction cost.** you reach for an abstraction → it removes more complexity than it adds. Name the complexity it removes; if you cannot, the benefit is hypothetical
-
-**feature.** you build a feature → a behaviour-complete slice proves it first. Take one slice from caller scenario through implementation and checks, then let its evidence choose the next
-
-**diagnosis.** you fix a defect or regression → the reported symptom is addressed. Build a symptom-specific loop first and keep the original scenario
-
-**reproduce minimize.** you reproduce a defect → the input is minimal and the symptom survives. Capture redacted input, configuration, versions and the exact wrong output; reduce one element at a time
-
-**hypothesis probe.** you look for the cause → each probe separates competing hypotheses. Rank them, write a falsifiable prediction for each, vary one condition at a time
-
-**diagnosis closure.** you have the cause → the fix addresses the cause and the original scenario reruns. Apply the smallest fix, keep a regression check, rerun the unreduced scenario and the affected checks
-
-**refactor.** you refactor → behaviour holds and evidence attributes. Define the behaviour to preserve and separate the structural change from a feature change
-
-**testing.** you write a check → it catches what it targets and you know what it misses. Write at the behaviour interface with expectations independent of the implementation; say what each catches and misses
-
 **research.** you do research → the question, the decision it serves and the criteria come first. Write the three before gathering evidence; a negative result is a result
 
 **primary evidence.** you cite a claim → it traces to the source that owns it. Record version, date and a reproducible query; with secondary evidence only, bound the conclusion
@@ -316,17 +231,7 @@ inheritSkills: false
 
 **earned budget.** you want a bigger budget → it buys attempts and context, never a lower standard. Raise it only for genuinely hard work or after two failures; the cap lives in the roadmap
 
-**caller complexity.** you design an interface → callers gain capability without duplicating knowledge. Treat the interface as everything callers must know; prove the gain with a caller example
-
-**dependency isolation.** you isolate nondeterminism → side effects sit at the narrow boundary that needs substitution. Classify dependencies by purity, substitutability, ownership and external control
-
-**test scope.** you choose a test level → it survives internal refactoring. Prefer caller-observable outcomes; justify an internal invariant test by being more direct or cheaper
-
-**test doubles.** you use a double → it controls external effects instead of mirroring choreography. Use doubles for external effects or nondeterminism, never to mirror implementation detail
-
 **unavailable repro.** you cannot reproduce → what was tried, what was missing and the confidence are written. After bounded attempts write it down; never call such a fix verified
-
-**caller migration.** you replace an interface or migrate data → affected callers and preserved behaviours are listed. List callers and behaviours, write a reversible or idempotent migration, verify the new use before retiring the old
 
 **evaluation integrity.** you run an evaluation → the baseline is fair and leakage is excluded. Fix population, provenance, metric and a fair baseline; prevent leakage and contamination; keep the held-out set out of selection
 
@@ -390,18 +295,6 @@ inheritSkills: false
 
 ## Upkeep
 
-**checklist.** you judge a document → every question on the list is answered. One home, a trigger and an act, a distinguisher of failure, a trace to a law, no derived value stored, no absence invented, no conflict with a higher layer, nothing obsolete, invalidated checks rerun, the strongest cure, authority held
-
-**resolvable.** you write a reference → it can be checked. A path, a heading, a command; resolve it against what exists
-
-**rebuild after edit.** you edit the corpus source → the render regenerates and the checks run in the same act. Run every applicable one; a missing or failed check is incomplete acceptance
-
-**render is written not read.** a render exists → nobody treats it as input. Never hand-edit or read it back; carry a banner naming what produced it
-
-**adopt.** you adopt a whole tree → every fact has a home when conversion ends. Read it all first, decide each fact's layer, convert only when the whole set has a home, and fill the root as you go
-
-**migrate.** the person asks for a whole-tree conversion → it is idempotent, rerunnable and recorded. Check everything, write an idempotent migration, migrate, check again, record it in the owning document
-
 **outdated.** you see something out of date → value decides, not age. Migrate what still carries value; delete what lost it from the latest revision
 
 **dead code.** you see unreachable code → it leaves with reachability evidence. Give evidence rather than a grep guess; a declared reason keeps it
@@ -413,33 +306,13 @@ inheritSkills: false
 
 **layout first.** you look for something → you follow the declared layout. Follow the layout; do not sweep the tree
 
-**defect surface.** you write code → the defect surface stays small and failure is visible where it happens. Shift errors left, prefer configuration to code, make failure visible where it happens
-
 **efficiency.** you economise → what you save is his time.
 
-**start early.** an independent package is ready → it starts early instead of waiting for a grant nobody withheld. Start it and schedule local compute within actual capacity
-
-**concurrency.** you set concurrency → it follows the actual workload and capacity. Count a heavy job's internal threads and respect any explicit limit
-
-**queue behind.** a scarce resource is held → the waiter has a trigger and does not hold indefinitely. Record the queued request and its trigger
-
-**overlap waits.** version-bound work is waiting → the wait is filled with other work. Overlap review, tests and documentation with implementation
-
-**bounded calibration.** a heavy workload's needs are unknown → a manageable representative run comes first. Run once and adjust from observation; uncertainty calls for calibration, not permission
-
-**recovery reserve.** you run heavy work → the machine stays recoverable. Choose headroom from the actual conditions
-
-**grant recovery.** you are about to restart expensive work → you confirm the jobs are really dead. Check live jobs and descendants first; a missing heartbeat does not prove exit
-
 **follow toolchain.** you use the project's toolchain → the environment is input. Follow its lockfile and scripts; change shared state only under authority
-
-**bootstrap.** a project must be inheritable → one command rebuilds from a fresh clone. Commit that command, state it in the README with its measured time and what it cannot rebuild
 
 **local config first.** you confirm a fact → local configuration first, then the authoritative source. Read the package's configuration; verify fast-moving compatibility, security, licence and price facts against current sources
 
 **diagnose network.** the network fails → you diagnose before switching mirrors. Diagnose the cause; a dated observation is not current evidence
-
-**cleanup check.** you clean up → uncommitted and unpushed work is safe. Confirm first; keep child repositories, instructions, history, licences and remotes
 
 **reproduce or artefact.** you keep a result → it is either reproducible or frozen. Pin inputs, versions and seed for a reproduction; freeze and hash what is not deterministic
 
@@ -450,11 +323,7 @@ inheritSkills: false
 
 **baseline.** you start changing things → existing failures are separated from yours. Capture a scoped baseline first
 
-**only authorized.** you write code → only authorised behaviour is implemented. Reproduce the defect where practical and use checks that can catch it
-
 **separate preexisting.** a check fails → you know whether you caused it. Separate pre-existing from introduced, and flag what you could not exercise
-
-**check gates.** you check before delivering → the project's checks and the risk-driven ones have run. Run them, read the scoped final diff, run the whitespace check
 
 **anomaly.** a step does not add up → it is treated as evidence. Route it through improvement; do not work around it
 
