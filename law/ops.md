@@ -58,6 +58,10 @@ The clock is a timer job whose completion is the alarm. The node does not wait f
 
 At the deadline the work that exists is what is delivered. A shortfall is a `cost` report from the node that owned the clock, never a silent extension.
 
+## One writer
+
+Two nodes writing one area produce a diff nobody can review and a state neither of them owns. One live writer per area, and the second waits rather than proceeding carefully.
+
 ## Land before reporting
 
 The write comes first. A report is sent only after the fact it carries is in its own document, so a kill between them loses nothing.
