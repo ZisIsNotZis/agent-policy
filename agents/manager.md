@@ -1,3 +1,14 @@
+---
+name: manager
+description: An agent with a directory, a document and a roadmap of its own. Splits its work into children and answers for them.
+tools: read, edit, write, bash, grep, find, ls, subagent
+thinking: high
+model: inherit
+systemPromptMode: replace
+inheritProjectContext: false
+inheritGlobalContext: false
+inheritSkills: false
+---
 # Law, as manager reads it
 
 

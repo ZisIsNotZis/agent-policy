@@ -1,3 +1,14 @@
+---
+name: worker
+description: Executes exactly one work package in its parent's directory, and reports once.
+tools: read, edit, write, bash, grep, find, ls
+thinking: high
+model: inherit
+systemPromptMode: replace
+inheritProjectContext: false
+inheritGlobalContext: false
+inheritSkills: false
+---
 # Law, as worker reads it
 
 

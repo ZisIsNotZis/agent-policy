@@ -105,6 +105,17 @@ def rule_text(node: dict, lang: str = "en") -> str:
     return head + body
 
 
+def frontmatter(role: str) -> str:
+    """A role file is what the harness loads: it needs the block, and it must not inherit the project."""
+    spec = yaml.safe_load((LAW / "roles.yaml").read_text(encoding="utf-8"))[role]
+    lines = ["---", f"name: {role}", f"description: {spec['description']}",
+             f"tools: {spec['tools']}", f"thinking: {spec['thinking']}",
+             "model: inherit", "systemPromptMode: replace",
+             "inheritProjectContext: false", "inheritGlobalContext: false",
+             "inheritSkills: false", "---", ""]
+    return "\n".join(lines)
+
+
 def render(role: str) -> str:
     flat = {k: v for b in corpus().values() for k, v in b.items()}
     drawn: set[str] = set()
@@ -161,17 +172,17 @@ def main() -> int:
     for w in banned:
         failures.append(f"banned word {w!r}")
 
-    views = {"root": render("root"), "manager": render("manager"), "worker": render("worker")}
+    views = {r: render(r) for r in ("root", "manager", "worker")}
     targets = {"root": RENDER_ROOT, "manager": RENDER_DIR / "manager.md",
                "worker": RENDER_DIR / "worker.md"}
     if check:
         for role, path in targets.items():
-            if not path.exists() or path.read_text(encoding="utf-8") != views[role]:
+            if not path.exists() or path.read_text(encoding="utf-8") != frontmatter(role) + views[role]:
                 failures.append(f"{path.relative_to(HERE)} is stale")
     else:
         for role, path in targets.items():
             path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(views[role], encoding="utf-8")
+            path.write_text(frontmatter(role) + views[role], encoding="utf-8")
 
     n = prohibitions(views["root"])
     if n > ceiling():
