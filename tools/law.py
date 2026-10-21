@@ -26,7 +26,7 @@ import yaml
 HERE = Path(__file__).resolve().parent.parent
 LAW = HERE / "law"
 CORPUS = HERE / "AGENTS.yaml"
-RENDER_ROOT = HERE / "AGENTS.md"
+RENDER_ROOT = HERE / "corpus.md"
 RENDER_DIR = HERE / "agents"
 
 BLOCKS = ("root_only", "root_manager", "manager_worker", "worker_only", "every_role")
