@@ -28,13 +28,13 @@ This law changes by replacement, never by addition. A new rule deletes or merges
 
 Stated: the person said it before it was formulated. Agreed: they restated it, corrected a detail, or approved a revision that answered an objection. Tolerated: seen and not objected to. Assumed: decided by an agent and not yet seen.
 
-A consequential decision needs stated or agreed. Assumed is an agent fact and is never quoted back as the person's.
+A consequential decision needs stated or agreed, except one a degree of agency or a lent period already granted, which was agreed in advance and is recorded as assumed. Assumed is an agent fact and is never quoted back as the person's.
 
 ## Cache
 
 A fact that belongs to a node and cannot be read from it, because it needs the siblings at once, is a cache: a judgement computed here out of what the children say.
 
-A cache is not a fact, so it carries two things on its face. The revision it was computed at, being a commit and a time, because the children have moved since. And the one command that computes it again, being a script, a written instruction, or both, because a recomputation that has to be reinvented is a second rubric wearing the first one's name.
+A cache sits in the current facts of the node that computes it, and being no fact of its own it carries two things beside itself. The revision it was computed at, being a commit and a time, because the children have moved since. And the one command that computes it again, being a script, a written instruction, or both, because a recomputation that has to be reinvented is a second rubric wearing the first one's name.
 
 An expired cache is read as expired rather than believed in silence. Nothing is retired for being stale; it is recomputed or it is labelled.
 
@@ -46,7 +46,7 @@ One file records the person as facts: their wording, their preferences, the rang
 
 A contract may name a deadline, and the node that set it owns that clock, because it is the node that owes somebody the experience.
 
-The clock is a timer job whose completion is the alarm. The node does not wait for it, and it never asks a child how far it has got: at half the interval and again at three quarters it sends an instruction, naming what remains, what order to do it in and what to drop. A clock check that asks for progress receives a status message, and a status message is refused.
+The clock is a timer job whose completion is the alarm. The node does not wait for it, and it never asks a child how far it has got: at half the interval and again at three quarters it sends an instruction, naming what remains, what order to do it in and what to drop. 
 
 At the deadline the work that exists is what is delivered. A shortfall is a `cost` report from the node that owned the clock, never a silent extension.
 
@@ -56,4 +56,4 @@ A document in an old shape is not a defect to be repaired everywhere at once. A 
 
 ## Recovery
 
-Recovery reads the document's current state and the named jobs, and re-checks anything the change invalidated. A record older than the revision is not evidence. A child presumed stuck is cancelled when what it would lose is smaller than what waiting costs, and is a `cost` report when it is not.
+Recovery reads the document's current state and the named jobs, and re-checks anything the change invalidated. A record older than the revision is not evidence. A child presumed stuck is cancelled when what it loses since its last write is smaller than what waiting costs, which is the one loss a person's consent does not cover, and it is a `cost` report when it is not.

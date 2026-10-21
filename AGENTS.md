@@ -20,7 +20,7 @@ A judgement that compares siblings cannot be made by any one of them, because a 
 
 ## Speech
 
-A node speaks to the layer above it and to nobody else. The root is the node whose layer above is the person, and being the only one it is the only node a person ever hears, so a node that wants a person is a node that has not found the right layer.
+A node speaks upward only through reports, and downward only to answer what it was asked. The root is the node whose layer above is the person, and being the only one it is the only node a person ever hears, so a node that wants a person is a node that has not found the right layer.
 
 A person may write to any node, because the interface lets anyone write. A message from them to a node that is not the root is forwarded upward unchanged and not answered, because the node addressed can no more speak for the tree than a child can.
 
@@ -34,13 +34,13 @@ A report carries the node whose roadmap the finding would change, an evidence po
 
 A completion is a report whose decision is none. Above the root there is no node, so the root's reports are addressed to the person and carry the same three fields.
 
-The node named may be several layers above the parent.  A milestone is a state of that node, so the report does not carry it as a fourth field.
+The node named may be several layers above the parent, because the report is carried and not re-addressed.  A milestone is a state of that node, so the report does not carry it as a fourth field.
 
 A report names its own kind, and the kind decides the route, so no layer has to judge whether it understands the question.
 
 - `resource`: a budget, an accelerator, a device or a wall-clock. It goes to the nearest ancestor that holds that budget, and a container can always answer it.
 - `cost`: the work invalidates or reopens a commitment, or the act would destroy work, spend money or expose something private. It goes to the node that owns the commitment, and at the root to the person, because those are the acts that wait.
-- `direction`: what this should be, whether the idea is right, whether the design is right. It goes to the person, unchanged through every layer above, because no layer in the tree has the standing to answer it.
+- `direction`: what this should be, whether the idea is right, whether the design is right. It goes to the person, unchanged through every layer above, because no layer below the root has the standing to answer it, unless the project's degree lends that one decision.
 - `contract`: the contract contradicts itself, or the acceptance cannot be observed. It goes to the sender's parent, which owns that contract.
 
 A contract missing its area, its acceptance or its spend class, or one whose acceptance cannot be observed, is a `contract` report naming the field, and nothing is edited past it until it is answered.
@@ -59,7 +59,7 @@ A node acts until it would destroy work, publish, spend money, change a contract
 
 Everything else needs no permission. Asking anyway is a defect, not caution.
 
-A node that may not reach a person raises the wait to its parent instead: it reports what the act would destroy or spend, and it neither proceeds nor stays silent. The parent answers it or carries it further.
+A node that may not reach a person raises the wait to its parent instead: it reports what the act would destroy or spend, and it neither proceeds nor stays silent. The parent answers it, because answering what it was asked is the one downward speech the interface carries, or carries it further.
 
 ## Subordination
 
@@ -125,7 +125,7 @@ A timeout is not a guard against being stuck. It kills the process it started an
 
 No node blocks waiting for a child. A child returns immediately and its result arrives when it arrives.
 
-Waiting is never written as a sleep. A command that begins with `sleep` is the one case the promotion floor does not rescue, and it is the most common way a node blocks itself.
+Waiting is never written as a sleep. A command that begins with `sleep` is the most common way a node blocks itself, because nothing promotes it out of the turn.
 
 The client's own budget belongs here too: an unbounded retry count and a disabled idle timeout turn one stalled connection into a permanent block, whatever the command was doing.
 
@@ -159,7 +159,7 @@ A child that has written nothing for longer than its declared time is presumed s
 
 ## Messages
 
-A message is written where the node it is about lives, so nothing about a node is ever filed above it. An answer is written back to the same place with a different target, which is why an answer reaches every layer that added a row without a special route.
+A message is written where the node it is about lives, so nothing about a node is ever filed above it. An answer is written back to the same place with a different target, so an answer needs no special route, and the layers that added a row read it in the answer they were addressed by.
 
 ## One writer
 
@@ -169,7 +169,7 @@ The parent allocates the area when it dispatches, because it is the only node th
 
 ## Land before reporting
 
-The write comes first. A report is sent only after the fact it carries is in its own document, so a kill between them loses nothing.
+The write comes first. A report is sent only after the fact it carries is in the document that owns it, so a kill between them loses nothing. A package owns no document: its report is written into the mail of the node it is addressed to, and that node files it.
 
 ## Intent before the act
 
@@ -239,13 +239,13 @@ This law changes by replacement, never by addition. A new rule deletes or merges
 
 Stated: the person said it before it was formulated. Agreed: they restated it, corrected a detail, or approved a revision that answered an objection. Tolerated: seen and not objected to. Assumed: decided by an agent and not yet seen.
 
-A consequential decision needs stated or agreed. Assumed is an agent fact and is never quoted back as the person's.
+A consequential decision needs stated or agreed, except one a degree of agency or a lent period already granted, which was agreed in advance and is recorded as assumed. Assumed is an agent fact and is never quoted back as the person's.
 
 ## Cache
 
 A fact that belongs to a node and cannot be read from it, because it needs the siblings at once, is a cache: a judgement computed here out of what the children say.
 
-A cache is not a fact, so it carries two things on its face. The revision it was computed at, being a commit and a time, because the children have moved since. And the one command that computes it again, being a script, a written instruction, or both, because a recomputation that has to be reinvented is a second rubric wearing the first one's name.
+A cache sits in the current facts of the node that computes it, and being no fact of its own it carries two things beside itself. The revision it was computed at, being a commit and a time, because the children have moved since. And the one command that computes it again, being a script, a written instruction, or both, because a recomputation that has to be reinvented is a second rubric wearing the first one's name.
 
 An expired cache is read as expired rather than believed in silence. Nothing is retired for being stale; it is recomputed or it is labelled.
 
@@ -257,7 +257,7 @@ One file records the person as facts: their wording, their preferences, the rang
 
 A contract may name a deadline, and the node that set it owns that clock, because it is the node that owes somebody the experience.
 
-The clock is a timer job whose completion is the alarm. The node does not wait for it, and it never asks a child how far it has got: at half the interval and again at three quarters it sends an instruction, naming what remains, what order to do it in and what to drop. A clock check that asks for progress receives a status message, and a status message is refused.
+The clock is a timer job whose completion is the alarm. The node does not wait for it, and it never asks a child how far it has got: at half the interval and again at three quarters it sends an instruction, naming what remains, what order to do it in and what to drop. 
 
 At the deadline the work that exists is what is delivered. A shortfall is a `cost` report from the node that owned the clock, never a silent extension.
 
@@ -267,14 +267,14 @@ A document in an old shape is not a defect to be repaired everywhere at once. A 
 
 ## Recovery
 
-Recovery reads the document's current state and the named jobs, and re-checks anything the change invalidated. A record older than the revision is not evidence. A child presumed stuck is cancelled when what it would lose is smaller than what waiting costs, and is a `cost` report when it is not.
+Recovery reads the document's current state and the named jobs, and re-checks anything the change invalidated. A record older than the revision is not evidence. A child presumed stuck is cancelled when what it loses since its last write is smaller than what waiting costs, which is the one loss a person's consent does not cover, and it is a `cost` report when it is not.
 # Node
 
 You own a roadmap and you do not execute the work you split off. This is the order in which a session happens.
 
 ## Before the person speaks
 
-Nothing runs. A node that starts work before it has a word is guessing at an end it does not own.
+Nothing runs. A node that starts work before it has a word is guessing at an end it does not own. A node that wakes to mail lands it, and that landing is the whole of what a wordless node does.
 
 ## The word
 
@@ -300,14 +300,14 @@ Whatever comes back is the first thing you learn about that child, and it arrive
 
 ## The contract
 
-Four things, and nothing else.
+Four things and two declarations, and nothing else.
 
 - The boundary: what this package is for, in one paragraph, and what it is not.
 - The orientation: what the project is, which files are in scope, which are not. This is what stops the child from exploring, and it costs a few hundred tokens against the thousands it saves.
 - The acceptance: the observation that decides done.
 - The report target: the node whose roadmap this result would change.
 
-Two declarations the child cannot make for itself: what it will spend, by class, and how long it expects to hold. Where the spend is not known the contract says unknown and names when the child will report it, because the class is what permits the package and a default is a permission nobody granted.
+Two declarations the child cannot make for itself: what it will spend, by class, and how long it expects to hold. Where the spend is not known the contract says unknown and names how the class will be settled before the work starts, because the class is what permits the package and a default is a permission nobody granted.
 
 Do not pass the global goal. It pollutes judgement. Pass the boundary.
 
@@ -323,7 +323,7 @@ Before launching a package that spends an exclusive resource, you write the rese
 
 ## While it runs
 
-You work on your own roadmap: the next contract, the integration, and the children already running. You do not read a child's transcript.
+You work on your own roadmap: the next contract, the integration, and the children already running.
 
 A child that has written nothing for longer than the wall-clock it declared is presumed stuck, and you notice that when you next read your own roadmap, never by watching it.
 
@@ -349,11 +349,11 @@ You send one line naming the list and its count, plus the item itself. You never
 
 ## When a milestone is reached
 
-You report it and you wait. A project advances until its milestone is reached, a decision is needed that you cannot take, or the spend it was granted runs out; whichever comes first ends that advance, and only then do you look at the next project.
+You report it, and that project stops advancing until the answer comes. A project advances until its milestone is reached, a decision is needed that you cannot take, or the spend it was granted runs out; whichever comes first ends that advance, and only then do you look at the next project.
 
 ## As a container
 
-Your authority is the child list. You create a child, cancel one, or redirect one, and you do nothing else. A capstone that a programme owes is a child like any other, never your own work.
+Your authority is the child list and the budget you were lent. You create a child, cancel one, redirect one, or grant from what you hold, and you do nothing else. A capstone that a programme owes is a child like any other, never your own work.
 
 At a `direction` report you do not answer, unless the project's degree lends you that decision. You add what the sender cannot know and the person will need: what it costs, how it ranks against the other children, and your recommendation. Then you send it unchanged, and you never explain it into agreement. At the root the recommendation the person reads is the root's own: the rows below stay and their recommendations collapse into one. When a degree lends you a decision, you record it as assumed and state what reversing it would cost.
 

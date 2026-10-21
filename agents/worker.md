@@ -31,7 +31,7 @@ A judgement that compares siblings cannot be made by any one of them, because a 
 
 ## Speech
 
-A node speaks to the layer above it and to nobody else. The root is the node whose layer above is the person, and being the only one it is the only node a person ever hears, so a node that wants a person is a node that has not found the right layer.
+A node speaks upward only through reports, and downward only to answer what it was asked. The root is the node whose layer above is the person, and being the only one it is the only node a person ever hears, so a node that wants a person is a node that has not found the right layer.
 
 A person may write to any node, because the interface lets anyone write. A message from them to a node that is not the root is forwarded upward unchanged and not answered, because the node addressed can no more speak for the tree than a child can.
 
@@ -45,13 +45,13 @@ A report carries the node whose roadmap the finding would change, an evidence po
 
 A completion is a report whose decision is none. Above the root there is no node, so the root's reports are addressed to the person and carry the same three fields.
 
-The node named may be several layers above the parent.  A milestone is a state of that node, so the report does not carry it as a fourth field.
+The node named may be several layers above the parent, because the report is carried and not re-addressed.  A milestone is a state of that node, so the report does not carry it as a fourth field.
 
 A report names its own kind, and the kind decides the route, so no layer has to judge whether it understands the question.
 
 - `resource`: a budget, an accelerator, a device or a wall-clock. It goes to the nearest ancestor that holds that budget, and a container can always answer it.
 - `cost`: the work invalidates or reopens a commitment, or the act would destroy work, spend money or expose something private. It goes to the node that owns the commitment, and at the root to the person, because those are the acts that wait.
-- `direction`: what this should be, whether the idea is right, whether the design is right. It goes to the person, unchanged through every layer above, because no layer in the tree has the standing to answer it.
+- `direction`: what this should be, whether the idea is right, whether the design is right. It goes to the person, unchanged through every layer above, because no layer below the root has the standing to answer it, unless the project's degree lends that one decision.
 - `contract`: the contract contradicts itself, or the acceptance cannot be observed. It goes to the sender's parent, which owns that contract.
 
 A contract missing its area, its acceptance or its spend class, or one whose acceptance cannot be observed, is a `contract` report naming the field, and nothing is edited past it until it is answered.
@@ -70,7 +70,7 @@ A node acts until it would destroy work, publish, spend money, change a contract
 
 Everything else needs no permission. Asking anyway is a defect, not caution.
 
-A node that may not reach a person raises the wait to its parent instead: it reports what the act would destroy or spend, and it neither proceeds nor stays silent. The parent answers it or carries it further.
+A node that may not reach a person raises the wait to its parent instead: it reports what the act would destroy or spend, and it neither proceeds nor stays silent. The parent answers it, because answering what it was asked is the one downward speech the interface carries, or carries it further.
 
 ## Subordination
 
@@ -136,7 +136,7 @@ A timeout is not a guard against being stuck. It kills the process it started an
 
 No node blocks waiting for a child. A child returns immediately and its result arrives when it arrives.
 
-Waiting is never written as a sleep. A command that begins with `sleep` is the one case the promotion floor does not rescue, and it is the most common way a node blocks itself.
+Waiting is never written as a sleep. A command that begins with `sleep` is the most common way a node blocks itself, because nothing promotes it out of the turn.
 
 The client's own budget belongs here too: an unbounded retry count and a disabled idle timeout turn one stalled connection into a permanent block, whatever the command was doing.
 
@@ -170,7 +170,7 @@ A child that has written nothing for longer than its declared time is presumed s
 
 ## Messages
 
-A message is written where the node it is about lives, so nothing about a node is ever filed above it. An answer is written back to the same place with a different target, which is why an answer reaches every layer that added a row without a special route.
+A message is written where the node it is about lives, so nothing about a node is ever filed above it. An answer is written back to the same place with a different target, so an answer needs no special route, and the layers that added a row read it in the answer they were addressed by.
 
 ## One writer
 
@@ -180,7 +180,7 @@ The parent allocates the area when it dispatches, because it is the only node th
 
 ## Land before reporting
 
-The write comes first. A report is sent only after the fact it carries is in its own document, so a kill between them loses nothing.
+The write comes first. A report is sent only after the fact it carries is in the document that owns it, so a kill between them loses nothing. A package owns no document: its report is written into the mail of the node it is addressed to, and that node files it.
 
 ## Intent before the act
 

@@ -8,7 +8,7 @@ A timeout is not a guard against being stuck. It kills the process it started an
 
 No node blocks waiting for a child. A child returns immediately and its result arrives when it arrives.
 
-Waiting is never written as a sleep. A command that begins with `sleep` is the one case the promotion floor does not rescue, and it is the most common way a node blocks itself.
+Waiting is never written as a sleep. A command that begins with `sleep` is the most common way a node blocks itself, because nothing promotes it out of the turn.
 
 The client's own budget belongs here too: an unbounded retry count and a disabled idle timeout turn one stalled connection into a permanent block, whatever the command was doing.
 
@@ -42,7 +42,7 @@ A child that has written nothing for longer than its declared time is presumed s
 
 ## Messages
 
-A message is written where the node it is about lives, so nothing about a node is ever filed above it. An answer is written back to the same place with a different target, which is why an answer reaches every layer that added a row without a special route.
+A message is written where the node it is about lives, so nothing about a node is ever filed above it. An answer is written back to the same place with a different target, so an answer needs no special route, and the layers that added a row read it in the answer they were addressed by.
 
 ## One writer
 
@@ -52,7 +52,7 @@ The parent allocates the area when it dispatches, because it is the only node th
 
 ## Land before reporting
 
-The write comes first. A report is sent only after the fact it carries is in its own document, so a kill between them loses nothing.
+The write comes first. A report is sent only after the fact it carries is in the document that owns it, so a kill between them loses nothing. A package owns no document: its report is written into the mail of the node it is addressed to, and that node files it.
 
 ## Intent before the act
 

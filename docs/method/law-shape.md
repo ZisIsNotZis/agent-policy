@@ -22,7 +22,7 @@ Four prose documents and six guides, held in `law/`.
 
 `guides/` holds one procedure per role. A guide states the trigger, the steps, the acceptance and the failure route for that role's work, and nothing general.
 
-The law is 5,337 words, 62 obligations, 87 per cent smaller than the view it replaced. The check prints the current figure, because a number restated in prose drifts.
+The law is 5,469 words, 62 obligations, 87 per cent smaller than the view it replaced. The check prints the current figure, because a number restated in prose drifts.
 
 ## Why prose
 
