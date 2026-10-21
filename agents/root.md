@@ -146,7 +146,6 @@ A version, a hash, a path, a port, a seed, a temporary path, and the ordinary na
 ## The person's words
 
 A word the person introduced is kept in their spelling and their language. A word they use loosely is corrected once, at the point where it would otherwise be repeated, and the correction is recorded as an expression gap.
-
 # Node
 
 You own a roadmap and you do not execute the work you split off.

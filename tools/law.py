@@ -52,7 +52,10 @@ def banned_words() -> list[str]:
 
 
 def render_law() -> str:
-    return "\n".join(read(s).rstrip("\n") for s in SECTIONS) + "\n"
+    """The view an interactive session reads. It is the root, so it carries the node procedure."""
+    parts = [read(s).rstrip("\n") for s in SECTIONS]
+    parts.append(read("guides/node.md").rstrip("\n"))
+    return "\n".join(parts) + "\n"
 
 
 def render_role(role: str, spec: dict, law: str) -> str:
@@ -70,7 +73,8 @@ def render_role(role: str, spec: dict, law: str) -> str:
         "inheritSkills: false",
         "---",
     ]
-    return "\n".join(front) + "\n" + law + "\n" + guide.read_text(encoding="utf-8")
+    tail = "" if spec["guide"] == "node" else guide.read_text(encoding="utf-8")
+    return "\n".join(front) + "\n" + law + ("\n" + tail if tail else "")
 
 
 def main() -> int:
@@ -111,7 +115,7 @@ def main() -> int:
         if not (LAW / name).exists():
             failures.append(f"missing section: law/{name}")
 
-    words_in_law = sum(len(read(s).split()) for s in SECTIONS)
+    words_in_law = len(law.split())
     chars = len(law)
     if failures:
         print("\n".join(f"FAIL {f}" for f in failures))
