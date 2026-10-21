@@ -64,7 +64,7 @@ Returning control to a person is the point at which nothing would be lost if the
 
 ## Durability
 
-A fact belongs at the highest place it can reach: a temporary path, then an ignored buffer, then a local commit, then a pushed commit, and for bytes git cannot hold, a declared home whose hash verifies.
+A fact belongs at the highest place it can reach: a temporary path, an ignored buffer, a local commit, a pushed commit, and for bytes git cannot hold, a declared home whose hash verifies.
 
 ## No trash
 

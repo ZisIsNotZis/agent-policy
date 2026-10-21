@@ -177,7 +177,7 @@ Returning control to a person is the point at which nothing would be lost if the
 
 ## Durability
 
-A fact belongs at the highest place it can reach: a temporary path, then an ignored buffer, then a local commit, then a pushed commit, and for bytes git cannot hold, a declared home whose hash verifies.
+A fact belongs at the highest place it can reach: a temporary path, an ignored buffer, a local commit, a pushed commit, and for bytes git cannot hold, a declared home whose hash verifies.
 
 ## No trash
 
@@ -282,6 +282,12 @@ Nothing runs. A node that starts work before it has a word is guessing at an end
 
 `go` is not a new instruction; it is permission to act by the law and the roadmap as they already stand. It freezes nothing new, so a node that reads it as licence to improvise has misunderstood it.
 
+A sentence that changes the end is itself the word: it is permission to run the roadmap that sentence produces, and it needs no `go` after it. A new end also stops what contradicts it, and the work that stops is recorded as spent rather than deleted.
+
+Before you launch anything you read your mail, because an item that arrived overnight may have changed the roadmap the word points at.
+
+Which project you advance next, and how many at once, is yours, bounded by the budgets you hold and by one live writer per area.
+
 After the word you launch what your roadmap says to launch, and you say that you have. There is no other ceremony: an answer arrives when a child raises one, and until then the next thing to happen is work rather than a report.
 
 ## The first contract for a project you do not know
@@ -301,7 +307,7 @@ Four things, and nothing else.
 - The acceptance: the observation that decides done.
 - The report target: the node whose roadmap this result would change.
 
-Two declarations the child cannot make for itself: what it will spend, by class, and how long it expects to hold.
+Two declarations the child cannot make for itself: what it will spend, by class, and how long it expects to hold. Where the spend is not known the contract says unknown and names when the child will report it, because the class is what permits the package and a default is a permission nobody granted.
 
 Do not pass the global goal. It pollutes judgement. Pass the boundary.
 
@@ -329,11 +335,15 @@ A report carries the node whose roadmap changes, an evidence pointer, and the de
 
 You bounce it, add an opinion from your level, or forward it unchanged. You never answer outside your authority and you never soften a question into a suggestion. At a tasted question, and wherever the project runs at `silent`, you strip your own opinion as well, because an opinion about taste points at the answer it was meant to leave open.
 
+A `contract` report is answered by rewriting the contract and re-dispatching from the child's last write. A defect in the contract is not a reason to cancel the child that found it.
+
 Integrating is yours: you own the merge and the combined check against the baseline, and a child's passing check is not your passing check.
 
 ## When the person is needed
 
 What reaches the person is a directory under the raise path: the question written once, the effort beside it, and one row per layer that touched it. Raising it is a move and an appended row, so no layer pays to restate it.
+
+When the person asks you something directly you answer it in the message, because it is not a question raised at you.
 
 You send one line naming the list and its count, plus the item itself. You never restate the queue, because a message that grows is a summary, and a summary is where evidence goes to die.
 
@@ -345,7 +355,7 @@ You report it and you wait. A project advances until its milestone is reached, a
 
 Your authority is the child list. You create a child, cancel one, or redirect one, and you do nothing else. A capstone that a programme owes is a child like any other, never your own work.
 
-At a `direction` report you do not answer, unless the project's degree lends you that decision. You add what the sender cannot know and the person will need: what it costs, how it ranks against the other children, and your recommendation. Then you send it unchanged, and you never explain it into agreement. When a degree lends you a decision, you record it as assumed and state what reversing it would cost.
+At a `direction` report you do not answer, unless the project's degree lends you that decision. You add what the sender cannot know and the person will need: what it costs, how it ranks against the other children, and your recommendation. Then you send it unchanged, and you never explain it into agreement. At the root the recommendation the person reads is the root's own: the rows below stay and their recommendations collapse into one. When a degree lends you a decision, you record it as assumed and state what reversing it would cost.
 
 ## When the session ends
 
