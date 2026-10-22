@@ -1,0 +1,22 @@
+bad_rule:
+  _kind: act
+  _when: ""
+  _know: ok
+  _scope: [nobody]
+  _choices:
+    - move: do it
+      gain: something
+  _goal: fine
+loose_dep:
+  _when: x
+  _scope: []
+  _depends_on: [missing]
+  _why: [nope]
+  _choices:
+    - move: a
+      gain: b
+      cost: c
+    - move: d
+      gain: e
+      cost: ""
+  _goal: y

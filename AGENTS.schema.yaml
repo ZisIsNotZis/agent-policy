@@ -1,0 +1,36 @@
+# The one schema. It describes AGENTS.yaml, which is a flat map of rules.
+#
+# A rule is keyed by a leading word. The fields below are the whole vocabulary; any other field
+# is a failure, not an extension. Only the first level of a rule carries the underscore, because
+# there it separates an attribute from a rule name; nested fields are plain.
+version: 1
+
+# Role names a `_scope` may name. roles.yaml owns the harness fields; when it exists, this list
+# moves there and the checker reads it instead.
+roles:
+  - root
+  - manager
+  - worker
+  - researcher
+  - reviewer
+  - policy_writer
+  - policy_reviewer
+
+rule:
+  required: [_when, _know, _choices, _scope, _goal]
+  optional: [_why, _depends_on]
+  fields:
+    _when: {type: text}
+    _know: {type: text, empty: true}
+    _why: {type: keys}
+    _depends_on: {type: keys}
+    _scope: {type: roles}
+    _choices: {type: list, of: choice, min: 2}
+    _goal: {type: text}
+
+choice:
+  required: [move, gain, cost]
+  fields:
+    move: {type: text}
+    gain: {type: text}
+    cost: {type: text}

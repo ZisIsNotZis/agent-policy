@@ -28,77 +28,82 @@ The product is the law in `AGENTS.yaml`, rendered to one agent definition per ro
 
 ## Roadmap
 
-The result: every decision rule is a balance; each role's case list scores 99% `stated` or `delegated`; the helpful rules are agent-native; a problem is classified, routed and fixed at the class; the six views are readable; `sh tools/check.sh` is green; a fresh review passes.
+The target: six files and one command.
 
 ```
-1_law:    72 balances; the rest verified as procedures
-2_cases:  six case lists in one file, 99% stated or delegated
-3_review: one fresh review of the whole law
-4_result: result_gate (person)
+AGENTS.yaml          rules only; every rule is a balance; keys are leading words, globally unique
+AGENTS.schema.yaml   the one schema: required, optional, enums, no extra field, first level only
+roles.yaml           the harness fields a role file needs, and nothing else
+banned.yaml          the forbidden terms
+schema.py            the one tool: validate, render, write; the only flag is --depth N
+agents/              the render, English and Chinese
 ```
 
-Worksets:
+A rule is: a leading-word key; `_when` (one sentence, exceptions inline); `_know` (one text field: the facts to have an impression of before deciding); `_why` (optional, the derivation as a list of rule keys, never rendered); `_choices` (a list of plausible choices, each a long SOP direction with its `gain` and `cost` in text; the agent picks one); `_scope`; and `_goal` (the ideal end state, never the method). `_depends_on` is a list of rule keys, resolved against the corpus; whether a view draws one is not the schema's business. The render writes `@key` at the end of the row for each dependency it includes, because markdown is generated and `@` is lean there. No `_kind`, no `_between`, no `_pull`, no rubric, no ends list, no `_links` field.
 
-- `1_law` is one writer, the policy_worker, section by section; no worktrees and no subagent labour.
-- `2_cases` after `1_law`; `3_review` after `2_cases`; `4_result` last and the only stop.
+A package is one file or one manual pass. Check the box when its accept line has run.
 
-### balance_migration (the big change)
+### 1_schema
 
-Outcome: every remaining decision act is a balance: two ends, each with a cost in the seven units and a payer, the band where the role acts, and the pull that says which way to yield; every procedure stays a how, with the balance that chooses it named; the `laws` section is done.
-Deliverable: one commit per law section; the regenerated views; the word delta.
-How: the section table, the decision/procedure method and the section order are in `docs/roadmap/balance_migration.md`; the `laws` section is the model; a rule that cannot be written as a balance is a design defect, not an exception.
-Acceptance: the balance test in `docs/review/contract.md`; `check.sh` green; a fresh review; the case coverage.
-Owner: the policy_worker writes `AGENTS.yaml` and regenerates the views; a subagent reviews, and reviews only.
+- [x] `schema_file`: write `AGENTS.schema.yaml` — the fields `_when`, `_know`, `_why`, `_choices`, `_depends_on`, `_scope`, `_goal`; no extra field; first-level underscore only.
+- [x] `schema_kind`: `_kind` dies; every rule carries the same fields.
+- [x] `schema_choices`: `_choices` is a list of objects; each has `move`, `gain`, `cost`, all non-empty text; at least two, and every one plausible — no decoy.
+- [x] `schema_depends`: `_depends_on` is a list of keys; each resolves to a rule; a dependency need not be drawn.
+- [x] `schema_know`: `_know` is a text field, present on every rule, allowed to be empty.
+- [x] `schema_why`: `_why` optional, a list of rule keys, never rendered.
 
-### case_lists
+Accept: a three-rule fixture validates; a corrupt fixture fails once per violation, naming the field.
 
-Outcome: six case lists: the moment, the axis (`authority`/`proceed`), the current verdict, the sentence that settles it or the missing one.
-Deliverable: `docs/review/cases.md`, one section per role, and the score table.
-Seed: `docs/review/reports/*.md`; the role's law sections; each role's SOP steps.
-Acceptance: every case is a moment, not a topic; the axis is marked; the verdict is backed by a quote or an absence; a fresh reviewer can reproduce it.
+Evidence at this revision: `python3 tools/schema.py tools/fixtures/valid.yaml` → `ok: 3 rules`; `python3 tools/schema.py tools/fixtures/invalid.yaml` → nine `FAIL` lines, one per violation, exit 1.
 
-### helpful_rewrite
+### 2_data (one file or one field set per package)
 
-Outcome: `understand`, `trace_requirements`, `no_blind_agreement` and `brainstorm` are amended to agent-native language and scoped to every role; the old names die.
-Deliverable: the commit; the views.
-Acceptance: no new rule; the four are amended; the request-understanding cases improve; a fresh review.
+- [ ] `roles_file`: extract `roles.yaml` (name, description, tools, thinking, ruleset).
+- [ ] `banned_file`: extract `banned.yaml`.
+- [ ] `sop_rules`: SOP steps become rules with `role` and `order`.
+- [ ] `yaml_names`: `_ends` becomes `_choices`; `_between` and `_pull` die; `_when`, `_goal`, `_scope` keep their underscore.
+- [ ] `yaml_cost_rule`: one rule named `cost` absorbs `units` and `payers`, so `_depends_on: [cost]` resolves and the seven units and four payers live in one home.
+- [ ] `yaml_choices`: every rule's band, pull and ends become choices — a long SOP direction with `gain` and `cost` in text.
+- [ ] `yaml_know`: write the `_know` text for every rule, by hand; the facts differ per rule and cannot be derived.
+- [ ] `yaml_style`: every `_goal` speaks in degrees — no 零、没有、不必、不让、definite — and uses the law's vocabulary without listing resources.
 
-### rdi_chain
+Accept: every rule validates; the rendered text reads as before or better; one commit per package.
 
-Outcome: `problem_class`, `double_check`, the report payload and the `signal`/`intake` route are complete; a simulated problem walks from detection to rule fix.
-Deliverable: the commit; the test; the views.
-Acceptance: a fresh reviewer traces detection, class, owner and fix; the payload carries case, expectation, rule, observation, evidence and class.
+### 3_links (manual, rule by rule)
 
-### baseline_score
+- [ ] `links_audit`: every `@` decided by one question — without it, can the reader act? Keep, delete, or add. No script.
+- [ ] `links_scope`: every kept link names who needs it.
 
-Outcome: the current law's coverage per role: counts of `stated`/`delegated`/`ambiguous`/`silent`; the gap list ranked by cost.
-Deliverable: the score table and the gap nodes.
-Acceptance: the counts sum to the case list; irreversible and expensive gaps are first; the 99% target is computed from the list.
+Accept: a table of rule → link → verdict → why, read by the person.
 
-### gap_migration
+### 4_split
 
-Outcome: the cases the baseline marks `ambiguous`/`silent` are closed by migrating their rules; the case list grows with each new case; coverage is re-scored.
-Deliverable: one commit per gap; the updated case lists; the score table.
-Acceptance: 99% `stated`/`delegated`; no new gap; `check.sh` green; a fresh review.
-Order: irreversible and expensive gaps first, then the frequent ones.
+- [ ] `role_split`: `policy_worker` → `policy_writer`; add `policy_reviewer`; scopes updated.
+- [ ] `worker_no_child`: a worker launches nothing; the manager dispatches the reviewer.
+- [ ] `token_lens`: `policy_reviewer` names token efficiency among what it judges.
 
-### rerun_behavior
+Accept: both policy views; the worker view carries no subagent right.
 
-Outcome: one fixed task set runs under the old and the current law; the violations are compared.
-Deliverable: the run log and the comparison.
-Acceptance: the same tasks and model; only the law differs; every difference is attributed.
+### 5_tool
 
-### result_gate (person)
+- [ ] `tool_one`: write `schema.py` — load once, validate, render, write; `--depth N` the only flag, default 0.
+- [ ] `tool_depth`: N and N+1 visibility — the open decision below.
+- [ ] `tool_fast`: one parse, one render, one write, under two seconds.
 
-Outcome: the person sees the rendered root and worker views, the case coverage table and the diff.
-Deliverable: the views, the score, the rerun, the commit.
-Acceptance: the person judges the direction; dependent work waits.
+Accept: `python3 tools/schema.py` writes every view in under two seconds; a corrupt fixture fails before anything is written.
 
-### cleanup
+### 6_cleanup
 
-Outcome: the proposals graduate or die; the old forms die; this roadmap reflects the result; the final commit.
-Deliverable: the commit; the README.
-Acceptance: no proposal left as an open question; `check.sh` green; a safe point.
+- [ ] `cleanup_files`: delete `tools/policy.py`, the checks that lived in it, and every reference to the old model.
+- [ ] `cleanup_review`: decide the fate of `docs/review/cases.md` — review artefact, or delete.
+- [ ] `cleanup_readme`: the README describes six files and one command.
+- [ ] `cleanup_hook`: `.githooks/pre-commit` runs `python3 tools/schema.py`, not the old tool.
+- [ ] `cleanup_agents`: `tools/install-agents.sh` and the `~/.pi/agent/agents` links carry `policy_writer` and `policy_reviewer`; the old `policy_worker` link and its view are gone.
+- [ ] `cleanup_hidden`: confirm no `*` hidden-name logic exists anywhere; today it does not, and nothing reintroduces it.
+
+Accept: a search for every old name returns nothing but git history.
+
+Worksets: `1_schema` and `5_tool` can start together, since the tool reads the schema; `2_data` after both; `3_links` after `yaml_names`; `4_split` after `links_scope`; `6_cleanup` last.
 
 ## Open questions
 
@@ -107,6 +112,14 @@ These are proposed, not law. Author: policy_worker. Source: the person's 2026-10
 | rule | what it says |
 |---|---|
 | `review_metric_home` | The case metric lives in the parent `docs/method/review.md`; a rule about role MDs belongs with the law. Decide: move it to `docs/review/`, or point at it and leave the parent copy as the owner. |
+| `depth_boundary` | At depth `N`, layers 0..N are drawn. Is layer `N+1` shown as a one-line stub (`@key — goal`) so the reader can judge whether to raise the depth, or not shown at all? Recommendation: the stub; your last word was "not included = not shown", so this is your call. |
+| `sections_in_yaml` | Sections stay as YAML nesting — grouping only, no semantics — or `AGENTS.yaml` becomes one flat map of rules? Recommendation: keep the nesting; it orders the view and costs nothing. |
+| `goal_every_rule` | Every rule carries `goal`, the expectation. Confirm under "everything is a balance". |
+| `text_language` | Every text stays `{zh, en}`, or one language per field? Recommendation: keep both; the Chinese view already exists and the migration cost is the same either way. |
+| `case_file` | `docs/review/cases.md` is review evidence, not law. Keep it as evidence, or delete it at `cleanup_review`. |
+| `unique_keys` | I do not agree that global uniqueness is manual: the schema cannot express it, but `schema.py` can collect keys and report duplicates mechanically. Recommendation: the tool checks it. |
+| `why_render` | `_why` is not rendered for now; it lives in the source for the maintainer. Confirm this stays true when the renderer is rewritten. |
+| `know_length` | `_know` lists every fact, or only the ones easy to forget? Recommendation: only the easy-to-forget ones, otherwise every rule becomes a checklist. |
 
 ## Retraction
 
