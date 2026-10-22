@@ -911,6 +911,7 @@ file_shape:
 sender_decides_nothing:
   _when: 你写完一条消息
   _know: 对方现在在不在跑；它会不会自己看到；有没有别的路能送到
+  _depends_on: [alive_or_not]
   _scope: [root, manager]
   _choices:
     - move: 写完就走；在跑的直接告知，没在跑的等它醒来自己看到
@@ -1007,6 +1008,7 @@ correct_by_author:
 write_through:
   _when: 一条决定刚成为当前
   _know: 这条决定住在哪份文档；它是不是还在等回答；谁会照着它行动
+  _depends_on: [ssot]
   _scope: [manager, policy_writer, policy_reviewer, researcher, reviewer, worker]
   _choices:
     - move: 立刻写进拥有它的文档，不等里程碑；还在等回答的提案也写，标上它的同意等级
@@ -1071,6 +1073,7 @@ missing_entrance:
 worker_records:
   _when: 你是执行者
   _know: 这个包要交什么；谁会把答案归档；你手上有多少超出这个包的东西
+  _depends_on: [report_fields]
   _scope: [researcher, reviewer, worker]
   _choices:
     - move: 把答案作为报告交回去，文档由启动你的人归档
@@ -1167,6 +1170,7 @@ assent:
 assumed_is_agent_fact:
   _when: 你引用一条假定
   _know: 这条假定是谁定的；它是不是人的原话；读的人会不会把它当成他的意思
+  _depends_on: [assent]
   _scope: [manager, policy_writer, policy_reviewer, researcher, reviewer, worker]
   _choices:
     - move: 说出是谁定的，并标明它是假定
@@ -1231,6 +1235,7 @@ no_manual_wrap:
 fact_record:
   _when: 你记一条事实
   _know: 它从哪来；谁的端；谁写的；什么时候、什么事；它管多宽；它现在算什么状态；证据和产生它的命令
+  _depends_on: [assent]
   _scope: [manager, policy_writer, policy_reviewer, researcher, reviewer, worker]
   _choices:
     - move: 把坐标写齐——来源、端、作者、场合、范围、状态、证据、产生它的命令
@@ -1263,6 +1268,7 @@ split_authorship:
 scratch_retired:
   _when: 你想用 .scratch
   _know: 你要放的东西还有没有别的家；里面已经有什么；谁还会来读它
+  _depends_on: [migrate_on_touch]
   _scope: [manager, policy_writer, policy_reviewer, researcher, reviewer, worker]
   _choices:
     - move: 不用它，把要留的东西按 migrate_on_touch 搬到有主的地方

@@ -66,3 +66,39 @@ The table is the evidence of the pass. It grows section by section; a rule with 
 | `person_may_write_anywhere` | — | The forward and the wake are in the rule. |
 | `ask_the_owner` | — | The wake and the record are in the rule. |
 | `say_that_you_started` | — | The one line is the rule. |
+
+## inbox (9 rules)
+
+| rule | depends_on | why |
+|---|---|---|
+| `one_direction` | — | The directory and the two don'ts are the rule. |
+| `tracked` | — | Version control is the act. |
+| `file_shape` | — | The four header names are enumerated in the rule. |
+| `sender_decides_nothing` | `alive_or_not` | "Send now or let it wake" is that rule's two routes; without it the stance has no method. |
+| `alive_or_not` | — | It defines the two states and their routes. |
+| `delete_on_read` | — | Land, then delete, is the whole act. |
+| `delete_is_tidying` | — | The act is the rule. |
+| `fire_and_forget` | — | The three returns are enumerated. |
+| `correct_by_author` | — | The author and the pass-back are the rule. |
+
+## records (17 rules)
+
+| rule | depends_on | why |
+|---|---|---|
+| `write_through` | `ssot` | "The document that owns it" is ssot's home rule; without it the reader picks any document. |
+| `entrance` | — | The four things an entrance carries are enumerated. |
+| `entrance_for_next_session` | — | The one reader and the silence are the rule. |
+| `missing_entrance` | — | Doing a little and reporting the block is the act. |
+| `worker_records` | `report_fields` | The answer goes back as a report; the three fields are not restated. |
+| `current_fact` | — | The present tense and git are the rule. |
+| `retraction` | — | The reason stays; the dead claim is not restated — that is the act. |
+| `cache` | — | The revision and the recompute command are in the rule. |
+| `expired_cache` | — | Recompute or label is the whole act. |
+| `assent` | — | It defines the four levels. |
+| `assumed_is_agent_fact` | `assent` | "假定" is one of its four levels; without it the mark has no scale. |
+| `no_mood_labels` | — | The occasion and the evidence are the rule. |
+| `absent_claim` | — | The command and the hit count are the rule. |
+| `no_manual_wrap` | — | One statement per line is the rule. |
+| `fact_record` | `assent` | "status" is one of the levels `assent` defines; without it the coordinate is undefined. |
+| `split_authorship` | — | Two records and the pointer are the rule. |
+| `scratch_retired` | `migrate_on_touch` | The move names that procedure for relocating what still matters. |
