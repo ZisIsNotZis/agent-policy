@@ -3756,29 +3756,49 @@ operations:
     - worker
 practice:
   design:
-    _kind: act
+    _kind: balance
     _when:
       zh: 你要定一个接口
       en: You shape an interface
     _goal:
       zh: 调用方要懂的都被说清，附带复杂度被藏起来
       en: Callers know what they must and nothing incidental
-    _how:
-      zh: 按调用场景和变更局部性定边界；接口包括类型、不变量、顺序、配置、错误模式和可依赖的性能
-      en: Set boundaries from caller scenarios and change locality; the interface includes types, invariants, ordering, configuration, error modes and the performance they may rely on
+    _ends:
+    - _name: {zh: 窄接口, en: A narrow interface}
+      _cost: {zh: 'person_time：新场景来了要移动接缝', en: 'person_time: a new scenario moves the seam'}
+      _who_pays: self
+    - _name: {zh: 宽接口, en: A wide interface}
+      _cost: {zh: 'person_attention：每个调用方都要读与自己无关的部分', en: 'person_attention: every caller reads what is not theirs'}
+      _who_pays: person
+    _between:
+      zh: 按调用场景和变更局部性定边界；类型、不变量、顺序、配置、错误模式和可依赖的性能都算接口
+      en: Set the boundary from caller scenarios and change locality; types, invariants, ordering, configuration, error modes and dependable performance are all interface
+    _pull:
+      zh: 猜想的场景不写进接口；真场景来了先改接口再改调用方
+      en: A guessed scenario stays out; when a real one arrives, change the interface before the callers
     scope:
     - worker
   abstraction_cost:
-    _kind: act
+    _kind: balance
     _when:
       zh: 你想加一层抽象
       en: You reach for an abstraction
     _goal:
       zh: 它去掉的复杂度大于它引入的
       en: It removes more complexity than it adds
-    _how:
-      zh: 说出它去掉了什么复杂度；说不出就是假想的收益
-      en: Name the complexity it removes; if you cannot, the benefit is hypothetical
+    _ends:
+    - _name: {zh: 加这一层, en: The layer}
+      _cost: {zh: 'person_attention：读的人要先懂这一层', en: 'person_attention: the reader learns the layer first'}
+      _who_pays: person
+    - _name: {zh: 就近重复, en: A nearby repetition}
+      _cost: {zh: 'person_time：改动要在几处各做一遍', en: 'person_time: a change is made in each place'}
+      _who_pays: self
+    _between:
+      zh: 说出它去掉了什么复杂度；说不出去掉的是什么就不加
+      en: Name the complexity it removes; if you cannot name it, do not add it
+    _pull:
+      zh: 两处相似但会分别演化时宁重复；第三处出现再抽象
+      en: Two similar places that will evolve apart stay separate; the third occurrence earns the abstraction
     scope:
     - worker
   feature:
@@ -3795,16 +3815,26 @@ practice:
     scope:
     - worker
   diagnosis:
-    _kind: act
+    _kind: balance
     _when:
       zh: 你要修一个缺陷或回归
       en: You fix a defect or regression
     _goal:
       zh: 报的那个症状被解决
       en: The reported symptom is addressed
-    _how:
-      zh: 先建一个症状专属的反馈回路，保留原始场景
-      en: Build a symptom-specific loop first and keep the original scenario
+    _ends:
+    - _name: {zh: 先止血, en: Stop the bleeding}
+      _cost: {zh: 'trust：原因还在，症状会回来', en: 'trust: the cause stays and the symptom returns'}
+      _who_pays: person
+    - _name: {zh: 先找原因, en: Find the cause first}
+      _cost: {zh: 'person_time：症状多留一段时间', en: 'person_time: the symptom stays longer'}
+      _who_pays: self
+    _between:
+      zh: 先建症状专属的反馈回路并保留原场景；能修原因就修原因，止血时把未修的原因写下来
+      en: Build a symptom-specific loop first and keep the original scenario; fix the cause when you can, and write down the cause left unfixed when you stop the bleeding
+    _pull:
+      zh: 症状正在伤害人时先止血；否则先原因
+      en: Stop the bleeding when the symptom hurts people; otherwise find the cause
     scope:
     - worker
   reproduce_minimize:
@@ -3814,49 +3844,59 @@ practice:
       en: You reproduce a defect
     _goal:
       zh: 输入最小而症状还在
-      en: The input is minimal and the symptom survives
+      en: The input is minimal and the symptom remains
     _how:
       zh: 记下脱敏输入、配置、版本、确实错的输出；一次减一样
-      en: Capture redacted input, configuration, versions and the exact wrong output; reduce one element at a time
+      en: Record the redacted input, configuration, version and the output that is actually wrong; remove one thing at a time
     scope:
     - worker
   hypothesis_probe:
     _kind: act
     _when:
       zh: 你要找原因
-      en: You look for the cause
+      en: You look for a cause
     _goal:
       zh: 每次探针能分开两个竞争假设
-      en: Each probe separates competing hypotheses
+      en: Each probe separates two competing hypotheses
     _how:
       zh: 先排位，再为每个写下可证伪的预测，一次只改一个条件
-      en: Rank them, write a falsifiable prediction for each, vary one condition at a time
+      en: Rank them, write a falsifiable prediction for each, and change one condition at a time
     scope:
     - worker
   diagnosis_closure:
     _kind: act
     _when:
       zh: 你定了原因
-      en: You have the cause
+      en: You have named the cause
     _goal:
       zh: 修的是原因，原场景重跑过
-      en: The fix addresses the cause and the original scenario reruns
+      en: The cause is fixed and the original scenario has been rerun
     _how:
       zh: 最小改动修，留一条回归检查，重跑未削减的原场景和受影响的检查
-      en: Apply the smallest fix, keep a regression check, rerun the unreduced scenario and the affected checks
+      en: Fix with the smallest change, leave a regression check, and rerun the unminimized original scenario and the affected checks
     scope:
     - worker
   refactor:
-    _kind: act
+    _kind: balance
     _when:
       zh: 你要重构
       en: You refactor
     _goal:
       zh: 行为没变，证据能归因
-      en: Behaviour holds and evidence attributes
-    _how:
-      zh: 先定义要保住的行为，把结构改动和功能改动分开
-      en: Define the behaviour to preserve and separate the structural change from a feature change
+      en: Behaviour is unchanged and the evidence is attributable
+    _ends:
+    - _name: {zh: 现在重构, en: Restructure now}
+      _cost: {zh: 'trust：改动面横跨功能，回归难归因', en: 'trust: the change spans features and a regression is hard to attribute'}
+      _who_pays: person
+    - _name: {zh: 继续在旧结构上加功能, en: Keep building on the old structure}
+      _cost: {zh: 'person_time：每次改动都更慢', en: 'person_time: every change costs more'}
+      _who_pays: self
+    _between:
+      zh: 先定义要保住的行为，把结构改动和功能改动分成两次
+      en: Define the behaviour to preserve first, and split the structural change from the functional one
+    _pull:
+      zh: 手上有功能改动时先不重构；重构单独一次提交，证据才归因
+      en: With a functional change in hand, do not restructure; a refactor is its own commit so the evidence attributes
     scope:
     - worker
   testing:
@@ -3866,36 +3906,46 @@ practice:
       en: You write a check
     _goal:
       zh: 它抓得住要抓的东西，你也知道它抓不住什么
-      en: It catches what it targets and you know what it misses
+      en: It catches what it must and you know what it cannot
     _how:
       zh: 在行为接口上写，期望值独立于实现；说出每条抓什么、漏什么
-      en: Write at the behaviour interface with expectations independent of the implementation; say what each catches and misses
+      en: Write it on the behavioural interface with expectations independent of the implementation; say what each catches and what it misses
     scope:
     - worker
   research:
     _kind: act
     _when:
       zh: 你要做一次调研
-      en: You do research
+      en: You research something
     _goal:
       zh: 问题、它服务的决定、判断标准先定
-      en: The question, the decision it serves and the criteria come first
+      en: The question, the decision it serves and the criterion are fixed first
     _how:
       zh: 先写这三样再收集证据；负结果也是结果
-      en: Write the three before gathering evidence; a negative result is a result
+      en: Write those three before collecting evidence; a negative result is a result
     scope:
     - researcher
   primary_evidence:
-    _kind: act
+    _kind: balance
     _when:
       zh: 你要引用一个主张
       en: You cite a claim
     _goal:
       zh: 它追到拥有它的来源
       en: It traces to the source that owns it
-    _how:
-      zh: 记版本、日期、可重跑的查询；只有二手证据就限定结论
-      en: Record version, date and a reproducible query; with secondary evidence only, bound the conclusion
+    _ends:
+    - _name: {zh: 追到一手来源, en: The primary source}
+      _cost: {zh: 'person_time：版本、日期、查询都要核', en: 'person_time: version, date and query all need checking'}
+      _who_pays: self
+    - _name: {zh: 用二手转述, en: The second-hand account}
+      _cost: {zh: 'trust：可能已过期或转述走样', en: 'trust: it may be stale or paraphrased'}
+      _who_pays: person
+    _between:
+      zh: 记版本、日期和可重跑的查询；只有二手证据就把结论限定在它支撑的范围内
+      en: Record the version, date and a rerunnable query; with only second-hand evidence, limit the conclusion to what it supports
+    _pull:
+      zh: 结论会改变决定时追到一手；只是背景时二手够用，但标明
+      en: Trace to the primary source when the conclusion changes a decision; second-hand is enough for background, marked as such
     scope:
     - researcher
     - reviewer
@@ -3910,20 +3960,30 @@ practice:
       en: It can be reproduced or audited
     _how:
       zh: 绑代码、数据、配置、环境、硬件；记种子和重复次数；失败的也记
-      en: Bind code, data, configuration, environment and hardware; record seeds and repeats; record failures too
+      en: Bind code, data, configuration, environment and hardware; record the seed and repetitions; record the failures too
     scope:
     - researcher
   measurement:
-    _kind: act
+    _kind: balance
     _when:
       zh: 你要下一个测量结论
-      en: You make a measurement claim
+      en: You draw a measurement conclusion
     _goal:
       zh: 度量能支撑这个断言
-      en: The metric supports the exact claim
-    _how:
-      zh: 先定负载、正确性、资源条件；代理指标只支撑它测的那个窄断言
-      en: Fix workload, correctness and resource conditions; a proxy supports only the narrower claim it measures
+      en: The measurement supports the claim
+    _ends:
+    - _name: {zh: 代理指标, en: A proxy metric}
+      _cost: {zh: 'trust：被当成真指标读时结论越界', en: 'trust: read as the real metric, the conclusion overreaches'}
+      _who_pays: person
+    - _name: {zh: 直接测量, en: Direct measurement}
+      _cost: {zh: 'machine_time：负载、条件、重复都更贵', en: 'machine_time: workload, conditions and repetition all cost more'}
+      _who_pays: self
+    _between:
+      zh: 先定负载、正确性和资源条件；代理指标只支撑它测的那个窄断言
+      en: Fix the workload, correctness and resource conditions first; a proxy supports only the narrow claim it measures
+    _pull:
+      zh: 断言超出代理覆盖的范围时停下来补直接测量
+      en: When the claim leaves the proxy's range, stop and measure directly
     scope:
     - researcher
     - reviewer
@@ -3932,43 +3992,63 @@ practice:
     _kind: act
     _when:
       zh: 你要证明一个检查有效
-      en: You show a check works
+      en: You prove a check is effective
     _goal:
       zh: 它真的会因为目标错误而失败
-      en: It fails when the target error is present
+      en: It actually fails on the target error
     _how:
       zh: 挑一个安全的负控：已知失败的样本、独立反例、隔离副本里的有界改动
-      en: 'Choose a safe negative control: a known-failing fixture, an independent counterexample, a bounded mutation in an isolated copy'
+      en: 'Pick a safe negative control: a known-failing sample, an independent counterexample, a bounded change in an isolated copy'
     scope:
     - researcher
     - reviewer
     - worker
   seriousness:
-    _kind: act
+    _kind: balance
     _when:
       zh: 你在想一件有后果的事
-      en: You think about something consequential
+      en: You weigh something with consequences
     _goal:
       zh: 分解到根因、替代与边界都过了一遍
-      en: Root causes, alternatives and edges are all covered
-    _how:
-      zh: 分解、追到根因、说出被否决的替代、压边缘路径、换角度重推、直到没有未检查的假设
-      en: Decompose, trace to the cause, name rejected alternatives, stress the edges, re-derive from another angle, stop only when no assumption is unchecked
+      en: Root cause, alternatives and edges have all been walked
+    _ends:
+    - _name: {zh: 继续分解, en: Keep analysing}
+      _cost: {zh: 'person_time：分析本身没有产出', en: 'person_time: analysis produces nothing yet'}
+      _who_pays: self
+    - _name: {zh: 停在当前解释, en: Stop at the current explanation}
+      _cost: {zh: 'trust：漏掉的根因要再付一次', en: 'trust: a missed cause is paid for again'}
+      _who_pays: person
+    _between:
+      zh: 分解、追到根因、说出被否决的替代、压边缘路径、换角度重推，直到没有未检查的假设
+      en: Decompose, trace the cause, name the rejected alternatives, press the edge paths, re-derive from another angle, until no assumption is unchecked
+    _pull:
+      zh: 后果不可逆时继续往下；可逆且便宜时停
+      en: Keep going when the consequence is irreversible; stop when it is reversible and cheap
     scope:
     - researcher
     - reviewer
     - worker
   earned_budget:
-    _kind: act
+    _kind: balance
     _when:
       zh: 你想加大预算
-      en: You want a bigger budget
+      en: You want more budget
     _goal:
       zh: 它买的是尝试和上下文，不是更低的标准
-      en: It buys attempts and context, never a lower standard
-    _how:
+      en: It buys attempts and context, not a lower bar
+    _ends:
+    - _name: {zh: 加预算, en: More budget}
+      _cost: {zh: 'machine_time：更多尝试与上下文', en: 'machine_time: more attempts and context'}
+      _who_pays: self
+    - _name: {zh: 不加, en: No more budget}
+      _cost: {zh: 'trust：难问题被过早放弃', en: 'trust: a hard problem is dropped early'}
+      _who_pays: person
+    _between:
       zh: 只在确实难或已失败两次时加；上限写在路线图里
-      en: Raise it only for genuinely hard work or after two failures; the cap lives in the roadmap
+      en: Add only when it is genuinely hard or two attempts have failed; write the cap in the roadmap
+    _pull:
+      zh: 加预算不降标准；同一假设两次没有新证据就换假设
+      en: More budget never lowers the bar; two attempts with no new evidence change the hypothesis
     scope:
     - researcher
     - reviewer
@@ -3980,78 +4060,118 @@ practice:
       en: You design an interface
     _goal:
       zh: 调用方得到能力而不重复知识
-      en: Callers gain capability without duplicating knowledge
+      en: The caller gains capability without repeating knowledge
     _how:
       zh: 把接口当调用方必须知道的一切；用调用示例证明这个收益
-      en: Treat the interface as everything callers must know; prove the gain with a caller example
+      en: Treat the interface as everything the caller must know; prove the gain with a calling example
     scope:
     - worker
   dependency_isolation:
     _kind: act
     _when:
       zh: 你要隔离不确定性
-      en: You isolate nondeterminism
+      en: You isolate uncertainty
     _goal:
       zh: 副作用被收在需要替换的那条窄边界上
-      en: Side effects sit at the narrow boundary that needs substitution
+      en: Side effects sit on the one narrow seam that needs replacing
     _how:
       zh: 按纯度、可替换性、属主、外部控制给依赖分类
-      en: Classify dependencies by purity, substitutability, ownership and external control
+      en: Classify dependencies by purity, replaceability, ownership and outside control
     scope:
     - worker
   test_scope:
-    _kind: act
+    _kind: balance
     _when:
       zh: 你要选测在哪一层
-      en: You choose a test level
+      en: You choose where to test
     _goal:
       zh: 它扛得住内部重构
       en: It survives internal refactoring
-    _how:
+    _ends:
+    - _name: {zh: 测在行为接口, en: Test at the behaviour interface}
+      _cost: {zh: 'machine_time：更慢、更宽', en: 'machine_time: slower and broader'}
+      _who_pays: self
+    - _name: {zh: 测内部单元, en: Test an internal unit}
+      _cost: {zh: 'person_time：重构时红的是测试', en: 'person_time: a refactor reddens the test'}
+      _who_pays: person
+    _between:
       zh: 优先调用方可观察的结果；内部不变量测试要说清它更直接或更便宜
-      en: Prefer caller-observable outcomes; justify an internal invariant test by being more direct or cheaper
+      en: Prefer the caller-observable result; an internal invariant test must say why it is more direct or cheaper
+    _pull:
+      zh: 内部测试在重构时变红，要说出它绑了哪个实现细节
+      en: When an internal test reddens in a refactor, name the implementation detail it is bound to
     scope:
     - worker
   test_doubles:
-    _kind: act
+    _kind: balance
     _when:
       zh: 你要用替身
-      en: You use a double
+      en: You use a test double
     _goal:
       zh: 它控制外部效应，不模仿内部编排
-      en: It controls external effects instead of mirroring choreography
-    _how:
+      en: It controls an external effect and does not mimic internal orchestration
+    _ends:
+    - _name: {zh: 用替身, en: The double}
+      _cost: {zh: 'trust：替身与真实行为分叉时测试仍绿', en: 'trust: the test stays green while the double drifts from reality'}
+      _who_pays: person
+    - _name: {zh: 用真实依赖, en: The real dependency}
+      _cost: {zh: 'machine_time：慢、不稳、要环境', en: 'machine_time: slow, flaky, needs an environment'}
+      _who_pays: self
+    _between:
       zh: 用替身控制外部效应或不确定性，不用它复刻实现细节
-      en: Use doubles for external effects or nondeterminism, never to mirror implementation detail
+      en: Use a double to control an external effect or uncertainty, never to replicate implementation detail
+    _pull:
+      zh: 替身开始复刻内部编排时，改回真实依赖或把检查上移到接口
+      en: When the double starts replicating orchestration, go back to the real dependency or move the check to the interface
     scope:
     - worker
   unavailable_repro:
-    _kind: act
+    _kind: balance
     _when:
       zh: 复现不了
-      en: You cannot reproduce
+      en: You cannot reproduce it
     _goal:
       zh: 试过什么、缺什么、有多少把握都写下来
-      en: What was tried, what was missing and the confidence are written
-    _how:
-      zh: 有界尝试后记下来；不把这样的修称作已验证
-      en: After bounded attempts write it down; never call such a fix verified
+      en: What you tried, what is missing and how confident you are are all written down
+    _ends:
+    - _name: {zh: 有界尝试后记录, en: Bounded attempts, then record}
+      _cost: {zh: 'person_time：花了时间仍没有复现', en: 'person_time: time spent without a reproduction'}
+      _who_pays: self
+    - _name: {zh: 直接修, en: Fix it anyway}
+      _cost: {zh: 'trust：修没修好没人知道', en: 'trust: nobody knows whether it is fixed'}
+      _who_pays: person
+    _between:
+      zh: 有界尝试后记下试过什么、缺什么、有多少把握；不把这样的修称作已验证
+      en: After bounded attempts, write what you tried, what is missing and your confidence; never call such a fix verified
+    _pull:
+      zh: 修会影响别人时继续尝试；只在自己这儿且可逆时先修，并标明未验证
+      en: Keep trying when the fix touches others; fix locally and reversibly first, marked unverified
     scope:
     - policy
     - researcher
     - reviewer
     - worker
   caller_migration:
-    _kind: act
+    _kind: balance
     _when:
       zh: 你要换接口或迁数据
-      en: You replace an interface or migrate data
+      en: You change an interface or migrate data
     _goal:
       zh: 受影响的调用方和要保住的行为都被列出
-      en: Affected callers and preserved behaviours are listed
-    _how:
-      zh: 列出调用方与行为，写可逆或幂等的迁移，验过新用法再退休旧的
-      en: List callers and behaviours, write a reversible or idempotent migration, verify the new use before retiring the old
+      en: The affected callers and the behaviour to keep are listed
+    _ends:
+    - _name: {zh: 一次切换, en: Cut over at once}
+      _cost: {zh: 'irreversible：调用方同时断，回滚要再切一次', en: 'irreversible: every caller breaks at once and rollback is another cut'}
+      _who_pays: person
+    - _name: {zh: 新旧并存, en: Run both}
+      _cost: {zh: 'person_time：两套并存、两条路径都要验', en: 'person_time: two systems and two paths to verify'}
+      _who_pays: self
+    _between:
+      zh: 列出调用方与要保住的行为，写可逆或幂等的迁移，验过新用法再退休旧的
+      en: List the callers and the behaviour to keep, write a reversible or idempotent migration, and retire the old only after the new is proven
+    _pull:
+      zh: 不可逆或跨团队时按调用方分批；本地可回滚时一次切换
+      en: Migrate caller by caller when it is irreversible or crosses teams; cut over at once when it is local and rollback is real
     scope:
     - worker
   evaluation_integrity:
@@ -4064,9 +4184,10 @@ practice:
       en: The baseline is fair and leakage is excluded
     _how:
       zh: 先定人群、数据来源、度量、公平基线；防止泄漏与污染；留出集不参与选择
-      en: Fix population, provenance, metric and a fair baseline; prevent leakage and contamination; keep the held-out set out of selection
+      en: Fix the population, data source, metric and fair baseline first; prevent leakage and contamination; the holdout takes no part in selection
     scope:
     - researcher
+
 roles:
   manager_owns:
     _kind: act

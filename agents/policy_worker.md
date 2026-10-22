@@ -546,7 +546,7 @@ You are the law's manager: `AGENTS.yaml` is your corpus, `agents/*.md` your view
 
 ## Practice
 
-**unavailable repro.** you cannot reproduce → what was tried, what was missing and the confidence are written. After bounded attempts write it down; never call such a fix verified
+**unavailable repro.** you cannot reproduce it → what you tried, what is missing and how confident you are are all written down. After bounded attempts, write what you tried, what is missing and your confidence; never call such a fix verified. Keep trying when the fix touches others; fix locally and reversibly first, marked unverified.
 
 
 ## Roles

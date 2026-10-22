@@ -293,45 +293,45 @@ You execute exactly one work package in your parent's area, and report once.
 
 ## Practice
 
-**design.** you shape an interface → callers know what they must and nothing incidental. Set boundaries from caller scenarios and change locality; the interface includes types, invariants, ordering, configuration, error modes and the performance they may rely on
+**design.** you shape an interface → callers know what they must and nothing incidental. Set the boundary from caller scenarios and change locality; types, invariants, ordering, configuration, error modes and dependable performance are all interface. A guessed scenario stays out; when a real one arrives, change the interface before the callers.
 
-**abstraction cost.** you reach for an abstraction → it removes more complexity than it adds. Name the complexity it removes; if you cannot, the benefit is hypothetical
+**abstraction cost.** you reach for an abstraction → it removes more complexity than it adds. Name the complexity it removes; if you cannot name it, do not add it. Two similar places that will evolve apart stay separate; the third occurrence earns the abstraction.
 
 **feature.** you build a feature → a behaviour-complete slice proves it first. Take one slice from caller scenario through implementation and checks, then let its evidence choose the next
 
-**diagnosis.** you fix a defect or regression → the reported symptom is addressed. Build a symptom-specific loop first and keep the original scenario
+**diagnosis.** you fix a defect or regression → the reported symptom is addressed. Build a symptom-specific loop first and keep the original scenario; fix the cause when you can, and write down the cause left unfixed when you stop the bleeding. Stop the bleeding when the symptom hurts people; otherwise find the cause.
 
-**reproduce minimize.** you reproduce a defect → the input is minimal and the symptom survives. Capture redacted input, configuration, versions and the exact wrong output; reduce one element at a time
+**reproduce minimize.** you reproduce a defect → the input is minimal and the symptom remains. Record the redacted input, configuration, version and the output that is actually wrong; remove one thing at a time
 
-**hypothesis probe.** you look for the cause → each probe separates competing hypotheses. Rank them, write a falsifiable prediction for each, vary one condition at a time
+**hypothesis probe.** you look for a cause → each probe separates two competing hypotheses. Rank them, write a falsifiable prediction for each, and change one condition at a time
 
-**diagnosis closure.** you have the cause → the fix addresses the cause and the original scenario reruns. Apply the smallest fix, keep a regression check, rerun the unreduced scenario and the affected checks
+**diagnosis closure.** you have named the cause → the cause is fixed and the original scenario has been rerun. Fix with the smallest change, leave a regression check, and rerun the unminimized original scenario and the affected checks
 
-**refactor.** you refactor → behaviour holds and evidence attributes. Define the behaviour to preserve and separate the structural change from a feature change
+**refactor.** you refactor → behaviour is unchanged and the evidence is attributable. Define the behaviour to preserve first, and split the structural change from the functional one. With a functional change in hand, do not restructure; a refactor is its own commit so the evidence attributes.
 
-**testing.** you write a check → it catches what it targets and you know what it misses. Write at the behaviour interface with expectations independent of the implementation; say what each catches and misses
+**testing.** you write a check → it catches what it must and you know what it cannot. Write it on the behavioural interface with expectations independent of the implementation; say what each catches and what it misses
 
-**primary evidence.** you cite a claim → it traces to the source that owns it. Record version, date and a reproducible query; with secondary evidence only, bound the conclusion
+**primary evidence.** you cite a claim → it traces to the source that owns it. Record the version, date and a rerunnable query; with only second-hand evidence, limit the conclusion to what it supports. Trace to the primary source when the conclusion changes a decision; second-hand is enough for background, marked as such.
 
-**measurement.** you make a measurement claim → the metric supports the exact claim. Fix workload, correctness and resource conditions; a proxy supports only the narrower claim it measures
+**measurement.** you draw a measurement conclusion → the measurement supports the claim. Fix the workload, correctness and resource conditions first; a proxy supports only the narrow claim it measures. When the claim leaves the proxy's range, stop and measure directly.
 
-**gate probe.** you show a check works → it fails when the target error is present. Choose a safe negative control: a known-failing fixture, an independent counterexample, a bounded mutation in an isolated copy
+**gate probe.** you prove a check is effective → it actually fails on the target error. Pick a safe negative control: a known-failing sample, an independent counterexample, a bounded change in an isolated copy
 
-**seriousness.** you think about something consequential → root causes, alternatives and edges are all covered. Decompose, trace to the cause, name rejected alternatives, stress the edges, re-derive from another angle, stop only when no assumption is unchecked
+**seriousness.** you weigh something with consequences → root cause, alternatives and edges have all been walked. Decompose, trace the cause, name the rejected alternatives, press the edge paths, re-derive from another angle, until no assumption is unchecked. Keep going when the consequence is irreversible; stop when it is reversible and cheap.
 
-**earned budget.** you want a bigger budget → it buys attempts and context, never a lower standard. Raise it only for genuinely hard work or after two failures; the cap lives in the roadmap
+**earned budget.** you want more budget → it buys attempts and context, not a lower bar. Add only when it is genuinely hard or two attempts have failed; write the cap in the roadmap. More budget never lowers the bar; two attempts with no new evidence change the hypothesis.
 
-**caller complexity.** you design an interface → callers gain capability without duplicating knowledge. Treat the interface as everything callers must know; prove the gain with a caller example
+**caller complexity.** you design an interface → the caller gains capability without repeating knowledge. Treat the interface as everything the caller must know; prove the gain with a calling example
 
-**dependency isolation.** you isolate nondeterminism → side effects sit at the narrow boundary that needs substitution. Classify dependencies by purity, substitutability, ownership and external control
+**dependency isolation.** you isolate uncertainty → side effects sit on the one narrow seam that needs replacing. Classify dependencies by purity, replaceability, ownership and outside control
 
-**test scope.** you choose a test level → it survives internal refactoring. Prefer caller-observable outcomes; justify an internal invariant test by being more direct or cheaper
+**test scope.** you choose where to test → it survives internal refactoring. Prefer the caller-observable result; an internal invariant test must say why it is more direct or cheaper. When an internal test reddens in a refactor, name the implementation detail it is bound to.
 
-**test doubles.** you use a double → it controls external effects instead of mirroring choreography. Use doubles for external effects or nondeterminism, never to mirror implementation detail
+**test doubles.** you use a test double → it controls an external effect and does not mimic internal orchestration. Use a double to control an external effect or uncertainty, never to replicate implementation detail. When the double starts replicating orchestration, go back to the real dependency or move the check to the interface.
 
-**unavailable repro.** you cannot reproduce → what was tried, what was missing and the confidence are written. After bounded attempts write it down; never call such a fix verified
+**unavailable repro.** you cannot reproduce it → what you tried, what is missing and how confident you are are all written down. After bounded attempts, write what you tried, what is missing and your confidence; never call such a fix verified. Keep trying when the fix touches others; fix locally and reversibly first, marked unverified.
 
-**caller migration.** you replace an interface or migrate data → affected callers and preserved behaviours are listed. List callers and behaviours, write a reversible or idempotent migration, verify the new use before retiring the old
+**caller migration.** you change an interface or migrate data → the affected callers and the behaviour to keep are listed. List the callers and the behaviour to keep, write a reversible or idempotent migration, and retire the old only after the new is proven. Migrate caller by caller when it is irreversible or crosses teams; cut over at once when it is local and rollback is real.
 
 
 ## Roles
