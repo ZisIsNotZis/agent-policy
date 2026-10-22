@@ -73,7 +73,7 @@ One-to-one is complete in `AGENTS.next.yaml`: 381 rules, the old key set and ord
 
 ### 3_links (manual, rule by rule)
 
-- [ ] `links_audit`: every `@` decided by one question — without it, can the reader act? Keep, delete, or add. No script.
+- [ ] `links_audit`: every `@` decided by one question — without it, can the reader act? Keep, delete, or add. No script. Started: laws and architecture are in `docs/roadmap/links.md`; 31 rules, 6 links.
 - [ ] `links_scope`: every kept link names who needs it.
 
 Accept: a table of rule → link → verdict → why, read by the person.

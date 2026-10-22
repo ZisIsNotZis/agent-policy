@@ -1,6 +1,7 @@
 ssot:
   _when: 你要记下一条事实
   _know: 这条事实现在住在哪几个文件里；谁会读它；它多久变一次；读者能不能顺着指针走
+  _depends_on: [chain]
   _scope: [root, manager, worker, researcher, reviewer, policy_writer, policy_reviewer]
   _choices:
     - move: 把这条事实连同来源写进拥有它的那一份文件，删掉旧的那一份
@@ -161,6 +162,7 @@ specific_wins:
 rule_over_state:
   _when: 规则和现状不一致
   _know: 规则要的是什么；现状差在哪；把现状带过来要动多少地方；规则本身是不是错了
+  _depends_on: [migrate_on_touch]
   _scope: [root, manager, worker, researcher, reviewer, policy_writer, policy_reviewer]
   _choices:
     - move: 按规则做，并把碰到的部分带过来
@@ -273,6 +275,7 @@ levels_in_order:
 two_kinds:
   _when: 你要派一个东西
   _know: 它里面有几件互不依赖、各有自己验收的事；谁会持续拥有它；它要报几次
+  _depends_on: [kind_test]
   _scope: [root, manager]
   _choices:
     - move: 是管理者就给它目录和名字，是执行者就让它只报一次
@@ -289,6 +292,7 @@ two_kinds:
 worker:
   _when: 你派了一个执行者
   _know: 这个包里有什么；它会不会碰到目录、文档、路线图；它报几次
+  _depends_on: [contract_fields]
   _scope: [manager, worker, researcher, reviewer, policy_writer, policy_reviewer]
   _choices:
     - move: 在契约里写明它不持有目录、文档、路线图，只做一个包、只报一次
@@ -321,6 +325,7 @@ kind_test:
 proposal:
   _when: 一条事实还没被同意
   _know: 它改变谁的决定；谁有权同意；同意前它会不会被当成已定
+  _depends_on: [assent]
   _scope: [root, manager]
   _choices:
     - move: 写进所属文档的 open questions，带 assent 假定、作者和来源；同意后移进已决定部分，同一次删掉它
@@ -481,6 +486,7 @@ workset:
 sub_owner:
   _when: 你要分解自己这一层
   _know: 有没有明确许可；运行时边界是什么；覆盖、接口、依赖、验收各是什么
+  _depends_on: [coverage_first]
   _scope: [root, manager]
   _choices:
     - move: 拿到明确许可和运行时边界才拆；定清覆盖、接口、依赖、验收；对父的结果负责
