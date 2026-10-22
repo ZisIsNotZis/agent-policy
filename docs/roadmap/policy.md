@@ -74,6 +74,8 @@ All six packages are done.
 | `view_size` | The root view is about 200k characters. Narrowing the scopes or rendering only the moves would cut it; not done, because the static brainstorm is the point. |
 | `why_render` | `_why` is never rendered. It is the maintainer's provenance, not the agent's instruction. |
 | `cases_history` | `cases.md` is kept with a banner. Delete it when its last reference goes. |
+| `merge_candidates` | The one-to-one pass found pairs that may be one rule: `ssot`/`derived`/`inferable`, `kill`/`supersede`, `two_kinds`/`kind_test`/`worker`, `info_ownership`/`everything_under_itself`, `subagent_scope`/`model_cost`. Not merged; the migration kept one-to-one. |
+| `why_empty` | `_why` is optional and empty on every rule. The derivation is not recorded yet; the links pass recorded reader needs, not provenance. |
 
 ## Evidence
 
