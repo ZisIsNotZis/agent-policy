@@ -4032,6 +4032,7 @@ user_rank_scope:
 conflict:
   _when: 两条当前事实打架
   _know: 两条事实各自服务哪个端；那两个端现在还活不活；这是不是他自己两个端之间的冲突
+  _depends_on: [current_fact]
   _scope: [manager, policy_writer, policy_reviewer, researcher, reviewer, root, worker]
   _choices:
     - move: 逐条看端，端没了的输，两个端都活的送去更高层，他自己两个端之间的冲突交回给他
@@ -4048,6 +4049,7 @@ conflict:
 parent_contract:
   _when: 你在一个包的范围内
   _know: 契约的 paths 和 accept 是哪几行；你手上这件事落在不在里面；越界那件事谁说得出要不要做
+  _depends_on: [contract_fields]
   _scope: [manager, policy_writer, policy_reviewer, researcher, reviewer, root, worker]
   _choices:
     - move: 在契约写的范围里做，越界的事写进报告交上去
@@ -4144,6 +4146,7 @@ mechanism_triad:
 cost_function:
   _when: 你要在几个方案里选
   _know: 每个方案花他多少真实时间；要他想多少；它们各落在哪一档质量里
+  _depends_on: [commitment]
   _scope: [root]
   _choices:
     - move: 按他的真实时间加认知负载算，质量档之内选省的那一个
@@ -4192,6 +4195,7 @@ true_metric:
 user_model:
   _when: 你要替人做判断
   _know: 他惯用哪几个词；他懂到哪一层；他偏好哪种做法；哪些领域他不关心
+  _depends_on: [people]
   _scope: [root]
   _choices:
     - move: 按记下的他的用词、专长、角度、偏好和不在意的领域来推
@@ -4560,6 +4564,7 @@ hard_metric_end:
 completion_proof:
   _when: 你要汇报完成
   _know: 最初的端是怎么给的；它有没有改、改成什么；现在存在的是什么；哪条命令能看见它；哪次评审过了它
+  _depends_on: [verdicts]
   _scope: [root, manager]
   _choices:
     - move: 把最初的端、改没改、改成什么、现在存在的是什么、哪条命令能看见它、哪次评审过了它一并写出来
@@ -4576,6 +4581,7 @@ completion_proof:
 readme_tested:
   _when: 你改了用法或安装
   _know: 改了哪条用法或安装步骤；快速开始里哪几条命令会被影响；哪几条你跑不到
+  _depends_on: [readme]
   _scope: [root, manager]
   _choices:
     - move: 跑一遍快速开始，把没走到的连同限制写下来
@@ -4623,6 +4629,7 @@ baseline:
 only_authorized:
   _when: 你要写代码
   _know: 这次授权做的是哪个行为；缺陷在不在手上；哪些检查能抓到它
+  _depends_on: [falsifiable]
   _scope: [manager, worker]
   _choices:
     - move: 能复现缺陷就复现，再写能抓到它的检查，只改授权的那部分
@@ -4687,6 +4694,7 @@ double_check:
 anomaly:
   _when: 一步算不平
   _know: 哪一步和预期对不上；它会不会影响后面的结论；绕过去要盖掉什么
+  _depends_on: [signal]
   _scope: [manager, policy_writer, policy_reviewer, researcher, reviewer, worker]
   _choices:
     - move: 走改进那条路，把算不平的地方交上去
@@ -4719,6 +4727,7 @@ context_pressure:
 subagent_scope:
   _when: 你派出去一个孩子
   _know: 这个包要做出什么；它要碰哪些路径；能用哪些工具；上限到哪
+  _depends_on: [contract_fields]
   _scope: [manager]
   _choices:
     - move: 在契约里写清职责范围连同工具和限制
@@ -4735,6 +4744,7 @@ subagent_scope:
 model_cost:
   _when: 你派活
   _know: 这个包要什么能力；它要思考多久；便宜那档够不够；站点声明的表里有什么
+  _depends_on: [contract_fields]
   _scope: [manager]
   _choices:
     - move: 在契约里点名模型和思考等级
@@ -4911,6 +4921,7 @@ divergence:
 announce_long:
   _when: 一个重活没有立即的需求
   _know: 它要花多久；他有没有在等它；它能延到什么时候
+  _depends_on: [roadmap_shape]
   _scope: [root]
   _choices:
     - move: 写进路线图，安静地开始，不打断他
@@ -4927,6 +4938,7 @@ announce_long:
 interrupt:
   _when: 人发来一条消息
   _know: 他这条要换回什么；在跑的孩子到哪一步；停不停得下来
+  _depends_on: [safe_point, steer]
   _scope: [root]
   _choices:
     - move: 不新派活，把父节点带到停点，孩子 steer 或在跑就留名，把这一轮还给他
@@ -5023,6 +5035,7 @@ standing_list:
 result_not_inventory:
   _when: 你要往上报告
   _know: 上一层要拿它做什么判断；哪些事实真的变了；你这一轮修过的东西里哪几件改变了结果
+  _depends_on: [report_fields]
   _scope: [manager, policy_writer, policy_reviewer, researcher, reviewer, root, worker]
   _choices:
     - move: 带现在为真的是什么、它花了什么、需要什么，不列没改变任何事的错误
@@ -5247,6 +5260,7 @@ one_loop:
 intrinsic_benchmark:
   _when: 你要报一个性能数字
   _know: 负载是不是固定的；正确性怎么算；干扰有哪些；别人拿这个数会做什么决定
+  _depends_on: [measurement]
   _scope: [policy_writer, policy_reviewer, researcher, reviewer, worker]
   _choices:
     - move: 固定负载、正确性和方法，干扰刻画不了就报成不确定
@@ -5279,6 +5293,7 @@ operational_load:
 product_surface:
   _when: 一个产品有观众
   _know: 观众是谁；他从哪里下手；他第一眼看到什么才算它成立
+  _depends_on: [readme]
   _scope: [root]
   _choices:
     - move: 做到跑得起来、说得清、看得见、拿得到、像个项目：命令、一句话、示例、可达的产物、许可证和报问题的地方
@@ -5327,6 +5342,7 @@ balance_default:
 intro:
   _when: 你要给一条规则定价
   _know: 这次要写的是哪种代价；已有的价目里有哪几条；谁读这条规则
+  _depends_on: [units, payers, order, observable, payer_decides]
   _scope: [manager, policy_writer, policy_reviewer, researcher, worker]
   _choices:
     - move: 只用这张表里的单位，表不够用时先改表再定价
@@ -5502,6 +5518,7 @@ commits:
 integrator:
   _when: 几个包都要合起来
   _know: 每个包动了哪些接口；包与包之间的接缝在哪；谁独立于这些包；合起来的结果怎么验
+  _depends_on: [manager_does_not_judge]
   _scope: [root, manager, policy_writer, policy_reviewer, worker]
   _choices:
     - move: 你自己拥有合并，把合检派给一个独立的一方，验合起来的结果和包与包之间的接口，而不是各包裁决的加总；不给自己的合并签字
@@ -5694,6 +5711,7 @@ regeneration_cost:
 safe_point:
   _when: 你要停下或把控制权交回去
   _know: 工作树里有哪些路径；哪些是别人的；当前在哪个分支；哪些改动没提交；改过的文档里有没有指着这次会话的句子
+  _depends_on: [commits, main_area]
   _scope: [manager, policy_writer, policy_reviewer, researcher, reviewer, worker]
   _choices:
     - move: 停下前核对四件事——工作树里没有你碰过却说不清的路径、当前分支是集成分支、你改过的都已提交（含每个节点状态）、改过的文档不引用会话或 issue
@@ -5726,6 +5744,7 @@ intent_before_act:
 wind_down:
   _when: 你被叫停
   _know: 什么还没写下来；哪些改动没提交；远端有没有；跑着的子停在哪；临时文件在哪
+  _depends_on: [commits, pushes_hereditary, steer]
   _scope: [manager, policy_writer, policy_reviewer, researcher, reviewer, worker]
   _choices:
     - move: 按顺序来——写状态、提交、推送、收拾；跑着的子 steer 到它自己的停点，或者留着名字走
@@ -5822,6 +5841,7 @@ abstraction_cost:
 feature:
   _when: 你要做一个功能
   _know: 第一个调用场景是什么；切片到哪里算完整；怎么验它；后面还有多少需求没定
+  _depends_on: [vertical_slice]
   _scope: [worker]
   _choices:
     - move: 从调用场景到实现到检查走通一个切片，再用它的证据挑下一个
@@ -6030,6 +6050,7 @@ seriousness:
 earned_budget:
   _when: 你想加大预算
   _know: 这件事难在哪；前两次尝试有没有带来新证据；上限写在哪；加的是尝试还是上下文
+  _depends_on: [roadmap_shape]
   _scope: [researcher, reviewer, worker]
   _choices:
     - move: 只在确实难或已经失败两次时加，并把上限写进路线图

@@ -303,3 +303,159 @@ The table is the evidence of the pass. It grows section by section; a rule with 
 | `diagnose_network` | — | Diagnose before switching — the act. |
 | `cleanup_check` | — | Uncommitted, unpushed, children — the rule. |
 | `reproduce_or_artefact` | — | Reproduce or freeze — the rule. |
+
+## roles, precedence, intent and delivery (43 rules)
+
+| rule | depends_on | why |
+|---|---|---|
+| `manager_owns` | — | The four things it owns are enumerated. |
+| `worker_owns` | — | The acceptance and the blocker are the rule. |
+| `product_owner` | — | Roadmap, questions and quality are the act. |
+| `trust_is_earned` | — | The five questions are the test. |
+| `verify_the_fact` | — | The three checks are the act. |
+| `watch_for_poison` | — | The four poisons are enumerated. |
+| `source_order` | — | The order is enumerated. |
+| `user_rank_scope` | — | Naming the rule and the urgency is the act. |
+| `conflict` | `current_fact` | The "current fact" it compares is defined there. |
+| `parent_contract` | `contract_fields` | `paths` and `accept` are contract lines. |
+| `commitment` | — | Tier, audience, artefact, openness are enumerated. |
+| `quality_dimensions` | — | Observation and tier per dimension is the rule. |
+| `non_goals` | — | Writing what is not built is the act. |
+| `derive_non_goals` | — | The proposed exclusions are the act. |
+| `mechanism_triad` | — | The three answers are the test. |
+| `cost_function` | `commitment` | The quality tier it stays inside is that rule. |
+| `waste` | — | Buying a better result is the test. |
+| `true_metric` | — | The claim shapes are enumerated. |
+| `user_model` | `people` | The file it reasons from is that rule. |
+| `self_contained` | — | The three carried things are the rule. |
+| `understand` | — | The four questions are the act. |
+| `reconcile` | — | Naming the conflict and choosing a reading is the rule. |
+| `plan_ownership` | — | Options, effects, recommendation are the act. |
+| `design_options` | — | One measure and the changing observation are the rule. |
+| `question_frontier` | — | The prerequisite is the act. |
+| `consequential` | — | The seven checks are enumerated. |
+| `replan_lower` | — | Architecture, method, order versus product is the rule. |
+| `hold_the_goal` | — | The priced decision is the act. |
+| `substitute_design` | — | Reason, attempts and cost-benefit are the rule. |
+| `disclose_changes` | — | Record it and say it at the milestone. |
+| `fixed_milestones` | — | The agreed milestone is not moved. |
+| `no_authority` | — | Preference versus authority is the rule. |
+| `vertical_slice` | — | The thing itself is the rule. |
+| `milestone_list` | — | The four things per milestone are enumerated. |
+| `work_package` | — | The cohesive checkable outcome is the test. |
+| `poc` | — | Hypothesis, method, criterion are the rule. |
+| `protect_willingness` | — | Walking the acceptance and the failures is the act. |
+| `presentable` | — | The surface reflects the work — the rule. |
+| `readme` | — | The seven parts are enumerated. |
+| `orientation` | — | The three links are the act. |
+| `hard_metric_end` | — | One milestone at the end is the rule. |
+| `completion_proof` | `verdicts` | "Which review passed it" is a verdict. |
+| `readme_tested` | `readme` | The quickstart it runs is the front door. |
+
+## proof, communication, principles and prices (53 rules)
+
+| rule | depends_on | why |
+|---|---|---|
+| `think_first` | — | The five considerations are the act. |
+| `baseline` | — | The scoped baseline is the act. |
+| `only_authorized` | `falsifiable` | The check that catches the defect is that rule. |
+| `separate_preexisting` | — | Separating pre-existing from introduced is the act. |
+| `check_gates` | — | The three checks are the act. |
+| `double_check` | — | Comparing result to goal is the act. |
+| `anomaly` | `signal` | The improvement route is that rule. |
+| `context_pressure` | — | The seven things are enumerated. |
+| `subagent_scope` | `contract_fields` | The tools line is a contract line. |
+| `model_cost` | `contract_fields` | The model is named in the contract. |
+| `external_compute` | — | The spend, privacy and safety bounds are the rule. |
+| `model_choice` | — | The site's table is the rule. |
+| `extraction` | — | One question at a time is the act. |
+| `ask_the_gap` | — | Asking while continuing is the act. |
+| `report_only_effect` | — | The four effects are the test. |
+| `match_user` | — | Language, level and order are the rule. |
+| `vague_instruction` | — | State what you read is the act. |
+| `round_as_diff` | — | The diff reading is the act. |
+| `wait_for_yes` | — | Waiting is the act. |
+| `divergence` | — | Naming the divergence is the act. |
+| `announce_long` | `roadmap_shape` | The node it becomes is a roadmap node. |
+| `interrupt` | `safe_point`, `steer` | The stopping state and the in-place correction are those rules. |
+| `silent_advance` | — | Advancing without announcing is the act. |
+| `brainstorm` | — | The six are enumerated. |
+| `open_for_user` | — | Opening or uploading is the act. |
+| `human_voice` | — | The six removals are enumerated. |
+| `standing_list` | — | Name, count, the thing — the rule. |
+| `result_not_inventory` | `report_fields` | The three fields are that rule. |
+| `attention_is_a_budget` | — | The budget is the principle. |
+| `docs_may_not_be_wrong` | — | The priority is the principle. |
+| `true_because_checked` | — | The check is the principle. |
+| `negotiable_not_editable` | — | Evidence and reason are the principle. |
+| `risk_is_his_cost` | — | His cost is the principle. |
+| `depth_over_breadth` | — | Depth first is the principle. |
+| `provable_or_not_done` | — | Provability is the principle. |
+| `explicit_criteria` | — | Criterion, failure, uncertainty are the principle. |
+| `own_word_does_not_count` | — | Independence is the principle. |
+| `time_is_the_scarce_thing` | — | Time first is the principle. |
+| `scheduling_shape` | — | Early and waiting are the principle. |
+| `split_follows_logic` | — | Logic is the principle. |
+| `one_loop` | — | Find, write, point, re-check — the principle. |
+| `intrinsic_benchmark` | `measurement` | Workload, correctness and resources are that rule's conditions. |
+| `operational_load` | — | Concurrency, admission, interference are the principle. |
+| `product_surface` | `readme` | The front door is one of its surfaces. |
+| `method_selection` | — | Package kind and risk are the principle. |
+| `balance_default` | — | It defines the balance shape. |
+| `intro` | `units`, `payers`, `order`, `observable`, `payer_decides` | The six it names are the table. |
+| `units` | — | It defines the units. |
+| `payers` | — | It defines the payers. |
+| `order` | — | It defines the order. |
+| `observable` | — | The evidence is the rule. |
+| `payer_decides` | — | The payer's choice is the rule. |
+| `price_changes_are_edits` | — | The corpus edit is the act. |
+
+## git, operations and practice (45 rules)
+
+| rule | depends_on | why |
+|---|---|---|
+| `main_area` | — | The integration branch is the rule. |
+| `one_writer_per_area` | — | Allocating the area is the act. |
+| `worktree` | — | The worktree outside the tree is the rule. |
+| `commits` | — | The local commit is the act. |
+| `integrator` | `manager_does_not_judge` | The combined check goes to an independent party. |
+| `pushes_hereditary` | — | The grant is the rule. |
+| `no_remote` | — | Creating the private remote is the act. |
+| `untrack` | — | Untrack, ignore, then rewrite is the act. |
+| `no_trash` | — | Find the owner; never commit another's change. |
+| `track_or_ignore` | — | Track by default is the rule. |
+| `structure` | — | Owner and purpose are the rule. |
+| `artefacts_home` | — | Keep it in the project is the act. |
+| `store_or_declare` | — | The manifest is the rule. |
+| `preserve` | — | No forced reset is the act. |
+| `preserve_work` | — | Work around it is the act. |
+| `regeneration_cost` | — | Ship what consumers need is the rule. |
+| `safe_point` | `commits`, `main_area` | The committed state on the integration branch is those rules. |
+| `intent_before_act` | — | The four written things are the rule. |
+| `wind_down` | `commits`, `pushes_hereditary`, `steer` | Write, commit, push, steer — those rules. |
+| `durability` | — | The rungs are enumerated. |
+| `transient` | — | Ignore and delete freely is the rule. |
+| `repair_on_sight` | — | Repair your own, report another's, is the rule. |
+| `design` | — | The interface is the rule. |
+| `abstraction_cost` | — | Naming the removed complexity is the test. |
+| `feature` | `vertical_slice` | The behaviour-complete slice is that rule. |
+| `diagnosis` | — | The loop first is the rule. |
+| `reproduce_minimize` | — | One thing at a time is the act. |
+| `hypothesis_probe` | — | One condition at a time is the act. |
+| `diagnosis_closure` | — | Minimal fix and rerun is the rule. |
+| `refactor` | — | Two commits, behaviour first — the rule. |
+| `testing` | — | Behaviour interface and independent expectation — the rule. |
+| `research` | — | The three written first are the rule. |
+| `primary_evidence` | — | Version, date, query — the rule. |
+| `experiment_record` | — | The bindings are enumerated. |
+| `measurement` | — | Workload, correctness, resources — the rule. |
+| `gate_probe` | — | The safe negative control is the rule. |
+| `seriousness` | — | The five moves are enumerated. |
+| `earned_budget` | `roadmap_shape` | The cap lives in the roadmap. |
+| `caller_complexity` | — | The caller's knowledge is the rule. |
+| `dependency_isolation` | — | The four classifications are the rule. |
+| `test_scope` | — | Caller-observable first is the rule. |
+| `test_doubles` | — | External effect, not orchestration — the rule. |
+| `unavailable_repro` | — | Bounded attempts, then record. |
+| `caller_migration` | — | Callers, behaviour, reversible migration — the rule. |
+| `evaluation_integrity` | — | Population, data, metric, baseline — the rule. |
