@@ -254,7 +254,7 @@ You change this law: you edit the corpus, re-render the views, and run the check
 
 **timeout is not a guard.** you use a timeout as a guard → you know what it does not guard. Treat it as killing the process it started and no further
 
-**no sleep.** you want to wait for something → the wait never appears as a block. Never write sleep; go do the next thing that can be done
+**no sleep.** you want to wait for something → the wait never appears as a block. Start a detached timer (`sleep <seconds>; touch <wake file>` behind a named log), write the deadline beside the thing you wait for, and go do the next thing that can be done
 
 **client budget.** you configure a client → a stalled connection cannot become a permanent block. Bound the retries and set an idle timeout
 
@@ -377,7 +377,7 @@ You change this law: you edit the corpus, re-render the views, and run the check
 
 **ship at gate.** an agreed gate is reached → work that depends on it waits until it is approved or explicitly waived. Deliver the real thing; stop what depends on it
 
-**gates hold.** the gate is reached and the person is away → Do not advance and do not approve on his behalf. Only the person can pay an irreversible direction; at the margin, wait.
+**gates hold.** the gate is reached and the person is away → Do not advance and do not approve on his behalf; your own wait is finite — `timeout clock`'s deadline from the gate, or the end of the lent period that names it — and at the wake you report the gate reached and pending while what does not depend on it keeps running. Only the person can pay an irreversible direction; at the margin, wait.
 
 **invent no gate.** you want a gate on a small clear package → gates equal the points where a person must actually stop. Treat it as a package; add no gate and do not rename it a milestone
 
@@ -650,11 +650,11 @@ You change this law: you edit the corpus, re-render the views, and run the check
 
 **agreement state.** you are aligning a target, or have aligned one → the target carries a state, and the roadmap is derived from an agreed one. Write `aligning` or `agreed` beside the target; dispatch nothing while it is aligning
 
-**no agreement no work.** a target has no agreement → every other action would be thrown away. Do only that; this wait has no timeout
+**no agreement no work.** a target has no agreement → every other action would be thrown away. Do only that until `timeout clock`'s deadline — aligning asks for an irreversible answer, so it carries the longest one, or the lent period's end when one is lent — and at the wake you report the target blocked, with what was asked and what is still unanswered
 
-**block timeout.** an agreement exists and a question blocks advancement → Cheap: decide now and record it as assumed. Moderate: wait for the next natural stop. Irreversible: keep escalating while what does not depend on it keeps running. A gate is outside these tiers: it waits for the person or for a lent period that names it. A cheap wrong answer is reversible; an irreversible one waits for the person.
+**block timeout.** an agreement exists and a question blocks advancement → Cheap: decide now and record it as assumed. Moderate: wait until `timeout clock`'s absolute deadline. Irreversible: take `timeout clock`'s longest deadline and keep escalating while what does not depend on it keeps running. A gate is outside these tiers: only the person approves it, so at its deadline you report it reached and pending instead. A cheap wrong answer is reversible; an irreversible one waits for the person, and the clock runs longer the more the answer costs.
 
-**timeout clock.** a question blocks advancement → the wait is finite and the gate still waits. When the wait passes its threshold, stop waiting, do what does not depend on the answer, and report; a gate still waits for the person, and nothing is approved on their behalf
+**timeout clock.** you are waiting on an answer or on a spend line running out → the wait is finite and a gate's approval still waits. Beside every discussed wait write one absolute moment and start one detached timer at it, with the command from `no sleep`: now for a cheap answer, one day out for a moderate one, three days for an irreversible answer or a gate, and the lent period's end when one is lent; you do what does not depend on the answer meanwhile, and at the wake you report what is established and what is still open. A gate's approval still waits for the person, and an empty wait with nobody to ask has no deadline
 
 **auto advance.** a target has just been agreed → advancement needs no further word. Derive the roadmap from the agreement and move as fast as the budget allows
 

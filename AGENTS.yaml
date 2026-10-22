@@ -1870,8 +1870,8 @@ scheduling:
       zh: 等待不以阻塞的形式出现
       en: The wait never appears as a block
     _how:
-      zh: 不写 sleep；去做下一件能做的事
-      en: Never write sleep; go do the next thing that can be done
+      zh: 起一个分离的计时器（`sleep <秒数>; touch <醒来文件>` 挂在有名日志后面），把期限写在你在等的那件事旁边，然后去做下一件能做的事
+      en: Start a detached timer (`sleep <seconds>; touch <wake file>` behind a named log), write the deadline beside the thing you wait for, and go do the next thing that can be done
     scope:
     - manager
     - policy
@@ -2698,8 +2698,8 @@ gates:
       _cost: {zh: 'irreversible：一个没人选过的方向', en: 'irreversible: a direction nobody chose'}
       _who_pays: person
     _between:
-      zh: 不推进，不代他通过
-      en: Do not advance and do not approve on his behalf
+      zh: 不推进，不代他通过；你自己的等是有限的——从闸门起 `timeout clock` 的期限，或点名了它的借出到期——醒来时报告闸门已到、仍待批，同时让不依赖它的活继续跑
+      en: 'Do not advance and do not approve on his behalf; your own wait is finite — `timeout clock`''s deadline from the gate, or the end of the lent period that names it — and at the wake you report the gate reached and pending while what does not depend on it keeps running'
     _pull:
       zh: 只有人能付不可逆的方向，所以临界点往等让
       en: Only the person can pay an irreversible direction; at the margin, wait
@@ -4722,8 +4722,8 @@ docs_shape:
       zh: 除谈成它以外的活都是白做
       en: Every other action would be thrown away
     _how:
-      zh: 只做谈成这一件事；这个等待没有超时
-      en: Do only that; this wait has no timeout
+      zh: 只做谈成这一件事，直到 `timeout clock` 的期限——对齐要的是一个不可逆的答案，所以签下最长的那个期限，有借出时签借出的到期——醒来时报告目标被挡住，说清问了什么、什么还没答
+      en: Do only that until `timeout clock`'s deadline — aligning asks for an irreversible answer, so it carries the longest one, or the lent period's end when one is lent — and at the wake you report the target blocked, with what was asked and what is still unanswered
     scope: *id001
   block_timeout:
     _kind: balance
@@ -4736,26 +4736,27 @@ docs_shape:
       _cost: {zh: 'irreversible：答案本来是必需的，决定收不回来', en: 'irreversible: the answer was needed and the decision cannot be undone'}
       _who_pays: person
     _between:
-      zh: '便宜的现在决定并记成假定；中等等到下一个自然停顿点；不可逆的继续升级，同时让不依赖它的包继续跑。闸门不在这一档之内：闸门只等人，或等一段点名了它的借出'
-      en: 'Cheap: decide now and record it as assumed. Moderate: wait for the next natural stop. Irreversible: keep escalating while what does not depend on it keeps running. A gate is outside these tiers: it waits for the person or for a lent period that names it'
+      zh: '便宜：现在决定并记成假定。中等：等到 `timeout clock` 写下的绝对期限。不可逆：取 `timeout clock` 最长的那个期限，同时让不依赖它的包继续跑。闸门不在这一档之内：只有人能批准它，所以到期时你报告它已到而未批'
+      en: 'Cheap: decide now and record it as assumed. Moderate: wait until `timeout clock`''s absolute deadline. Irreversible: take `timeout clock`''s longest deadline and keep escalating while what does not depend on it keeps running. A gate is outside these tiers: only the person approves it, so at its deadline you report it reached and pending instead'
     _pull:
-      zh: 便宜的错可以回头，不可逆的错只能由人付，所以临界点往等让
-      en: A cheap wrong answer is reversible; an irreversible one waits for the person
+      zh: 便宜的错可以回头，不可逆的错只能由人付，所以答案越贵，钟走得越长
+      en: A cheap wrong answer is reversible; an irreversible one waits for the person, and the clock runs longer the more the answer costs
     scope: [root, manager]
   timeout_clock:
     _kind: act
     _when:
-      zh: 一个问题挡住推进
-      en: A question blocks advancement
+      zh: 你在等一个答复，或在等一条时间额度用完
+      en: You are waiting on an answer or on a spend line running out
     _goal:
-      zh: 等待有限，闸门仍然等
-      en: The wait is finite and the gate still waits
+      zh: 等待有限，闸门的批准仍然等
+      en: The wait is finite and a gate's approval still waits
     _how:
-      zh: '过了阈值就停止等待，做不依赖答案的活并报告；闸门仍然等人，不代他通过'
-      en: 'When the wait passes its threshold, stop waiting, do what does not depend on the answer, and report; a gate still waits for the person, and nothing is approved on their behalf'
+      zh: 每一个商量过的等待旁边写下一个绝对时刻，并在那个时刻起一个分离的计时器（命令在 `no sleep` 里）：便宜的答案写现在，中等的写一天后，不可逆的答案或闸门写三天后，有人借给你一段时间时写借出的到期；等的时候去做不依赖答案的活；醒来时报告已经成立什么、还开着什么。闸门的批准仍然等人，没人可问的空等没有期限
+      en: 'Beside every discussed wait write one absolute moment and start one detached timer at it, with the command from `no sleep`: now for a cheap answer, one day out for a moderate one, three days for an irreversible answer or a gate, and the lent period''s end when one is lent; you do what does not depend on the answer meanwhile, and at the wake you report what is established and what is still open. A gate''s approval still waits for the person, and an empty wait with nobody to ask has no deadline'
     scope:
     - root
     - manager
+    - researcher
   auto_advance:
     _kind: act
     _when:

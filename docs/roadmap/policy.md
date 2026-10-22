@@ -13,6 +13,7 @@ The product is the law in `AGENTS.yaml`, rendered to `AGENTS.md` and to one agen
 - A proposal is a fact with `assent: assumed`, an author and a source; it lives in this document's open questions, not in a separate area. `work/` does not exist.
 - An identifier carries a name in snake_case; a number is a prefix only when order matters (`1_snake_case`); the name is globally unique.
 - The meta-rules are current: `problem_class`, `double_check`, `balance_default`, `timeout_clock`.
+- Every discussed wait carries one absolute moment and one detached timer (`timeout_clock`: now / one day / three days by the answer's cost, a lent period overriding, only the empty wait unlimited); `block_timeout`, `gates_hold` and `no_agreement_no_work` read that clock, and `no_sleep` names the timer instead of banning `sleep`.
 - The balance slice is current: `ssot`, `kill`, `no_trash`, `contract_fields`, `verdicts`, `signal`, `gates_hold`, `go`, `result_not_inventory`, `block_timeout`; `law.py` renders the pull.
 - The helpful rules are current: `understand`, `no_blind_agreement` and `brainstorm` are balances; `trace_requirements` merged into `understand`.
 - The RDI case is `docs/review/rdi_case.md`; `intake` carries the case, expectation, rule, observation, evidence and class.
