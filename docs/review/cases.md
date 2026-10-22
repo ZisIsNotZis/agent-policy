@@ -8,15 +8,15 @@ The 99% is counted over cases, not over rules: the moments a role must decide so
 
 | role | cases | stated | delegated | ambiguous | silent |
 |---|---:|---:|---:|---:|---:|
-| root | 19 | 18 | 1 | 0 | 0 |
-| manager | 17 | 17 | 0 | 0 | 0 |
-| worker | 15 | 14 | 1 | 0 | 0 |
-| researcher | 12 | 11 | 1 | 0 | 0 |
-| reviewer | 12 | 12 | 0 | 0 | 0 |
-| policy_worker | 13 | 13 | 0 | 0 | 0 |
-| **total** | **88** | **85** | **3** | **0** | **0** |
+| root | 20 | 19 | 1 | 0 | 0 |
+| manager | 18 | 18 | 0 | 0 | 0 |
+| worker | 16 | 15 | 1 | 0 | 0 |
+| researcher | 13 | 12 | 1 | 0 | 0 |
+| reviewer | 13 | 13 | 0 | 0 | 0 |
+| policy_worker | 14 | 14 | 0 | 0 | 0 |
+| **total** | **94** | **91** | **3** | **0** | **0** |
 
-85/88 stated and 3/88 delegated: 100% answerable by the law. Every cited name is in the role's own view; `tools/law.py --check` refuses a scope that a view does not read.
+91/94 stated and 3/94 delegated: 100% answerable by the law. Every cited name is in the role's own view; `tools/law.py --check` refuses a scope that a view does not read.
 
 ## root
 
@@ -41,6 +41,7 @@ The 99% is counted over cases, not over rules: the moments a role must decide so
 | the session was killed and reopened | proceed | stated | `resume` |
 | you are told to stop | proceed | stated | `wind_down`, `safe_point` |
 | he leaves for a named period | authority | stated | `unattended`, `lent_scope` |
+| you are about to do something irreversible | authority | stated | `high_risk`, `pushes_hereditary` |
 
 ## manager
 
@@ -63,6 +64,7 @@ The 99% is counted over cases, not over rules: the moments a role must decide so
 | he asks to suspend a rule | authority | stated | `user_rank_scope` |
 | the session was killed and reopened | proceed | stated | `resume` |
 | you are told to stop | proceed | stated | `wind_down`, `safe_point` |
+| you are about to do something irreversible | authority | stated | `high_risk`, `secrets`, `pushes_hereditary` |
 
 ## worker
 
@@ -83,6 +85,7 @@ The 99% is counted over cases, not over rules: the moments a role must decide so
 | the session was killed and reopened | proceed | stated | `resume` |
 | you are told to stop | proceed | stated | `wind_down`, `safe_point` |
 | several packages have merged | proceed | stated | `integrator`, `own_word_does_not_count` |
+| you are about to do something irreversible | authority | stated | `high_risk`, `secrets`, `pushes_hereditary` |
 
 ## researcher
 
@@ -100,6 +103,7 @@ The 99% is counted over cases, not over rules: the moments a role must decide so
 | you report | proceed | stated | `completion`, `report_fields` |
 | the session was killed and reopened | proceed | stated | `resume` |
 | you are told to stop | proceed | stated | `wind_down`, `safe_point` |
+| you are about to do something irreversible | authority | stated | `high_risk`, `secrets` |
 
 ## reviewer
 
@@ -117,6 +121,7 @@ The 99% is counted over cases, not over rules: the moments a role must decide so
 | the person writes to you | authority | stated | `person_may_write_anywhere` |
 | the session was killed and reopened | proceed | stated | `resume` |
 | you are told to stop | proceed | stated | `wind_down`, `safe_point` |
+| you are about to do something irreversible | authority | stated | `high_risk`, `secrets` |
 
 ## policy_worker
 
@@ -135,6 +140,7 @@ The 99% is counted over cases, not over rules: the moments a role must decide so
 | a gate is reached | authority | stated | `gates_hold` |
 | the session was killed and reopened | proceed | stated | `resume` |
 | you are told to stop | proceed | stated | `wind_down`, `safe_point` |
+| you are about to do something irreversible | authority | stated | `high_risk`, `secrets`, `pushes_hereditary` |
 
 ## What this list does not cover
 

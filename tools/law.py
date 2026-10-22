@@ -14,9 +14,10 @@ A view is its role's `sop` first, then the rules that role reads: the ordered st
 the reference, and every step names a file or a command that `--check` resolves in this tree.
 
     python3 tools/law.py            regenerate one view per role
-    python3 tools/law.py --check    fail if a view is stale, a scope is unknown, a role has no SOP,
-                                    a step names a path that is gone, a node reaches no agent,
-                                    or a balance has no goal
+    python3 tools/law.py --check    fail if a scope is unknown, a role has no SOP, a step names a
+                                    path that is gone, a node reaches no agent, a balance has no
+                                    goal, or an end is not exactly zh+en; view drift is
+                                    tools/build.py --check
 """
 
 from __future__ import annotations
