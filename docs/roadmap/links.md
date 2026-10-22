@@ -149,3 +149,51 @@ The table is the evidence of the pass. It grows section by section; a rule with 
 | `pause` | `safe_point` | The stop point and the landing are that rule. |
 | `inbox_first` | — | Reading first is the act. |
 | `result_first` | `reviewer_contract` | Dispatching the review needs the nine lines; without them the dispatch is a sentence. |
+
+## dispatch (18 rules)
+
+| rule | depends_on | why |
+|---|---|---|
+| `take_next` | `roadmap_shape` | The `ready`/`running` statuses it reads are defined there. |
+| `self_execute` | — | The trade is in the rule. |
+| `contract_fields` | `reviewer_contract`, `budget_caps`, `subagent_scope`, `model_cost`, `worker` | "The lines other rules name" cannot be found without the rules that name them. |
+| `contract_identity` | — | Kind, name and roadmap are in the rule. |
+| `contract_grant` | `classes` | The grant is written in the spend classes. |
+| `pass_boundary` | — | The boundary and the exclusion are the rule. |
+| `coverage_first` | — | The six things are enumerated. |
+| `persist_split` | `agreement_node` | The node with owner and acceptance is that rule. |
+| `route_failure` | `coverage_first`, `roadmap_shape` | A re-split and a rewritten roadmap are those two. |
+| `self_report` | `contract_fields` | The re-dispatch is a contract. |
+| `worker_no_split` | `kind_contract` | The report it sends is that kind. |
+| `area_is_permission` | `contract_fields` | The `paths` line is defined there. |
+| `worker_one_message` | — | One report with what it found is the act. |
+| `logical_level` | — | The one-value key is the test. |
+| `logic_is_physical` | — | Converging the two boundaries is the act. |
+| `preflight` | `contract_fields` | The named files and acceptance are the contract's lines. |
+| `fresh_context` | — | Fresh or inherited is the trade. |
+| `child_context` | `two_kinds` | Manager or worker is that rule's pair. |
+
+## review (20 rules)
+
+| rule | depends_on | why |
+|---|---|---|
+| `manager_does_not_judge` | `fresh`, `reviewer_contract` | The reviewer is fresh and dispatched with the nine; without them the dispatch is a sentence. |
+| `fresh` | — | The fresh context and the scoped artefacts are the rule. |
+| `judgement_only` | — | Mechanical first, judgement last is the act. |
+| `reviewer_contract` | — | The nine are enumerated. |
+| `verdicts` | — | It defines the three. |
+| `not_a_verdict` | `kinds` | The three routes are the report kinds. |
+| `no_commit` | `bind_to_revision` | The evidence bound to a revision is that rule. |
+| `every_package` | — | One verdict per package is the rule. |
+| `milestone_experience` | — | The milestone question is the rule. |
+| `multimodal` | — | Looking first is the act. |
+| `self_test` | `own_word_does_not_count` | A self-test is not independent acceptance; that principle says why. |
+| `evidence_at_source` | — | The consumer's copy is the act. |
+| `bind_to_revision` | — | The hash and the rerun are the rule. |
+| `defect_evidence` | — | Location, criterion, reproduction are the rule. |
+| `falsify` | — | The counterexample search is the act. |
+| `scoped_review` | `reviewer_contract` | The scope is a contract line. |
+| `three_kinds_of_review` | `every_package`, `milestone_experience` | The two kinds it separates are those rules. |
+| `review_axes` | `how_not_what` | The step-shape axis is that rule. |
+| `review_cost` | — | The token price is the rule. |
+| `report_incomplete` | — | The unfinished acceptance and the next step are the rule. |

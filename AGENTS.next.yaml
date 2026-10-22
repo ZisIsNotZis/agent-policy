@@ -1285,6 +1285,7 @@ scratch_retired:
 take_next:
   _when: 你要从路线图上取活
   _know: 哪些节点的依赖已满足、状态是 `ready`；它们有几个；每个孩子叫什么；提交和发出去哪个先
+  _depends_on: [roadmap_shape]
   _scope: [root, manager]
   _choices:
     - move: 按顺序走，先把每一个依赖已满足、状态是 `ready` 的节点写上 `running` 和孩子的名字并提交，再发其中任何一个；其他状态的节点跳过
@@ -1317,6 +1318,7 @@ self_execute:
 contract_fields:
   _when: 你写或收到一份契约
   _know: 这个包的 goal、scope、验收命令、paths、花费类别和 wall-clock、停点；还有哪条规则为它点名了 caps、tools、model、holds；是不是审查契约
+  _depends_on: [reviewer_contract, budget_caps, subagent_scope, model_cost, worker]
   _scope: [manager, policy_writer, policy_reviewer, researcher, reviewer, root, worker]
   _choices:
     - move: 按地板六行写全——goal、scope、accept 连同产生观察的那条命令、paths、spend 的类别加 wall-clock、stop——再把别的规则为这个包点名的行补上，审查契约再加 reviewer contract 的九样
@@ -1349,6 +1351,7 @@ contract_identity:
 contract_grant:
   _when: 你要给孩子授权
   _know: 你手上还剩多少算力、钱、时间；这个作业是算力受限还是 IO 受限
+  _depends_on: [classes]
   _scope: [root, manager]
   _choices:
     - move: 写清算力、钱和时间，从你那份里分出来；算力受限的作业记成资源，IO 受限的不记
@@ -1397,6 +1400,7 @@ coverage_first:
 persist_split:
   _when: 你刚拆完
   _know: 拆出来的节点写进哪份路线图；谁接着读它；拆的边界落在哪个提交里
+  _depends_on: [agreement_node]
   _scope: [root, manager]
   _choices:
     - move: 同一次里把节点写进路线图，属主和验收一起写
@@ -1413,6 +1417,7 @@ persist_split:
 route_failure:
   _when: 一个包失败了
   _know: 这次失败在不在这个包的范围内；是不是真阻塞；重拆要动哪些节点；它花掉的 effort 是多少
+  _depends_on: [coverage_first, roadmap_shape]
   _scope: [root, manager]
   _choices:
     - move: 范围内的失败重写路线图并重拆；范围外的或者真阻塞，带着 effort 升级
@@ -1429,6 +1434,7 @@ route_failure:
 self_report:
   _when: 一个孩子判断自己不行了
   _know: 它自己怎么说；它做到了哪一步；换人要重写哪几行
+  _depends_on: [contract_fields]
   _scope: [policy_writer, policy_reviewer, researcher, reviewer, worker]
   _choices:
     - move: 让它报告要换人，你按契约重派一个
@@ -1445,6 +1451,7 @@ self_report:
 worker_no_split:
   _when: 执行者发现这活需要拆
   _know: 碎块有哪几个；每块大概多大；你手上还能起几个孩子；契约里留了几个位置
+  _depends_on: [kind_contract]
   _scope: [policy_writer, policy_reviewer, researcher, reviewer, worker]
   _choices:
     - move: 停下来，报一份 contract，点名碎块和各自的代价；你启动的唯一子节点是审你自己这一片的审查者
@@ -1461,6 +1468,7 @@ worker_no_split:
 area_is_permission:
   _when: 你划定一块区域，或者接到一块区域
   _know: 契约的 paths 行写了哪几条路径；区域之外想写的是哪些东西；区域是不是空的
+  _depends_on: [contract_fields]
   _scope: [root, manager, policy_writer, policy_reviewer, researcher, reviewer, worker]
   _choices:
     - move: 父节点在契约的 paths 行写确切路径，子节点只在其中写；空区域就是什么都不能写
@@ -1525,6 +1533,7 @@ logic_is_physical:
 preflight:
   _when: 你要开工
   _know: 契约点名了哪些文件；验收在哪一份里；有哪些依赖在契约之外
+  _depends_on: [contract_fields]
   _scope: [policy_writer, policy_reviewer, researcher, reviewer, worker]
   _choices:
     - move: 读契约点名的文件和验收所在的那一份，契约外的依赖去问
@@ -1557,6 +1566,7 @@ fresh_context:
 child_context:
   _when: 你要派一个孩子
   _know: 你手上能用的角色是哪两个；这一次要不要新上下文；每种派法会送过去什么
+  _depends_on: [two_kinds]
   _scope: [root, manager]
   _choices:
     - move: 用 manager 或 worker 之一起，用 fresh 上下文
@@ -1573,6 +1583,7 @@ child_context:
 manager_does_not_judge:
   _when: 一个孩子交了结果
   _know: 交来的是谁的活；谁能独立看它；你手上有没有它的产出
+  _depends_on: [fresh, reviewer_contract]
   _scope: [root, manager]
   _choices:
     - move: 派一个新的审查者写裁决，你按裁决行动；即使交来结果的孩子是管理者，也不自己写
@@ -1653,6 +1664,7 @@ verdicts:
 not_a_verdict:
   _when: 审查者交回了不是裁决的东西
   _know: 它交回来的是什么；那东西属于哪一类；裁决写没写
+  _depends_on: [kinds]
   _scope: [reviewer]
   _choices:
     - move: 按 kind 转成 contract、resource 或 direction 送走，并在裁决写出之前停住这次审查
@@ -1669,6 +1681,7 @@ not_a_verdict:
 no_commit:
   _when: 审查者在审
   _know: 被审的修订是哪一个；审查者会不会改文件；证据绑在哪个提交上
+  _depends_on: [bind_to_revision]
   _scope: [reviewer]
   _choices:
     - move: 审查者什么都不提交，证据绑在修订上，修订一动它作废
@@ -1733,6 +1746,7 @@ multimodal:
 self_test:
   _when: 你在切片内自测
   _know: 自测跑了什么；哪些结果是独立的；报告里怎么写它
+  _depends_on: [own_word_does_not_count]
   _scope: [policy_writer, policy_reviewer, worker]
   _choices:
     - move: 自测照做，报告里写清它是自测，不当独立验收
@@ -1813,6 +1827,7 @@ falsify:
 scoped_review:
   _when: 你在审查
   _know: 契约给的审范围是什么；视图定不定得下；要不要开源文件
+  _depends_on: [reviewer_contract]
   _scope: [reviewer]
   _choices:
     - move: 只读范围内的产物，视图定不下时才打开源文件
@@ -1829,6 +1844,7 @@ scoped_review:
 three_kinds_of_review:
   _when: 你在安排审查
   _know: 有几种审查；这一次要答的是哪个问题；人的接受排在哪儿
+  _depends_on: [every_package, milestone_experience]
   _scope: [root, manager]
   _choices:
     - move: 把包审查、里程碑体验审查、人的接受分开安排，各答各的问题
@@ -1845,6 +1861,7 @@ three_kinds_of_review:
 review_axes:
   _when: 你要审一份语料、一份角色文件或一次改动
   _know: 这份东西的读者是谁；它该对应的动作有哪些；六个轴各查什么
+  _depends_on: [how_not_what]
   _scope: [policy_writer, policy_reviewer]
   _choices:
     - move: 依序跑完六轴——完整性、必要性、单一真相来源、写给人看还是写给 agent 看、步骤形态、角色相关性——每轴跑完落一次发现，六个都跑完再汇总
