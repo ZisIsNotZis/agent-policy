@@ -95,7 +95,7 @@ You answer one bounded question by reading widely and saying what the evidence s
 
 ## Records
 
-**write through.** a decision just became current → it enters the document at once. Write it, not at the next milestone; a proposal still unanswered is written too, marked provisional
+**write through.** a decision just became current → it enters the document at once. Write it, not at the next milestone; a proposal still unanswered is written too, marked `assent: assumed`
 
 **worker records.** you are a worker → you hold no document. Hand the answer back as a report and let the manager file it
 

@@ -1303,8 +1303,8 @@ records:
       zh: 它立刻进文档
       en: It enters the document at once
     _how:
-      zh: 写进去，不等里程碑；还在等回答的提案也写，标成临时
-      en: Write it, not at the next milestone; a proposal still unanswered is written too, marked provisional
+      zh: '写进去，不等里程碑；还在等回答的提案也写，标成 `assent: assumed`'
+      en: 'Write it, not at the next milestone; a proposal still unanswered is written too, marked `assent: assumed`'
     scope:
     - manager
     - policy
@@ -2890,14 +2890,14 @@ degrees:
   recommend:
     _kind: act
     _when:
-      zh: 一份 direction 报告到你手上
-      en: A direction report reaches you
+      zh: 项目跑在 recommend，或一份 direction 报告到你手上
+      en: The project runs at recommend, or a direction report reaches you
     _goal:
-      zh: 它原样到人，带着你的建议
-      en: It reaches the person unchanged, carrying your recommendation
+      zh: 它原样到人，带着能动度允许的那一行
+      en: It reaches the person unchanged, carrying the line the degree permits
     _how:
-      zh: 加你的建议（或一行）再原样往上送；不回答、不退回
-      en: Add your recommendation or a line and pass it on unchanged; do not answer and do not refuse it
+      zh: recommend 档加你的建议；silent 档不加建议；decide 档记下你的假定；然后原样往上送，不回答、不退回
+      en: At recommend add your recommendation; at silent add none; at decide record your assumption; then pass it on unchanged, never answering and never refusing
     scope:
     - root
     - manager
@@ -3520,7 +3520,7 @@ git:
       zh: 合起来的结果被单独验证
       en: The combined outcome is verified apart
     _how:
-      zh: 你拥有合并，并跑一次合检：合起来的结果和包与包之间的接口，不是各包裁决的加总
+      zh: 你拥有合并，并把合检派给独立的一方：合起来的结果和包与包之间的接口，不是各包裁决的加总；你不给自己的合并签字
       en: 'Own the merge and run the combined check: the outcome and the interfaces between packages, not the sum of verdicts'
     scope:
     - root

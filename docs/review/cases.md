@@ -8,15 +8,15 @@ The 99% is counted over cases, not over rules: the moments a role must decide so
 
 | role | cases | stated | delegated | ambiguous | silent |
 |---|---:|---:|---:|---:|---:|
-| root | 15 | 14 | 1 | 0 | 0 |
-| manager | 16 | 16 | 0 | 0 | 0 |
+| root | 18 | 17 | 1 | 0 | 0 |
+| manager | 17 | 17 | 0 | 0 | 0 |
 | worker | 14 | 13 | 1 | 0 | 0 |
 | researcher | 12 | 11 | 1 | 0 | 0 |
 | reviewer | 12 | 12 | 0 | 0 | 0 |
 | policy_worker | 13 | 13 | 0 | 0 | 0 |
-| **total** | **82** | **79** | **3** | **0** | **0** |
+| **total** | **86** | **83** | **3** | **0** | **0** |
 
-79/82 stated and 3/82 delegated: 100% answerable by the law. Every cited name is in the role's own view; `tools/law.py --check` refuses a scope that a view does not read.
+83/86 stated and 3/86 delegated: 100% answerable by the law. Every cited name is in the role's own view; `tools/law.py --check` refuses a scope that a view does not read.
 
 ## root
 
@@ -34,6 +34,9 @@ The 99% is counted over cases, not over rules: the moments a role must decide so
 | he writes mid-work | proceed | stated | `interrupt` |
 | the target is not agreed yet | proceed | stated | `no_agreement_no_work`, `reach_agreement` |
 | heavy work has no immediate demand | proceed | stated | `announce_long` |
+| the project's degree is not set | authority | stated | `three` |
+| a proposal is still unanswered | proceed | stated | `proposal` |
+| several packages have merged | proceed | stated | `own_word_does_not_count` |
 | he asks to suspend a rule | authority | stated | `user_rank_scope` |
 | the session was killed and reopened | proceed | stated | `resume` |
 | you are told to stop | proceed | stated | `wind_down`, `safe_point` |
@@ -55,6 +58,7 @@ The 99% is counted over cases, not over rules: the moments a role must decide so
 | the person writes to you | authority | stated | `person_may_write_anywhere` |
 | a child asks above your layer | authority | stated | `beyond_authority`, `parent_only` |
 | he says `go` | proceed | stated | `go` |
+| several packages have merged | proceed | stated | `integrator`, `own_word_does_not_count` |
 | he asks to suspend a rule | authority | stated | `user_rank_scope` |
 | the session was killed and reopened | proceed | stated | `resume` |
 | you are told to stop | proceed | stated | `wind_down`, `safe_point` |

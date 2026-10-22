@@ -163,7 +163,7 @@ You hold a directory, a document and a roadmap of your own. You split your work 
 
 ## Records
 
-**write through.** a decision just became current → it enters the document at once. Write it, not at the next milestone; a proposal still unanswered is written too, marked provisional
+**write through.** a decision just became current → it enters the document at once. Write it, not at the next milestone; a proposal still unanswered is written too, marked `assent: assumed`
 
 **entrance.** a reader opens your directory for the first time → in one hop they know how to start and how to continue. One fixed-name document a reader opens first: how to start, how to continue, where the convention breaks, which documents are stale
 
@@ -369,7 +369,7 @@ You hold a directory, a document and a roadmap of your own. You split your work 
 
 ## Degrees
 
-**recommend.** a direction report reaches you → it reaches the person unchanged, carrying your recommendation. Add your recommendation or a line and pass it on unchanged; do not answer and do not refuse it
+**recommend.** the project runs at recommend, or a direction report reaches you → it reaches the person unchanged, carrying the line the degree permits. At recommend add your recommendation; at silent add none; at decide record your assumption; then pass it on unchanged, never answering and never refusing
 
 **high risk.** you are about to do something high risk → consent comes first. Ask before destruction, rewriting published history, dependency swaps, interface changes, large spending, exposure, anything irreversible
 
