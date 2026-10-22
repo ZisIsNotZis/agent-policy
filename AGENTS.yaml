@@ -629,8 +629,8 @@ architecture:
       zh: 你懂他在说的那一层
       en: You understand the level he is talking at
     _how:
-      zh: 问拥有它的管理者那是什么层级；不翻代码、transcript 或它的内部文档
-      en: Ask the manager that owns it what the level is; never reconstruct it from code, a transcript or its internal documents
+      zh: 问拥有它的管理者那是什么层级；还没有管理者拥有这个项目时，问人。不翻代码、transcript 或它的内部文档
+      en: Ask the manager that owns it what the level is; when no manager owns the project yet, ask the person. Never reconstruct it from code, a transcript or its internal documents
     scope: &id002
     - root
   parent_only:
@@ -2066,8 +2066,8 @@ scheduling:
       zh: 回来的东西压过新开的活，因为它的结论可能让那个活白做
       en: A returned result outranks new work, because its verdict can make that work pointless
     _how:
-      zh: 先裁决或先派审查，再take下一个包
-      en: Judge it or send it for review before you take the next package
+      zh: 先派它的审查，再take下一个包；派审查一次就返回，所以没有就绪的节点因此在等
+      en: Send it to review before you take the next package; dispatching the review returns at once, so no ready node waits on it
     _depends:
     - verdicts
     scope:
@@ -2342,8 +2342,8 @@ review:
       zh: 判定来自独立的一方，不来自你
       en: The verdict comes from an independent party, not from you
     _how:
-      zh: 不自己判，派一个执行者去审，按裁决行动
-      en: Do not judge it; dispatch a worker to review and act on the verdict
+      zh: 派一个新的审查者写裁决；你按裁决行动，不自己写，即使交来结果的孩子是管理者
+      en: Dispatch a fresh reviewer to render the verdict; you act on it and never write it, even when the child that delivered is a manager
     scope:
     - root
     - manager
@@ -2410,8 +2410,8 @@ review:
       _cost: {zh: 'person_time：下一轮还是没有决定', en: 'person_time: a second round with no decision'}
       _who_pays: person
     _between:
-      zh: '只接受三种：通过；不通过并附违反的判据和复现；被阻塞并附缺什么'
-      en: 'Accept three: pass; fail with the violated criterion and a reproduction; blocked with what is missing'
+      zh: '审查者写出三种之一，管理者按它行动：通过；不通过并附违反的判据和复现；被阻塞并附缺什么'
+      en: 'The reviewer renders one of three and the manager acts on it: pass; fail with the violated criterion and a reproduction; blocked with what is missing'
     _pull:
       zh: 没有复现的发现只会再来一轮，所以临界点往给出判词让
       en: A finding without a reproduction is a new round; at the margin, choose a verdict
@@ -4471,11 +4471,11 @@ delivery:
       zh: 你要开始自动执行
       en: You start executing automatically
     _goal:
-      zh: 里程碑表先被批准
-      en: The milestone list is approved first
+      zh: 第一个包出发前，表已经由上一层批准
+      en: The layer above approves the list before the first package leaves
     _how:
-      zh: 写出严格有序的一份：每个结果、交付物、验收、同步点
-      en: 'Write a strict ordered one: each outcome, deliverable, acceptance and synchronisation point'
+      zh: '写出严格有序的一份——每个结果、交付物、验收、同步点——送上去要一个「是」或者一条改动：管理者的给父节点；根的给人在谈成目标的那一次，度数把这个决定留给根的，记成 assumed。每个目标一次，`go` 不再问'
+      en: "Write a strict ordered one — each outcome, deliverable, acceptance and synchronisation point — and send it up for a yes or a named change: a manager's to its parent; the root's to the person at the stop where the target is agreed, or, at a degree that leaves the decision with the root, recorded as assumed. Once per target, and `go` never asks again"
     scope: *id001
   work_package:
     _kind: act
@@ -4771,11 +4771,11 @@ docs_shape:
       zh: 一个目标刚被同意
       en: A target has just been agreed
     _goal:
-      zh: 推进不再需要任何一句话
-      en: Advancement needs no further word
+      zh: 推进不再需要表批准以外的任何一句话
+      en: Advancement needs no word beyond the list's approval
     _how:
-      zh: 从协议推导路线图，然后按预算允许的最快速度推进
-      en: Derive the roadmap from the agreement and move as fast as the budget allows
+      zh: 从协议推导路线图，里程碑表被批准之后，按预算允许的最快速度推进
+      en: Derive the roadmap from the agreement, then advance as fast as the budget allows once its milestone list is approved
     scope: *id001
   agreement_node:
     _kind: act
