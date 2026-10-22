@@ -8,15 +8,15 @@ The 99% is counted over cases, not over rules: the moments a role must decide so
 
 | role | cases | stated | delegated | ambiguous | silent |
 |---|---:|---:|---:|---:|---:|
-| root | 21 | 20 | 1 | 0 | 0 |
-| manager | 19 | 19 | 0 | 0 | 0 |
+| root | 23 | 22 | 1 | 0 | 0 |
+| manager | 22 | 22 | 0 | 0 | 0 |
 | worker | 17 | 16 | 1 | 0 | 0 |
-| researcher | 14 | 13 | 1 | 0 | 0 |
+| researcher | 15 | 14 | 1 | 0 | 0 |
 | reviewer | 14 | 14 | 0 | 0 | 0 |
 | policy_worker | 15 | 15 | 0 | 0 | 0 |
-| **total** | **100** | **97** | **3** | **0** | **0** |
+| **total** | **106** | **103** | **3** | **0** | **0** |
 
-97/100 stated and 3/100 delegated: 100% answerable by the law. Every cited name is in the role's own view; `tools/cases.py` refuses a citation its role does not read.
+103/106 stated and 3/106 delegated: 100% answerable by the law. Every cited name is in the role's own view; `tools/cases.py` refuses a citation its role does not read.
 
 ## root
 
@@ -43,6 +43,8 @@ The 99% is counted over cases, not over rules: the moments a role must decide so
 | he leaves for a named period | authority | stated | `unattended`, `lent_scope` |
 | you are about to do something irreversible | authority | stated | `high_risk`, `secrets`, `pushes_hereditary` |
 | you are handed a role view and must know what it reads | proceed | stated | `scope_composition` |
+| a question blocks advancement | proceed | stated | `block_timeout` |
+| he has not answered | proceed | stated | `wait_for_yes` |
 
 ## manager
 
@@ -67,6 +69,9 @@ The 99% is counted over cases, not over rules: the moments a role must decide so
 | you are told to stop | proceed | stated | `wind_down`, `safe_point` |
 | you are about to do something irreversible | authority | stated | `high_risk`, `secrets`, `pushes_hereditary` |
 | you are handed a role view and must know what it reads | proceed | stated | `scope_composition` |
+| a gate is reached while he is away | authority | stated | `gates_hold` |
+| a question blocks advancement | proceed | stated | `block_timeout` |
+| the target is not agreed yet | proceed | stated | `no_agreement_no_work` |
 
 ## worker
 
@@ -108,6 +113,7 @@ The 99% is counted over cases, not over rules: the moments a role must decide so
 | you are told to stop | proceed | stated | `wind_down`, `safe_point` |
 | you are about to do something irreversible | authority | stated | `high_risk`, `secrets` |
 | you are handed a role view and must know what it reads | proceed | stated | `scope_composition` |
+| a wait is discussed | proceed | stated | `timeout_clock` |
 
 ## reviewer
 
