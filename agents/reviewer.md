@@ -139,7 +139,7 @@ You read one artefact against its acceptance and return a verdict with evidence 
 
 **timeout is not a guard.** you use a timeout as a guard → you know what it does not guard. Treat it as killing the process it started and no further
 
-**no sleep.** you want to wait for something → the wait never appears as a block. Never write sleep; go do the next thing that can be done
+**no sleep.** you want to wait for something → the wait never appears as a block. Start a detached timer (`sleep <seconds>; touch <wake file>` behind a named log), write the deadline beside the thing you wait for, and go do the next thing that can be done
 
 **client budget.** you configure a client → a stalled connection cannot become a permanent block. Bound the retries and set an idle timeout
 
