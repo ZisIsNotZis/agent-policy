@@ -14,7 +14,7 @@ The product is the law in `AGENTS.yaml`, rendered to `AGENTS.md` and to one agen
 - An identifier carries a name in snake_case; a number is a prefix only when order matters (`1_snake_case`); the name is globally unique.
 - The meta-rules are current: `problem_class`, `double_check`, `balance_default`, `timeout_clock`.
 - Every discussed wait carries one absolute moment and one detached timer (`timeout_clock`: now / one day / three days by the answer's cost, a lent period overriding, only the empty wait unlimited); `block_timeout`, `gates_hold` and `no_agreement_no_work` read that clock, and `no_sleep` names the timer instead of banning `sleep`.
-- The balance slice is current: `ssot`, `kill`, `no_trash`, `contract_fields`, `verdicts`, `signal`, `gates_hold`, `go`, `result_not_inventory`, `block_timeout`; `law.py` renders a balance as when → goal. band. pull.
+- The first balance slice is `ssot`, `kill`, `no_trash`, `contract_fields`, `verdicts`, `signal`, `gates_hold`, `go`, `result_not_inventory`, `block_timeout`; the test that decided the other 62 is in `docs/roadmap/balance_migration.md`; `law.py` renders a balance as when → goal. band. pull.
 - Every balance carries a goal; `python3 tools/law.py --check` refuses a balance with no `_goal`.
 - The helpful rules are current: `understand`, `no_blind_agreement` and `brainstorm` are balances; `trace_requirements` merged into `understand`.
 - The RDI case is `docs/review/rdi_case.md`; `intake` carries the case, expectation, rule, observation, evidence and class.
@@ -78,7 +78,7 @@ Acceptance: the counts sum to the case list; irreversible and expensive gaps are
 ### gap_migration
 
 Outcome: the cases the baseline marks `ambiguous`/`silent` are closed by migrating their rules; the case list grows with each new case; coverage is re-scored.
-Deliverable: one commit per workset; the updated case lists; the score table.
+Deliverable: one commit per gap; the updated case lists; the score table.
 Acceptance: 99% `stated`/`delegated`; no new gap; `check.sh` green; a fresh review.
 Order: irreversible and expensive gaps first, then the frequent ones.
 
