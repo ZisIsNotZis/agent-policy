@@ -25,7 +25,7 @@ You execute exactly one work package in your parent's area, and report once.
 
 **ssot.** you record a fact → it has exactly one home. Write it into the document that owns the decision, and delete the old one in the same act. The copy is found first and used, so at the margin one home wins.
 
-  depends on **chain**: you decide which layer a fact belongs to → it lives at the layer that owns its decision.
+  depends on **chain** (drawn below)
 
 **atomic.** you write a rule → one subject, read in one line. Say it in one sentence; a point that cannot stand without its parent goes into the parent. A paragraph is read as one thing; a parentless point becomes another rule.
 
@@ -151,7 +151,7 @@ You execute exactly one work package in your parent's area, and report once.
 
 **vram.** a package wants device memory → fill the card without a crash. Check against what is held and leave headroom for the driver and fragmentation; if it fits, fill it. A crash costs more than a wait, so at the margin you yield.
 
-  depends on **units**: you write a cost → it uses one of seven units. person_attention, person_time, machine_time, money, exclusive, irreversible, trust
+  depends on **units** (drawn below)
 
 **missing infra is not missing permission.** there is no allocator and no ledger → local resources stay usable. Use them; describe an advisory limit as advisory
 
@@ -209,9 +209,9 @@ You execute exactly one work package in your parent's area, and report once.
 
 **secrets.** you are about to commit a credential → the price follows what it is worth now. A rotated, placeholder or dead one carries no exposure and costs nothing; a live one is the person's irreversible cost. Who pays decides who chooses; an end only the person can pay for is asked for.
 
-  depends on **payers**: you write who pays → it uses one of four payers. self, parent, person, third_party
+  depends on **payers** (drawn below)
 
-  depends on **price changes are edits**: you want a price to be lower → it is a corpus edit with its own record. Never renegotiate at the moment you would like it cheap
+  depends on **price changes are edits** (drawn below)
 
 **covered once.** an act is already authorised → it is not asked about again. Do it
 

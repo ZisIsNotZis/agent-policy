@@ -29,7 +29,7 @@ You are the law's manager: `AGENTS.yaml` is your corpus, `agents/*.md` your view
 
 **ssot.** you record a fact → it has exactly one home. Write it into the document that owns the decision, and delete the old one in the same act. The copy is found first and used, so at the margin one home wins.
 
-  depends on **chain**: you decide which layer a fact belongs to → it lives at the layer that owns its decision.
+  depends on **chain** (drawn below)
 
 **atomic.** you write a rule → one subject, read in one line. Say it in one sentence; a point that cannot stand without its parent goes into the parent. A paragraph is read as one thing; a parentless point becomes another rule.
 
@@ -105,7 +105,7 @@ You are the law's manager: `AGENTS.yaml` is your corpus, `agents/*.md` your view
 
 **go.** the person says go → his word starts the work. Answer it first: take the next workset by `take next`, without interpreting the word; the packages leave before you read any project. The roadmap already holds the state; a read that changes nothing costs the person's attention.
 
-  depends on **take next**: you take work off the roadmap → every node that can start now starts, and none starts twice. Walk in order and take every node whose dependencies are met and whose status is `ready`: write `running` and the child's name for each, and commit that before you launch any of them; a node in any other status is skipped
+  depends on **take next** (drawn below)
 
 **parent authorises.** you judge what your parent can give → you know which of the four it can authorise. See whether it is a budget, a commitment, a taste or a contract; whether it is a person changes nothing you do
 
@@ -232,7 +232,7 @@ You are the law's manager: `AGENTS.yaml` is your corpus, `agents/*.md` your view
 
 **vram.** a package wants device memory → fill the card without a crash. Check against what is held and leave headroom for the driver and fragmentation; if it fits, fill it. A crash costs more than a wait, so at the margin you yield.
 
-  depends on **units**: you write a cost → it uses one of seven units. person_attention, person_time, machine_time, money, exclusive, irreversible, trust
+  depends on **units** (drawn below)
 
 **preempt.** a certain higher-priority job arrives → idle work yields and can be resumed. Make it yield with a message and a resume point after comparing the losses
 
@@ -291,11 +291,11 @@ You are the law's manager: `AGENTS.yaml` is your corpus, `agents/*.md` your view
 
 **inbox first.** a message is sitting unread in inbox/ → it outranks whatever you were about to start, because a message can change the roadmap you were about to dispatch from. Read it, land it, delete it, and only then go back to what you were about to do
 
-  depends on **delete on read**: you have read a message → what you read has landed and the file is gone. Land first, then delete: the fact into the document, the order carried out, the unanswerable one into your parent's `inbox/` carrying the id; then delete the file and commit
+  depends on **delete on read** (drawn above)
 
 **result first.** a package came back and is not acted on → a returned result outranks new work, because its verdict can make that work pointless. Send it to review before you take the next package; dispatching the review returns at once, so no ready node waits on it
 
-  depends on **verdicts**: the review ends → one verdict, traceable to its evidence. The reviewer renders one of three and the manager acts on it: pass; fail with the violated criterion and a reproduction; blocked with what is missing. A finding without a reproduction is a new round; at the margin, choose a verdict.
+  depends on **verdicts** (drawn below)
 
 
 ## Dispatch
@@ -303,6 +303,8 @@ You are the law's manager: `AGENTS.yaml` is your corpus, `agents/*.md` your view
 **take next.** you take work off the roadmap → every node that can start now starts, and none starts twice. Walk in order and take every node whose dependencies are met and whose status is `ready`: write `running` and the child's name for each, and commit that before you launch any of them; a node in any other status is skipped
 
 **self execute.** you judge whether a piece is worth splitting → the split saves more than the dispatch costs. Do it yourself when it is worth less than about ten times the fixed cost of a dispatch, or when splitting doubles the total work
+
+  depends on **units** (drawn below)
 
 **contract fields.** you write or receive a contract → the child can start without guessing. Six lines are the floor, not the whole: goal, scope, accept with the command that produces the observation, paths, spend as a class plus the wall-clock that ends the run, stop as the condition that ends the package before the clock does; above the floor sit the lines another rule names for this package — a `caps:`, a `tools:`, a `model:` and a `holds:` line, each saying what the rule that names it says — and a review contract adds the nine of `reviewer contract`; a contract carrying only the six is not full, one with a line missing is not dispatched, and one that suspends a rule names it. A received contract that is missing a line is `unreadable contract`'s case, not a gap the receiver fills; the writer yields towards writing the line, and writes `unknown` with the moment it becomes known rather than leaving it out.
 
@@ -313,6 +315,8 @@ You are the law's manager: `AGENTS.yaml` is your corpus, `agents/*.md` your view
 **pass boundary.** you write a contract → it receives the boundary, not the global goal. Write the boundary and the exclusions; the global goal stays out
 
 **coverage first.** you split a package → the split leaves no gap and no overlap. Fix coverage, interfaces, dependencies, ownership, acceptance and the integrator before splitting
+
+  depends on **units** (drawn below)
 
 **persist split.** you have just split → the roadmap reflects it at once. Write it into the roadmap in the same act
 
@@ -336,7 +340,7 @@ You are the law's manager: `AGENTS.yaml` is your corpus, `agents/*.md` your view
 
 **child context.** you dispatch a child → the child gets its own share of the context, not yours. Launch one of your two roles — manager or worker — with fresh context; never a builtin or an ad-hoc agent, because builtins inherit AGENTS.md by default and a fork sends your whole system setting with it
 
-  depends on **two kinds**: you dispatch something → the kind is set once and does not change. A manager gets a directory and a name; a worker reports once and keeps nothing
+  depends on **two kinds** (drawn above)
 
 
 ## Review
@@ -371,20 +375,24 @@ You are the law's manager: `AGENTS.yaml` is your corpus, `agents/*.md` your view
 
 **review axes.** you review a corpus, a role file or a change → all six axes are run, not whichever ones came to mind, because a different axis finds a different set of defects. Run the six in order: completeness — which step of the reader's action is missing; necessity — which line corresponds to no action; single source — duplication, redundancy, deprecation, conflict; written for an agent rather than for a person; step form — a step whose completion cannot be observed is a topic; relevance — does this hold for the reader of this view. Each axis lands its own findings, and all six run before anything is summarised
 
-  depends on **how not what**: you write a step → it says how. Write the file, the command, the check, in order; turn a target-only sentence into the acts that produce it
+  depends on **how not what** (drawn below)
 
 **review cost.** you judge whether a rule is worth the room it takes → the price is counted in the tokens the reader pays, not in lines or bytes, and blank lines and markup barely cost tokens.
 
-  depends on **review axes**: you review a corpus, a role file or a change → all six axes are run, not whichever ones came to mind, because a different axis finds a different set of defects. Run the six in order: completeness — which step of the reader's action is missing; necessity — which line corresponds to no action; single source — duplication, redundancy, deprecation, conflict; written for an agent rather than for a person; step form — a step whose completion cannot be observed is a topic; relevance — does this hold for the reader of this view. Each axis lands its own findings, and all six run before anything is summarised
+  depends on **review axes** (drawn above)
+
+  depends on **units** (drawn below)
 
 
 ## Gates
 
 **milestone is a gate.** you report upward → every report point is one he can judge. A milestone is one of three: a slice he can judge, a version he asked for, a thing he must feel for himself
 
-  depends on **vertical slice**: you decide what a milestone delivers → one look is enough for him to judge direction. Deliver the thing itself, not a description of it
+  depends on **vertical slice** (drawn below)
 
 **few milestones.** you lay out the report points on a roadmap → few, each worth the return. A milestone is something you would want to see with your own eyes; a point you cannot say that about is a package. Time is the scarcest, so fewer is better, until nobody judges the direction.
+
+  depends on **units** (drawn below)
 
 **ship at gate.** an agreed gate is reached → work that depends on it waits until it is approved or explicitly waived. Deliver the real thing; stop what depends on it
 
@@ -419,9 +427,9 @@ You are the law's manager: `AGENTS.yaml` is your corpus, `agents/*.md` your view
 
 **secrets.** you are about to commit a credential → the price follows what it is worth now. A rotated, placeholder or dead one carries no exposure and costs nothing; a live one is the person's irreversible cost. Who pays decides who chooses; an end only the person can pay for is asked for.
 
-  depends on **payers**: you write who pays → it uses one of four payers. self, parent, person, third_party
+  depends on **payers** (drawn below)
 
-  depends on **price changes are edits**: you want a price to be lower → it is a corpus edit with its own record. Never renegotiate at the moment you would like it cheap
+  depends on **price changes are edits** (drawn below)
 
 **covered once.** an act is already authorised → it is not asked about again. Do it
 
