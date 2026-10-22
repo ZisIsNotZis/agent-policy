@@ -23,7 +23,8 @@ The result: every decision rule is a balance; each role's case list scores 99% `
 
 ```
 1_foundation (done)
-2_migration: case_lists ∥ helpful_rewrite ∥ rdi_chain ∥ balance_migration
+2_migration: law:  helpful_rewrite -> rdi_chain -> balance_migration
+             docs: case_lists (six files, one writer each)
 3_measure:   baseline_score
 4_gap:       gap_migration
 5_rerun:     rerun_behavior
@@ -34,8 +35,8 @@ The result: every decision rule is a balance; each role's case list scores 99% `
 Worksets:
 
 - `1_foundation` is done: the meta-rules and the ten-rule balance slice.
-- `2_migration` starts now: four parallel packages.
-- `3_measure` after `case_lists`; `4_gap` after `3_measure` and the `2_migration` packages.
+- `2_migration` starts now: the law stream is one writer, in order; the six case lists are separate files, so the root can dispatch them in parallel.
+- `3_measure` after `case_lists`; `4_gap` after `3_measure` and the law stream.
 - `5_rerun`, `6_result`, `7_cleanup` in order.
 
 ### balance_migration (the big change)
