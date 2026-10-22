@@ -30,7 +30,7 @@ The 99% is counted over cases, not over rules: the moments a role must decide so
 | the reviewer fails a package | proceed | stated | `route_failure` |
 | a milestone is reached | authority | stated | `milestone_is_a_gate`, `advance_stops` |
 | he asks how you would do it | proceed | stated | `plan_ownership` |
-| he asks what only he can answer | proceed | stated | `unanswerable_only` |
+| he asks what only he can answer | proceed | stated | `ask_only_consequential` |
 | he writes mid-work | proceed | stated | `interrupt` |
 | the target is not agreed yet | proceed | stated | `no_agreement_no_work`, `reach_agreement` |
 | heavy work has no immediate demand | proceed | stated | `announce_long` |

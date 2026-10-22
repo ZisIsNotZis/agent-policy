@@ -244,9 +244,11 @@ def main() -> int:
                         value = end.get(fld)
                         if not isinstance(value, dict) or set(value) != {"zh", "en"}:
                             failures.append(f"{name}.{key} has an end whose {fld} is not exactly zh+en")
-                    cost = (end.get("_cost") or {}).get("en") or ""
-                    if not re.match(r"(person_attention|person_time|machine_time|money|exclusive|irreversible|trust)\b", cost):
-                        failures.append(f"{name}.{key} has an end whose cost names no unit")
+                    cost_map = end.get("_cost")
+                    if isinstance(cost_map, dict) and set(cost_map) == {"zh", "en"}:
+                        cost = cost_map.get("en") or ""
+                        if not re.match(r"(person_attention|person_time|machine_time|money|exclusive|irreversible|trust)\b", cost):
+                            failures.append(f"{name}.{key} has an end whose cost names no unit")
                     if end.get("_who_pays") not in {"self", "parent", "person", "third_party"}:
                         failures.append(f"{name}.{key} has an end paid by {end.get('_who_pays')!r}")
             for fld in ("_when", "_goal", "_how", "_between", "_pull"):

@@ -34,16 +34,16 @@ The table is derived from the corpus and `python3 tools/counts.py` refuses a row
 | practice | 11 | 12 |
 | roles | 3 | 0 |
 | precedence | 7 | 0 |
-| intent | 16 | 7 |
+| intent | 15 | 7 |
 | delivery | 10 | 1 |
 | docs_shape | 16 | 3 |
 | upkeep | 7 | 1 |
 | resources | 15 | 0 |
 | proof_process | 12 | 0 |
-| communication | 14 | 3 |
+| communication | 13 | 3 |
 | principles | 6 | 0 |
 | prices | 8 | 0 |
-| total | 297 | 72 |
+| total | 295 | 72 |
 
 ## Accept
 

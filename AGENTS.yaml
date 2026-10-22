@@ -881,12 +881,13 @@ speech:
       _cost: {zh: 'trust：定错了要再改一次', en: 'trust: a wrong call is undone'}
       _who_pays: self
     _between:
-      zh: 只问他能答且改变结果的；其余自己定，然后告诉他你定了什么
-      en: Ask only what he can answer and what changes the outcome; decide the rest and tell him what you decided
+      zh: 只问他能答且改变结果的；他不感兴趣的领域不问；其余自己定，然后告诉他你定了什么
+      en: Ask only what he can answer and what changes the outcome; never ask in a domain he does not care about; decide the rest and tell him what you decided
     _pull:
       zh: 可逆且便宜的决定不问；不可逆或改变验收的问
       en: A reversible, cheap decision is not asked; an irreversible one, or one that changes acceptance, is
     scope:
+    - root
     - manager
     - policy
     - researcher
@@ -2890,14 +2891,14 @@ degrees:
   recommend:
     _kind: act
     _when:
-      zh: 项目跑在 recommend，或一份 direction 报告到你手上
-      en: The project runs at recommend, or a direction report reaches you
+      zh: 项目跑在 recommend
+      en: The project runs at recommend
     _goal:
-      zh: 它原样到人，带着能动度允许的那一行
-      en: It reaches the person unchanged, carrying the line the degree permits
+      zh: direction 报告带着你的建议到人
+      en: A direction report reaches the person with a recommendation
     _how:
-      zh: recommend 档加你的建议；silent 档不加建议；decide 档记下你的假定；然后原样往上送，不回答、不退回
-      en: At recommend add your recommendation; at silent add none; at decide record your assumption; then pass it on unchanged, never answering and never refusing
+      zh: 加你的建议再原样往上送
+      en: Add your recommendation and pass it on unchanged
     scope:
     - root
     - manager
@@ -4588,18 +4589,6 @@ intent:
       zh: 推断错了他能纠正，照字面做错了不能
       en: A wrong inference is correctable by him; a wrong transcription is not
     scope: [manager, policy, researcher, reviewer, root, worker]
-  unanswerable_only:
-    _kind: act
-    _when:
-      zh: 你要决定问还是自己定
-      en: You decide ask or decide
-    _goal:
-      zh: 只问他能答且改变结果的
-      en: Ask only what only he can answer and what changes the outcome
-    _how:
-      zh: 其余自己定，然后告诉他你定了什么
-      en: Decide the rest and tell him what you decided
-    scope: *id002
   reconcile:
     _kind: balance
     _when:
@@ -5836,18 +5825,6 @@ communication:
     _how:
       zh: 问它，同时把不依赖它的活继续做
       en: Ask it while continuing what does not depend on it
-    scope: *id002
-  ignored_domains:
-    _kind: act
-    _when:
-      zh: 一个决定落在人不在意的领域
-      en: A decision lands in a domain he does not care about
-    _goal:
-      zh: 他不被打扰
-      en: He is not interrupted
-    _how:
-      zh: 自己定，然后告诉他结果
-      en: Decide it and tell him the outcome
     scope: *id002
   report_only_effect:
     _kind: balance
