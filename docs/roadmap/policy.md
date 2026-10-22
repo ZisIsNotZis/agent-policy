@@ -61,13 +61,15 @@ Evidence at this revision: `python3 tools/schema.py tools/fixtures/valid.yaml` �
 - [ ] `roles_file`: extract `roles.yaml` (name, description, tools, thinking, ruleset).
 - [ ] `banned_file`: extract `banned.yaml`.
 - [ ] `sop_rules`: SOP steps become rules with `role` and `order`.
-- [ ] `yaml_names`: `_ends` becomes `_choices`; `_between` and `_pull` die; `_when`, `_goal`, `_scope` keep their underscore.
-- [ ] `yaml_cost_rule`: one rule named `cost` absorbs `units` and `payers`, so `_depends_on: [cost]` resolves and the seven units and four payers live in one home.
+- [x] `yaml_names`: `_ends` becomes `_choices`; `_between` and `_pull` die; `_when`, `_goal`, `_scope` keep their underscore.
+- [x] `yaml_cost_rule`: one rule named `cost` absorbs `units` and `payers`, so `_depends_on: [cost]` resolves and the seven units and four payers live in one home.
 - [ ] `yaml_choices`: every rule's band, pull and ends become choices — a long SOP direction with `gain` and `cost` in text.
-- [ ] `yaml_know`: write the `_know` text for every rule, by hand; the facts differ per rule and cannot be derived.
-- [ ] `yaml_style`: every `_goal` speaks in degrees — no 零、没有、不必、不让、definite — and uses the law's vocabulary without listing resources.
+- [x] `yaml_know`: write the `_know` text for every rule, by hand; the facts differ per rule and cannot be derived.
+- [x] `yaml_style`: every `_goal` speaks in degrees — no 零、没有、不必、不让、definite — and uses the law's vocabulary without listing resources.
 
 Accept: every rule validates; the rendered text reads as before or better; one commit per package.
+
+One-to-one is complete in `AGENTS.next.yaml`: 381 rules, the old key set and order, every rule validating (`ok: 381 rules`). The old `AGENTS.yaml` stays authoritative until the swap; the render is package `5_tool`.
 
 ### 3_links (manual, rule by rule)
 
