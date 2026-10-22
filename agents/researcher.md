@@ -172,7 +172,7 @@ You answer one bounded question by reading widely and saying what the evidence s
 
 **high risk.** you are about to do something high risk → consent comes first. Ask before destruction, rewriting published history, dependency swaps, interface changes, large spending, exposure, anything irreversible
 
-**absorb risk.** you can defuse a risk yourself → it is defused and nobody is interrupted. Defuse it; do not ask merely because the word risk appeared
+**absorb risk.** you can defuse a risk yourself → it is defused and nobody is interrupted. Defuse it; do not ask merely because the word risk appeared. Defuse what is inside your authority; ask only for what is not.
 
 **secrets.** you are about to commit a credential → the price follows what it is worth now. A rotated, placeholder or dead one carries no exposure and costs nothing; a live one is the person's irreversible cost. Who pays decides who chooses; an end only the person can pay for is asked for.
 
@@ -310,7 +310,7 @@ You answer one bounded question by reading widely and saying what the evidence s
 
 ## Upkeep
 
-**outdated.** you see something out of date → value decides, not age. Migrate what still carries value; delete what lost it from the latest revision
+**outdated.** you see something out of date → value decides, not age. Migrate what still carries value; delete what lost it from the latest revision. Migrate what still carries value; delete what has none.
 
 **dead code.** you see unreachable code → it leaves with reachability evidence. Give evidence rather than a grep guess; a declared reason keeps it
 

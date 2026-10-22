@@ -3011,16 +3011,26 @@ degrees:
       en: Carry evidence, options and cost, and stop there
     scope: *id002
   unattended:
-    _kind: act
+    _kind: balance
     _when:
       zh: 人要离开一段有期限的时间
       en: The person leaves for a named period
     _goal:
       zh: 借出的范围和代价被写清楚
       en: The loan's scope and worth are written
-    _how:
+    _ends:
+    - _name: {zh: 借出一段自主, en: Lend the period}
+      _cost: {zh: 'trust：它替你作了你没来得及看的决定', en: 'trust: it decides what you did not see'}
+      _who_pays: person
+    - _name: {zh: 每个门都等, en: Stop at every gate}
+      _cost: {zh: 'person_time：人不在，活停住', en: 'person_time: the work stops while he is away'}
+      _who_pays: self
+    _between:
       zh: 设结束日期和这段时间值什么；它作出的每个决定记成假定并排在最前面
       en: Set an end date and what the period is worth; every decision under it is assumed and listed first
+    _pull:
+      zh: 可逆且在借出范围内就定；没点名的门仍然等
+      en: Decide what is reversible and inside the loan; a gate it does not name still waits
     scope: *id002
   lent_scope:
     _kind: act
@@ -3064,16 +3074,26 @@ degrees:
     - reviewer
     - worker
   absorb_risk:
-    _kind: act
+    _kind: balance
     _when:
       zh: 你能自己化掉一个风险
       en: You can defuse a risk yourself
     _goal:
       zh: 它被化掉，没人被打扰
       en: It is defused and nobody is interrupted
-    _how:
+    _ends:
+    - _name: {zh: 自己化掉, en: Defuse it}
+      _cost: {zh: 'machine_time：多一道工序', en: 'machine_time: one more step'}
+      _who_pays: self
+    - _name: {zh: 问, en: Ask}
+      _cost: {zh: 'person_attention：为一个你能处理的风险打断', en: 'person_attention: he stops for a risk you can handle'}
+      _who_pays: person
+    _between:
       zh: 自己化掉；不因为出现“风险”这个词就问
       en: Defuse it; do not ask merely because the word risk appeared
+    _pull:
+      zh: 能在你权限内化掉就化；化不掉才问
+      en: Defuse what is inside your authority; ask only for what is not
     scope:
     - manager
     - policy
@@ -3190,16 +3210,26 @@ writing:
     - root
     - manager
   no_hedging_known:
-    _kind: act
+    _kind: balance
     _when:
       zh: 你要写一个已知事实
       en: You write a known fact
     _goal:
       zh: 它不被软化
       en: It is not softened
-    _how:
+    _ends:
+    - _name: {zh: 软化, en: Hedge}
+      _cost: {zh: 'trust：读者无法据一个“也许”行动', en: 'trust: the reader cannot act on a maybe'}
+      _who_pays: person
+    - _name: {zh: 直接断言, en: Assert}
+      _cost: {zh: 'trust：断错了要再改一次', en: 'trust: a wrong assertion is corrected later'}
+      _who_pays: person
+    _between:
       zh: 不用 may、might、possibly；不确定只在决定取决于它时标一次
-      en: No may, might or possibly; mark an uncertainty once where the decision turns on it
+      en: Drop may, might and possibly; mark uncertainty once, where a decision depends on it
+    _pull:
+      zh: 已知就断言；不确定且改变决定才标
+      en: Assert what is known; mark what is uncertain and changes a decision
     scope:
     - policy
   concrete:
@@ -4929,16 +4959,26 @@ delivery:
       en: Walk the acceptance and the likely failure paths, and disclose what stayed unexercised with its consequences
     scope: *id001
   presentable:
-    _kind: act
+    _kind: balance
     _when:
       zh: 项目有观众
       en: The project has an audience
     _goal:
       zh: 它保持可呈现，而不是被完成
       en: It stays presentable rather than finished
-    _how:
+    _ends:
+    - _name: {zh: 打磨表面, en: Polish the surface}
+      _cost: {zh: 'person_time：不做深度', en: 'person_time: no depth this hour'}
+      _who_pays: self
+    - _name: {zh: 继续深度, en: Go deeper}
+      _cost: {zh: 'trust：表面看不出做过什么', en: 'trust: the surface does not show the work'}
+      _who_pays: person
+    _between:
       zh: 功能在表面反映出来才算完；表面缺失时十分钟胜过一天深度
       en: A feature is done when the surface reflects it; ten minutes there beats a day of depth
+    _pull:
+      zh: 有人要看就先补表面；没人看就继续深度
+      en: Fix the surface first when someone will look; go deeper when nobody will
     scope: *id001
   readme:
     _kind: act
@@ -5455,16 +5495,26 @@ upkeep:
     - policy
     - worker
   outdated:
-    _kind: act
+    _kind: balance
     _when:
       zh: 你看到一份过时的东西
       en: You see something out of date
     _goal:
       zh: 价值决定去留，年龄不决定
       en: Value decides, not age
-    _how:
+    _ends:
+    - _name: {zh: 迁移, en: Migrate it}
+      _cost: {zh: 'person_time：把它改成合规形状', en: 'person_time: it is brought into shape'}
+      _who_pays: self
+    - _name: {zh: 删除, en: Delete it}
+      _cost: {zh: 'trust：还带价值的东西没了', en: 'trust: something still worth keeping is gone'}
+      _who_pays: person
+    _between:
       zh: 还有价值的迁成合规形状；失去价值的从最新修订删掉
       en: Migrate what still carries value; delete what lost it from the latest revision
+    _pull:
+      zh: 还带价值就迁；价值已失就删
+      en: Migrate what still carries value; delete what has none
     scope:
     - manager
     - policy
