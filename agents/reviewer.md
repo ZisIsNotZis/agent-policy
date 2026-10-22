@@ -158,7 +158,7 @@ You read one artefact against its acceptance and return a verdict with evidence 
 
 ## Review
 
-**verdicts.** the review ends → Accept three: pass; fail with the violated criterion and a reproduction; blocked with what is missing. A finding without a reproduction is a new round; at the margin, choose a verdict.
+**verdicts.** the review ends → The reviewer renders one of three and the manager acts on it: pass; fail with the violated criterion and a reproduction; blocked with what is missing. A finding without a reproduction is a new round; at the margin, choose a verdict.
 
 **not a verdict.** the reviewer returns something that is not a verdict → it travels as a report and does not pass as a verdict. Route it as `contract`, `resource` or `direction`, and stop the review before a verdict is written
 
