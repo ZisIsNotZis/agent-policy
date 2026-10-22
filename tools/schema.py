@@ -125,7 +125,7 @@ def reads(role: str, scope: list) -> bool:
     """A role reads what names it; the root also reads manager, the law roles also read root+manager."""
     if role in scope:
         return True
-    if role == "root_manager" and "manager" in scope:
+    if role == "root" and "manager" in scope:
         return True
     if role in ("policy_writer", "policy_reviewer") and ({"root", "manager"} & set(scope)):
         return True
@@ -173,7 +173,7 @@ def render(role: str, corpus: dict, roles: dict, depth: int) -> str:
 
 
 def frontmatter(role: str, spec: dict) -> str:
-    if role == "root_manager":
+    if role == "root":
         return ""
     desc = str(spec.get("description") or "").replace('"', "'")
     return "\n".join([
@@ -200,10 +200,6 @@ def main() -> int:
         path = OUT / f"{role}.md"
         path.parent.mkdir(exist_ok=True)
         path.write_text(text, encoding="utf-8")
-    link = ROOT / "AGENTS.md"
-    if link.is_symlink() or link.exists():
-        link.unlink()
-    link.symlink_to(Path("agents") / "root_manager.md")
     print(f"ok: {len(corpus)} rules, {len(roles)} views, depth {depth}")
     return 0
 

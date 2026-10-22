@@ -53,7 +53,7 @@ No rule lists every role. Most rules have one actor, some two.
 
 The old six packages are superseded by this rebuild. The result gate is not reached.
 
-- [x] `role_model_root`: the role is `root_manager`; pi reads `AGENTS.md`, a symlink to `agents/root_manager.md`; the tool refreshes it.
+- [ ] `role_model_root`: the role is `root_manager`; pi reads `AGENTS.md`, a symlink to `agents/root_manager.md`; the tool refreshes it.
 - [ ] `role_model_policy`: rename `policy_writer` to `policy_worker` everywhere — `roles.yaml`, every `_scope`, the `policy_writer_sop_*` keys, `install-agents.sh`, and the tool's law-role check; the descriptions follow the role model.
 - [ ] `role_model_names`: the remaining SOP keys take the role's name (`root_sop_*` → `root_manager_sop_*`), so no key carries a retired role name.
 - [ ] `role_model_descriptions`: the seven descriptions say what the role does, in the model above, and the reviewer's multimodal/emotional pre-review is named.

@@ -1,4 +1,4 @@
-root_manager:
+root:
   ruleset: root
   description: You are the root. Your parent is the person. You speak to them and to nobody else, and answer for the whole tree.
   tools: read, edit, write, bash, grep, find, ls, subagent
