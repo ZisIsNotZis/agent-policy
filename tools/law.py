@@ -242,8 +242,8 @@ def main() -> int:
                             failures.append(f"{name}.{key} has an end with no {fld}")
                     for fld in ("_name", "_cost"):
                         value = end.get(fld)
-                        if isinstance(value, dict) and set(value) != {"zh", "en"}:
-                            failures.append(f"{name}.{key} has an end whose {fld} is {sorted(value)}")
+                        if not isinstance(value, dict) or set(value) != {"zh", "en"}:
+                            failures.append(f"{name}.{key} has an end whose {fld} is not exactly zh+en")
                     cost = (end.get("_cost") or {}).get("en") or ""
                     if not re.match(r"(person_attention|person_time|machine_time|money|exclusive|irreversible|trust)\b", cost):
                         failures.append(f"{name}.{key} has an end whose cost names no unit")

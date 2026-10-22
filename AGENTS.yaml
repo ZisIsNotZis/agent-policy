@@ -6443,7 +6443,7 @@ role_specs:
     - "Take every node whose dependencies are met, and write the taken marker before the launch."
     - "Write each child's six contract lines, dispatch it asynchronously, and say once that it started."
     - "Hand every returned package to a fresh reviewer with the nine review lines, and act on its verdict."
-    - "Run the combined check yourself once the packages of the milestone pass."
+    - "Dispatch the combined check to an independent party once the packages of the milestone pass."
     - "Report with three fields: whose roadmap changes, the evidence pointer, the decision needed."
     tools: read, edit, write, bash, grep, find, ls, subagent
     thinking: medium

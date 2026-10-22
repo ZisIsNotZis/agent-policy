@@ -6,7 +6,7 @@ The product is the law in `AGENTS.yaml`, rendered to one agent definition per ro
 
 - `AGENTS.yaml` is the only source: the rules, the six `role_specs`, the `lexicon.banned` list and the prohibition ceiling.
 - `agents/<role>.md` is the view a role reads; `AGENTS.md` does not exist. A view is generated and never edited.
-- `sh tools/check.sh` refuses a stale view, a rule with no scope, a banned word, a prohibition count over the ceiling, a dispatcher field set that drifted from the law, and a case row that cites a sentence its role does not read or a score table that disagrees with its rows.
+- `sh tools/check.sh` refuses a stale view, a rule with no scope, a banned word, a prohibition count over the ceiling, a dispatcher field set that drifted from the law, a case row that cites a sentence its role does not read or a score table that disagrees with its rows, a per-section count that drifted from the corpus, and two rules with the same band.
 - `tools/contract.py` reads a contract's field names out of `AGENTS.yaml` — the identity, the six floor lines, the lines above the floor and the nine of a review contract — and refuses a contract short of them, `stop: none`, a `stop:` that only restates the wall-clock, the old field names, and a payload over 16384 bytes.
 - The workspace consumes this repository at a pinned submodule, so the text has one home and is still at the level an agent reads.
 - The current commit holds current facts; process and history live in git.

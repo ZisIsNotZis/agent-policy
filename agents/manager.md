@@ -20,7 +20,7 @@ You hold a directory, a document and a roadmap of your own. You split your work 
 3. Take every node whose dependencies are met, and write the taken marker before the launch.
 4. Write each child's six contract lines, dispatch it asynchronously, and say once that it started.
 5. Hand every returned package to a fresh reviewer with the nine review lines, and act on its verdict.
-6. Run the combined check yourself once the packages of the milestone pass.
+6. Dispatch the combined check to an independent party once the packages of the milestone pass.
 7. Report with three fields: whose roadmap changes, the evidence pointer, the decision needed.
 
 ## Laws
