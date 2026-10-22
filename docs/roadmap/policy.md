@@ -18,7 +18,7 @@ The product is the law in `AGENTS.yaml`, rendered to `AGENTS.md` and to one agen
 - Every balance carries a goal; `python3 tools/law.py --check` refuses a balance with no `_goal`.
 - The helpful rules are current: `understand`, `no_blind_agreement` and `brainstorm` are balances; `trace_requirements` merged into `understand`.
 - The RDI case is `docs/review/rdi_case.md`; `intake` carries the case, expectation, rule, observation, evidence and class.
-- The `laws` section is migrated: 15 acts are balances; 351 acts remain, 114 decision candidates, in `docs/roadmap/balance_migration.md`.
+- Every rule that presents a live choice is a balance: 72 in total; the other 310 are procedures or structural rules, and `docs/roadmap/balance_migration.md` records the test that decides which is which.
 - The review contract is `docs/review/contract.md`: the nine content checks, the case metric, the SOP test and the balance test.
 - The `policy_worker` is the law's manager: it holds `AGENTS.yaml`, `agents/*.md` and this roadmap, so `self test` reaches it and `worker records` and `worker owns` no longer do.
 - Every role spec carries a `sop`, rendered after the description and before the rules; `tools/law.py --check` refuses a role with no SOP, or a step naming a file that is gone.
@@ -31,22 +31,16 @@ The product is the law in `AGENTS.yaml`, rendered to `AGENTS.md` and to one agen
 The result: every decision rule is a balance; each role's case list scores 99% `stated` or `delegated`; the helpful rules are agent-native; a problem is classified, routed and fixed at the class; the six views are readable; `sh tools/check.sh` is green; a fresh review passes.
 
 ```
-1_foundation (done)
-2_migration: law:  helpful_rewrite (done) -> rdi_chain (done) -> balance_migration (laws done, the 31 goals done; 351 acts)
-             docs: case_lists (six files, one writer each)
-3_measure:   baseline_score
-4_gap:       gap_migration
-5_rerun:     rerun_behavior
-6_result:    result_gate (person)
-7_cleanup:   cleanup
+1_law:    72 balances; the rest verified as procedures
+2_cases:  six case lists in one file, 99% stated or delegated
+3_review: one fresh review of the whole law
+4_result: result_gate (person)
 ```
 
 Worksets:
 
-- `1_foundation` is done: the meta-rules and the ten-rule balance slice.
-- `2_migration` starts now: the law stream is one writer, in order; the six case lists are separate files, so the root can dispatch them in parallel. The `balance_migration` has the `laws` section done; the 351 acts remain.
-- `3_measure` after `case_lists`; `4_gap` after `3_measure` and the law stream.
-- `5_rerun`, `6_result`, `7_cleanup` in order.
+- `1_law` is one writer, the policy_worker, section by section; no worktrees and no subagent labour.
+- `2_cases` after `1_law`; `3_review` after `2_cases`; `4_result` last and the only stop.
 
 ### balance_migration (the big change)
 
@@ -54,13 +48,13 @@ Outcome: every remaining decision act is a balance: two ends, each with a cost i
 Deliverable: one commit per law section; the regenerated views; the word delta.
 How: the section table, the decision/procedure method and the section order are in `docs/roadmap/balance_migration.md`; the `laws` section is the model; a rule that cannot be written as a balance is a design defect, not an exception.
 Acceptance: the balance test in `docs/review/contract.md`; `check.sh` green; a fresh review; the case coverage.
-Owner: the root dispatches one package per section in a worktree; the policy_worker merges the law file; the fresh review is the root's.
+Owner: the policy_worker writes `AGENTS.yaml` and regenerates the views; a subagent reviews, and reviews only.
 
 ### case_lists
 
 Outcome: six case lists: the moment, the axis (`authority`/`proceed`), the current verdict, the sentence that settles it or the missing one.
-Deliverable: `docs/review/cases/<role>.md`; a merged index.
-Seed: the six reports at `417ab94`; the role's law sections; the SOP cases from the 10-20 review.
+Deliverable: `docs/review/cases.md`, one section per role, and the score table.
+Seed: `docs/review/reports/*.md`; the role's law sections; each role's SOP steps.
 Acceptance: every case is a moment, not a topic; the axis is marked; the verdict is backed by a quote or an absence; a fresh reviewer can reproduce it.
 
 ### helpful_rewrite

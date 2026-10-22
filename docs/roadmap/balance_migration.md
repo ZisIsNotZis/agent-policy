@@ -1,24 +1,58 @@
 # Balance migration
 
-Goal: every remaining decision act is a balance: two ends, each with a cost in the seven units and a payer, the band, and the pull. A procedure stays a `how`, with the balance that chooses it named.
+Goal: every rule that presents a live choice is a balance: two live options, each with a cost in the seven units and a payer, the band where the role acts, and the pull that says which way to yield. A rule with one live option is a procedure and keeps its `how`.
 
-Scope: the 351 acts that remain in `AGENTS.yaml`; the `laws` section (15) is already balanced; of the 351, 114 are decision candidates and 237 are procedures.
+## The test
 
-## Method
+The keyword list in an earlier draft (`if`, `only`, `when`, `prefer`, ...) counted 114 candidates. It over-counts: a clause that says *how* is not a choice. The balance test decides:
 
-- A **decision** is an act whose `_how` names a condition or a trade-off: `if`, `unless`, `when`, `before`, `after`, `prefer`, `only`, `may`, `cannot`, `cost`, `worth`, `instead`, `rather`, `choose`, `else`, `until`. The section worker verifies each against the balance test.
-- A **procedure** is an act that names one sequence, not a choice. Keep the act; name the balance that chooses it. A procedure with no choosing balance is an incomplete design.
-- Each balance: the goal (the expectation), two ends each with a cost and a payer, the band (the how), and the pull. The pull is the tie-breaker, not a restatement of the band or the end cost.
-- Every balance carries its goal as its own field; `law.py` renders a balance as when → goal. band. pull and refuses one with no goal. The balances converted from acts got their goal back out of the band; `vram`, `few_milestones` and `secrets` got a written one.
-- The `laws` section is the model: `atomic`, `no_op`, `falsifiable`, `top_down`, `absent`, `controlled`, `invalidate`, `specific_wins`, `rule_over_state`, `own_inference`, `untrusted_input`, `derived`, `inferable`, `fail_loud`, `levels_in_order`.
+1. Name two options an agent could actually take at this moment.
+2. Each option has a cost it would pay, in one of the seven units.
+3. The band says where the line sits, and the pull says which way to yield at it.
+
+A rule with no second live option stays an act; a second label for the same option is not an option. Every converted rule was checked against all three.
+
+## State
+
+72 balances; 310 acts, all procedures or structural rules. The `laws` section is the model for the shape.
+
+| section | acts | balances |
+|---|---:|---:|
+| laws | 0 | 17 |
+| architecture | 15 | 0 |
+| speech | 15 | 8 |
+| inbox | 10 | 0 |
+| records | 19 | 0 |
+| spend | 15 | 3 |
+| scheduling | 17 | 3 |
+| dispatch | 15 | 3 |
+| review | 18 | 2 |
+| gates | 5 | 2 |
+| degrees | 8 | 3 |
+| writing | 9 | 1 |
+| change | 14 | 2 |
+| git | 15 | 1 |
+| operations | 7 | 0 |
+| practice | 11 | 12 |
+| roles | 4 | 0 |
+| precedence | 7 | 0 |
+| intent | 16 | 7 |
+| delivery | 10 | 1 |
+| docs_shape | 17 | 3 |
+| upkeep | 7 | 1 |
+| resources | 16 | 0 |
+| proof_process | 12 | 0 |
+| communication | 14 | 3 |
+| principles | 6 | 0 |
+| prices | 8 | 0 |
 
 ## Accept
 
-The balance test in `docs/review/contract.md`; `sh tools/check.sh`; a fresh review; the case coverage from `baseline_score`.
+The balance test in `docs/review/contract.md`; `sh tools/check.sh`; one fresh review; the case coverage from `docs/review/cases.md`.
 
 ## Paths
 
-`AGENTS.yaml`; one writer per worktree.
+`AGENTS.yaml`; one writer, the policy_worker.
 
 ## Spend
 
@@ -30,36 +64,4 @@ The result gate.
 
 ## Owner
 
-The root dispatches one package per section in a worktree; the policy_worker integrates; the fresh review is the root's.
-
-## Sections
-
-| section | acts | decisions | status |
-|---|---:|---:|---|
-| practice | 23 | 12 | pending |
-| intent | 22 | 9 | pending |
-| speech | 21 | 11 | pending |
-| scheduling | 20 | 6 | pending |
-| records | 19 | 1 | pending |
-| review | 19 | 8 | pending |
-| docs_shape | 19 | 8 | pending |
-| spend | 17 | 6 | pending |
-| dispatch | 17 | 5 | pending |
-| resources | 16 | 4 | pending |
-| architecture | 15 | 6 | pending |
-| change | 15 | 6 | pending |
-| git | 15 | 1 | pending |
-| communication | 15 | 6 | pending |
-| proof_process | 12 | 4 | pending |
-| delivery | 11 | 2 | pending |
-| inbox | 10 | 2 | pending |
-| degrees | 10 | 3 | pending |
-| writing | 10 | 4 | pending |
-| upkeep | 8 | 2 | pending |
-| prices | 8 | 1 | pending |
-| operations | 7 | 3 | pending |
-| precedence | 7 | 1 | pending |
-| principles | 6 | 2 | pending |
-| gates | 5 | 1 | pending |
-| roles | 4 | 0 | pending |
-| **total** | **351** | **114** | |
+The policy_worker writes the law and regenerates the views; a subagent reviews and only reviews.
