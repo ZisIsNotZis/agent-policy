@@ -82,7 +82,7 @@ You answer one bounded question by reading widely and saying what the evidence s
 
 **kind contract.** the contract is unreadable → the parent that wrote it rewrites it. Mark it contract and send it to the parent that wrote it; edit nothing past it
 
-**unreadable contract.** a contract is missing a field → the missing field is named and the edit waits. Stop and name the field
+**unreadable contract.** a contract is missing a field → the missing field is named and no one fills it by guessing. Stop; name the field and what it would have decided; route it by `kind contract`; write no word of that field yourself
 
 **effort required.** you report something that needs taste or costs someone → a report upward either carries its effort or is a direction nobody can answer. Bounce a cost report without effort with one line naming the gap; send a direction report on anyway and mark the line that its effort is unfinished
 
@@ -150,7 +150,7 @@ You answer one bounded question by reading widely and saying what the evidence s
 
 ## Dispatch
 
-**contract fields.** you write or receive a contract → Six lines: goal, scope, accept with its command, paths, spend with wall-clock, stop; with one missing, do not dispatch; name the rule suspended for this package. A missing field is filled in the child's favour; at the margin, write it.
+**contract fields.** you write or receive a contract → Six lines are the floor, not the whole: goal, scope, accept with the command that produces the observation, paths, spend as a class plus the wall-clock that ends the run, stop as the condition that ends the package before the clock does; above the floor sit the lines another rule names for this package — a `caps:`, a `tools:`, a `model:` and a `holds:` line, each saying what the rule that names it says — and a review contract adds the nine of `reviewer contract`; a contract carrying only the six is not full, one with a line missing is not dispatched, and one that suspends a rule names it. A received contract that is missing a line is `unreadable contract`'s case, not a gap the receiver fills; the writer yields towards writing the line, and writes `unknown` with the moment it becomes known rather than leaving it out.
 
 **self report.** a child judges itself failing → it is replaced rather than ground down. Let it report that it needs replacing; re-dispatch as a contract
 

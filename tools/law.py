@@ -232,6 +232,9 @@ def main() -> int:
         failures.append(f"the root view states {n} prohibitions against a ceiling of {ceiling()}")
 
     for key, node in flat_all.items():
+        for name, target in (node.get("_above") or {}).items():
+            if target not in flat_all:
+                failures.append(f"{key}._above.{name} names {target}, which does not exist")
         for dep in node.get("_depends", []):
             if dep not in flat_all:
                 failures.append(f"{key} depends on {dep}, which does not exist")

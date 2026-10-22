@@ -55,7 +55,7 @@ sh tools/install-agents.sh --check  # fail if one is missing or points elsewhere
 ```sh
 python3 tools/law.py --check    # the corpus: shape, scope, dependencies, banned words, shields
 python3 tools/build.py --check  # the six role files against the corpus
-python3 tools/contract.py --self-test  # the dispatcher's field set, command, wall-clock and byte limit
+python3 tools/contract.py --self-test  # the field names read from the law, the command, the wall-clock, the byte limit
 sh tools/check.sh               # all three
 ```
 
@@ -67,7 +67,7 @@ become a ban; and it refuses a role with no SOP, or an SOP step naming a file th
 - `AGENTS.yaml` — the rules, the six role specs, the banned-word list and the ceiling. The only source.
 - `tools/law.py` — renders one role's view out of the corpus, and checks it.
 - `tools/build.py` — writes `agents/*.md`.
-- `tools/contract.py` — checks a contract before dispatch; `--template` prints the skeleton.
+- `tools/contract.py` — checks a contract's identity, its floor and the lines above it before dispatch; `--template` prints the skeleton.
 - `tools/install-agents.sh` — links the five role files into `~/.pi/agent/agents`.
 - `tools/check.sh` — one entry point.
 - `docs/roadmap/policy.md` — the roadmap; `docs/product/policy.md` — the product commitment; `docs/review/contract.md` — the review criteria.

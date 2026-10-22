@@ -946,11 +946,11 @@ speech:
       zh: 契约缺了一个字段
       en: A contract is missing a field
     _goal:
-      zh: 缺的那项被点名，改在它被回答之后
-      en: The missing field is named and the edit waits
+      zh: 缺的那项被点名，没有人靠猜把它补上
+      en: The missing field is named and no one fills it by guessing
     _how:
-      zh: 停下，点名缺哪项
-      en: Stop and name the field
+      zh: 停下；点名缺的那项以及它本来会定什么；按 `kind contract` 的路子送回给写它的一层；这一项你一个字都不填
+      en: Stop; name the field and what it would have decided; route it by `kind contract`; write no word of that field yourself
     scope:
     - manager
     - policy
@@ -2111,13 +2111,18 @@ dispatch:
       _cost: {zh: 'person_time：孩子靠猜，包重做', en: 'person_time: the child guesses and the package is redone'}
       _who_pays: person
     _between:
-      zh: '六行：goal、scope、accept（带产生观察的命令）、paths、spend+wall-clock、stop；缺一行不派；点名为这个包挂起的那条规则'
-      en: 'Six lines: goal, scope, accept with its command, paths, spend with wall-clock, stop; with one missing, do not dispatch; name the rule suspended for this package'
+      zh: '六行是地板，不是全部：goal、scope、accept（连同产生观察的那条命令）、paths、spend（类别加 wall-clock，时钟走完就是停）、stop（在时钟用完之前结束它的那个条件）；地板上还有另一条规则为这个包点名的行——一条 caps、一条 tools、一条 model、一条 holds，每条说什么由点名它的那条规则定——审查契约再加上 reviewer contract 的九样；只有六行的契约不算写全，缺一行的契约不派，挂起某条规则的契约点名那条规则'
+      en: 'Six lines are the floor, not the whole: goal, scope, accept with the command that produces the observation, paths, spend as a class plus the wall-clock that ends the run, stop as the condition that ends the package before the clock does; above the floor sit the lines another rule names for this package — a `caps:`, a `tools:`, a `model:` and a `holds:` line, each saying what the rule that names it says — and a review contract adds the nine of `reviewer contract`; a contract carrying only the six is not full, one with a line missing is not dispatched, and one that suspends a rule names it'
     _pull:
-      zh: 缺口会被孩子按自己的方便补，所以临界点往写全让
-      en: A missing field is filled in the child's favour; at the margin, write it
+      zh: 收到的契约缺一行是 unreadable contract 的事，不是收的人能补的洞；写契约的这边在临界点往把那一行写出来，写不出来就写 unknown 加它何时变清楚
+      en: A received contract that is missing a line is `unreadable contract`'s case, not a gap the receiver fills; the writer yields towards writing the line, and writes `unknown` with the moment it becomes known rather than leaving it out
     scope: [manager, policy, researcher, reviewer, root, worker]
     _fields: [goal, scope, accept, paths, spend, stop]
+    _above:
+      caps: budget_caps
+      tools: subagent_scope
+      model: model_cost
+      holds: worker
   contract_identity:
     _kind: act
     _when:
@@ -2130,6 +2135,7 @@ dispatch:
       zh: 写明它的种类、名字、服务谁的路线图
       en: Name its kind, its name and whose roadmap it serves
     scope: *id001
+    _fields: [kind, name, roadmap]
   contract_grant:
     _kind: act
     _when:
