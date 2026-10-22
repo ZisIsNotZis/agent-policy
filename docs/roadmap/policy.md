@@ -18,6 +18,10 @@ The product is the law in `AGENTS.yaml`, rendered to `AGENTS.md` and to one agen
 - The RDI case is `docs/review/rdi_case.md`; `intake` carries the case, expectation, rule, observation, evidence and class.
 - The `laws` section is migrated: 15 acts are balances; 351 acts remain, 114 decision candidates, in `docs/roadmap/balance_migration.md`.
 - The review contract is `docs/review/contract.md`: the nine content checks, the case metric, the SOP test and the balance test.
+- The `policy_worker` is the law's manager: it holds `AGENTS.yaml`, `agents/*.md` and this roadmap, so `self test` reaches it and `worker records` and `worker owns` no longer do.
+- Every role spec carries a `sop`, rendered after the description and before the rules; `tools/law.py --check` refuses a role with no SOP, or a step naming a file that is gone.
+- `area is permission` names both halves: the parent writes the paths in the contract, the child writes inside them.
+- `worker no split` names the one child a worker may launch: the reviewer of its own slice.
 - No document cites a ticket, an issue or a session.
 
 ## Roadmap

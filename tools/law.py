@@ -10,9 +10,12 @@ There is no fifth block. A manager is an agent whose parent is a manager, and th
 manager whose parent is the person, so every manager rule reaches the root by construction and
 every shared rule reaches both remaining kinds.
 
-    python3 tools/law.py            regenerate the three views
-    python3 tools/law.py --check    fail if a view is stale, a scope is unknown, or a node reaches
-                                    no agent at all
+A view is its role's `sop` first, then the rules that role reads: the ordered steps come before
+the reference, and every step names a file or a command that `--check` resolves in this tree.
+
+    python3 tools/law.py            regenerate one view per role
+    python3 tools/law.py --check    fail if a view is stale, a scope is unknown, a role has no SOP,
+                                    a step names a path that is gone, or a node reaches no agent
 """
 
 from __future__ import annotations
@@ -136,10 +139,18 @@ def sections():
     return {k: v for k, v in corpus().items() if k not in META}
 
 
+def sop(role: str) -> list[str]:
+    """A role's procedure: the steps in the order it runs them, before the rules it reads."""
+    return ROLE_SPECS[role].get("sop") or []
+
+
 def render(role: str) -> str:
     flat = {k: v for b in sections().values() for k, v in b.items()}
     drawn: set[str] = set()
     out = [f"# Law, as {role} reads it\n\n{ROLE_SPECS[role]['description']}\n"]
+    out.append("## SOP\n")
+    for n, step in enumerate(sop(role), 1):
+        out.append(f"{n}. {step}")
     for name, body in sections().items():
         rows = [(k, v) for k, v in body.items() if reads(role, v.get("scope", ["manager", "worker"]))]
         rows = [(k, v) for k, v in rows]
@@ -206,6 +217,15 @@ def main() -> int:
                        "inheritGlobalContext: false"):
             if needed not in frontmatter(role):
                 failures.append(f"role {role} would not be shielded: {needed} missing")
+        steps = ROLE_SPECS[role].get("sop")
+        if not isinstance(steps, list) or not steps or not all(isinstance(s, str) and s.strip() for s in steps):
+            failures.append(f"role {role} has no sop list")
+            continue
+        for step in steps:
+            for ref in re.findall(r"`([^`]+)`", step):
+                for token in ref.split():
+                    if "." in token.split("/")[-1] and not (HERE / token).exists():
+                        failures.append(f"role {role} sop names {token}, which does not exist")
 
     n = prohibitions(views["root"])
     if n > ceiling():
@@ -223,7 +243,9 @@ def main() -> int:
     if failures:
         print("\n".join(f"FAIL {f}" for f in failures))
         return 1
-    print(f"ok: {len(views)} views, {len(sections())} sections, "
+    counts = ", ".join(f"{r} {sum(1 for line in views[r].splitlines() if line.startswith('**'))}"
+                       for r in ROLES)
+    print(f"ok: {len(views)} views ({counts}), {len(sections())} sections, "
           f"{sum(len(b) for b in sections().values())} nodes, {n} prohibitions, "
           f"{len(banned_words())} banned words")
     return 0
