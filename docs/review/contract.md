@@ -25,7 +25,7 @@ For every case, the view says what the role does next, in order, with a completi
 
 ## The balance test
 
-For every decision rule: two ends, each with a cost and a payer; the band; the pull that says which way to yield. If it cannot be written as a balance, the design is the defect.
+For every decision rule: the goal (the expectation), two ends, each with a cost and a payer; the band; the pull that says which way to yield. If it cannot be written as a balance, the design is the defect.
 
 ## The writing lens
 

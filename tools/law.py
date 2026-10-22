@@ -11,8 +11,8 @@ manager whose parent is the person, so every manager rule reaches the root by co
 every shared rule reaches both remaining kinds.
 
     python3 tools/law.py            regenerate the three views
-    python3 tools/law.py --check    fail if a view is stale, a scope is unknown, or a node reaches
-                                    no agent at all
+    python3 tools/law.py --check    fail if a view is stale, a scope is unknown, a node reaches
+                                    no agent at all, or a balance has no goal
 """
 
 from __future__ import annotations
@@ -29,6 +29,12 @@ RENDER_DIR = HERE / "agents"
 
 RULESETS = ("root", "manager", "worker", "researcher", "reviewer", "policy")
 META = ("role_specs", "lexicon", "ceiling")
+# A balance reads when → goal. band. pull, so its goal is a field of its own.
+REQUIRED = {
+    "balance": ("_when", "_goal", "_between", "_pull"),
+    "act": ("_when", "_goal", "_how"),
+    "principle": ("_when", "_goal"),
+}
 TITLES = {
     "laws": "Laws", "architecture": "Architecture", "speech": "Speech", "inbox": "Inbox",
     "records": "Records", "spend": "Spend", "scheduling": "Scheduling", "dispatch": "Dispatch",
@@ -86,12 +92,17 @@ def reads(role: str, scope: list) -> bool:
 
 
 def rule_text(node: dict, lang: str = "en") -> str:
-    """A rule's text: the goal, then the how. _text is gone and is never a fallback."""
+    """A rule's text: the goal, then the how. A balance reads when → goal. band. pull."""
     if "_goal" not in node and node.get("_kind") != "balance":
         raise SystemExit(f"{node.get('_name', 'a rule')} has no _goal; _text is gone")
     if node.get("_kind") == "balance":
+        goal = node.get("_goal")
+        if not goal:
+            raise SystemExit(f"a balance has no _goal: {node.get('_when', {}).get('en', '?')}")
+        when = node.get("_when")
         band = node["_between"]
-        text = (band.get(lang) or band["en"]).rstrip()
+        g = (goal.get(lang) or goal["en"]).rstrip(". ")
+        text = g[0].lower() + g[1:] + ". " + (band.get(lang) or band["en"]).rstrip()
         if not text.endswith((".", "?", "!")):
             text += "."
         pull = node.get("_pull")
@@ -99,10 +110,6 @@ def rule_text(node: dict, lang: str = "en") -> str:
             text += " " + (pull.get(lang) or pull["en"]).rstrip()
             if not text.endswith((".", "?", "!")):
                 text += "."
-        goal = node.get("_goal")
-        if goal:
-            text = (goal.get(lang) or goal["en"]).rstrip(". ") + ". " + text
-        when = node.get("_when")
         if when:
             w = (when.get(lang) or when["en"]).rstrip(". ")
             return w[0].lower() + w[1:] + " → " + text
@@ -175,27 +182,27 @@ def main() -> int:
                 unknown = [r for r in scope if r not in RULESETS]
                 if unknown:
                     failures.append(f"{name}.{key} names unknown roles {unknown}")
-            text += rule_text(node) + "\n"
-            if "_goal" in node:
-                for fld in ("_when", "_goal"):
-                    if fld not in node:
-                        failures.append(f"{name}.{key} has no {fld}")
-                if node.get("_kind") == "balance":
-                    for fld in ("_between", "_pull"):
-                        if fld not in node:
-                            failures.append(f"{name}.{key} is a balance with no {fld}")
-                    for end in node.get("_ends", []):
-                        if end.get("_who_pays") not in {"self", "parent", "person", "third_party"}:
-                            failures.append(f"{name}.{key} has an end paid by {end.get('_who_pays')!r}")
-                if node.get("_kind", "act") == "act" and "_how" not in node:
-                    failures.append(f"{name}.{key} is an act with no _how")
-                for fld in ("_when", "_goal", "_how"):
-                    if fld in node and isinstance(node[fld], dict) and "zh" not in node[fld]:
-                        failures.append(f"{name}.{key} {fld} has no zh")
+            kind = node.get("_kind", "act")
+            missing = [fld for fld in REQUIRED.get(kind, ("_when", "_goal")) if fld not in node]
+            for fld in missing:
+                failures.append(f"{name}.{key} is a {kind} with no {fld}")
+            if not missing:
+                text += rule_text(node) + "\n"
+            if kind == "balance":
+                for end in node.get("_ends", []):
+                    if end.get("_who_pays") not in {"self", "parent", "person", "third_party"}:
+                        failures.append(f"{name}.{key} has an end paid by {end.get('_who_pays')!r}")
+            for fld in ("_when", "_goal", "_how", "_between", "_pull"):
+                if isinstance(node.get(fld), dict) and "zh" not in node[fld]:
+                    failures.append(f"{name}.{key} {fld} has no zh")
 
     banned = [w for w in banned_words() if w and re.search(rf"\b{re.escape(w)}\b", text, re.I)]
     for w in banned:
         failures.append(f"banned word {w!r}")
+
+    if failures:
+        print("\n".join(f"FAIL {f}" for f in failures))
+        return 1
 
     views = {r: render(r) for r in ROLES}
     targets = {r: RENDER_DIR / f"{r}.md" for r in ROLES}
