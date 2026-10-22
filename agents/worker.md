@@ -23,7 +23,7 @@ You execute exactly one work package in your parent's area, and report once.
 
 ## Laws
 
-**ssot.** you record a fact → it has exactly one home. Write it into the document that owns the decision, and delete the old one in the same act. The copy is found first and used, so at the margin one home wins.
+**ssot.** you record a fact → it has exactly one home, the home is its layer, and the source is on the record. Write it into the layer's file that owns the decision, with its source, and delete the old one in the same act. The copy is found first and used, so at the margin one home wins.
 
   depends on **chain** (drawn below)
 
@@ -365,7 +365,7 @@ You execute exactly one work package in your parent's area, and report once.
 
 **chain.** you decide which layer a fact belongs to → it lives at the layer that owns its decision.
 
-**layout.** you place a file → it lands on one layer of the chain. One directory per layer; a file only when the layer is cut by a key
+**layout.** you place a file → it lands on one layer of the chain, and that layer has an owner. One directory per layer, documents in `docs/`; a file only when the layer is cut by a key; another folder holds only its own class
 
 **files.** you organise a scope → the corpus source, the render, the person's file and the layer folders are there. Lay out those four
 
@@ -386,8 +386,6 @@ You execute exactly one work package in your parent's area, and report once.
 **keep evidence.** you have a result → it can be audited without redoing the work. Keep the evidence; a value that cannot be recomputed is a claim
 
 **resume.** you resume interrupted work → you resume from the current state. Use the document, the work-in-progress commits and branches, at most one flushed buffer; an older record is not evidence
-
-**layer and source.** you record a fact → it sits at its layer and has a source. Write it into that layer's file, with its source
 
 **stereotype.** you pick a file pattern for a project → it fits the domain. Choose among layer document, router and render the one that fits
 

@@ -27,7 +27,7 @@ You are the law's manager: `AGENTS.yaml` is your corpus, `agents/*.md` your view
 
 ## Laws
 
-**ssot.** you record a fact → it has exactly one home. Write it into the document that owns the decision, and delete the old one in the same act. The copy is found first and used, so at the margin one home wins.
+**ssot.** you record a fact → it has exactly one home, the home is its layer, and the source is on the record. Write it into the layer's file that owns the decision, with its source, and delete the old one in the same act. The copy is found first and used, so at the margin one home wins.
 
   depends on **chain** (drawn below)
 
@@ -71,8 +71,6 @@ You are the law's manager: `AGENTS.yaml` is your corpus, `agents/*.md` your view
 **worker.** you dispatched a worker → it executes one package and reports once. Say in the contract that it holds no directory, document or roadmap
 
 **kind test.** you decide manager or worker → the kind is decided once and never changed. Ask whether it holds several things that are mutually independent and each has its own acceptance; if so a manager, otherwise a worker
-
-**directory.** you place a file → it falls into a class that has an owner. Documents in `docs/`; other folders only for the kind they own
 
 **proposal.** a fact is not yet agreed → it is written down without pretending to be decided. Write it in the owning document's open questions with `assent: assumed`, its author and its source; when agreed, move it to the decided facts and delete the proposal
 
@@ -645,7 +643,7 @@ You are the law's manager: `AGENTS.yaml` is your corpus, `agents/*.md` your view
 
 **chain.** you decide which layer a fact belongs to → it lives at the layer that owns its decision.
 
-**layout.** you place a file → it lands on one layer of the chain. One directory per layer; a file only when the layer is cut by a key
+**layout.** you place a file → it lands on one layer of the chain, and that layer has an owner. One directory per layer, documents in `docs/`; a file only when the layer is cut by a key; another folder holds only its own class
 
 **files.** you organise a scope → the corpus source, the render, the person's file and the layer folders are there. Lay out those four
 
@@ -678,8 +676,6 @@ You are the law's manager: `AGENTS.yaml` is your corpus, `agents/*.md` your view
 **keep evidence.** you have a result → it can be audited without redoing the work. Keep the evidence; a value that cannot be recomputed is a claim
 
 **resume.** you resume interrupted work → you resume from the current state. Use the document, the work-in-progress commits and branches, at most one flushed buffer; an older record is not evidence
-
-**layer and source.** you record a fact → it sits at its layer and has a source. Write it into that layer's file, with its source
 
 **stereotype.** you pick a file pattern for a project → it fits the domain. Choose among layer document, router and render the one that fits
 

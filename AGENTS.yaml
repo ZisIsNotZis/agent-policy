@@ -5,8 +5,8 @@ laws:
       zh: 你要记下一条事实
       en: You record a fact
     _goal:
-      zh: 它只有一个家
-      en: It has exactly one home
+      zh: 它只有一个家，家在它那一层，来源在案
+      en: It has exactly one home, the home is its layer, and the source is on the record
     _ends:
     - _name: {zh: 一个家, en: One home}
       _cost: {zh: 'person_time：读的人多花一次查找', en: 'person_time: the reader pays one lookup'}
@@ -15,8 +15,8 @@ laws:
       _cost: {zh: 'trust：副本漂移，两个人按不同的事实行动', en: 'trust: the copy drifts and two readers act on different facts'}
       _who_pays: person
     _between:
-      zh: 写进那个决定所在的那份文档；旧的那条同一次删掉
-      en: Write it into the document that owns the decision, and delete the old one in the same act
+      zh: 写进那个决定所在的那层的文件，带来源；旧的那条同一次删掉
+      en: Write it into the layer's file that owns the decision, with its source, and delete the old one in the same act
     _pull:
       zh: 副本会先被找到并使用，所以临界点往一个家让
       en: The copy is found first and used, so at the margin one home wins
@@ -622,18 +622,6 @@ architecture:
     _how:
       zh: 问一句里面是不是有几个互不依赖、各自有自己的验收的东西；是就派管理者，不是就派执行者
       en: Ask whether it holds several things that are mutually independent and each has its own acceptance; if so a manager, otherwise a worker
-    scope: *id001
-  directory:
-    _kind: act
-    _when:
-      zh: 你要放一个文件
-      en: You place a file
-    _goal:
-      zh: 它落在有属主的那一类里
-      en: It falls into a class that has an owner
-    _how:
-      zh: 文档放 `docs/`；别的文件夹只放它自己那一类
-      en: Documents in `docs/`; other folders only for the kind they own
     scope: *id001
   proposal:
     _kind: act
@@ -5013,12 +5001,13 @@ docs_shape:
       zh: 你要放一个文件
       en: You place a file
     _goal:
-      zh: 它落在链上的某一层
-      en: It lands on one layer of the chain
+      zh: 它落在链上的某一层，那一层有属主
+      en: It lands on one layer of the chain, and that layer has an owner
     _how:
-      zh: 一层一个目录；只有被一个键切开才有文件
-      en: One directory per layer; a file only when the layer is cut by a key
+      zh: 一层一个目录，文档放 `docs/`；只有被一个键切开才有文件；别的文件夹只放它自己那一类
+      en: One directory per layer, documents in `docs/`; a file only when the layer is cut by a key; another folder holds only its own class
     scope:
+    - root
     - manager
     - policy
     - researcher
@@ -5291,23 +5280,6 @@ docs_shape:
     _how:
       zh: 用文档、进行中的提交和分支、最多一个冲刷过的缓冲；更老的记录不算证据
       en: Use the document, the work-in-progress commits and branches, at most one flushed buffer; an older record is not evidence
-    scope:
-    - manager
-    - policy
-    - researcher
-    - reviewer
-    - worker
-  layer_and_source:
-    _kind: act
-    _when:
-      zh: 你要记一条事实
-      en: You record a fact
-    _goal:
-      zh: 它在自己那层，且有来源
-      en: It sits at its layer and has a source
-    _how:
-      zh: 写进那层的文件，带来源
-      en: Write it into that layer's file, with its source
     scope:
     - manager
     - policy

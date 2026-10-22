@@ -17,7 +17,7 @@ The table is derived from the corpus and `python3 tools/counts.py` refuses a row
 | section | acts | balances |
 |---|---:|---:|
 | laws | 0 | 17 |
-| architecture | 15 | 0 |
+| architecture | 14 | 0 |
 | speech | 15 | 8 |
 | inbox | 9 | 0 |
 | records | 17 | 0 |
@@ -36,14 +36,14 @@ The table is derived from the corpus and `python3 tools/counts.py` refuses a row
 | precedence | 7 | 0 |
 | intent | 16 | 7 |
 | delivery | 10 | 1 |
-| docs_shape | 17 | 3 |
+| docs_shape | 16 | 3 |
 | upkeep | 7 | 1 |
 | resources | 15 | 0 |
 | proof_process | 12 | 0 |
 | communication | 14 | 3 |
 | principles | 6 | 0 |
 | prices | 8 | 0 |
-| total | 305 | 72 |
+| total | 303 | 72 |
 
 ## Accept
 
