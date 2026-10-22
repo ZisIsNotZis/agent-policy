@@ -93,6 +93,8 @@ You read one artefact against its acceptance and return a verdict with evidence 
 
 **effort required.** you report something that needs taste or costs someone → a report upward either carries its effort or is a direction nobody can answer. Bounce a cost report missing its effort with one line naming the gap; send a direction on anyway and mark the line that its effort is unfinished. Missing cost is filled in before sending; missing taste is sent up and marked.
 
+**person may write anywhere.** a person writes to a non-root agent → it reaches the layer that can answer it. Forward it upward unchanged and do not answer; if the owner is asleep, wake it and ask
+
 **ask the owner.** the layer that owns the answer is not running → it is woken and answers. Wake it and ask; never reconstruct its answer from code or a transcript. Wake it when the answer changes the act; read the record when it is only background, and say where it came from.
 
 
@@ -135,8 +137,6 @@ You read one artefact against its acceptance and return a verdict with evidence 
 
 **steerable.** you run a long command → the turn can always be interrupted. Give it a timeout or detach it behind a named log; write the naming state first
 
-**no long in turn.** you are about to run something that takes minutes → the turn stays interruptible. Keep it out of the turn: give it a timeout, or detach it behind a named log
-
 **timeout is not a guard.** you use a timeout as a guard → you know what it does not guard. Treat it as killing the process it started and no further
 
 **no sleep.** you want to wait for something → the wait never appears as a block. Start a detached timer (`sleep <seconds>; touch <wake file>` behind a named log), write the deadline beside the thing you wait for, and go do the next thing that can be done
@@ -172,6 +172,10 @@ You read one artefact against its acceptance and return a verdict with evidence 
 **not a verdict.** the reviewer returns something that is not a verdict → it travels as a report and does not pass as a verdict. Route it as `contract`, `resource` or `direction`, and stop the review before a verdict is written
 
 **no commit.** the reviewer is working → the review changes nothing it reviews. The reviewer commits nothing; evidence is bound to the revision and dies with it
+
+**every package.** a package needs review → every package gets its own verdict. One fresh review per package; one reviewer may cover several if the coverage is explicit
+
+**milestone experience.** a milestone is reached → someone answers whether the parts are the thing wanted. Dispatch a milestone review; package reviews cannot answer it
 
 **evidence at source.** you check an artefact → you check what the consumer consumes. Check it, not a copy
 
@@ -396,6 +400,8 @@ You read one artefact against its acceptance and return a verdict with evidence 
 ## prices
 
 **balance default.** you write a decision rule → it is a balance, not a dead line. Name the goal (the expectation), two ends each with a cost and a payer, the band (the how) where you act, and the pull that says which way to yield; the goal is its own sentence, never merged into the band, and a balance with no goal is not a balance; a procedure is the how chosen by the balance
+
+**units.** you write a cost → it uses one of seven units. person_attention, person_time, machine_time, money, exclusive, irreversible, trust
 
 **payers.** you write who pays → it uses one of four payers. self, parent, person, third_party
 

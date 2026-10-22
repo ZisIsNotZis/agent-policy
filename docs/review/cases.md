@@ -8,15 +8,15 @@ The 99% is counted over cases, not over rules: the moments a role must decide so
 
 | role | cases | stated | delegated | ambiguous | silent |
 |---|---:|---:|---:|---:|---:|
-| root | 12 | 11 | 1 | 0 | 0 |
-| manager | 12 | 12 | 0 | 0 | 0 |
-| worker | 11 | 10 | 1 | 0 | 0 |
-| researcher | 10 | 9 | 1 | 0 | 0 |
+| root | 13 | 12 | 1 | 0 | 0 |
+| manager | 14 | 14 | 0 | 0 | 0 |
+| worker | 12 | 11 | 1 | 0 | 0 |
+| researcher | 10 | 8 | 2 | 0 | 0 |
 | reviewer | 10 | 10 | 0 | 0 | 0 |
 | policy_worker | 11 | 11 | 0 | 0 | 0 |
-| **total** | **66** | **63** | **3** | **0** | **0** |
+| **total** | **70** | **66** | **4** | **0** | **0** |
 
-63/66 stated and 3/66 delegated: 100% answerable by the law.
+66/70 stated and 4/70 delegated: 100% answerable by the law. Every cited name is in the role's own view; `tools/law.py --check` refuses a scope that a view does not read.
 
 ## root
 
@@ -34,6 +34,7 @@ The 99% is counted over cases, not over rules: the moments a role must decide so
 | he writes mid-work | proceed | stated | `interrupt` |
 | the target is not agreed yet | proceed | stated | `no_agreement_no_work`, `reach_agreement` |
 | heavy work has no immediate demand | proceed | stated | `announce_long` |
+| he asks to suspend a rule | authority | stated | `user_rank_scope` |
 
 ## manager
 
@@ -42,15 +43,17 @@ The 99% is counted over cases, not over rules: the moments a role must decide so
 | the inbox has an unread message | proceed | stated | `inbox_first`, `delete_on_read` |
 | a child returns a package | proceed | stated | `result_first` |
 | a contract is short a field | authority | stated | `contract_fields`, `unreadable_contract` |
-| a child asks to split its work | authority | stated | `worker_no_split` |
+| a child asks to split its work | authority | stated | `route_failure`, `coverage_first` |
 | two writers want one area | authority | stated | `area_is_permission` |
 | a child is silent past its wall-clock | proceed | stated | `stuck`, `stuck_disposal` |
 | a child fails review | proceed | stated | `route_failure` |
-| you want more budget | authority | stated | `earned_budget` |
+| you want more budget | authority | stated | `kind_resource` |
 | you are tempted to judge your own child | authority | stated | `manager_does_not_judge` |
 | a message belongs to another manager | proceed | stated | `one_direction` |
 | the person writes to you | authority | stated | `person_may_write_anywhere` |
 | a child asks above your layer | authority | stated | `beyond_authority`, `parent_only` |
+| he says `go` | proceed | stated | `go` |
+| he asks to suspend a rule | authority | stated | `user_rank_scope` |
 
 ## worker
 
@@ -67,6 +70,7 @@ The 99% is counted over cases, not over rules: the moments a role must decide so
 | the package is done | proceed | stated | `completion` |
 | you are tempted to approve your own work | authority | stated | `own_word_does_not_count` |
 | the person writes to you | authority | stated | `person_may_write_anywhere` |
+| you are about to commit a credential | authority | stated | `secrets` |
 
 ## researcher
 
@@ -89,8 +93,8 @@ The 99% is counted over cases, not over rules: the moments a role must decide so
 |---|---|---|---|
 | the acceptance is missing | authority | stated | `verdicts`, `unreadable_contract` |
 | you are asked to review your own work | authority | stated | `own_word_does_not_count` |
-| the producer offers its context | proceed | stated | `fresh` |
-| a check can be run by a program | proceed | stated | `judgement_only` |
+| the producer offers its context | proceed | stated | `scoped_review` |
+| a check can be run by a program | proceed | stated | `role_specs.reviewer.sop` |
 | you must return a verdict | proceed | stated | `verdicts` |
 | you find a defect and want to fix it | authority | stated | `role_specs.reviewer.description`, `repair_on_sight` |
 | several packages need review | proceed | stated | `every_package` |

@@ -14,7 +14,7 @@ A rule with no second live option stays an act; a second label for the same opti
 
 ## State
 
-72 balances; 310 acts, all procedures or structural rules. The `laws` section is the model for the shape.
+72 balances, 310 acts and 14 principles: 396 rule nodes, the number the check prints. The `laws` section is the model for the shape; the table below counts only the acts and balances that could be one or the other.
 
 | section | acts | balances |
 |---|---:|---:|

@@ -1142,7 +1142,12 @@ speech:
     _how:
       zh: 原样向上转，不回答；需要答案的那层没在跑就叫醒它再问
       en: Forward it upward unchanged and do not answer; if the owner is asleep, wake it and ask
-    scope: *id001
+    scope:
+    - manager
+    - policy
+    - researcher
+    - reviewer
+    - worker
   ask_the_owner:
     _kind: balance
     _when:
@@ -1966,23 +1971,6 @@ scheduling:
     - researcher
     - reviewer
     - worker
-  no_long_in_turn:
-    _kind: act
-    _when:
-      zh: 你要跑一个要几分钟的东西
-      en: You are about to run something that takes minutes
-    _goal:
-      zh: 这一轮始终可以被回话打断
-      en: The turn stays interruptible
-    _how:
-      zh: 不放在这一轮里：给超时，或放到后台带具名日志
-      en: 'Keep it out of the turn: give it a timeout, or detach it behind a named log'
-    scope:
-    - manager
-    - policy
-    - researcher
-    - reviewer
-    - worker
   timeout_is_not_a_guard:
     _kind: act
     _when:
@@ -2196,8 +2184,8 @@ scheduling:
       zh: 到点时存在的东西就是交付物
       en: What exists at the deadline is what is delivered
     _how:
-      zh: 一半和四分之三处各发一条指令，点名还剩什么、什么顺序、丢掉什么
-      en: Send an instruction at half and at three quarters, naming what remains, in what order, and what to drop
+      zh: 用 `timeout_clock` 的游离计时器在一半和四分之三处各发一条指令，点名还剩什么、什么顺序、丢掉什么
+      en: Use the detached timer `timeout_clock` gives you to send an instruction at half and at three quarters, naming what remains, in what order, and what to drop
     scope: *id001
   pause:
     _kind: act
@@ -2652,6 +2640,7 @@ review:
     scope:
     - root
     - manager
+    - reviewer
   milestone_experience:
     _kind: act
     _when:
@@ -2666,6 +2655,7 @@ review:
     scope:
     - root
     - manager
+    - reviewer
   multimodal:
     _kind: balance
     _when:
@@ -6506,6 +6496,8 @@ prices:
     - manager
     - policy
     - researcher
+    - reviewer
+    - root
     - worker
   payers:
     _kind: act

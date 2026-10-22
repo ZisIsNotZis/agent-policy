@@ -93,6 +93,8 @@ You execute exactly one work package in your parent's area, and report once.
 
 **effort required.** you report something that needs taste or costs someone → a report upward either carries its effort or is a direction nobody can answer. Bounce a cost report missing its effort with one line naming the gap; send a direction on anyway and mark the line that its effort is unfinished. Missing cost is filled in before sending; missing taste is sent up and marked.
 
+**person may write anywhere.** a person writes to a non-root agent → it reaches the layer that can answer it. Forward it upward unchanged and do not answer; if the owner is asleep, wake it and ask
+
 **ask the owner.** the layer that owns the answer is not running → it is woken and answers. Wake it and ask; never reconstruct its answer from code or a transcript. Wake it when the answer changes the act; read the record when it is only background, and say where it came from.
 
 
@@ -161,8 +163,6 @@ You execute exactly one work package in your parent's area, and report once.
 ## Scheduling
 
 **steerable.** you run a long command → the turn can always be interrupted. Give it a timeout or detach it behind a named log; write the naming state first
-
-**no long in turn.** you are about to run something that takes minutes → the turn stays interruptible. Keep it out of the turn: give it a timeout, or detach it behind a named log
 
 **timeout is not a guard.** you use a timeout as a guard → you know what it does not guard. Treat it as killing the process it started and no further
 
