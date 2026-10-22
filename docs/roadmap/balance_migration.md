@@ -8,7 +8,8 @@ Scope: the 351 acts that remain in `AGENTS.yaml`; the `laws` section (15) is alr
 
 - A **decision** is an act whose `_how` names a condition or a trade-off: `if`, `unless`, `when`, `before`, `after`, `prefer`, `only`, `may`, `cannot`, `cost`, `worth`, `instead`, `rather`, `choose`, `else`, `until`. The section worker verifies each against the balance test.
 - A **procedure** is an act that names one sequence, not a choice. Keep the act; name the balance that chooses it. A procedure with no choosing balance is an incomplete design.
-- Each balance: two ends, each with a cost and a payer; the band is the old `_goal` plus `_how`; the pull is the tie-breaker, not a restatement of the band or the end cost.
+- Each balance: the goal (the expectation), two ends each with a cost and a payer, the band (the how), and the pull. The pull is the tie-breaker, not a restatement of the band or the end cost.
+- The current 31 balances were converted from acts whose goal was merged into the band; the first pass splits the goal back out. A balance without a goal cannot pass `double_check`.
 - The `laws` section is the model: `atomic`, `no_op`, `falsifiable`, `top_down`, `absent`, `controlled`, `invalidate`, `specific_wins`, `rule_over_state`, `own_inference`, `untrusted_input`, `derived`, `inferable`, `fail_loud`, `levels_in_order`.
 
 ## Accept

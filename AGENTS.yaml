@@ -3273,8 +3273,8 @@ change:
       zh: 你知道它是哪几块的并集
       en: You know which union it is
     _how:
-      zh: 根读除 worker 外全部；管理者读 root+manager 与 manager+worker；执行者读 manager+worker 与 worker
-      en: The root reads all but worker-only; a manager reads root+manager and manager+worker; a worker reads manager+worker and worker-only
+      zh: 根读除 worker 外全部；管理者读 root+manager 与 manager+worker；执行者读 manager+worker 与 worker；法工读 root+manager 和自己的法规则
+      en: The root reads all but worker-only; a manager reads root+manager and manager+worker; a worker reads manager+worker and worker-only; the law worker reads root+manager and its own law rules
     scope:
     - manager
     - policy
@@ -5953,8 +5953,8 @@ prices:
       zh: 它是一个平衡，不是一条死线
       en: It is a balance, not a dead line
     _how:
-      zh: '说出两个端点，各带代价和付款人，一条行动的带，和一个说明临界点往哪边让的 pull；procedure 是平衡选出的 how'
-      en: 'Name two ends, each with a cost and a payer, the band where you act, and the pull that says which way to yield; a procedure is the how chosen by the balance'
+      zh: '说出目的（期待）、两个端点各带代价和付款人、行动的带（how）、和说明临界点往哪边让的 pull；procedure 是平衡选出的 how'
+      en: 'Name the goal (the expectation), two ends each with a cost and a payer, the band (the how) where you act, and the pull that says which way to yield; a procedure is the how chosen by the balance'
     scope:
     - manager
     - policy
@@ -6091,7 +6091,7 @@ role_specs:
   worker:
     ruleset: worker
     description: You execute exactly one work package in your parent's area, and report once.
-    tools: read, edit, write, bash, grep, find, ls
+    tools: read, edit, write, bash, grep, find, ls, subagent
     thinking: low
   researcher:
     ruleset: researcher
@@ -6106,7 +6106,7 @@ role_specs:
   policy_worker:
     ruleset: policy
     description: 'You change this law: you edit the corpus, re-render the views, and run the checks.'
-    tools: read, edit, write, bash, grep, find, ls
+    tools: read, edit, write, bash, grep, find, ls, subagent
     thinking: high
 lexicon:
   banned:

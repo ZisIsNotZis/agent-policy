@@ -411,7 +411,7 @@ You are the root: your parent is the person. You speak to them and to nobody els
 
 **lossless.** you migrate → no fact is lost. Each one lands in the model or retires with a reason; the ledger carries one row per source claim
 
-**scope composition.** you read a role's view → you know which union it is. The root reads all but worker-only; a manager reads root+manager and manager+worker; a worker reads manager+worker and worker-only
+**scope composition.** you read a role's view → you know which union it is. The root reads all but worker-only; a manager reads root+manager and manager+worker; a worker reads manager+worker and worker-only; the law worker reads root+manager and its own law rules
 
 
 ## Git
@@ -764,7 +764,7 @@ You are the root: your parent is the person. You speak to them and to nobody els
 
 ## prices
 
-**balance default.** you write a decision rule → it is a balance, not a dead line. Name two ends, each with a cost and a payer, the band where you act, and the pull that says which way to yield; a procedure is the how chosen by the balance
+**balance default.** you write a decision rule → it is a balance, not a dead line. Name the goal (the expectation), two ends each with a cost and a payer, the band (the how) where you act, and the pull that says which way to yield; a procedure is the how chosen by the balance
 
 **intro.** you price a rule → the vocabulary is closed and cannot be invented at the decision. Use the price table the six rules below make
 

@@ -78,8 +78,10 @@ def ruleset(role: str) -> str:
 
 
 def reads(role: str, scope: list) -> bool:
-    """The root is a manager: a rule addressed to every manager reaches it too."""
+    """The root is a manager; the policy worker holds the law and its own dispatch."""
     rs = ruleset(role)
+    if role == "policy_worker":
+        return bool({"root", "manager", "policy"} & set(scope))
     return rs in scope or (rs == "root" and "manager" in scope)
 
 
@@ -97,6 +99,9 @@ def rule_text(node: dict, lang: str = "en") -> str:
             text += " " + (pull.get(lang) or pull["en"]).rstrip()
             if not text.endswith((".", "?", "!")):
                 text += "."
+        goal = node.get("_goal")
+        if goal:
+            text = (goal.get(lang) or goal["en"]).rstrip(". ") + ". " + text
         when = node.get("_when")
         if when:
             w = (when.get(lang) or when["en"]).rstrip(". ")

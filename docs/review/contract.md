@@ -31,6 +31,13 @@ For every decision rule: two ends, each with a cost and a payer; the band; the p
 
 Leading words, no-op, context load, relevance, progressive disclosure. The law's `writing` section is the short form; the skill is the long form.
 
+## System checks
+
+- **Idempotency**: kill at a stable point, reopen, say `go`; the roadmap state is the same, and no node becomes ready because the session restarted.
+- **Timeout**: every discussed block has an absolute deadline; only the no-discussion (empty) case waits forever.
+- **Efficiency**: the declared wall-clock against the actual; exploration outside the contract; the context read.
+- **Expectation**: every rule names its goal (the expectation) and its how; a balance carries the goal; information the role must collect outside the contract is named there or reported as a contract defect.
+
 ## For a law change
 
 Before a change lands, name the existing rule it amends or the search that found none. A change that does neither is refused.
