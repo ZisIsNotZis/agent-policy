@@ -1,88 +1,86 @@
 # Policy
 
-The product is the law: one flat rule file, one schema, one tool, and the views the tool writes. This is the roadmap for that product.
+The law is a derivation tree, written once, rendered into English views with a Chinese copy. This is its roadmap.
 
-## Current facts
+## The role model
 
-- `AGENTS.yaml` is every rule: a flat map keyed by a leading word. A rule carries `_when`, `_know`, `_choices` (at least two, each with a long move and its gain and cost), `_scope` and `_goal`; optionally `_why`, `_depends_on` and `_order`. Nothing else is a field.
-- `AGENTS.schema.yaml` is the one schema. `tools/schema.py` reads it and validates the corpus; the schema is never checked.
-- `roles.yaml` is the harness: name, description, tools, thinking and ruleset for each of the seven roles. `banned.yaml` is the forbidden-term list.
-- `tools/schema.py` is the one tool: one parse, validate, render, write. `--depth N` is the only flag; there is no check-only mode.
-- `agents/<role>.md` is generated and never edited. The old `agents/zh/` copies are gone: the corpus is written in Chinese, so one view per role is the whole render.
-- The law holds 423 rules: 381 migrated one-to-one from the old shape, plus 42 SOP steps added as rules with `_order`.
-- `_depends_on` holds 84 links, each decided one by one by the question "without this, can the reader act?"; the evidence is `docs/roadmap/links.md`.
-- The role split is current: `policy_writer` writes the law, `policy_reviewer` reviews it, and a worker launches nothing. The two law roles read root and manager rules in addition to their own.
-- `banned.yaml` names 34 terms; the tool refuses a rule whose text uses one.
-- No `_kind`, no `_between`, no `_pull`, no `_ends`, no `_links`, no sections, no `role_specs`, no `lexicon`, no `ceiling`: the old shape died at the swap; git holds it.
-- `docs/review/cases.md` is bound to the pre-schema law and is history, not a current fact. `docs/review/contract.md` still describes the checks a policy reviewer applies.
+Two kinds, not seven.
+
+- **manager** is a level: it plans, splits, dispatches, collects, dispatches the review, runs the combined check, and keeps its own directory, document and roadmap. There can be zero managers or many levels.
+- **root_manager** is the manager whose parent is the person. It does everything a manager does, plus the person-facing part: the target agreement, the degrees, the gates, the final report. The harness entry stays `root`, because pi launches that file directly; the role in this law is `root_manager`.
+- **worker** executes one work package and reports once. It does not plan: no roadmap, no split, no dispatch, no review dispatch. It does the work in the package.
+
+Worker specializations, same kind, different subject:
+
+- **worker** — code, configuration, architecture, design.
+- **policy_worker** — policy work: writing and changing the law; no code. The old name `policy_writer` is wrong.
+- **researcher** — a question; reads, answers, writes only its own notes.
+- **reviewer** — a verification; returns a verdict, repairs nothing. It verifies the worker's work: program, code, architecture, configuration, design, and the multimodal/emotional pre-review — trying to feel the thing for the person before the person feels it.
+- **policy_reviewer** — the policy version of the reviewer: the law's structure, its balance shape, its coverage, its token price. No code.
+
+**Scope follows the actor, not the judge.** A rule belongs to the role that performs its act. A role that only judges a rule gets it through its SOP's `_depends_on`, not through `_scope`. So:
+
+- planning rules (roadmap, split, dispatch, combined check, gates, degrees, review dispatch) → `root_manager`, `manager`.
+- document rules (`ssot`, `records`, `docs_shape`) → `root_manager`, `manager`, `policy_worker`. A worker writes code, not documents; a researcher writes only its own notes; neither reviewer writes anything.
+- work rules (practice, proof, git, contract preflight/area) → `worker`.
+- policy work (change, writing, the law's shape) → `policy_worker`.
+- verification (verdicts, evidence, falsify, scoped review, multimodal) → `reviewer`; policy axes → `policy_reviewer`.
+
+No rule lists every role. Most rules have one actor, some two.
+
+## What is current, and what it is worth
+
+`AGENTS.yaml` is 423 flat rules in Chinese. It is the working base, not the truth.
+
+- The derivation tree is absent: no rule is nested under a parent; `_why` is empty on every rule.
+- The 84 `_depends_on` links were asserted by me during the links pass, rule by rule. They are suspect and are not the truth; the tree pass re-derives every relation.
+- The scopes have drifted: many rules list every role, which the role model above rules out. The true actor is usually one or two roles.
+- The views are Chinese, large, and the SOP is special-cased with numbers and bold keys.
+- `roles.yaml` carries `policy_writer`; the role is `policy_worker`.
+- The old revisions — the 315-node tree and the pre-migration YAML — are **base data**: useful as a sketch of the parent relations and for the English half, polluted as a source of truth, above all in `_depends_on`. They are read, compared, and not copied.
+
+## The target
+
+- **Tree**: the 17 laws are the roots. Every other rule is nested under its main parent; other parents go in `_why`; `_depends_on` names concepts the reader may want to look up. Level is depth. `_` separates an attribute from a child rule's name, because a node's map holds both.
+- **Bilingual**: every text is `{zh, en}`. `agents/<role>.md` is English; `agents/zh/<role>.md` is the Chinese copy.
+- **Scopes**: re-derived from the actor; no rule lists every role.
+- **Names**: `root_manager`, `policy_worker`.
+- **SOP**: ordinary rules under their role; ordered by `_order`, rendered like every other rule — no numbers, no bold, no indent.
+- **Format**: English views are ASCII; a choice starts `-` at column 0; `when -> goal`; `@key` at the end of the line; `move: gain; cost`.
+- **Tool**: one pass, tree traversal, `--depth N`; it refuses a rule with no parent, a cycle, a scope naming every role, and a text without `en`.
 
 ## Roadmap
 
-All six packages are done.
+The old six packages are superseded by this rebuild. The result gate is not reached.
 
-### 1_schema
+- [ ] `role_model`: rewrite `roles.yaml` — `root_manager`, `manager`, `worker`, `policy_worker`, `researcher`, `reviewer`, `policy_reviewer`; descriptions follow the model; the harness name for the top role stays `root`.
+- [ ] `tree_skeleton`: decide the main parent of every rule, one by one. The old tree is base data, not truth; `_depends_on` is not evidence. `_why` gets the other parents.
+- [ ] `tree_file`: shape `AGENTS.yaml` as nesting — attributes with `_`, children by name underneath their main parent; level is depth.
+- [ ] `bilingual`: every text back to `{zh, en}`; the old English by key where it still fits, rewritten where the Chinese changed, written fresh for new rules.
+- [ ] `scope_pass`: re-derive every scope from the actor; reviewers get criteria by `_depends_on`, not by scope; refuse any all-role list.
+- [ ] `sop_plain`: SOP rules are ordinary rules; no numbering, no bold, no indent.
+- [ ] `tool_tree`: rewrite `tools/schema.py` for the tree: parents, cycles, roots, scopes, bilingual texts, `--depth`; English and Chinese views in one pass.
+- [ ] `views`: regenerate; English primary, Chinese copy; ASCII in English.
+- [ ] `cleanup`: old names (`policy_writer`, `root` as a role), old views, old references, the old English half if it does not fit.
+- [ ] `result_gate`: the person reads the tree and names what is wrong, or accepts it.
 
-- [x] `schema_file`: `AGENTS.schema.yaml` — `_when`, `_know`, `_why`, `_choices`, `_depends_on`, `_scope`, `_goal`, `_order`; no extra field.
-- [x] `schema_kind`: `_kind` died; every rule carries the same fields.
-- [x] `schema_choices`: a list of objects, each `move`/`gain`/`cost`, at least two, every one plausible.
-- [x] `schema_depends`: `_depends_on` is a list of keys; each resolves.
-- [x] `schema_know`: `_know` is text, present on every rule.
-- [x] `schema_why`: `_why` optional, keys, never rendered.
-
-### 2_data
-
-- [x] `roles_file`: `roles.yaml` holds the harness fields of seven roles.
-- [x] `banned_file`: `banned.yaml` holds the forbidden terms.
-- [x] `sop_rules`: 42 SOP steps became rules with `_scope` and `_order`.
-- [x] `yaml_names`, `yaml_cost_rule`, `yaml_choices`, `yaml_know`, `yaml_style`: the old fields folded into the new shape; one-to-one, 381 rules.
-
-### 3_links
-
-- [x] `links_audit`: every `_depends_on` decided by hand, rule by rule; 84 links, the table in `docs/roadmap/links.md`.
-- [x] `links_scope`: each kept link names the reader's need, not the rule's origin.
-
-### 4_split
-
-- [x] `role_split`: `policy_worker` became `policy_writer`; `policy_reviewer` was added; scopes updated.
-- [x] `worker_no_child`: the worker's SOP carries no reviewer launch; managers dispatch reviews.
-- [x] `token_lens`: `policy_reviewer` judges the token price of a rule.
-
-### 5_tool
-
-- [x] `tool_one`: `tools/schema.py` loads once, validates, renders and writes; `--depth` is the only flag.
-- [x] `tool_depth`: a view includes N levels of `_depends_on`; the default is 0.
-- [x] `tool_fast`: one parse, one render, one write; no subprocess, no second pass.
-
-### 6_cleanup
-
-- [x] `cleanup_files`: the old tool, the old views, the migration files and the old references are deleted.
-- [x] `cleanup_review`: `cases.md` is kept as history with a banner; the contract stays.
-- [x] `cleanup_readme`: the README describes four sources, one tool and seven roles.
-- [x] `cleanup_hook`: `.githooks/pre-commit` runs `tools/schema.py` and refuses a commit that leaves a view changed.
-- [x] `cleanup_agents`: `install-agents.sh` links the six child roles, including both law roles.
-- [x] `cleanup_hidden`: no `*` hidden-name logic remains.
-
-### result_gate
-
-- [ ] The person accepts the law, or names the rule that is wrong. This is the only stop.
+Worksets: `role_model` first; `tree_skeleton` and `bilingual` can run per rule together; `tree_file` after the skeleton; `scope_pass` after the tree, since the parent informs the actor; `tool_tree` after `tree_file` and `bilingual`; `views` and `cleanup` last.
 
 ## Open questions
 
 | question | state |
 |---|---|
-| `depth_boundary` | A view at depth N draws layers 0..N. The N+1 boundary is not stubbed; the reader sees nothing of it. Kept as the person's call. |
-| `view_size` | The root view is about 200k characters. Narrowing the scopes or rendering only the moves would cut it; not done, because the static brainstorm is the point. |
-| `why_render` | `_why` is never rendered. It is the maintainer's provenance, not the agent's instruction. |
-| `cases_history` | `cases.md` is kept with a banner. Delete it when its last reference goes. |
-| `merge_candidates` | The one-to-one pass found pairs that may be one rule: `ssot`/`derived`/`inferable`, `kill`/`supersede`, `two_kinds`/`kind_test`/`worker`, `info_ownership`/`everything_under_itself`, `subagent_scope`/`model_cost`. Not merged; the migration kept one-to-one. |
-| `why_empty` | `_why` is optional and empty on every rule. The derivation is not recorded yet; the links pass recorded reader needs, not provenance. |
+| `harness_name` | The role is `root_manager`; the pi agent file is `root.md` because the harness launches it. Confirm the split stays. |
+| `law_scope` | Are the 17 laws universal (every view) or do they also carry a scope? One of the two has to be written. |
+| `reviewer_criteria` | The reviewer needs the work rules to judge them. Kept as `_depends_on` from its SOP, not as scope. |
+| `old_english` | The old English half is base data; where the Chinese changed, the English is rewritten, not copied. |
+| `link_truth` | The 84 `_depends_on` links are re-derived in `tree_skeleton`; none survives by assertion. |
 
 ## Evidence
 
-- `python3 tools/schema.py` → `ok: 423 rules, 7 views, depth 0`.
-- `sh tools/check.sh` → the same line.
-- `docs/roadmap/links.md` → the link pass, rule by rule.
+- `python3 tools/schema.py` → `ok: 423 rules, 7 views, depth 0` is the current flat state, not the target.
+- The old tree at `a1c47f1^` and the old YAML at `5e46382^` are read as base data.
 
 ## Retraction
 
-The old law — sections, `_kind`, act/balance/principle, bilingual fields, `role_specs`, `lexicon`, `ceiling`, six Python tools, `--check`, the `agents/zh/` copies — is dead at the swap commit. The flat file, the schema, the axis-then-choice model and the one tool replaced it; git holds the migration.
+The flat shape, the Chinese-only corpus, the all-role scopes, the numbered SOP and the name `policy_writer` are not the target. The old six packages are superseded; the rebuild above replaces them. Git holds the old tree and the old bilingual YAML as data, not as truth.
