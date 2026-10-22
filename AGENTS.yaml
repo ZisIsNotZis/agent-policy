@@ -5290,7 +5290,7 @@ docs_shape:
       zh: 它被点名，带场合和代价
       en: It is named with its occasion and its cost
     _ends:
-    - _name: {zh: 第一次就点名, en: Name it the first time}
+    - _name: {zh: 记下它, en: Record it}
       _cost: {zh: 'person_attention：为一件他没问的事停下', en: 'person_attention: he stops for what he did not ask about'}
       _who_pays: person
     - _name: {zh: 第二次才点名, en: Name it on the second occurrence}

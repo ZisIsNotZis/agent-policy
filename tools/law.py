@@ -47,6 +47,7 @@ TITLES = {
     "roles": "Roles", "precedence": "Precedence", "intent": "Intent", "delivery": "Delivery",
     "docs_shape": "Document shape", "upkeep": "Upkeep", "resources": "Resources",
     "proof_process": "Proof process", "communication": "Communication", "principles": "Principles",
+    "prices": "Prices",
 }
 
 

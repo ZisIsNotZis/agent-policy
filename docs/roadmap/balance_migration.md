@@ -4,17 +4,15 @@ Goal: every rule that presents a live choice is a balance: two live options, eac
 
 ## The test
 
-The keyword list in an earlier draft (`if`, `only`, `when`, `prefer`, ...) counted 114 candidates. It over-counts: a clause that says *how* is not a choice. The balance test decides:
-
 1. Name two options an agent could actually take at this moment.
 2. Each option has a cost it would pay, in one of the seven units.
 3. The band says where the line sits, and the pull says which way to yield at it.
 
-A rule with no second live option stays an act; a second label for the same option is not an option. Every converted rule was checked against all three.
+A rule with no second live option stays an act; a second label for the same option is not an option. The keyword test in an earlier draft (`if`, `only`, `when`, `prefer`) counted 114 candidates; it over-counts, because a clause that says *how* is not a choice. The balance test decided each one.
 
 ## State
 
-72 balances, 310 acts and 14 principles: 396 rule nodes, the number the check prints. The `laws` section is the model for the shape; the table below counts only the acts and balances that could be one or the other.
+The table is derived from the corpus and `python3 tools/counts.py` refuses a row that drifts; the corpus also holds the principles, which are neither acts nor balances.
 
 | section | acts | balances |
 |---|---:|---:|
@@ -24,7 +22,7 @@ A rule with no second live option stays an act; a second label for the same opti
 | inbox | 10 | 0 |
 | records | 19 | 0 |
 | spend | 15 | 3 |
-| scheduling | 17 | 3 |
+| scheduling | 16 | 3 |
 | dispatch | 15 | 3 |
 | review | 18 | 2 |
 | gates | 5 | 2 |
@@ -45,6 +43,7 @@ A rule with no second live option stays an act; a second label for the same opti
 | communication | 14 | 3 |
 | principles | 6 | 0 |
 | prices | 8 | 0 |
+| total | 309 | 72 |
 
 ## Accept
 

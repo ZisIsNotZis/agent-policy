@@ -18,7 +18,7 @@ The product is the law in `AGENTS.yaml`, rendered to one agent definition per ro
 - Every balance carries a goal; `python3 tools/law.py --check` refuses a balance with no `_goal`.
 - The helpful rules are current: `understand`, `no_blind_agreement` and `brainstorm` are balances; `trace_requirements` merged into `understand`.
 - The RDI case is `docs/review/rdi_case.md`; `intake` carries the case, expectation, rule, observation, evidence and class.
-- Every rule that presents a live choice is a balance: 72 of 396 rule nodes; the other 310 acts and 14 principles are procedures or structural rules, and `docs/roadmap/balance_migration.md` records the test that decides which is which.
+- Every rule that presents a live choice is a balance; the per-section count is in `docs/roadmap/balance_migration.md`, which `tools/counts.py` recomputes from the corpus and refuses if it drifts.
 - The review contract is `docs/review/contract.md`: the nine content checks, the case metric, the SOP test and the balance test.
 - The `policy_worker` is the law's manager: it holds `AGENTS.yaml`, `agents/*.md` and this roadmap, so `self test` reaches it and `worker records` and `worker owns` no longer do.
 - Every role spec carries a `sop`, rendered after the description and before the rules; `tools/law.py --check` refuses a role with no SOP, or a step naming a file that is gone.

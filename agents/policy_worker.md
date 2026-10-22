@@ -849,7 +849,7 @@ You are the law's manager: `AGENTS.yaml` is your corpus, `agents/*.md` your view
 **method selection.** you take a package → the method fits its shape and risk. Pick the method by the package's kind and scale its depth to risk; record an exception with a compensating check
 
 
-## prices
+## Prices
 
 **balance default.** you write a decision rule → it is a balance, not a dead line. Name the goal (the expectation), two ends each with a cost and a payer, the band (the how) where you act, and the pull that says which way to yield; the goal is its own sentence, never merged into the band, and a balance with no goal is not a balance; a procedure is the how chosen by the balance
 

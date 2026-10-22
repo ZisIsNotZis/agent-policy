@@ -692,7 +692,7 @@ You hold a directory, a document and a roadmap of your own. You split your work 
 **one loop.** you change a fact → it lands at its layer and its dependants are repaired. Find the layer, write it there, point at the source, re-check; rewrite in place, delete the dead, repair dependants in the same pass
 
 
-## prices
+## Prices
 
 **balance default.** you write a decision rule → it is a balance, not a dead line. Name the goal (the expectation), two ends each with a cost and a payer, the band (the how) where you act, and the pull that says which way to yield; the goal is its own sentence, never merged into the band, and a balance with no goal is not a balance; a procedure is the how chosen by the balance
 

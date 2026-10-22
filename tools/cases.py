@@ -16,6 +16,15 @@ import law  # noqa: E402
 ROOT = HERE.parent
 CASES = ROOT / "docs/review/cases.md"
 AXES = {"authority", "proceed"}
+
+
+def resolves(name: str, rules: dict, corpus: dict) -> bool:
+    if name in rules:
+        return True
+    parts = name.split(".")
+    if len(parts) == 3 and parts[0] == "role_specs":
+        return parts[1] in corpus["role_specs"] and parts[2] in corpus["role_specs"][parts[1]]
+    return False
 VERDICTS = {"stated", "delegated", "ambiguous", "silent"}
 
 
@@ -47,10 +56,11 @@ def main() -> int:
         if verdict not in VERDICTS:
             print(f"FAIL verdict {verdict!r} in {role}: {moment}")
             return 1
-        for name in re.findall(r"`([a-z_][a-z0-9_]*)`", cite):
-            if name not in rules:
-                continue
-            if not law.reads(role, rules[name]["scope"]):
+        for name in re.findall(r"`([a-z_][a-z0-9_.]*)`", cite):
+            if not resolves(name, rules, corpus):
+                print(f"FAIL {role} cites {name}, which names nothing")
+                return 1
+            if name in rules and not law.reads(role, rules[name]["scope"]):
                 print(f"FAIL {role} cites {name}, which its view does not read")
                 return 1
         rows.append((role, verdict))

@@ -8,15 +8,15 @@ The 99% is counted over cases, not over rules: the moments a role must decide so
 
 | role | cases | stated | delegated | ambiguous | silent |
 |---|---:|---:|---:|---:|---:|
-| root | 13 | 12 | 1 | 0 | 0 |
-| manager | 14 | 14 | 0 | 0 | 0 |
-| worker | 12 | 11 | 1 | 0 | 0 |
-| researcher | 10 | 8 | 2 | 0 | 0 |
-| reviewer | 10 | 10 | 0 | 0 | 0 |
-| policy_worker | 11 | 11 | 0 | 0 | 0 |
-| **total** | **70** | **66** | **4** | **0** | **0** |
+| root | 15 | 14 | 1 | 0 | 0 |
+| manager | 16 | 16 | 0 | 0 | 0 |
+| worker | 14 | 13 | 1 | 0 | 0 |
+| researcher | 12 | 11 | 1 | 0 | 0 |
+| reviewer | 12 | 12 | 0 | 0 | 0 |
+| policy_worker | 13 | 13 | 0 | 0 | 0 |
+| **total** | **82** | **79** | **3** | **0** | **0** |
 
-66/70 stated and 4/70 delegated: 100% answerable by the law. Every cited name is in the role's own view; `tools/law.py --check` refuses a scope that a view does not read.
+79/82 stated and 3/82 delegated: 100% answerable by the law. Every cited name is in the role's own view; `tools/law.py --check` refuses a scope that a view does not read.
 
 ## root
 
@@ -35,6 +35,8 @@ The 99% is counted over cases, not over rules: the moments a role must decide so
 | the target is not agreed yet | proceed | stated | `no_agreement_no_work`, `reach_agreement` |
 | heavy work has no immediate demand | proceed | stated | `announce_long` |
 | he asks to suspend a rule | authority | stated | `user_rank_scope` |
+| the session was killed and reopened | proceed | stated | `resume`, `recovery` |
+| you are told to stop | proceed | stated | `wind_down`, `safe_point` |
 
 ## manager
 
@@ -54,6 +56,8 @@ The 99% is counted over cases, not over rules: the moments a role must decide so
 | a child asks above your layer | authority | stated | `beyond_authority`, `parent_only` |
 | he says `go` | proceed | stated | `go` |
 | he asks to suspend a rule | authority | stated | `user_rank_scope` |
+| the session was killed and reopened | proceed | stated | `resume`, `recovery` |
+| you are told to stop | proceed | stated | `wind_down`, `safe_point` |
 
 ## worker
 
@@ -71,6 +75,8 @@ The 99% is counted over cases, not over rules: the moments a role must decide so
 | you are tempted to approve your own work | authority | stated | `own_word_does_not_count` |
 | the person writes to you | authority | stated | `person_may_write_anywhere` |
 | you are about to commit a credential | authority | stated | `secrets` |
+| the session was killed and reopened | proceed | stated | `resume`, `recovery` |
+| you are told to stop | proceed | stated | `wind_down`, `safe_point` |
 
 ## researcher
 
@@ -82,10 +88,12 @@ The 99% is counted over cases, not over rules: the moments a role must decide so
 | the result cannot be reproduced | proceed | stated | `unavailable_repro` |
 | the result is negative | proceed | stated | `research` |
 | you are asked to write beyond your notes | authority | stated | `role_specs.researcher.description` |
-| you are asked to dispatch | authority | delegated | `role_specs.researcher.description` — forward to the parent |
+| you are asked to dispatch | authority | stated | `role_specs.researcher.description` |
 | the claim is wider than the metric | proceed | stated | `measurement` |
 | the person writes to you | authority | stated | `person_may_write_anywhere` |
 | you report | proceed | stated | `completion`, `report_fields` |
+| the session was killed and reopened | proceed | stated | `resume`, `recovery` |
+| you are told to stop | proceed | stated | `wind_down`, `safe_point` |
 
 ## reviewer
 
@@ -101,6 +109,8 @@ The 99% is counted over cases, not over rules: the moments a role must decide so
 | the milestone, not a package, is judged | proceed | stated | `milestone_experience` |
 | the evidence exists only in a copy | proceed | stated | `evidence_at_source` |
 | the person writes to you | authority | stated | `person_may_write_anywhere` |
+| the session was killed and reopened | proceed | stated | `resume`, `recovery` |
+| you are told to stop | proceed | stated | `wind_down`, `safe_point` |
 
 ## policy_worker
 
@@ -117,6 +127,8 @@ The 99% is counted over cases, not over rules: the moments a role must decide so
 | you are tempted to orchestrate other layers | authority | stated | `no_orchestration`, `worker_no_split` |
 | an old name survives the change | proceed | stated | `kill` |
 | a gate is reached | authority | stated | `gates_hold` |
+| the session was killed and reopened | proceed | stated | `resume`, `recovery` |
+| you are told to stop | proceed | stated | `wind_down`, `safe_point` |
 
 ## What this list does not cover
 
