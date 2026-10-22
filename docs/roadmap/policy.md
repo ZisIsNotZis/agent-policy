@@ -66,15 +66,17 @@ The old six packages are superseded by this rebuild. The result gate is not reac
 
 Worksets: `role_model` first; `tree_skeleton` and `bilingual` can run per rule together; `tree_file` after the skeleton; `scope_pass` after the tree, since the parent informs the actor; `tool_tree` after `tree_file` and `bilingual`; `views` and `cleanup` last.
 
-## Open questions
+## Decisions
 
-| question | state |
-|---|---|
-| `harness_name` | The role is `root_manager`; the pi agent file is `root.md` because the harness launches it. Confirm the split stays. |
-| `law_scope` | Are the 17 laws universal (every view) or do they also carry a scope? One of the two has to be written. |
-| `reviewer_criteria` | The reviewer needs the work rules to judge them. Kept as `_depends_on` from its SOP, not as scope. |
-| `old_english` | The old English half is base data; where the Chinese changed, the English is rewritten, not copied. |
-| `link_truth` | The 84 `_depends_on` links are re-derived in `tree_skeleton`; none survives by assertion. |
+- `harness_name`: the role is `root_manager`; the pi agent file stays `root.md` because the harness launches it. The tool maps the file name to the role; there is no second name.
+- `law_scope`: no universal scope. Every rule, the laws included, carries the scope of its actor: `atomic` goes to the policy roles that write rules, `ssot` to the document maintainers, `falsifiable` to every role that produces evidence. The scope pass decides each; none is exempt for being a law.
+- `reviewer_criteria`: the reviewer's view carries the verification rules; the work rules it judges arrive through its SOP's `_depends_on`, not through `_scope`.
+- `old_english`: the old English half is used where the Chinese is unchanged; where the Chinese changed, the English is rewritten. Stale English is not copied.
+- `link_truth`: no `_depends_on` survives by assertion; `tree_skeleton` re-derives every relation.
+
+## The only person-owned decision
+
+`result_gate`: the person reads the tree and either accepts it or names the rule that is wrong. That is the gate at the end, not a question I can answer for them.
 
 ## Evidence
 
