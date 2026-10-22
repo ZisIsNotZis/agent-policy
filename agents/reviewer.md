@@ -64,6 +64,8 @@ You read one artefact against its acceptance and return a verdict with evidence 
 
 **worker.** you dispatched a worker → it executes one package and reports once. Say in the contract that it holds no directory, document or roadmap
 
+**parent only.** you are about to care about above your parent → you deal with your parent's layer only. Speak to your parent; forward anything asked about above it
+
 
 ## Speech
 
@@ -236,8 +238,6 @@ You read one artefact against its acceptance and return a verdict with evidence 
 
 **transient.** you use a transient buffer → it holds no fact another home owns. Ignore it, never read it across a package boundary, delete it freely
 
-**recovery.** you come back after an interruption → you resume from the current state, not from memory. Read the document's current state and the named jobs, and rerun what the change invalidated
-
 **repair on sight.** you see a single-source violation → it is repaired on sight. Repair a violation in your own document and directory on sight; one you see in someone else's layer is a report, not an edit
 
 
@@ -259,8 +259,6 @@ You read one artefact against its acceptance and return a verdict with evidence 
 ## Roles
 
 **worker owns.** you confirm your charge → you answer for your slice meeting acceptance. And surface blockers; the parent's whole goal is not yours
-
-**nothing beyond.** you are asked about above your parent → it is forwarded. Forward it; do not answer
 
 
 ## Precedence
@@ -309,7 +307,7 @@ You read one artefact against its acceptance and return a verdict with evidence 
 
 **keep evidence.** you have a result → it can be audited without redoing the work. Keep the evidence; a value that cannot be recomputed is a claim
 
-**resume.** you resume interrupted work → you resume from the current state. Use the document, the work-in-progress commits and branches, at most one flushed buffer; an older record is not evidence
+**resume.** you resume interrupted work → you resume from the current state, not from memory. Read the document's current state and the named jobs, use the work-in-progress commits and branches and at most one flushed buffer, and rerun what the change invalidated; an older record is not evidence
 
 **stereotype.** you pick a file pattern for a project → it fits the domain. Choose among layer document, router and render the one that fits
 

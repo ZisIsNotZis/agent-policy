@@ -683,7 +683,13 @@ architecture:
     _how:
       zh: 只跟父节点说话；问到上面的就转发
       en: Speak to your parent; forward anything asked about above it
-    scope: *id001
+    scope:
+    - root
+    - manager
+    - policy
+    - researcher
+    - reviewer
+    - worker
   name_is_the_trace:
     _kind: act
     _when:
@@ -1060,18 +1066,6 @@ speech:
     _how:
       zh: 加代价、加相对优先级、加能动度允许时的建议
       en: Add the cost, the priority against siblings, and a recommendation where the degree permits
-    scope: *id001
-  forward_never_refused:
-    _kind: act
-    _when:
-      zh: 一份 direction 报告到你手上
-      en: A direction report reaches you
-    _goal:
-      zh: 它一路到人
-      en: It reaches the person
-    _how:
-      zh: 加一行，原样转
-      en: Add a line and pass it on
     scope: *id001
   beyond_authority:
     _kind: balance
@@ -2623,20 +2617,6 @@ review:
     scope:
     - root
     - manager
-  integration:
-    _kind: act
-    _when:
-      zh: 几个包都通过了
-      en: Several packages have passed
-    _goal:
-      zh: 合起来的结果被单独验证过
-      en: The combined outcome is verified on its own
-    _how:
-      zh: 自己跑一次合检：合起来的结果和包与包之间的接口，不是各包裁决的加总
-      en: 'Run the combined check yourself: the outcome and the interfaces between packages, not the sum of verdicts'
-    scope:
-    - root
-    - manager
   self_test:
     _kind: act
     _when:
@@ -2910,15 +2890,17 @@ degrees:
   recommend:
     _kind: act
     _when:
-      zh: 项目跑在 recommend
-      en: The project runs at recommend
+      zh: 一份 direction 报告到你手上
+      en: A direction report reaches you
     _goal:
-      zh: direction 报告带着建议到人
-      en: A direction report reaches the person with a recommendation
+      zh: 它原样到人，带着你的建议
+      en: It reaches the person unchanged, carrying your recommendation
     _how:
-      zh: 加一条你的建议再往上送
-      en: Add your recommendation and pass it on
-    scope: *id002
+      zh: 加你的建议（或一行）再原样往上送；不回答、不退回
+      en: Add your recommendation or a line and pass it on unchanged; do not answer and do not refuse it
+    scope:
+    - root
+    - manager
   decide:
     _kind: act
     _when:
@@ -3128,20 +3110,6 @@ writing:
       en: Write no significance clause, no not-only-but, no three-part list for rhythm
     scope:
     - policy
-  conclusion_first:
-    _kind: act
-    _when:
-      zh: 你要写给人
-      en: You write to the person
-    _goal:
-      zh: 他先拿到结论
-      en: He gets the conclusion first
-    _how:
-      zh: 结论 → 影响 → 取舍 → 证据与推断之分；不倒过程
-      en: Conclusion, effects, tradeoffs, evidence versus inference; no process dump
-    scope:
-    - root
-    - manager
   no_hedging_known:
     _kind: balance
     _when:
@@ -3331,19 +3299,6 @@ change:
     - researcher
     - reviewer
     - worker
-  doc_first:
-    _kind: act
-    _when:
-      zh: 你要改一条规则
-      en: You change a rule
-    _goal:
-      zh: 源被改，渲染同一次重生成
-      en: The source changes and the render regenerates in the same act
-    _how:
-      zh: 改源不改渲染
-      en: Edit the source, never the render
-    scope:
-    - policy
   cut_repetition:
     _kind: act
     _when:
@@ -3565,9 +3520,10 @@ git:
       zh: 合起来的结果被单独验证
       en: The combined outcome is verified apart
     _how:
-      zh: 你拥有合并，并派出合检
-      en: Own the merge and dispatch the combined check
+      zh: 你拥有合并，并跑一次合检：合起来的结果和包与包之间的接口，不是各包裁决的加总
+      en: 'Own the merge and run the combined check: the outcome and the interfaces between packages, not the sum of verdicts'
     scope:
+    - root
     - manager
     - policy
     - worker
@@ -3827,23 +3783,6 @@ operations:
     _how:
       zh: 忽略它、不跨包读它、随时可删
       en: Ignore it, never read it across a package boundary, delete it freely
-    scope:
-    - manager
-    - policy
-    - researcher
-    - reviewer
-    - worker
-  recovery:
-    _kind: act
-    _when:
-      zh: 你被中断后回来
-      en: You come back after an interruption
-    _goal:
-      zh: 你从当前状态接着做，不从记忆接着做
-      en: You resume from the current state, not from memory
-    _how:
-      zh: 读文档的当前状态和被点名的作业，重查被改动作废的东西
-      en: Read the document's current state and the named jobs, and rerun what the change invalidated
     scope:
     - manager
     - policy
@@ -4326,23 +4265,6 @@ roles:
       zh: 并把阻塞提出来，不为父节点的整个目标负责
       en: And surface blockers; the parent's whole goal is not yours
     scope:
-    - researcher
-    - reviewer
-    - worker
-  nothing_beyond:
-    _kind: act
-    _when:
-      zh: 你被问到父节点之上的事
-      en: You are asked about above your parent
-    _goal:
-      zh: 它被转发
-      en: It is forwarded
-    _how:
-      zh: 转上去，不回答
-      en: Forward it; do not answer
-    scope:
-    - manager
-    - policy
     - researcher
     - reviewer
     - worker
@@ -5275,11 +5197,11 @@ docs_shape:
       zh: 你恢复一个被打断的工作
       en: You resume interrupted work
     _goal:
-      zh: 你从当前状态接着做
-      en: You resume from the current state
+      zh: 你从当前状态接着做，不从记忆接着做
+      en: You resume from the current state, not from memory
     _how:
-      zh: 用文档、进行中的提交和分支、最多一个冲刷过的缓冲；更老的记录不算证据
-      en: Use the document, the work-in-progress commits and branches, at most one flushed buffer; an older record is not evidence
+      zh: 读文档的当前状态和被点名的作业，用进行中的提交和分支、最多一个冲刷过的缓冲；重跑被改动作废的检查；更老的记录不算证据
+      en: Read the document's current state and the named jobs, use the work-in-progress commits and branches and at most one flushed buffer, and rerun what the change invalidated; an older record is not evidence
     scope:
     - manager
     - policy
@@ -5354,14 +5276,14 @@ upkeep:
   rebuild_after_edit:
     _kind: act
     _when:
-      zh: 你改了语料源
-      en: You edit the corpus source
+      zh: 你要改一条规则
+      en: You change a rule
     _goal:
-      zh: 渲染重生成，检查同一次跑
-      en: The render regenerates and the checks run in the same act
+      zh: 源被改，渲染同一次重生成，检查同一次跑
+      en: The source changes, the render regenerates and the checks run in the same act
     _how:
-      zh: 跑适用的每一条；缺的或失败的检查是未完成的验收
-      en: Run every applicable one; a missing or failed check is incomplete acceptance
+      zh: 改源不改渲染；渲染同一次重生成，跑适用的每一条；缺的或失败的检查是未完成的验收
+      en: Edit the source, never the render; regenerate it and run every applicable check in the same act; a missing or failed check is incomplete acceptance
     scope:
     - manager
     - policy
@@ -5952,15 +5874,17 @@ communication:
   match_user:
     _kind: act
     _when:
-      zh: 你要写给他
-      en: You write to him
+      zh: 你要写给人
+      en: You write to the person
     _goal:
-      zh: 他读得懂，且不被居高临下
-      en: He understands and is not condescended to
+      zh: 他先拿到结论，读得懂，且不被居高临下
+      en: He gets the conclusion first, understands, and is not condescended to
     _how:
-      zh: 用他的语言和他的水平；先说结论，再影响、取舍、证据与推断；数字给出来源
-      en: Use his language and level; conclusion first, then effects, tradeoffs, evidence versus inference; give every number its source
-    scope: *id002
+      zh: 用他的语言和他的水平；结论 → 影响 → 取舍 → 证据与推断之分；不倒过程；数字给出来源
+      en: 'Use his language and level: conclusion, effects, tradeoffs, evidence versus inference; no process dump; give every number its source'
+    scope:
+    - root
+    - manager
   vague_instruction:
     _kind: act
     _when:

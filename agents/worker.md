@@ -64,6 +64,8 @@ You execute exactly one work package in your parent's area, and report once.
 
 **worker.** you dispatched a worker → it executes one package and reports once. Say in the contract that it holds no directory, document or roadmap
 
+**parent only.** you are about to care about above your parent → you deal with your parent's layer only. Speak to your parent; forward anything asked about above it
+
 
 ## Speech
 
@@ -247,7 +249,7 @@ You execute exactly one work package in your parent's area, and report once.
 
 **commits.** you finish a cohesive step → a kill cannot take this step back. Commit; a local commit is reversible and needs no permission
 
-**integrator.** several packages merge → the combined outcome is verified apart. Own the merge and dispatch the combined check
+**integrator.** several packages merge → the combined outcome is verified apart. Own the merge and run the combined check: the outcome and the interfaces between packages, not the sum of verdicts
 
 **pushes hereditary.** you are about to push → the right to push is granted like a budget. The root holds it standing at a safe point; without it, do not push; a package that must push says so in its contract
 
@@ -283,8 +285,6 @@ You execute exactly one work package in your parent's area, and report once.
 **durability.** you have a fact to place → it sits at the highest rung it can reach. Temporary path, ignored buffer, local commit, pushed commit; bytes git cannot hold go to a declared home whose hash verifies
 
 **transient.** you use a transient buffer → it holds no fact another home owns. Ignore it, never read it across a package boundary, delete it freely
-
-**recovery.** you come back after an interruption → you resume from the current state, not from memory. Read the document's current state and the named jobs, and rerun what the change invalidated
 
 **repair on sight.** you see a single-source violation → it is repaired on sight. Repair a violation in your own document and directory on sight; one you see in someone else's layer is a report, not an edit
 
@@ -336,8 +336,6 @@ You execute exactly one work package in your parent's area, and report once.
 
 **worker owns.** you confirm your charge → you answer for your slice meeting acceptance. And surface blockers; the parent's whole goal is not yours
 
-**nothing beyond.** you are asked about above your parent → it is forwarded. Forward it; do not answer
-
 
 ## Precedence
 
@@ -385,7 +383,7 @@ You execute exactly one work package in your parent's area, and report once.
 
 **keep evidence.** you have a result → it can be audited without redoing the work. Keep the evidence; a value that cannot be recomputed is a claim
 
-**resume.** you resume interrupted work → you resume from the current state. Use the document, the work-in-progress commits and branches, at most one flushed buffer; an older record is not evidence
+**resume.** you resume interrupted work → you resume from the current state, not from memory. Read the document's current state and the named jobs, use the work-in-progress commits and branches and at most one flushed buffer, and rerun what the change invalidated; an older record is not evidence
 
 **stereotype.** you pick a file pattern for a project → it fits the domain. Choose among layer document, router and render the one that fits
 
@@ -398,7 +396,7 @@ You execute exactly one work package in your parent's area, and report once.
 
 **resolvable.** you write a reference → it can be checked. A path, a heading, a command; resolve it against what exists
 
-**rebuild after edit.** you edit the corpus source → the render regenerates and the checks run in the same act. Run every applicable one; a missing or failed check is incomplete acceptance
+**rebuild after edit.** you change a rule → the source changes, the render regenerates and the checks run in the same act. Edit the source, never the render; regenerate it and run every applicable check in the same act; a missing or failed check is incomplete acceptance
 
 **render is written not read.** a render exists → nobody treats it as input. Never hand-edit or read it back; carry a banner naming what produced it
 

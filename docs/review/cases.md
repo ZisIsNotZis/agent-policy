@@ -35,7 +35,7 @@ The 99% is counted over cases, not over rules: the moments a role must decide so
 | the target is not agreed yet | proceed | stated | `no_agreement_no_work`, `reach_agreement` |
 | heavy work has no immediate demand | proceed | stated | `announce_long` |
 | he asks to suspend a rule | authority | stated | `user_rank_scope` |
-| the session was killed and reopened | proceed | stated | `resume`, `recovery` |
+| the session was killed and reopened | proceed | stated | `resume` |
 | you are told to stop | proceed | stated | `wind_down`, `safe_point` |
 
 ## manager
@@ -56,7 +56,7 @@ The 99% is counted over cases, not over rules: the moments a role must decide so
 | a child asks above your layer | authority | stated | `beyond_authority`, `parent_only` |
 | he says `go` | proceed | stated | `go` |
 | he asks to suspend a rule | authority | stated | `user_rank_scope` |
-| the session was killed and reopened | proceed | stated | `resume`, `recovery` |
+| the session was killed and reopened | proceed | stated | `resume` |
 | you are told to stop | proceed | stated | `wind_down`, `safe_point` |
 
 ## worker
@@ -75,7 +75,7 @@ The 99% is counted over cases, not over rules: the moments a role must decide so
 | you are tempted to approve your own work | authority | stated | `own_word_does_not_count` |
 | the person writes to you | authority | stated | `person_may_write_anywhere` |
 | you are about to commit a credential | authority | stated | `secrets` |
-| the session was killed and reopened | proceed | stated | `resume`, `recovery` |
+| the session was killed and reopened | proceed | stated | `resume` |
 | you are told to stop | proceed | stated | `wind_down`, `safe_point` |
 
 ## researcher
@@ -92,7 +92,7 @@ The 99% is counted over cases, not over rules: the moments a role must decide so
 | the claim is wider than the metric | proceed | stated | `measurement` |
 | the person writes to you | authority | stated | `person_may_write_anywhere` |
 | you report | proceed | stated | `completion`, `report_fields` |
-| the session was killed and reopened | proceed | stated | `resume`, `recovery` |
+| the session was killed and reopened | proceed | stated | `resume` |
 | you are told to stop | proceed | stated | `wind_down`, `safe_point` |
 
 ## reviewer
@@ -109,7 +109,7 @@ The 99% is counted over cases, not over rules: the moments a role must decide so
 | the milestone, not a package, is judged | proceed | stated | `milestone_experience` |
 | the evidence exists only in a copy | proceed | stated | `evidence_at_source` |
 | the person writes to you | authority | stated | `person_may_write_anywhere` |
-| the session was killed and reopened | proceed | stated | `resume`, `recovery` |
+| the session was killed and reopened | proceed | stated | `resume` |
 | you are told to stop | proceed | stated | `wind_down`, `safe_point` |
 
 ## policy_worker
@@ -127,7 +127,7 @@ The 99% is counted over cases, not over rules: the moments a role must decide so
 | you are tempted to orchestrate other layers | authority | stated | `no_orchestration`, `worker_no_split` |
 | an old name survives the change | proceed | stated | `kill` |
 | a gate is reached | authority | stated | `gates_hold` |
-| the session was killed and reopened | proceed | stated | `resume`, `recovery` |
+| the session was killed and reopened | proceed | stated | `resume` |
 | you are told to stop | proceed | stated | `wind_down`, `safe_point` |
 
 ## What this list does not cover

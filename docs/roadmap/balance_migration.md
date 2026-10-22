@@ -18,21 +18,21 @@ The table is derived from the corpus and `python3 tools/counts.py` refuses a row
 |---|---:|---:|
 | laws | 0 | 17 |
 | architecture | 14 | 0 |
-| speech | 15 | 8 |
+| speech | 14 | 8 |
 | inbox | 9 | 0 |
 | records | 17 | 0 |
 | spend | 15 | 3 |
 | scheduling | 16 | 3 |
 | dispatch | 15 | 3 |
-| review | 18 | 2 |
+| review | 17 | 2 |
 | gates | 5 | 2 |
 | degrees | 8 | 3 |
-| writing | 9 | 1 |
-| change | 14 | 2 |
+| writing | 8 | 1 |
+| change | 13 | 2 |
 | git | 15 | 1 |
-| operations | 7 | 0 |
+| operations | 6 | 0 |
 | practice | 11 | 12 |
-| roles | 4 | 0 |
+| roles | 3 | 0 |
 | precedence | 7 | 0 |
 | intent | 16 | 7 |
 | delivery | 10 | 1 |
@@ -43,7 +43,7 @@ The table is derived from the corpus and `python3 tools/counts.py` refuses a row
 | communication | 14 | 3 |
 | principles | 6 | 0 |
 | prices | 8 | 0 |
-| total | 303 | 72 |
+| total | 297 | 72 |
 
 ## Accept
 

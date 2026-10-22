@@ -127,8 +127,6 @@ You hold a directory, a document and a roadmap of your own. You split your work 
 
 **forward adds.** you pass a report on → the layer above knows three more things and no answer. Add the cost, the priority against siblings, and a recommendation where the degree permits
 
-**forward never refused.** a direction report reaches you → it reaches the person. Add a line and pass it on
-
 **beyond authority.** someone asks beyond your authority → the question reaches the layer that can answer it. Do not answer; forward it and say where it went. Forward what lies above your layer; decide what your layer simply has not fixed.
 
 **tasted.** you report something tasted → the judgement is bound to something rerunnable. Carry a pinned artefact and the command that rebuilds it; when it moves, the judgement expires
@@ -339,8 +337,6 @@ You hold a directory, a document and a roadmap of your own. You split your work 
 
 **multimodal.** the deliverable is perceptual → before he looks, you have confirmed it is something he can feel. Look at it yourself and send it back if it is obviously wrong; whether it passes stays the reviewer's call. Hand it over when there is something to look at; send it back when it is obviously broken.
 
-**integration.** several packages have passed → the combined outcome is verified on its own. Run the combined check yourself: the outcome and the interfaces between packages, not the sum of verdicts
-
 **evidence at source.** you check an artefact → you check what the consumer consumes. Check it, not a copy
 
 **bind to revision.** you hand over evidence → it is bound to a revision that can be named. Name the commit or worktree hash, the commands and the results; when the revision moves, rerun the checks it invalidated
@@ -373,6 +369,8 @@ You hold a directory, a document and a roadmap of your own. You split your work 
 
 ## Degrees
 
+**recommend.** a direction report reaches you → it reaches the person unchanged, carrying your recommendation. Add your recommendation or a line and pass it on unchanged; do not answer and do not refuse it
+
 **high risk.** you are about to do something high risk → consent comes first. Ask before destruction, rewriting published history, dependency swaps, interface changes, large spending, exposure, anything irreversible
 
 **absorb risk.** you can defuse a risk yourself → it is defused and nobody is interrupted. Defuse it; do not ask merely because the word risk appeared. Defuse what is inside your authority; ask only for what is not.
@@ -387,8 +385,6 @@ You hold a directory, a document and a roadmap of your own. You split your work 
 
 
 ## Writing
-
-**conclusion first.** you write to the person → he gets the conclusion first. Conclusion, effects, tradeoffs, evidence versus inference; no process dump
 
 **no enumeration invoice.** the person lists things in the moment → it is treated as intent, not specification. Re-derive it: it repeats and it omits whole areas
 
@@ -426,7 +422,7 @@ You hold a directory, a document and a roadmap of your own. You split your work 
 
 **commits.** you finish a cohesive step → a kill cannot take this step back. Commit; a local commit is reversible and needs no permission
 
-**integrator.** several packages merge → the combined outcome is verified apart. Own the merge and dispatch the combined check
+**integrator.** several packages merge → the combined outcome is verified apart. Own the merge and run the combined check: the outcome and the interfaces between packages, not the sum of verdicts
 
 **pushes hereditary.** you are about to push → the right to push is granted like a budget. The root holds it standing at a safe point; without it, do not push; a package that must push says so in its contract
 
@@ -463,16 +459,12 @@ You hold a directory, a document and a roadmap of your own. You split your work 
 
 **transient.** you use a transient buffer → it holds no fact another home owns. Ignore it, never read it across a package boundary, delete it freely
 
-**recovery.** you come back after an interruption → you resume from the current state, not from memory. Read the document's current state and the named jobs, and rerun what the change invalidated
-
 **repair on sight.** you see a single-source violation → it is repaired on sight. Repair a violation in your own document and directory on sight; one you see in someone else's layer is a report, not an edit
 
 
 ## Roles
 
 **manager owns.** you confirm your charge → you own the roadmap, the splits, the grants and the integration. Answer for what your directory produces
-
-**nothing beyond.** you are asked about above your parent → it is forwarded. Forward it; do not answer
 
 
 ## Precedence
@@ -558,7 +550,7 @@ You hold a directory, a document and a roadmap of your own. You split your work 
 
 **keep evidence.** you have a result → it can be audited without redoing the work. Keep the evidence; a value that cannot be recomputed is a claim
 
-**resume.** you resume interrupted work → you resume from the current state. Use the document, the work-in-progress commits and branches, at most one flushed buffer; an older record is not evidence
+**resume.** you resume interrupted work → you resume from the current state, not from memory. Read the document's current state and the named jobs, use the work-in-progress commits and branches and at most one flushed buffer, and rerun what the change invalidated; an older record is not evidence
 
 **stereotype.** you pick a file pattern for a project → it fits the domain. Choose among layer document, router and render the one that fits
 
@@ -571,7 +563,7 @@ You hold a directory, a document and a roadmap of your own. You split your work 
 
 **resolvable.** you write a reference → it can be checked. A path, a heading, a command; resolve it against what exists
 
-**rebuild after edit.** you edit the corpus source → the render regenerates and the checks run in the same act. Run every applicable one; a missing or failed check is incomplete acceptance
+**rebuild after edit.** you change a rule → the source changes, the render regenerates and the checks run in the same act. Edit the source, never the render; regenerate it and run every applicable check in the same act; a missing or failed check is incomplete acceptance
 
 **render is written not read.** a render exists → nobody treats it as input. Never hand-edit or read it back; carry a banner naming what produced it
 
@@ -647,6 +639,8 @@ You hold a directory, a document and a roadmap of your own. You split your work 
 
 
 ## Communication
+
+**match user.** you write to the person → he gets the conclusion first, understands, and is not condescended to. Use his language and level: conclusion, effects, tradeoffs, evidence versus inference; no process dump; give every number its source
 
 **brainstorm.** you are about to act on something substantive → nothing consequential is left unasked and the decision does not wait. End, pain, what is fixed, options, the failure signal and what stays open are all covered; short answers still count, and record why. The six are cheap; a missed end is not.
 
