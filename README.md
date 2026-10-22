@@ -12,26 +12,29 @@ means, and it sends a failure to the layer that should have prevented it.
 
 ## One source, six projections
 
-[AGENTS.yaml](AGENTS.yaml) is the whole law: 396 rules, each with a trigger, a goal and an action, in
-Chinese and English side by side, plus the role specs, the banned-word lexicon and the ceiling. Nothing
-else in this repository is a source.
+[AGENTS.yaml](AGENTS.yaml) is the whole law: every rule carries a trigger, a goal and an action, in
+Chinese and English side by side, plus the six role specs with their SOPs, the banned-word lexicon and the
+ceiling. Nothing else in this repository is a source. The sizes are printed by `python3 tools/law.py --check`
+rather than kept here.
 
-`python3 tools/build.py` writes one file per role into [agents/](agents): the rules that role reads, and
-nothing else. A role file is generated and never edited, and `--check` fails when one has drifted.
+`python3 tools/build.py` writes one file per role into [agents/](agents): the role's SOP — the steps it runs
+in order, each naming its file or its command — then the rules that role reads, and nothing else. A role
+file is generated and never edited, and `--check` fails when one has drifted.
 
-| Role | What it is for | Rules |
+| Role | What it is for | Kind |
 |---|---|---|
-| `root` | the one node whose parent is the person | 339 |
-| `manager` | holds a directory, a document and a roadmap, and dispatches | 288 |
-| `worker` | executes one work package and reports once | 211 |
-| `researcher` | answers one bounded question with max thinking and writes nothing | 151 |
-| `reviewer` | reads one artefact against its acceptance and returns a verdict | 158 |
-| `policy_worker` | changes this law and runs the checks | 187 |
+| `root` | the one node whose parent is the person | manager |
+| `manager` | holds a directory, a document and a roadmap, and dispatches | manager |
+| `policy_worker` | holds the law, its views and this repository's roadmap, and dispatches the review of its own change | manager |
+| `worker` | executes one work package and reports once | worker |
+| `researcher` | answers one bounded question with max thinking and writes nothing | worker |
+| `reviewer` | reads one artefact against its acceptance and returns a verdict | worker |
 
-The first two hold a directory and dispatch. The last four are flavours of a worker: they differ in what
-they read, what they produce and how hard they are allowed to think, and none of them dispatches. A
-behaviour that is a matter of subject rather than of interface — holding a GPU, searching the web, writing
-for the public — is not a role. It is a contract that names the rules it needs.
+`root`, `manager` and `policy_worker` hold a directory, a document and a roadmap, and dispatch. `worker`,
+`researcher` and `reviewer` execute one package and report once: the worker may launch the reviewer of its
+own slice, and the researcher and reviewer launch nothing. A behaviour that is a matter of subject rather
+than of interface — holding a GPU, searching the web, writing for the public — is not a role. It is a
+contract that names the rules it needs.
 
 ## Read it
 
@@ -40,7 +43,7 @@ file and that is the file it gets. Subagents never see it: each role file turns 
 
 ## Install it
 
-The law is one checkout, but a child launched from a project resolves agents from `~/.pi/agent/agents`. Link the five dispatchable role files there; the command is idempotent and writes nothing inside this repository.
+The law is one checkout, but a child launched from a project resolves agents from `~/.pi/agent/agents`. Link the five child role files there; the command is idempotent and writes nothing inside this repository.
 
 ```sh
 sh tools/install-agents.sh          # install or refresh the links
@@ -57,7 +60,7 @@ sh tools/check.sh               # all three
 ```
 
 The check also counts prohibitions against the `ceiling` block in `AGENTS.yaml`, so a rule cannot quietly
-become a ban.
+become a ban; and it refuses a role with no SOP, or an SOP step naming a file that is gone.
 
 ## The rest of the repository
 

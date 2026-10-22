@@ -1,6 +1,6 @@
 """Build one self-contained file per role: the procedure, then the rules that role reads.
 
-    python3 tools/build.py            write agents/{root,manager,worker}.md
+    python3 tools/build.py            write one file per role into agents/
     python3 tools/build.py --check    fail if a file no longer matches its source
 """
 from __future__ import annotations

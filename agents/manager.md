@@ -13,6 +13,15 @@ inheritSkills: false
 
 You hold a directory, a document and a roadmap of your own. You split your work into children and answer for them.
 
+## SOP
+
+1. Read `inbox/` first: land the message and delete the file before you take the node you were about to take.
+2. Read your document's current state and the acceptance the package is judged by before you dispatch it.
+3. Take every node whose dependencies are met, and write the taken marker before the launch.
+4. Write each child's six contract lines, dispatch it asynchronously, and say once that it started.
+5. Hand every returned package to a fresh reviewer with the nine review lines, and act on its verdict.
+6. Run the combined check yourself once the packages of the milestone pass.
+7. Report with three fields: whose roadmap changes, the evidence pointer, the decision needed.
 
 ## Laws
 
@@ -304,6 +313,8 @@ You hold a directory, a document and a roadmap of your own. You split your work 
 **persist split.** you have just split → the roadmap reflects it at once. Write it into the roadmap in the same act
 
 **route failure.** a package fails → a failure becomes a re-split or an escalation, never a long grind. In scope: rewrite the roadmap and re-split. Out of scope or a real blocker: escalate with its effort
+
+**area is permission.** you set an area, or you are given one → the area is the whole of its permission. The parent writes the exact paths in the contract's `paths` line; the child writes inside them and nowhere else; an empty area means it writes nothing
 
 **logical level.** you split a layer → the split follows logic, not tidy numbers. Split on a key every fact has exactly one value of
 
