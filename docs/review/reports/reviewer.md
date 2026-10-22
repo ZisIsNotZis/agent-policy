@@ -1,3 +1,5 @@
+> Bound to `9e9e0ea`. The quotations below are evidence at that revision, not current facts; `docs/review/cases.md` carries the current case list.
+
 # Review: reviewer role view
 
 Artefact: `agents/reviewer.md` at `9e9e0ea6776625c51081ca47451f1f63ac859cda` (HEAD, clean tree before this report).

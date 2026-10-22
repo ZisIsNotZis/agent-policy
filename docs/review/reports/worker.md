@@ -1,3 +1,5 @@
+> Bound to `9e9e0ea`. The quotations below are evidence at that revision, not current facts; `docs/review/cases.md` carries the current case list.
+
 # Review: the worker view at 9e9e0ea
 
 Artefact `agents/worker.md` (519 lines, 214 rules, 38,075 bytes ≈ 9.5k tokens, read every turn by a `thinking: low` role).

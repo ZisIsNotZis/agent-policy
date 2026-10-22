@@ -1,3 +1,5 @@
+> Bound to `9e9e0ea`. The quotations below are evidence at that revision, not current facts; `docs/review/cases.md` carries the current case list.
+
 # Review: researcher view
 
 Artefact: `agents/researcher.md` (154 rules) at revision `9e9e0ea` (`9e9e0ea6776625c51081ca47451f1f63ac859cda`), tree clean before the review.

@@ -1,3 +1,5 @@
+> Bound to `9e9e0ea`. The quotations below are evidence at that revision, not current facts; `docs/review/cases.md` carries the current case list.
+
 # Review: the manager view
 
 Artefact: `agents/manager.md` (the render of `AGENTS.yaml` for role `manager`: 696 lines, 293 rules).

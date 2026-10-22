@@ -1,3 +1,5 @@
+> Bound to `9e9e0ea`. The quotations below are evidence at that revision, not current facts; `docs/review/cases.md` carries the current case list.
+
 # Review — `agents/root.md` at 9e9e0ea
 
 Artefact: `agents/root.md`, revision `9e9e0ea` (781 lines, 62,802 bytes, 341 rules plus 9 `depends on` lines), read as the consumer reads it.
