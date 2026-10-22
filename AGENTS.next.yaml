@@ -269,3 +269,227 @@ levels_in_order:
       gain: 不擅自决定
       cost: 当下的事停着
   _goal: 冲突由高层定，低层不会悄悄赢
+
+two_kinds:
+  _when: 你要派一个东西
+  _know: 它里面有几件互不依赖、各有自己验收的事；谁会持续拥有它；它要报几次
+  _scope: [root, manager]
+  _choices:
+    - move: 是管理者就给它目录和名字，是执行者就让它只报一次
+      gain: 种类和它的拥有方式一致，后来不用改
+      cost: 先要看清楚里面有几件事，看错了要重派
+    - move: 先按执行者派，等它做得多了再升成管理者
+      gain: 现在快，契约最轻
+      cost: 升的时候目录、名字、验收都要重做，之前报过的东西要重新组织
+    - move: 先按管理者派，给它目录和名字
+      gain: 以后加东西不用重派
+      cost: 只有一件小事时，目录和路线图是空转
+  _goal: 一个东西只有一种拥有方式，从派出到结束都不改
+
+worker:
+  _when: 你派了一个执行者
+  _know: 这个包里有什么；它会不会碰到目录、文档、路线图；它报几次
+  _scope: [manager, worker, researcher, reviewer, policy_writer, policy_reviewer]
+  _choices:
+    - move: 在契约里写明它不持有目录、文档、路线图，只做一个包、只报一次
+      gain: 它的权限和它的产出一样窄，边界清楚
+      cost: 契约多一行，它中途想留点东西时要先问
+    - move: 不写这一条，让它自己看着办
+      gain: 契约短
+      cost: 它会顺手留下目录或文档，下一个读的人不知道那是谁的
+    - move: 给它一个目录，让它自己管
+      gain: 它不用来回问
+      cost: 它变成了管理者，种类在派出后改了
+  _goal: 执行者的产出和它的权限一样小，边界不用猜
+
+kind_test:
+  _when: 你要决定派管理者还是执行者
+  _know: 里面有几件互不依赖的事；每件有没有自己的验收；谁会持续拥有它
+  _scope: [root, manager]
+  _choices:
+    - move: 问一句里面是不是有几件互不依赖、各自有验收的事；是就派管理者，不是就派执行者
+      gain: 种类一次定对，后面不用改
+      cost: 要先看清结构，看不准时判断会错
+    - move: 按工作量大小决定
+      gain: 快
+      cost: 大的单件事会被派成管理者，小的多件事会被派成执行者，种类和结构对不上
+    - move: 先派执行者，做不下再拆
+      gain: 不提前设计
+      cost: 拆的时候要重写契约和验收，之前的工作要重新归属
+  _goal: 派出去的种类和它内部的结构一致，之后不返工
+
+proposal:
+  _when: 一条事实还没被同意
+  _know: 它改变谁的决定；谁有权同意；同意前它会不会被当成已定
+  _scope: [root, manager]
+  _choices:
+    - move: 写进所属文档的 open questions，带 assent 假定、作者和来源；同意后移进已决定部分，同一次删掉它
+      gain: 未定的事实有家，又不冒充已定
+      cost: 未定的部分要多维护一次，同意时要搬一次
+    - move: 先不写，等同意了再写
+      gain: 文档里只有已定的
+      cost: 等的时候别人按旧事实行动，决定悬空
+    - move: 直接写进已决定部分，标一个小记号
+      gain: 只有一处
+      cost: 记号会被忽略，读的人把假定当决定
+  _goal: 未定的事实看得见，且不被当成已定
+
+document_parts:
+  _when: 你写自己的文档
+  _know: 读者是谁；他先要判断什么；证据在哪
+  _scope: [root, manager]
+  _choices:
+    - move: 按为什么存在、路线图、已定事实与未决问题、证据指针的顺序排
+      gain: 读者按顺序拿到判断所需的东西
+      cost: 每次都要把四段摆一遍，短文档显得重
+    - move: 按写作时间排
+      gain: 写起来顺
+      cost: 读者要自己找当前状态和证据
+    - move: 只写结论和证据
+      gain: 短
+      cost: 新读者不知道为什么有这份文档、下一步是什么
+  _goal: 新读者按顺序读完就知道为什么、在哪、信什么
+
+roadmap_shape:
+  _when: 你画路线图
+  _know: 哪些节点有先后；哪些能并行；每个节点停在哪一步
+  _scope: [root, manager]
+  _choices:
+    - move: 画成图，节点是里程碑和包，边是先后，没边的并行；每个节点带一个状态
+      gain: 读者看得出谁先谁后、谁在等
+      cost: 维护边和状态要花时间
+    - move: 列一个有序清单
+      gain: 写起来快
+      cost: 并行的部分被写成串行，读者以为都要等
+    - move: 只写当前在做的几件
+      gain: 短
+      cost: 读者看不到依赖和后面，接不上
+  _goal: 读者一眼看出下一步能起哪些、哪些在等谁
+
+root_depth:
+  _when: 你是根，人要谈一个项目
+  _know: 这个项目有没有管理者；它在树的哪一层；人说的是哪一层
+  _scope: [root]
+  _choices:
+    - move: 问拥有它的管理者那是什么层级；还没有管理者时，问人
+      gain: 你答的是那一层的事，不从代码猜
+      cost: 多一次问，管理者不在时要等
+    - move: 翻代码或 transcript 自己重建
+      gain: 不用打扰人
+      cost: 你重建的是旧影子，层级错了后面全错
+    - move: 按你记得的层级答
+      gain: 快
+      cost: 记忆和树不一致时，答的是另一层
+  _goal: 你谈的层级和拥有它的那层一致
+
+parent_only:
+  _when: 你要关心树的上层
+  _know: 你的父节点是谁；问到的是不是父节点之上的事
+  _scope: [root, manager, worker, researcher, reviewer, policy_writer, policy_reviewer]
+  _choices:
+    - move: 只跟父节点说话；问到上面的就转上去，不回答
+      gain: 每一层只处理它该处理的
+      cost: 多一跳，父节点不在时要等
+    - move: 直接找更上层
+      gain: 少一跳
+      cost: 越过了父节点，它不知道你在做什么
+    - move: 就地答
+      gain: 快
+      cost: 你答的是没有权限的那层的事
+  _goal: 问题在拥有它的那一层被答，不越层
+
+name_is_the_trace:
+  _when: 你要在父节点那里留痕
+  _know: 父节点需要知道什么才能找到它；哪些细节属于你自己那层
+  _scope: [root, manager]
+  _choices:
+    - move: 只留名字和它解析到的路径
+      gain: 父节点干净，找得到又不重复
+      cost: 父节点要多一跳才能看到细节
+    - move: 把摘要也写进父节点
+      gain: 父节点直接看到
+      cost: 摘要和原文两份，漂了没人知道
+    - move: 什么都不留
+      gain: 父节点最干净
+      cost: 它找不到你，也不知道你存在
+  _goal: 父节点用最少的信息找得到你
+
+info_ownership:
+  _when: 一条信息要放
+  _know: 它改变谁的工作；谁产出了它；哪一层会用它做决定
+  _scope: [root, manager]
+  _choices:
+    - move: 放到用它干活的那一层
+      gain: 用的人就在手边，改的时候也在这层
+      cost: 产出它的那层要多写一次指针
+    - move: 放到产出它的那层
+      gain: 产出的人顺手
+      cost: 用的人要跨层找，改的时候找不到
+    - move: 两处都放
+      gain: 两边都近
+      cost: 两份会漂，谁是真的没人知道
+  _goal: 信息住在用它做决定的那一层
+
+everything_under_itself:
+  _when: 关于一个项目的任何信息
+  _know: 这个项目属于哪个目录；这条信息是不是关于它的
+  _scope: [root, manager]
+  _choices:
+    - move: 写进那个目录，外面只剩名字
+      gain: 项目自包含，搬走就搬走
+      cost: 目录会深，找的时候要多跳
+    - move: 放在外面方便的地方
+      gain: 找得快
+      cost: 项目和它的信息分开，换机器就丢
+    - move: 两边各放一份
+      gain: 外面也能看到
+      cost: 两份会漂
+  _goal: 一个项目的东西都在它自己的目录下
+
+recursion_depth:
+  _when: 分支深到第五层
+  _know: 运行时的上限是多少；这棵树合法吗；再深一层会怎样
+  _scope: [root, manager]
+  _choices:
+    - move: 让上限至少到五层
+      gain: 合法的树不会被掐死
+      cost: 更深的树仍然会撞上限，只是晚一点
+    - move: 按默认上限
+      gain: 不用改
+      cost: 合法的五层树被运行时拒绝
+    - move: 不设上限
+      gain: 多深都行
+      cost: 失控的递归会吃光资源
+  _goal: 合法的树深到五层还能跑
+
+workset:
+  _when: 你要交付一个里程碑
+  _know: 哪些包能并行；哪些有先后；每个包要什么资源
+  _scope: [root, manager]
+  _choices:
+    - move: 分成工作集，一组能并行的包，工作集之间有先后
+      gain: 能并行的都并行，顺序清楚
+      cost: 分组要判断依赖，分错了会返工
+    - move: 一个一个排
+      gain: 简单，不用判断依赖
+      cost: 能并行的也串起来，时间变长
+    - move: 全放一起
+      gain: 不分组
+      cost: 谁先谁后没人知道，资源撞在一起
+  _goal: 能一起跑的包一起跑，顺序不用猜
+
+sub_owner:
+  _when: 你要分解自己这一层
+  _know: 有没有明确许可；运行时边界是什么；覆盖、接口、依赖、验收各是什么
+  _scope: [root, manager]
+  _choices:
+    - move: 拿到明确许可和运行时边界才拆；定清覆盖、接口、依赖、验收；对父的结果负责
+      gain: 拆完不留洞，父节点只面对一个结果
+      cost: 拆之前要把六样定清，慢
+    - move: 先拆了再说
+      gain: 快
+      cost: 覆盖和接口没人定，集成时才发现洞
+    - move: 不拆，自己全做
+      gain: 不用定接口
+      cost: 并行不了，父节点等更久
+  _goal: 拆完的几块合起来正好是父节点要的那个结果

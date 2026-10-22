@@ -112,6 +112,10 @@ The one-to-one pass writes `AGENTS.next.yaml`: flat, every rule in the new shape
 - `no_op` and `top_down` share the add-a-rule moment and test different things; keep both.
 - `ssot` probably needs `_depends_on: [chain]`; the manual links pass decides.
 - `rule_over_state` no longer names `migrate_on_touch`; the action is written out, so the link may go.
+- `two_kinds` and `kind_test` share the manager-vs-worker moment: one is the test, one the consequence. Candidate merge.
+- `worker` says what a worker holds; it may fold into `two_kinds`. Candidate merge.
+- `info_ownership` and `everything_under_itself` both place information: one by the layer that uses it, one under the project directory. Candidate merge or a clear split.
+- `recursion_depth` is a runtime limit, not a decision; candidate move to configuration or delete.
 - Every act has one `_how`, so its one-to-one form has **one** choice. The schema needs two. The acts are procedures, not menus; the merge pass decides whether a second choice exists, whether the procedure folds into a balance, or whether it is deleted.
 
 Worksets: `1_schema` and `5_tool` can start together, since the tool reads the schema; `2_data` after both; `3_links` after `yaml_names`; `4_split` after `links_scope`; `6_cleanup` last.
