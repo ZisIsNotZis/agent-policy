@@ -503,6 +503,7 @@ sub_owner:
 upward_reports:
   _when: 你要和上下说话
   _know: 对面是父节点还是子节点；你要传的是结果还是问题；对面读完接着要做什么
+  _depends_on: [report_fields]
   _scope: [manager, policy_writer, policy_reviewer, researcher, reviewer, worker]
   _choices:
     - move: 向上只递报告——现在为真的结果、证据指针、要的决定——向下只答所问和给契约
@@ -535,6 +536,7 @@ word_from_parent:
 go:
   _when: 人说了 go
   _know: 下一个工作集是什么；路线图还是不是当前；派出去多久才回话；他问的是不是已经开始了
+  _depends_on: [take_next]
   _scope: [manager, root]
   _choices:
     - move: 先用 take next 取下一个工作集并把它派出去，再回来读任何项目
@@ -551,6 +553,7 @@ go:
 parent_authorises:
   _when: 你要判断父节点能给你什么
   _know: 它手里是预算、承诺、品味还是契约；它上面还有没有别的层；你要的那样能不能从别处拿
+  _depends_on: [kinds]
   _scope: [manager, policy_writer, policy_reviewer, researcher, reviewer, worker]
   _choices:
     - move: 先看它给的是四样里的哪一样，按那一样去要；它是人还是管理者不改变你的动作
@@ -615,6 +618,7 @@ report_fields:
 completion:
   _when: 你做完了
   _know: 谁能判断它成了；证据在哪；还有什么没做
+  _depends_on: [report_fields]
   _scope: [manager, policy_writer, policy_reviewer, researcher, reviewer, worker]
   _choices:
     - move: 报给父节点：结果、证据指针、要的决定写无
@@ -711,6 +715,7 @@ kind_contract:
 unreadable_contract:
   _when: 契约缺了一个字段
   _know: 缺的是哪一项；这一项本来会定什么；谁会因为猜它而做错
+  _depends_on: [kind_contract]
   _scope: [manager, policy_writer, policy_reviewer, researcher, reviewer, worker]
   _choices:
     - move: 停下，点名缺的那项和它本来会定什么，按 kind contract 送回写它的一层，这一项自己一个字不填
@@ -727,6 +732,7 @@ unreadable_contract:
 effort_required:
   _when: 你要报一件要方向或要代价的事
   _know: 这份报告要人答还是有人要付钱；努力（花多久、谁在等）写没写；它算 cost 还是 direction
+  _depends_on: [kinds]
   _scope: [manager, policy_writer, policy_reviewer, researcher, reviewer, worker]
   _choices:
     - move: cost 缺努力就退回并一行写明缺什么；direction 缺努力照样上送，在那一行标努力未完成
@@ -743,6 +749,7 @@ effort_required:
 forward_adds:
   _when: 你要转发一份报告
   _know: 它的代价是多少；它和兄弟相比的优先级；你的能动度允许说到哪一步
+  _depends_on: [recommend]
   _scope: [root, manager]
   _choices:
     - move: 加上代价、相对优先级，能动度允许时加一句建议，原文不动
@@ -791,6 +798,7 @@ tasted:
 three_deciders:
   _when: 你不知道一份报告会走多远
   _know: 它的种类是什么；它花什么；你的能动度到哪一步
+  _depends_on: [kinds, classes, three]
   _scope: [root, manager]
   _choices:
     - move: 三件分开看：种类定路线、花什么定放行、能动度定到不到人

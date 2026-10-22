@@ -39,3 +39,30 @@ The table is the evidence of the pass. It grows section by section; a rule with 
 | `recursion_depth` | — | The five-level bound is the rule. |
 | `workset` | — | The parallel set and the order are the rule. |
 | `sub_owner` | `coverage_first` | The six things it must fix — coverage, interfaces, dependencies, ownership, acceptance, integrator — are defined there; without it the list is partial. |
+
+## speech (22 rules)
+
+| rule | depends_on | why |
+|---|---|---|
+| `upward_reports` | `report_fields` | "A report" is defined by its three fields; without them the reader writes a message, not a report. |
+| `word_from_parent` | — | The parent is a role, not a rule. |
+| `go` | `take_next` | The move says take the next workset by that procedure; the name is the procedure. |
+| `parent_authorises` | `kinds` | The four things it can authorise are the four report kinds; without them the reader knows the words but not the routes. |
+| `no_blind_agreement` | — | End, means and taste are separated in the rule itself. |
+| `ask_only_consequential` | — | The test is in the rule. |
+| `report_fields` | — | The fields are the rule. |
+| `completion` | `report_fields` | A completion report is one of those reports; the three fields are not restated. |
+| `kinds` | — | It defines them. |
+| `kind_resource` | — | The route is the whole act. |
+| `kind_cost` | — | The route is the whole act. |
+| `kind_direction` | — | The route is the whole act. |
+| `kind_contract` | — | The route is the whole act. |
+| `unreadable_contract` | `kind_contract` | "Send it by kind contract" is that route; without it the reader knows to send it but not how. |
+| `effort_required` | `kinds` | Cost and direction are two of the four kinds. |
+| `forward_adds` | `recommend` | "Where the degree permits" is the recommend rule; without it the reader adds a recommendation in silent. |
+| `beyond_authority` | — | The forward is the act. |
+| `tasted` | — | The pinned artefact and the rebuild are the rule. |
+| `three_deciders` | `kinds`, `classes`, `three` | It names the three deciders; each is defined by one of these. |
+| `person_may_write_anywhere` | — | The forward and the wake are in the rule. |
+| `ask_the_owner` | — | The wake and the record are in the rule. |
+| `say_that_you_started` | — | The one line is the rule. |
