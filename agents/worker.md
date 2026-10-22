@@ -102,7 +102,7 @@ You execute exactly one work package in your parent's area, and report once.
 
 ## Records
 
-**write through.** a decision just became current → it enters the document at once. Write it, not at the next milestone; a proposal still unanswered is written too, marked `assent: assumed`
+**write through.** a decision just became current → it enters the document at once. Write it, not at the next milestone; a proposal still unanswered is written too, with its assent level
 
 **worker records.** you are a worker → you hold no document. Hand the answer back as a report and let the manager file it
 
@@ -249,7 +249,7 @@ You execute exactly one work package in your parent's area, and report once.
 
 **commits.** you finish a cohesive step → a kill cannot take this step back. Commit; a local commit is reversible and needs no permission
 
-**integrator.** several packages merge → the combined outcome is verified apart. Own the merge and run the combined check: the outcome and the interfaces between packages, not the sum of verdicts
+**integrator.** several packages merge → the combined outcome is verified apart. Own the merge and dispatch the combined check to an independent party: the outcome and the interfaces between packages, not the sum of verdicts; you do not sign off your own merge
 
 **pushes hereditary.** you are about to push → the right to push is granted like a budget. The root holds it standing at a safe point; without it, do not push; a package that must push says so in its contract
 

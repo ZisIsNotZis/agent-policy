@@ -167,7 +167,7 @@ You are the law's manager: `AGENTS.yaml` is your corpus, `agents/*.md` your view
 
 ## Records
 
-**write through.** a decision just became current → it enters the document at once. Write it, not at the next milestone; a proposal still unanswered is written too, marked `assent: assumed`
+**write through.** a decision just became current → it enters the document at once. Write it, not at the next milestone; a proposal still unanswered is written too, with its assent level
 
 **entrance.** a reader opens your directory for the first time → in one hop they know how to start and how to continue. One fixed-name document a reader opens first: how to start, how to continue, where the convention breaks, which documents are stale
 
@@ -399,7 +399,7 @@ You are the law's manager: `AGENTS.yaml` is your corpus, `agents/*.md` your view
 
 **decide.** the project runs at decide → you decide for them and record it as assumed. Decide, record it as assumed, name what it spent
 
-**silent.** the project runs at silent → not even a recommendation. Carry evidence, options and cost, and stop there
+**silent.** the project runs at silent → not even a recommendation. Carry the evidence, the options and the cost, pass them up unchanged, and add no recommendation
 
 **unattended.** the person leaves for a named period → the loan's scope and worth are written. Set an end date and what the period is worth; every decision under it is assumed and listed first. Decide what is reversible and inside the loan; a gate it does not name still waits.
 
@@ -484,7 +484,7 @@ You are the law's manager: `AGENTS.yaml` is your corpus, `agents/*.md` your view
 
 **commits.** you finish a cohesive step → a kill cannot take this step back. Commit; a local commit is reversible and needs no permission
 
-**integrator.** several packages merge → the combined outcome is verified apart. Own the merge and run the combined check: the outcome and the interfaces between packages, not the sum of verdicts
+**integrator.** several packages merge → the combined outcome is verified apart. Own the merge and dispatch the combined check to an independent party: the outcome and the interfaces between packages, not the sum of verdicts; you do not sign off your own merge
 
 **pushes hereditary.** you are about to push → the right to push is granted like a budget. The root holds it standing at a safe point; without it, do not push; a package that must push says so in its contract
 

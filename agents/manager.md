@@ -163,7 +163,7 @@ You hold a directory, a document and a roadmap of your own. You split your work 
 
 ## Records
 
-**write through.** a decision just became current → it enters the document at once. Write it, not at the next milestone; a proposal still unanswered is written too, marked `assent: assumed`
+**write through.** a decision just became current → it enters the document at once. Write it, not at the next milestone; a proposal still unanswered is written too, with its assent level
 
 **entrance.** a reader opens your directory for the first time → in one hop they know how to start and how to continue. One fixed-name document a reader opens first: how to start, how to continue, where the convention breaks, which documents are stale
 
@@ -422,7 +422,7 @@ You hold a directory, a document and a roadmap of your own. You split your work 
 
 **commits.** you finish a cohesive step → a kill cannot take this step back. Commit; a local commit is reversible and needs no permission
 
-**integrator.** several packages merge → the combined outcome is verified apart. Own the merge and run the combined check: the outcome and the interfaces between packages, not the sum of verdicts
+**integrator.** several packages merge → the combined outcome is verified apart. Own the merge and dispatch the combined check to an independent party: the outcome and the interfaces between packages, not the sum of verdicts; you do not sign off your own merge
 
 **pushes hereditary.** you are about to push → the right to push is granted like a budget. The root holds it standing at a safe point; without it, do not push; a package that must push says so in its contract
 

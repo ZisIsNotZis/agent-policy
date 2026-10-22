@@ -102,7 +102,7 @@ You read one artefact against its acceptance and return a verdict with evidence 
 
 ## Records
 
-**write through.** a decision just became current → it enters the document at once. Write it, not at the next milestone; a proposal still unanswered is written too, marked `assent: assumed`
+**write through.** a decision just became current → it enters the document at once. Write it, not at the next milestone; a proposal still unanswered is written too, with its assent level
 
 **worker records.** you are a worker → you hold no document. Hand the answer back as a report and let the manager file it
 

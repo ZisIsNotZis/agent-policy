@@ -227,7 +227,26 @@ def main() -> int:
             if not missing:
                 text += rule_text(node) + "\n"
             if kind == "balance":
-                for end in node.get("_ends", []):
+                ends = node.get("_ends") or []
+                if len(ends) != 2:
+                    failures.append(f"{name}.{key} has {len(ends)} ends, not two")
+                for end in ends:
+                    if not isinstance(end, dict):
+                        failures.append(f"{name}.{key} has an end that is not a map")
+                        continue
+                    extra = set(end) - {"_name", "_cost", "_who_pays"}
+                    if extra:
+                        failures.append(f"{name}.{key} has an end with stray keys {sorted(extra)}")
+                    for fld in ("_name", "_cost", "_who_pays"):
+                        if fld not in end:
+                            failures.append(f"{name}.{key} has an end with no {fld}")
+                    for fld in ("_name", "_cost"):
+                        value = end.get(fld)
+                        if isinstance(value, dict) and set(value) != {"zh", "en"}:
+                            failures.append(f"{name}.{key} has an end whose {fld} is {sorted(value)}")
+                    cost = (end.get("_cost") or {}).get("en") or ""
+                    if not re.match(r"(person_attention|person_time|machine_time|money|exclusive|irreversible|trust)\b", cost):
+                        failures.append(f"{name}.{key} has an end whose cost names no unit")
                     if end.get("_who_pays") not in {"self", "parent", "person", "third_party"}:
                         failures.append(f"{name}.{key} has an end paid by {end.get('_who_pays')!r}")
             for fld in ("_when", "_goal", "_how", "_between", "_pull"):

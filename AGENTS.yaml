@@ -1303,8 +1303,8 @@ records:
       zh: 它立刻进文档
       en: It enters the document at once
     _how:
-      zh: '写进去，不等里程碑；还在等回答的提案也写，标成 `assent: assumed`'
-      en: 'Write it, not at the next milestone; a proposal still unanswered is written too, marked `assent: assumed`'
+      zh: 写进去，不等里程碑；还在等回答的提案也写，标出它的同意等级
+      en: Write it, not at the next milestone; a proposal still unanswered is written too, with its assent level
     scope:
     - manager
     - policy
@@ -2922,8 +2922,8 @@ degrees:
       zh: 连建议也不加
       en: Not even a recommendation
     _how:
-      zh: 带证据、选项和代价，停在那里
-      en: Carry evidence, options and cost, and stop there
+      zh: 带证据、选项和代价，原样上送，不加建议
+      en: Carry the evidence, the options and the cost, pass them up unchanged, and add no recommendation
     scope: *id002
   unattended:
     _kind: balance
@@ -3521,7 +3521,7 @@ git:
       en: The combined outcome is verified apart
     _how:
       zh: 你拥有合并，并把合检派给独立的一方：合起来的结果和包与包之间的接口，不是各包裁决的加总；你不给自己的合并签字
-      en: 'Own the merge and run the combined check: the outcome and the interfaces between packages, not the sum of verdicts'
+      en: 'Own the merge and dispatch the combined check to an independent party: the outcome and the interfaces between packages, not the sum of verdicts; you do not sign off your own merge'
     scope:
     - root
     - manager
@@ -4186,7 +4186,7 @@ practice:
       zh: 试过什么、缺什么、有多少把握都写下来
       en: What you tried, what is missing and how confident you are are all written down
     _ends:
-    - _name: {zh: 有界尝试后记录, en: Bounded attempts, then record}
+    - _name: {zh: 有界尝试后记录, en: 'Bounded attempts, then record'}
       _cost: {zh: 'person_time：花了时间仍没有复现', en: 'person_time: time spent without a reproduction'}
       _who_pays: self
     - _name: {zh: 直接修, en: Fix it anyway}
@@ -6429,7 +6429,7 @@ role_specs:
     - "Read the roadmap in the document that owns it, and take every node whose dependencies are met, writing the taken marker before the launch."
     - "Write each child's six contract lines, dispatch it asynchronously, and say once that it started."
     - "Hand every returned package to a fresh reviewer with the nine review lines, and act on its verdict rather than on your own reading."
-    - "Run the combined check yourself once the packages of a milestone pass: the outcome and the interfaces between them."
+    - "Dispatch the combined check to an independent party once the packages of a milestone pass: the outcome and the interfaces between them."
     - "Stop at a milestone and show him the thing itself; what depends on it waits for his judgement."
     - "Report with three fields: whose roadmap changes, the evidence pointer, the decision needed, which is none on completion."
     tools: read, edit, write, bash, grep, find, ls, subagent

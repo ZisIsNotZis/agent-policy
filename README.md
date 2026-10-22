@@ -38,7 +38,7 @@ contract that names the rules it needs.
 
 ## Read it
 
-[AGENTS.md](AGENTS.md) is a symlink to `agents/root.md`, because a root launched directly by pi loads no role
+`agents/root.md` is the view a root reads, because a root launched directly by pi loads no role
 file and that is the file it gets. Subagents never see it: each role file turns project context off.
 
 ## Install it
