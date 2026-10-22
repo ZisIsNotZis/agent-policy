@@ -102,3 +102,50 @@ The table is the evidence of the pass. It grows section by section; a rule with 
 | `fact_record` | `assent` | "status" is one of the levels `assent` defines; without it the coordinate is undefined. |
 | `split_authorship` | — | Two records and the pointer are the rule. |
 | `scratch_retired` | `migrate_on_touch` | The move names that procedure for relocating what still matters. |
+
+## spend (18 rules)
+
+| rule | depends_on | why |
+|---|---|---|
+| `classes` | — | It defines the classes. |
+| `time` | — | The wall-clock and the split are in the rule. |
+| `idle` | — | The site's power and the class are in the rule. |
+| `metered` | — | The unit price is the act. |
+| `exclusive` | — | The device, memory or port is in the rule. |
+| `unrecoverable` | — | The rerun cost is the act. |
+| `class_decides` | `classes`, `contract_grant` | The classes and the grant; without them "拿到授权" has no route. |
+| `unknown_class` | — | Unknown plus the settlement step is the rule. |
+| `no_hold_while_unsure` | — | Idle or settle first is the act. |
+| `vram` | — | Headroom against what is held is the rule; the cost units are not needed to act. |
+| `preempt` | `pause` | The resume point is that rule's stop, land, resume; without it "续跑点" is a word. |
+| `missing_infra_is_not_missing_permission` | — | The permission and the infra are distinguished in the rule. |
+| `advisory_limits` | — | Saying it is advisory is the act. |
+| `claim_enforced` | — | Binding the job and its descendants is the act. |
+| `significant_only` | — | The significant occupancy is defined in the rule. |
+| `grant` | — | The split from what you were lent is the rule. |
+| `queue` | — | The request and the trigger are the rule. |
+| `price_clock` | — | The throughput/wait distinction is the rule. |
+
+## scheduling (19 rules)
+
+| rule | depends_on | why |
+|---|---|---|
+| `async_only` | — | Launch and wake are the rule. |
+| `no_orchestration` | — | The direct child is the rule. |
+| `steerable` | — | The timeout or the named log is the act. |
+| `timeout_is_not_a_guard` | — | What the timeout does and does not kill is the rule. |
+| `no_sleep` | `timeout_clock` | The detached timer is that rule's clock; without it the timer has no shape. |
+| `client_budget` | — | The retry cap and idle timeout are the rule. |
+| `no_watching` | — | Not watching is the act. |
+| `stuck` | — | The declared wall-clock is the trigger. |
+| `stuck_disposal` | `kind_cost` | "Report a cost" is that kind; without it the report has no route. |
+| `own_effort` | — | Absorbing the obstacle is the act. |
+| `change_hypothesis` | — | Change the hypothesis or the check is the rule. |
+| `budget_caps` | — | The three numbers are the rule. |
+| `always_a_path` | `kind_cost` | The escalation carries effort, which is the cost report. |
+| `steer` | — | The correction in place is the act. |
+| `async_continuation` | `async_only` | The trigger is the completion notification that rule defines. |
+| `deadline` | `timeout_clock` | The detached timer is that rule's clock. |
+| `pause` | `safe_point` | The stop point and the landing are that rule. |
+| `inbox_first` | — | Reading first is the act. |
+| `result_first` | `reviewer_contract` | Dispatching the review needs the nine lines; without them the dispatch is a sentence. |

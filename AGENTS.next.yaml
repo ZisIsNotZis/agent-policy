@@ -1989,6 +1989,7 @@ unrecoverable:
 class_decides:
   _when: 你在决定这个包能不能现在开工
   _know: 这个包属于哪一类；授权在谁手里；它是不是已经拿到过
+  _depends_on: [classes, contract_grant]
   _scope: [manager, policy_writer, policy_reviewer, researcher, worker]
   _choices:
     - move: idle 的照跑；metered、exclusive、unrecoverable 先拿到授权再开工
@@ -2053,6 +2054,7 @@ vram:
 preempt:
   _when: 一个确定的更高优先级任务来了
   _know: 新任务有多急；被让位的活跑到哪了；停掉它损失多少；以后还接不接得上
+  _depends_on: [pause]
   _scope: [root, manager]
   _choices:
     - move: 让它让位，带一条消息和一个续跑点，让之前先比一比停掉的损失
@@ -2245,6 +2247,7 @@ timeout_is_not_a_guard:
 no_sleep:
   _when: 你想等一件事
   _know: 你在等什么；它大概什么时候到；这段时间里还有什么能做的
+  _depends_on: [timeout_clock]
   _scope: [manager, policy_writer, policy_reviewer, researcher, reviewer, worker]
   _choices:
     - move: 起一个分离的计时器挂在有名日志后面，把期限写在你在等的那件事旁边，然后去做下一件能做的事
@@ -2309,6 +2312,7 @@ stuck:
 stuck_disposal:
   _when: 一个孩子被推定卡住
   _know: 停掉它损失多少；它做出来的东西能不能重跑；位子被占着时谁在等
+  _depends_on: [kind_cost]
   _scope: [root, manager]
   _choices:
     - move: 停掉的损失更小就取消
@@ -2373,6 +2377,7 @@ budget_caps:
 always_a_path:
   _when: 一个包做不到
   _know: 挡着的是什么；换路在不在你权限内；换路会不会动了端；升级要带多少 effort
+  _depends_on: [kind_cost]
   _scope: [root, manager]
   _choices:
     - move: 在权限内换一条路，换设计或重拆包，端不动
@@ -2405,6 +2410,7 @@ steer:
 async_continuation:
   _when: 一个作业挂到后台
   _know: 它挂到后台之后谁接手；什么观察说明它完了；完了叫醒谁
+  _depends_on: [async_only]
   _scope: [manager, policy_writer, policy_reviewer, researcher, reviewer, worker]
   _choices:
     - move: 写下触发条件——什么观察说明它完了、完了叫醒谁
@@ -2421,6 +2427,7 @@ async_continuation:
 deadline:
   _when: 这个包有截止时间
   _know: 截止是什么时候；到那时能做完什么；哪些可以先丢
+  _depends_on: [timeout_clock]
   _scope: [root, manager]
   _choices:
     - move: 用游离计时器在一半和四分之三处各发一条指令，点名还剩什么、什么顺序、丢掉什么
@@ -2437,6 +2444,7 @@ deadline:
 pause:
   _when: 新信息改变了在跑的包该做什么
   _know: 新信息改的是哪一段；它最后一次写入在哪；从那里续跑和重派各要多少
+  _depends_on: [safe_point]
   _scope: [root, manager]
   _choices:
     - move: 在它最后一次写入处停下，把已经做出来的落地，从那里续跑或重派
@@ -2469,6 +2477,7 @@ inbox_first:
 result_first:
   _when: 有包回来了，还没处置
   _know: 回来的这个结论会不会动到正要开的活；审查派下去多久返回；有没有节点因此在等
+  _depends_on: [reviewer_contract]
   _scope: [root, manager]
   _choices:
     - move: 先把它的审查派出去，再取下一个包
