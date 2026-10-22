@@ -614,11 +614,11 @@ architecture:
       zh: 你画路线图
       en: You draw a roadmap
     _goal:
-      zh: 读者看得出谁先谁后
-      en: The reader can see what precedes what
+      zh: 读者看得出谁先谁后、每个节点停在哪一步
+      en: The reader can see what precedes what and where each node stands
     _how:
-      zh: 画成图：节点是里程碑和包，边表示先后，没边的并行
-      en: 'Draw it as a graph: nodes are milestones and packages, edges are precedence, no edge means parallel'
+      zh: '画成图：节点是里程碑和包，边表示先后，没边的并行；每个节点恰好带一个状态：`ready`；`running`（已取、已发出）；`blocked_on_person`、`gate`、`assumed`（等人）；包通过时 `done`，裁决失败或阻塞时 `failed`'
+      en: 'Draw it as a graph: nodes are milestones and packages, edges are precedence, no edge means parallel; each node carries exactly one status: `ready`; `running` (taken and launched); `blocked_on_person`, `gate`, `assumed` (waiting on the person); `done` when its package passes, `failed` when the verdict fails or blocks'
     scope: *id001
   root_depth:
     _kind: act
@@ -2081,11 +2081,11 @@ dispatch:
       zh: 你要从路线图上取活
       en: You take work off the roadmap
     _goal:
-      zh: 凡是能同时跑的都同时跑
-      en: Everything that can run together does
+      zh: 现在能起的都起来，而且没有节点起两次
+      en: Every node that can start now starts, and none starts twice
     _how:
-      zh: 按顺序走，依赖已满足的都取，写下已经取了
-      en: Walk in order, take every node whose dependencies are met, write down that it is taken
+      zh: '按顺序走，把依赖已满足、状态是 `ready` 的节点都取：先给每个写下 `running` 和孩子的名字并提交，再发其中任何一个；其他状态的节点跳过'
+      en: 'Walk in order and take every node whose dependencies are met and whose status is `ready`: write `running` and the child''s name for each, and commit that before you launch any of them; a node in any other status is skipped'
     scope: *id001
   self_execute:
     _kind: act
@@ -3550,8 +3550,8 @@ operations:
       zh: 被杀掉也不丢任何写下来的东西
       en: A kill loses nothing that was written down
     _how:
-      zh: 核对：`git status` 里没有你碰过却说不清的路径、当前分支是集成分支、改过的文档里没有 session 或 issue 引用
-      en: Check that git status shows nothing you touched and cannot explain, the branch is the integration branch, and no document you changed cites a session or an issue
+      zh: 核对：`git status` 里没有你碰过却说不清的路径、当前分支是集成分支、你改过的都已提交（包括每个节点状态）、改过的文档里没有 session 或 issue 引用
+      en: Check that git status shows nothing you touched and cannot explain, the branch is the integration branch, everything you changed is committed, including every node status, and no document you changed cites a session or an issue
     scope:
     - manager
     - policy

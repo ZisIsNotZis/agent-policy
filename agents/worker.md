@@ -269,7 +269,7 @@ You execute exactly one work package in your parent's area, and report once.
 
 ## Operations
 
-**safe point.** you stop or hand control back → a kill loses nothing that was written down. Check that git status shows nothing you touched and cannot explain, the branch is the integration branch, and no document you changed cites a session or an issue
+**safe point.** you stop or hand control back → a kill loses nothing that was written down. Check that git status shows nothing you touched and cannot explain, the branch is the integration branch, everything you changed is committed, including every node status, and no document you changed cites a session or an issue
 
 **intent before act.** you are about to run a step that takes minutes → any kill names its own resume point. First write into the document what is done, what is starting, what would prove it, and where the next step begins
 
