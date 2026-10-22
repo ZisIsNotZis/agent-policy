@@ -69,7 +69,7 @@ become a ban; and it refuses a role with no SOP, or an SOP step naming a file th
 
 - `AGENTS.yaml` — the rules, the six role specs, the banned-word list and the ceiling. The only source.
 - `tools/law.py` — renders one role's view out of the corpus, and checks it.
-- `tools/build.py` — writes `agents/*.md`.
+- `tools/build.py` — writes `agents/*.md` and the Chinese reading copy `agents/zh/*.md`.
 - `tools/contract.py` — checks a contract's identity, its floor and the lines above it before dispatch; `--template` prints the skeleton.
 - `tools/cases.py`, `tools/counts.py`, `tools/dupes.py` — the case list against the law, the section table against the corpus, and a copied band against its twin.
 - `tools/install-agents.sh` — links the five role files into `~/.pi/agent/agents`.

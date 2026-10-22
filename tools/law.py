@@ -148,7 +148,17 @@ def sop(role: str) -> list[str]:
     return ROLE_SPECS[role].get("sop") or []
 
 
-def render(role: str) -> str:
+ZH_TITLES = {
+    "laws": "法则", "architecture": "架构", "speech": "说话", "inbox": "收件", "records": "记录",
+    "spend": "花费", "scheduling": "调度", "dispatch": "派发", "review": "审查", "gates": "闸门",
+    "degrees": "能动度", "writing": "写作", "change": "变更", "git": "Git", "operations": "操作",
+    "practice": "实践", "roles": "角色", "precedence": "优先级", "intent": "意图", "delivery": "交付",
+    "docs_shape": "文档形状", "upkeep": "维护", "resources": "资源", "proof_process": "证明过程",
+    "communication": "沟通", "principles": "原则", "prices": "价格",
+}
+
+
+def render(role: str, lang: str = "en") -> str:
     """Each rule is drawn once, as its own row; a dependency is named, and the row it names is its text."""
     flat = {k: v for b in sections().values() for k, v in b.items()}
     plan = [(name, [(k, v) for k, v in body.items()
@@ -161,19 +171,28 @@ def render(role: str) -> str:
     for _, rows in plan:
         for key, _ in rows:
             drawn[key] = len(drawn)
-    out = [f"# Law, as {role} reads it\n\n{ROLE_SPECS[role]['description']}\n"]
-    out.append("## SOP\n")
+    if lang == "zh":
+        out = [f"# 法，{role} 读到的样子\n\n{ROLE_SPECS[role]['description']}\n"]
+        out.append("## SOP（英文；步骤只写一次）\n")
+    else:
+        out = [f"# Law, as {role} reads it\n\n{ROLE_SPECS[role]['description']}\n"]
+        out.append("## SOP\n")
     for n, step in enumerate(sop(role), 1):
         out.append(f"{n}. {step}")
     for name, rows in plan:
-        out.append(f"\n## {TITLES.get(name, name)}\n")
+        title = ZH_TITLES.get(name, name) if lang == "zh" else TITLES.get(name, name)
+        out.append(f"\n## {title}\n")
         for key, node in rows:
-            out.append(f"**{key.replace('_', ' ')}.** {rule_text(node).strip()}\n")
+            out.append(f"**{key.replace('_', ' ')}.** {rule_text(node, lang).strip()}\n")
             for dep in resolve(key, flat):
                 if dep not in drawn:
                     raise SystemExit(f"{key} depends on {dep}, which {role} does not read")
-                where = "above" if drawn[dep] < drawn[key] else "below"
-                out.append(f"  depends on **{dep.replace('_', ' ')}** (drawn {where})\n")
+                if lang == "zh":
+                    where = "上" if drawn[dep] < drawn[key] else "下"
+                    out.append(f"  取决于 **{dep.replace('_', ' ')}**（画在{where}方）\n")
+                else:
+                    where = "above" if drawn[dep] < drawn[key] else "below"
+                    out.append(f"  depends on **{dep.replace('_', ' ')}** (drawn {where})\n")
     return "\n".join(out)
 
 
@@ -199,7 +218,8 @@ def main() -> int:
     flat_all = {k: v for b in sections().values() for k, v in b.items()}
     args = sys.argv[1:]
     if "--render" in args:
-        print(render(args[args.index("--render") + 1]), end="")
+        lang = args[args.index("--lang") + 1] if "--lang" in args else "en"
+        print(render(args[args.index("--render") + 1], lang), end="")
         return 0
     check = "--check" in args
     failures: list[str] = []
