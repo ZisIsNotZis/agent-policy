@@ -16,7 +16,7 @@ The 99% is counted over cases, not over rules: the moments a role must decide so
 | policy_worker | 15 | 15 | 0 | 0 | 0 |
 | **total** | **106** | **103** | **3** | **0** | **0** |
 
-103/106 stated and 3/106 delegated: 100% answerable by the law. Every cited name is in the role's own view; `tools/cases.py` refuses a citation its role does not read.
+103/106 stated and 3/106 delegated: 100% answerable by the law. Every cited name is in the role's own view; `tools/policy.py` refuses a citation its role does not read.
 
 ## root
 

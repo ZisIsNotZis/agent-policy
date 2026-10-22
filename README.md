@@ -14,10 +14,10 @@ means, and it sends a failure to the layer that should have prevented it.
 
 [AGENTS.yaml](AGENTS.yaml) is the whole law: every rule carries a trigger, a goal and an action, in
 Chinese and English side by side, plus the six role specs with their SOPs, the banned-word lexicon and the
-ceiling. Nothing else in this repository is a source. The sizes are printed by `python3 tools/law.py --check`
+ceiling. Nothing else in this repository is a source. The sizes are printed by `python3 tools/policy.py --check`
 rather than kept here.
 
-`python3 tools/build.py` writes one file per role into [agents/](agents): the role's SOP — the steps it runs
+`python3 tools/policy.py` writes one file per role into [agents/](agents): the role's SOP — the steps it runs
 in order, each naming its file or its command — then the rules that role reads, and nothing else. A role
 file is generated and never edited, and `--check` fails when one has drifted.
 
@@ -53,13 +53,9 @@ sh tools/install-agents.sh --check  # fail if one is missing or points elsewhere
 ## Check it
 
 ```sh
-python3 tools/law.py --check    # the corpus: shape, scope, dependencies, banned words, shields
-python3 tools/build.py --check  # the six role files against the corpus
-python3 tools/contract.py --self-test  # the field names read from the law, the command, the wall-clock, the byte limit
-python3 tools/cases.py          # every case cites a sentence its role reads, and the score equals its rows
-python3 tools/counts.py         # the per-section table against the corpus
-python3 tools/dupes.py          # no two rules share a band verbatim
-sh tools/check.sh               # all six
+python3 tools/policy.py         # check everything, then write agents/ and agents/zh/
+python3 tools/policy.py --check # check everything and write nothing
+sh tools/check.sh               # the same check, for a script
 ```
 
 The check also counts prohibitions against the `ceiling` block in `AGENTS.yaml`, so a rule cannot quietly
@@ -68,10 +64,10 @@ become a ban; and it refuses a role with no SOP, or an SOP step naming a file th
 ## The rest of the repository
 
 - `AGENTS.yaml` — the rules, the six role specs, the banned-word list and the ceiling. The only source.
-- `tools/law.py` — renders one role's view out of the corpus, and checks it.
+- `tools/policy.py` — one pass: every check, then the render. `tools/law.py` renders one view and checks the corpus.
 - `tools/build.py` — writes `agents/*.md` and the Chinese reading copy `agents/zh/*.md`.
 - `tools/contract.py` — checks a contract's identity, its floor and the lines above it before dispatch; `--template` prints the skeleton.
-- `tools/cases.py`, `tools/counts.py`, `tools/dupes.py` — the case list against the law, the section table against the corpus, and a copied band against its twin.
+- `tools/policy.py`, `tools/counts.py`, `tools/dupes.py` — the checks `policy.py` runs: the case list against the law, the section table against the corpus, a copied band against its twin.
 - `tools/install-agents.sh` — links the five role files into `~/.pi/agent/agents`.
 - `tools/check.sh` — one entry point.
 - `docs/roadmap/policy.md` — the roadmap; `docs/product/policy.md` — the product commitment; `docs/review/contract.md` — the review criteria.

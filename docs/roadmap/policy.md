@@ -1,12 +1,12 @@
 # Policy
 
-The product is the law in `AGENTS.yaml`, rendered to one agent definition per role under `agents/` and checked by `python3 tools/law.py --check`. This is the roadmap for that product.
+The product is the law in `AGENTS.yaml`, rendered to one agent definition per role under `agents/` and checked by `python3 tools/policy.py --check`. This is the roadmap for that product.
 
 ## Current facts
 
 - `AGENTS.yaml` is the only source: the rules, the six `role_specs`, the `lexicon.banned` list and the prohibition ceiling.
 - `agents/<role>.md` is the view a role reads; `AGENTS.md` does not exist. A view is generated and never edited.
-- `sh tools/check.sh` refuses a stale view, a rule with no scope, a banned word, a prohibition count over the ceiling, a dispatcher field set that drifted from the law, a case row that cites a sentence its role does not read or a score table that disagrees with its rows, a per-section count that drifted from the corpus, and two rules with the same band.
+- `sh tools/check.sh` refuses a stale view, a rule with no scope, a banned word, a prohibition count over the ceiling, a dispatcher field set that drifted from the law, a case row that cites a sentence its role does not read or a score table that disagrees with its rows, a duplicate key, a key in two sections, a key naming its own section, a per-section count that drifted from the corpus, and two rules with the same band. One command runs them: `python3 tools/policy.py --check`, or `sh tools/check.sh`.
 - `tools/contract.py` reads a contract's field names out of `AGENTS.yaml` — the identity, the six floor lines, the lines above the floor and the nine of a review contract — and refuses a contract short of them, `stop: none`, a `stop:` that only restates the wall-clock, the old field names, and a payload over 16384 bytes.
 - The workspace consumes this repository at a pinned submodule, so the text has one home and is still at the level an agent reads.
 - The current commit holds current facts; process and history live in git.
@@ -15,7 +15,7 @@ The product is the law in `AGENTS.yaml`, rendered to one agent definition per ro
 - The meta-rules are current: `problem_class`, `double_check`, `balance_default`, `timeout_clock`.
 - Every discussed wait carries one absolute moment and one detached timer (`timeout_clock`: now / one day / three days by the answer's cost, a lent period overriding, only the empty wait unlimited); `block_timeout`, `gates_hold` and `no_agreement_no_work` read that clock, and `no_sleep` names the timer instead of banning `sleep`.
 - The first balance slice is `ssot`, `kill`, `no_trash`, `contract_fields`, `verdicts`, `signal`, `gates_hold`, `go`, `result_not_inventory`, `block_timeout`; the test that decided the other 62 is in `docs/roadmap/balance_migration.md`; `law.py` renders a balance as when → goal. band. pull.
-- Every balance carries a goal; `python3 tools/law.py --check` refuses a balance with no `_goal`.
+- Every balance carries a goal; `python3 tools/policy.py --check` refuses a balance with no `_goal`.
 - The helpful rules are current: `understand`, `no_blind_agreement` and `brainstorm` are balances; `trace_requirements` merged into `understand`.
 - The RDI case is `docs/review/rdi_case.md`; `intake` carries the case, expectation, rule, observation, evidence and class.
 - Every rule that presents a live choice is a balance; the per-section count is in `docs/roadmap/balance_migration.md`, which `tools/counts.py` recomputes from the corpus and refuses if it drifts.
@@ -124,4 +124,4 @@ The ten `act` forms of the balance slice died: their keys now carry balances, an
 - `sh tools/check.sh` — the pass line.
 - `agents/*.md` — the generated views.
 - `docs/review/contract.md` — the review criteria.
-- `python3 tools/contract.py --template` — the contract skeleton, generated from the law's field names.
+- `python3 tools/policy.py --template` — the contract skeleton, generated from the law's field names.

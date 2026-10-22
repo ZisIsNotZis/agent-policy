@@ -12,7 +12,7 @@ A rule with no second live option stays an act; a second label for the same opti
 
 ## State
 
-The table is derived from the corpus and `python3 tools/counts.py` refuses a row that drifts; the corpus also holds the principles, which are neither acts nor balances.
+The table is derived from the corpus and `python3 tools/policy.py` refuses a row that drifts; the corpus also holds the principles, which are neither acts nor balances.
 
 | section | acts | balances |
 |---|---:|---:|
