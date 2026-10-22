@@ -94,7 +94,7 @@ Accept: `python3 tools/schema.py` writes every view in under two seconds; a corr
 
 ### 6_cleanup
 
-- [ ] `cleanup_files`: delete `tools/policy.py`, the checks that lived in it, and every reference to the old model.
+- [ ] `cleanup_files`: delete `tools/policy.py`, the checks that lived in it, every reference to the old model, and `AGENTS.next.yaml` after the swap.
 - [ ] `cleanup_review`: decide the fate of `docs/review/cases.md` — review artefact, or delete.
 - [ ] `cleanup_readme`: the README describes six files and one command.
 - [ ] `cleanup_hook`: `.githooks/pre-commit` runs `python3 tools/schema.py`, not the old tool.
@@ -102,6 +102,17 @@ Accept: `python3 tools/schema.py` writes every view in under two seconds; a corr
 - [ ] `cleanup_hidden`: confirm no `*` hidden-name logic exists anywhere; today it does not, and nothing reintroduces it.
 
 Accept: a search for every old name returns nothing but git history.
+
+### Migration notes
+
+The one-to-one pass writes `AGENTS.next.yaml`: flat, every rule in the new shape, no merges and no semantic changes. Observations that need a later pass:
+
+- `ssot`, `derived` and `inferable` overlap: a pointer is one way to keep one home, and no-duplication is ssot's consequence. Candidate merge, decided in the merge pass, not now.
+- `kill` and `change.supersede` are twins: one says delete the old name, the other says replace with no trace. Candidate merge.
+- `no_op` and `top_down` share the add-a-rule moment and test different things; keep both.
+- `ssot` probably needs `_depends_on: [chain]`; the manual links pass decides.
+- `rule_over_state` no longer names `migrate_on_touch`; the action is written out, so the link may go.
+- Every act has one `_how`, so its one-to-one form has **one** choice. The schema needs two. The acts are procedures, not menus; the merge pass decides whether a second choice exists, whether the procedure folds into a balance, or whether it is deleted.
 
 Worksets: `1_schema` and `5_tool` can start together, since the tool reads the schema; `2_data` after both; `3_links` after `yaml_names`; `4_split` after `links_scope`; `6_cleanup` last.
 
