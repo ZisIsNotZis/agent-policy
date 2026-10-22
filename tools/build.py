@@ -13,13 +13,13 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent.parent
 OUT = HERE / "agents"
 import yaml
-ROLES = tuple(yaml.safe_load((HERE / "law" / "roles.yaml").read_text(encoding="utf-8")))
+SPECS = yaml.safe_load((HERE / "AGENTS.yaml").read_text(encoding="utf-8"))["role_specs"]
+ROLES = tuple(SPECS)
 TITLES = {r: "# " + r.replace("_", " ").title() for r in ROLES}
 
 
 def fm(role):
-    import yaml
-    spec = yaml.safe_load((HERE / "law" / "roles.yaml").read_text(encoding="utf-8"))[role]
+    spec = SPECS[role]
     return "\n".join(["---", f"name: {role}", f"description: {json.dumps(spec['description'], ensure_ascii=False)}",
                       f"tools: {spec['tools']}", f"thinking: {spec['thinking']}",
                       "model: inherit", "systemPromptMode: replace",

@@ -24,14 +24,11 @@ from pathlib import Path
 import yaml
 
 HERE = Path(__file__).resolve().parent.parent
-LAW = HERE / "law"
 CORPUS = HERE / "AGENTS.yaml"
 RENDER_DIR = HERE / "agents"
-RENDER_ROOT = RENDER_DIR / "root.md"
 
 RULESETS = ("root", "manager", "worker", "researcher", "reviewer", "policy")
-ROLE_SPECS = yaml.safe_load((HERE / "law" / "roles.yaml").read_text(encoding="utf-8"))
-ROLES = tuple(ROLE_SPECS)
+META = ("role_specs", "lexicon", "ceiling")
 TITLES = {
     "laws": "Laws", "architecture": "Architecture", "speech": "Speech", "inbox": "Inbox",
     "records": "Records", "spend": "Spend", "scheduling": "Scheduling", "dispatch": "Dispatch",
@@ -47,23 +44,16 @@ def corpus() -> dict:
     return yaml.safe_load(CORPUS.read_text(encoding="utf-8"))
 
 
-def read(name: str) -> str:
-    return (LAW / name).read_text(encoding="utf-8") if (LAW / name).exists() else ""
+ROLE_SPECS = corpus()["role_specs"]
+ROLES = tuple(ROLE_SPECS)
 
 
 def banned_words() -> list[str]:
-    table = read("lexicon.md")
-    if "# Lexicon" in table:
-        table = table.split("# Lexicon", 1)[1]
-    return [w.strip() for line in table.splitlines() for w in line.split("|")[3:4]
-            for w in [x.strip() for x in w.split(",")] if w and not w.startswith("---")]
+    return list(corpus()["lexicon"]["banned"])
 
 
 def ceiling() -> int:
-    for line in read("ceiling").splitlines():
-        if line.startswith("prohibitions"):
-            return int(line.split()[1])
-    raise SystemExit("law/ceiling needs a `prohibitions N` line")
+    return int(corpus()["ceiling"]["prohibitions"])
 
 
 def prohibitions(text: str) -> int:
@@ -83,7 +73,7 @@ def resolve(key: str, nodes: dict) -> list[str]:
 
 
 def ruleset(role: str) -> str:
-    """A role reads one rule set; a flavour that behaves like a worker says so in law/roles.yaml."""
+    """A role reads one rule set; a flavour that behaves like a worker says so in `role_specs`."""
     return ROLE_SPECS[role]["ruleset"]
 
 
@@ -99,7 +89,19 @@ def rule_text(node: dict, lang: str = "en") -> str:
         raise SystemExit(f"{node.get('_name', 'a rule')} has no _goal; _text is gone")
     if node.get("_kind") == "balance":
         band = node["_between"]
-        return band.get(lang) or band["en"]
+        text = (band.get(lang) or band["en"]).rstrip()
+        if not text.endswith((".", "?", "!")):
+            text += "."
+        pull = node.get("_pull")
+        if pull:
+            text += " " + (pull.get(lang) or pull["en"]).rstrip()
+            if not text.endswith((".", "?", "!")):
+                text += "."
+        when = node.get("_when")
+        if when:
+            w = (when.get(lang) or when["en"]).rstrip(". ")
+            return w[0].lower() + w[1:] + " → " + text
+        return text
     goal = node["_goal"].get(lang) or node["_goal"]["en"]
     how = node.get("_how")
     when = node.get("_when")
@@ -115,7 +117,7 @@ def rule_text(node: dict, lang: str = "en") -> str:
 
 def frontmatter(role: str) -> str:
     """A role file is what the harness loads: it needs the block, and it must not inherit the project."""
-    spec = yaml.safe_load((LAW / "roles.yaml").read_text(encoding="utf-8"))[role]
+    spec = ROLE_SPECS[role]
     lines = ["---", f"name: {role}", f"description: {spec['description']}",
              f"tools: {spec['tools']}", f"thinking: {spec['thinking']}",
              "model: inherit", "systemPromptMode: replace",
@@ -125,14 +127,14 @@ def frontmatter(role: str) -> str:
 
 
 def sections():
-    """Every section that holds rules."""
-    return dict(corpus())
+    """Every section that holds rules; the role specs, lexicon and ceiling are metadata."""
+    return {k: v for k, v in corpus().items() if k not in META}
 
 
 def render(role: str) -> str:
     flat = {k: v for b in sections().values() for k, v in b.items()}
     drawn: set[str] = set()
-    out = [f"# Law, as {role} reads it\n"]
+    out = [f"# Law, as {role} reads it\n\n{ROLE_SPECS[role]['description']}\n"]
     for name, body in sections().items():
         rows = [(k, v) for k, v in body.items() if reads(role, v.get("scope", ["manager", "worker"]))]
         rows = [(k, v) for k, v in rows]
@@ -194,7 +196,7 @@ def main() -> int:
     targets = {r: RENDER_DIR / f"{r}.md" for r in ROLES}
 
 
-    for role in yaml.safe_load((LAW / "roles.yaml").read_text(encoding="utf-8")):
+    for role in ROLE_SPECS:
         for needed in ("systemPromptMode: replace", "inheritProjectContext: false",
                        "inheritGlobalContext: false"):
             if needed not in frontmatter(role):
@@ -216,8 +218,8 @@ def main() -> int:
     if failures:
         print("\n".join(f"FAIL {f}" for f in failures))
         return 1
-    print(f"ok: {len(views)} views, {len(corpus())} sections, "
-          f"{sum(len(b) for b in corpus().values())} nodes, {n} prohibitions, "
+    print(f"ok: {len(views)} views, {len(sections())} sections, "
+          f"{sum(len(b) for b in sections().values())} nodes, {n} prohibitions, "
           f"{len(banned_words())} banned words")
     return 0
 

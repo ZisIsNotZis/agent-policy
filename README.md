@@ -13,7 +13,8 @@ means, and it sends a failure to the layer that should have prevented it.
 ## One source, six projections
 
 [AGENTS.yaml](AGENTS.yaml) is the whole law: 396 rules, each with a trigger, a goal and an action, in
-Chinese and English side by side. Nothing else in this repository is a source.
+Chinese and English side by side, plus the role specs, the banned-word lexicon and the ceiling. Nothing
+else in this repository is a source.
 
 `python3 tools/build.py` writes one file per role into [agents/](agents): the rules that role reads, and
 nothing else. A role file is generated and never edited, and `--check` fails when one has drifted.
@@ -37,24 +38,35 @@ for the public — is not a role. It is a contract that names the rules it needs
 [AGENTS.md](AGENTS.md) is a symlink to `agents/root.md`, because a root launched directly by pi loads no role
 file and that is the file it gets. Subagents never see it: each role file turns project context off.
 
+## Install it
+
+The law is one checkout, but a child launched from a project resolves agents from `~/.pi/agent/agents`. Link the five dispatchable role files there; the command is idempotent and writes nothing inside this repository.
+
+```sh
+sh tools/install-agents.sh          # install or refresh the links
+sh tools/install-agents.sh --check  # fail if one is missing or points elsewhere
+```
+
 ## Check it
 
 ```sh
 python3 tools/law.py --check    # the corpus: shape, scope, dependencies, banned words, shields
 python3 tools/build.py --check  # the six role files against the corpus
-sh tools/check.sh               # both
+python3 tools/contract.py --self-test  # the dispatcher's field set, command, wall-clock and byte limit
+sh tools/check.sh               # all three
 ```
 
-The check also counts prohibitions against `law/ceiling`, so a rule cannot quietly become a ban.
+The check also counts prohibitions against the `ceiling` block in `AGENTS.yaml`, so a rule cannot quietly
+become a ban.
 
 ## The rest of the repository
 
-- `law/roles.yaml` — the six roles, their tools and their thinking level. The only place tuning lives.
-- `law/lexicon.md` — the banned-word table, refused in every generated file.
-- `law/ceiling` — the prohibition budget.
+- `AGENTS.yaml` — the rules, the six role specs, the banned-word list and the ceiling. The only source.
 - `tools/law.py` — renders one role's view out of the corpus, and checks it.
 - `tools/build.py` — writes `agents/*.md`.
+- `tools/contract.py` — checks a contract before dispatch; `--template` prints the skeleton.
+- `tools/install-agents.sh` — links the five role files into `~/.pi/agent/agents`.
 - `tools/check.sh` — one entry point.
+- `docs/roadmap/policy.md` — the roadmap; `docs/product/policy.md` — the product commitment; `docs/review/contract.md` — the review criteria.
 
-Historical snapshots of the four-role era and the migration ledger are under [docs/](docs); they are not
-current.
+Proposals live in the owning document's open questions, with their author and source. History lives in git.
