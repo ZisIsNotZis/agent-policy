@@ -16,7 +16,7 @@ The 99% is counted over cases, not over rules: the moments a role must decide so
 | policy_worker | 14 | 14 | 0 | 0 | 0 |
 | **total** | **94** | **91** | **3** | **0** | **0** |
 
-91/94 stated and 3/94 delegated: 100% answerable by the law. Every cited name is in the role's own view; `tools/law.py --check` refuses a scope that a view does not read.
+91/94 stated and 3/94 delegated: 100% answerable by the law. Every cited name is in the role's own view; `tools/cases.py` refuses a citation its role does not read.
 
 ## root
 
@@ -41,7 +41,7 @@ The 99% is counted over cases, not over rules: the moments a role must decide so
 | the session was killed and reopened | proceed | stated | `resume` |
 | you are told to stop | proceed | stated | `wind_down`, `safe_point` |
 | he leaves for a named period | authority | stated | `unattended`, `lent_scope` |
-| you are about to do something irreversible | authority | stated | `high_risk`, `pushes_hereditary` |
+| you are about to do something irreversible | authority | stated | `high_risk`, `secrets`, `pushes_hereditary` |
 
 ## manager
 
