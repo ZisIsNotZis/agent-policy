@@ -197,3 +197,109 @@ The table is the evidence of the pass. It grows section by section; a rule with 
 | `review_axes` | `how_not_what` | The step-shape axis is that rule. |
 | `review_cost` | — | The token price is the rule. |
 | `report_incomplete` | — | The unfinished acceptance and the next step are the rule. |
+
+## gates and degrees (18 rules)
+
+| rule | depends_on | why |
+|---|---|---|
+| `milestone_is_a_gate` | `vertical_slice` | The judgeable slice is that rule. |
+| `few_milestones` | — | The one question is the rule. |
+| `ship_at_gate` | — | Ship the real thing and hold dependants is the act. |
+| `gates_hold` | `timeout_clock`, `lent_scope` | The finite wait and the lent period are those rules. |
+| `invent_no_gate` | — | The small clear package is the test. |
+| `advance_stops` | — | The three stops are enumerated. |
+| `reach_agreement` | — | The four things are enumerated. |
+| `three` | — | It defines the degrees. |
+| `recommend` | — | The recommendation at that degree is the act. |
+| `decide` | `assent` | "Record it as assumed" is one of assent's levels. |
+| `silent` | — | The options and the cost are the act. |
+| `unattended` | `assent`, `lent_scope` | The assumed decisions and the named gates are those rules. |
+| `lent_scope` | `gates_hold` | A gate it does not name still waits — that is the hold rule. |
+| `mixed_attention` | — | The observation and the depth are the rule. |
+| `high_risk` | — | The list is enumerated. |
+| `absorb_risk` | — | Defusing inside your authority is the act. |
+| `secrets` | — | The value-based price is the rule. |
+| `covered_once` | — | Not asking twice is the act. |
+
+## writing (9 rules)
+
+| rule | depends_on | why |
+|---|---|---|
+| `rule_form` | — | Situation, act, completion, failure route are enumerated. |
+| `prose` | — | The order and the cuts are the rule. |
+| `no_significance_clause` | — | What to delete is enumerated. |
+| `no_hedging_known` | — | Assert or mark once is the act. |
+| `concrete` | — | Name the thing is the act. |
+| `user_language` | `expression_gap` | The gap is recorded and named by that rule. |
+| `human_shape_and_rule_shape` | — | Two shapes, two readers is the rule. |
+| `no_enumeration_invoice` | — | Re-derive the intent is the act. |
+| `how_not_what` | — | The file, the command, the check are the rule. |
+
+## change (15 rules)
+
+| rule | depends_on | why |
+|---|---|---|
+| `problem_class` | — | The four classes are enumerated. |
+| `signal` | `strongest_cure` | The rungs of the cure are that rule. |
+| `bidirectional` | — | The class travels up, the person grows — the rule. |
+| `strongest_cure` | — | The four rungs are enumerated. |
+| `intake` | `roadmap_shape` | The node it becomes is a roadmap node. |
+| `cut_repetition` | — | Search, then the smallest act, is the rule. |
+| `amend_by_replacement` | — | Replace or merge in the same act is the rule. |
+| `propagate_down` | — | Re-check down the chain is the act. |
+| `supersede` | — | Delete the trace and re-derive is the rule. |
+| `migrate_on_touch` | — | The minimal neighbour is the act. |
+| `lossless` | — | One row per claim is the rule. |
+| `scope_field` | `scope_composition` | What the scope list means is that rule. |
+| `coverage_check` | `scope_composition` | "Every rule declares a scope" reads that meaning. |
+| `scope_composition` | — | It defines the view. |
+| `write_stricter` | — | Stricter for the actor, slack for the reader, is the rule. |
+
+## docs shape, upkeep and resources (44 rules)
+
+| rule | depends_on | why |
+|---|---|---|
+| `chain` | — | It defines the layer. |
+| `layout` | — | One directory per layer is the rule. |
+| `files` | — | The four kinds of file are enumerated. |
+| `file_kind` | `render_is_written_not_read` | The render is the kind that may not be edited. |
+| `granularity` | — | Split only to reduce ambiguity is the rule. |
+| `rollup` | — | Compute, do not hand-write, is the act. |
+| `home` | — | The roadmap and the open decision are the rule. |
+| `agreement_state` | — | `aligning` and `agreed` are defined. |
+| `no_agreement_no_work` | `timeout_clock`, `lent_scope` | The finite wait and the lent period are those rules. |
+| `block_timeout` | `timeout_clock` | The tiers are measured on that clock. |
+| `timeout_clock` | `no_sleep` | The detached timer is that rule's command. |
+| `auto_advance` | `milestone_list` | The approved table is that rule. |
+| `agreement_node` | — | One node with owner and acceptance is the rule. |
+| `named_ids` | — | The number-name shape is the rule. |
+| `people` | — | The one file is the rule. |
+| `expression_gap` | — | Record first, name on the second, is the rule. |
+| `keep_evidence` | — | Keep the evidence and the command is the act. |
+| `resume` | — | Read the state, rerun the invalidated, is the rule. |
+| `stereotype` | — | The three shapes are enumerated. |
+| `partition` | — | One field, one value per group, is the rule. |
+| `checklist` | — | The eleven are enumerated. |
+| `resolvable` | — | Resolve the reference is the act. |
+| `rebuild_after_edit` | `render_is_written_not_read` | The render is regenerated, never edited. |
+| `render_is_written_not_read` | — | It defines the render. |
+| `adopt` | — | Read all, decide each layer, then convert — the rule. |
+| `migrate` | — | Idempotent, recorded, re-checked — the rule. |
+| `outdated` | — | Value decides, not age — the rule. |
+| `dead_code` | — | Reachability evidence is the rule. |
+| `read_once` | — | One read per revision is the act. |
+| `layout_first` | `layout` | The declared layout is that rule. |
+| `defect_surface` | — | Shift left, make failure visible — the rule. |
+| `efficiency` | — | Saving his time is the rule. |
+| `start_early` | — | Start what is ready — the act. |
+| `concurrency` | — | Real load and capacity — the rule. |
+| `overlap_waits` | — | Fill the wait — the act. |
+| `bounded_calibration` | — | One representative run — the rule. |
+| `recovery_reserve` | — | Headroom from conditions — the rule. |
+| `grant_recovery` | — | Confirm the jobs are dead — the act. |
+| `follow_toolchain` | — | The lock and the scripts — the rule. |
+| `bootstrap` | `readme` | The one command lives in the front door. |
+| `local_config_first` | — | Local config, then the source — the rule. |
+| `diagnose_network` | — | Diagnose before switching — the act. |
+| `cleanup_check` | — | Uncommitted, unpushed, children — the rule. |
+| `reproduce_or_artefact` | — | Reproduce or freeze — the rule. |

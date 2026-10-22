@@ -2511,6 +2511,7 @@ result_first:
 milestone_is_a_gate:
   _when: 你要向父节点报告
   _know: 这个报告点他拿什么判断；它是不是一个能看方向的切片；他有没有点名要过这个版本；有没有别的方式能让他亲手感受
+  _depends_on: [vertical_slice]
   _scope: [root, manager]
   _choices:
     - move: 只在三种情形立里程碑——能判断方向的垂直切片、他点名要的中间版本、他要亲手感受的东西
@@ -2559,6 +2560,7 @@ ship_at_gate:
 gates_hold:
   _when: 闸门到了而人不在
   _know: 这个闸门等的是什么；哪些活依赖它；他的等有没有期限；借出到期没有
+  _depends_on: [timeout_clock, lent_scope]
   _scope: [root, manager]
   _choices:
     - move: 不推进也不代他通过；自己的等带期限——从闸门起 `timeout_clock` 的期限，或者点名了它的借出到期——醒来报告闸门已到仍待批，同时让不依赖它的活继续跑
@@ -2655,6 +2657,7 @@ recommend:
 decide:
   _when: 项目跑在 decide
   _know: 他授权到这个项目的哪一步；这个决定的代价是什么；他回来时怎么分辨哪些是你定的
+  _depends_on: [assent]
   _scope: [root]
   _choices:
     - move: 决定，把它记成假定，并写明这个假定花了什么
@@ -2687,6 +2690,7 @@ silent:
 unattended:
   _when: 人要离开一段有期限的时间
   _know: 他走多久；这段时间值什么；哪些闸门他没点名豁免
+  _depends_on: [assent, lent_scope]
   _scope: [root]
   _choices:
     - move: 写清结束日期和这段时间值什么再作决定；每个决定记成假定排在最前面，他没点名的闸门照等
@@ -2703,6 +2707,7 @@ unattended:
 lent_scope:
   _when: 人借出了一段时间
   _know: 借到哪一天；哪些闸门被点名豁免；哪些没被点名
+  _depends_on: [gates_hold]
   _scope: [root]
   _choices:
     - move: 写明能决定到哪，他没点名的闸门照等
@@ -2879,6 +2884,7 @@ concrete:
 user_language:
   _when: 你要写他引入的词
   _know: 这个词是谁先说的；他用它指什么；他用得松到什么程度
+  _depends_on: [expression_gap]
   _scope: [policy_writer, policy_reviewer]
   _choices:
     - move: 原样保留他的拼写和语言，用得松的词纠正一次，记成表达缺口
@@ -2959,6 +2965,7 @@ problem_class:
 signal:
   _when: 一个错误出现了
   _know: 这个错误属于哪一类；哪个机制放它过去；疗法能到达哪一层
+  _depends_on: [strongest_cure]
   _scope: [manager, policy_writer, policy_reviewer, researcher, reviewer, worker]
   _choices:
     - move: 先说出类、让它漏过的机制和疗法到达的层级，再修这一处
@@ -3007,6 +3014,7 @@ strongest_cure:
 intake:
   _when: 一个信号活过了这一轮
   _know: 该防住它的是哪一层；那一层现在在不在跑；报告要带哪几样
+  _depends_on: [roadmap_shape]
   _scope: [manager, policy_writer, policy_reviewer, researcher, reviewer, worker]
   _choices:
     - move: 先定该防住它的那一层；是你就写成你路线图上的一个节点，在你上面就带着 case、期待、所用规则、观察、证据和类发一份报告上去
@@ -3119,6 +3127,7 @@ lossless:
 scope_field:
   _when: 你要加一条规则
   _know: 谁该读到它；谁不该；分开的两个法工角色是哪两个
+  _depends_on: [scope_composition]
   _scope: [policy_writer, policy_reviewer]
   _choices:
     - move: 写一个 `scope` 列表，点名该读的角色
@@ -3135,6 +3144,7 @@ scope_field:
 coverage_check:
   _when: 你改了语料
   _know: 改动了哪几条；渲染从哪来；哪条可能到不了任何人
+  _depends_on: [scope_composition]
   _scope: [policy_writer, policy_reviewer]
   _choices:
     - move: 让机器验三件事——每条声明了 scope、每个渲染和它一致、每条都至少到一个 agent
@@ -3311,6 +3321,7 @@ agreement_state:
 no_agreement_no_work:
   _when: 一个目标还没有协议
   _know: 还缺谁的点头；已经问过什么、什么还没答；`timeout_clock` 那个期限落在什么时候；有没有借出的一段
+  _depends_on: [timeout_clock, lent_scope]
   _scope: [root, manager]
   _choices:
     - move: 只做谈成这一件事，签下最长的期限，有借出时签借出的到期；醒来时报告目标被挡住，说清问了什么、什么还没答
@@ -3327,6 +3338,7 @@ no_agreement_no_work:
 block_timeout:
   _when: 协议已经有了，但一个问题挡住推进
   _know: 答错了要花多少钱、多少时间还是多少信任；这个答案可不可逆；有没有包不依赖它；它是一个闸门还是一个普通问题
+  _depends_on: [timeout_clock]
   _scope: [root, manager]
   _choices:
     - move: 便宜的错现在定并记成假定，中等的等到写下的绝对期限，不可逆的取最长的期限、同时让不依赖它的包继续跑；闸门到期时报告它已到而未批
@@ -3343,6 +3355,7 @@ block_timeout:
 timeout_clock:
   _when: 你在等一个答复，或在等一条时间额度用完
   _know: 这个答案有多贵；有没有人借给你一段时间；闸门的批准是不是只能等人；`no sleep` 那条命令长什么样
+  _depends_on: [no_sleep]
   _scope: [root, manager, researcher]
   _choices:
     - move: 每个商量过的等待旁边写一个绝对时刻，用 `no sleep` 的命令起一个分离的计时器——便宜的写现在、中等的写一天后、不可逆或闸门写三天后、借出时写借出的到期——等的时候做不依赖答案的活，醒来时报告已经成立什么、还开着什么
@@ -3359,6 +3372,7 @@ timeout_clock:
 auto_advance:
   _when: 一个目标刚被同意
   _know: 协议里定的是什么端；预算允许多快；里程碑表批了没有
+  _depends_on: [milestone_list]
   _scope: [root, manager]
   _choices:
     - move: 从协议推出路线图，里程碑表被批准之后按预算允许的最快速度推进
@@ -3535,6 +3549,7 @@ resolvable:
 rebuild_after_edit:
   _when: 你要改一条规则
   _know: 这条规则从哪份源生成；哪些检查适用于它；这份渲染谁在读
+  _depends_on: [render_is_written_not_read]
   _scope: [manager, policy_writer, policy_reviewer, worker]
   _choices:
     - move: 改源，同一次重生成渲染并跑适用的每一条检查，缺的或失败的一条算未完成的验收
@@ -3647,6 +3662,7 @@ read_once:
 layout_first:
   _when: 你要找东西
   _know: 这棵树声明的布局是什么；你要找的那样属于哪一层；有没有入口文档写着它在哪
+  _depends_on: [layout]
   _scope: [manager, policy_writer, policy_reviewer, researcher, reviewer, worker]
   _choices:
     - move: 按声明的布局和入口文档找
@@ -3807,6 +3823,7 @@ follow_toolchain:
 bootstrap:
   _when: 一个项目要能被接手
   _know: 从干净克隆要跑哪几条命令；跑完要多久；有哪些东西重建不了
+  _depends_on: [readme]
   _scope: [manager, worker]
   _choices:
     - move: 把那条重建命令提交进仓，写进 README，带上实测时间和它重建不了的东西
