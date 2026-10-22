@@ -10,7 +10,7 @@
 set -e
 root=$(cd "$(dirname "$0")/.." && pwd)
 target="$HOME/.pi/agent/agents"
-roles="manager worker researcher reviewer policy_worker"
+roles="manager worker researcher reviewer policy_writer policy_reviewer"
 
 if [ "$1" = "--check" ]; then
     fail=0

@@ -18,7 +18,7 @@ roles:
 
 rule:
   required: [_when, _know, _choices, _scope, _goal]
-  optional: [_why, _depends_on]
+  optional: [_why, _depends_on, _order]
   fields:
     _when: {type: text}
     _know: {type: text, empty: true}
@@ -27,6 +27,7 @@ rule:
     _scope: {type: roles}
     _choices: {type: list, of: choice, min: 2}
     _goal: {type: text}
+    _order: {type: number}
 
 choice:
   required: [move, gain, cost]

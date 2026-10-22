@@ -1,9 +1,10 @@
-"""The one tool: validate a rule file against AGENTS.schema.yaml.
+"""The one tool: validate the rule file against its schema, then render the views.
 
-    python3 tools/schema.py [file]        default AGENTS.yaml
+    python3 tools/schema.py            validate, render, write agents/<role>.md
+    python3 tools/schema.py --depth N  the same, with N levels of references pulled in
 
-The schema is read, never checked. Every failure names the rule and the field, and the file is
-not a place to extend the vocabulary: a field the schema does not name is a failure.
+There is no check-only mode and no second command. Validation happens once, on one parse; a
+failure stops the pass before anything is written. The schema is read, never checked.
 """
 from __future__ import annotations
 
@@ -14,8 +15,11 @@ from pathlib import Path
 import yaml
 
 ROOT = Path(__file__).resolve().parent.parent
+CORPUS = ROOT / "AGENTS.yaml"
 SCHEMA = ROOT / "AGENTS.schema.yaml"
-DEFAULT = ROOT / "AGENTS.yaml"
+ROLES = ROOT / "roles.yaml"
+BANNED = ROOT / "banned.yaml"
+OUT = ROOT / "agents"
 NAME = re.compile(r"^[a-z][a-z0-9_]*$")
 
 
@@ -28,7 +32,7 @@ def _mapping(loader, node, deep=False):
     for key_node, _ in node.value:
         key = loader.construct_object(key_node, deep=deep)
         if key in seen:
-            raise SystemExit(f"duplicate key {key!r} in the file")
+            raise SystemExit(f"duplicate key {key!r}")
         seen.add(key)
     return yaml.SafeLoader.construct_mapping(loader, node, deep=deep)
 
@@ -36,8 +40,18 @@ def _mapping(loader, node, deep=False):
 Strict.add_constructor(yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG, _mapping)
 
 
-def load(path: Path) -> dict:
+def load(path: Path):
     return yaml.load(path.read_text(encoding="utf-8"), Loader=Strict)
+
+
+def text_of(node: dict) -> str:
+    parts = []
+    for field in ("_when", "_know", "_goal"):
+        if node.get(field):
+            parts.append(str(node[field]))
+    for choice in node.get("_choices") or []:
+        parts += [str(choice.get("move", "")), str(choice.get("gain", "")), str(choice.get("cost", ""))]
+    return "\n".join(parts)
 
 
 def check_fields(where: str, node: dict, spec: dict, ids: set, roles: set, schema: dict) -> list[str]:
@@ -54,7 +68,10 @@ def check_fields(where: str, node: dict, spec: dict, ids: set, roles: set, schem
         if field not in spec["fields"]:
             continue
         kind = spec["fields"][field]["type"]
-        if kind == "text":
+        if kind == "number":
+            if not isinstance(value, int):
+                fails.append(f"{where}.{field}: not a number")
+        elif kind == "text":
             if not isinstance(value, str):
                 fails.append(f"{where}.{field}: not text")
             elif not value.strip() and not spec["fields"][field].get("empty"):
@@ -88,26 +105,102 @@ def check_fields(where: str, node: dict, spec: dict, ids: set, roles: set, schem
     return fails
 
 
-def main() -> int:
-    path = Path(sys.argv[1]) if len(sys.argv) > 1 else DEFAULT
-    schema = load(SCHEMA)
-    data = load(path)
-    if not isinstance(data, dict):
-        print("FAIL the file is not a map")
-        return 1
+def validate(corpus: dict, schema: dict, roles: dict, banned: list[str]) -> list[str]:
     fails = []
-    for key, node in data.items():
-        where = key
+    ids = set(corpus)
+    for key, node in corpus.items():
         if not NAME.match(key):
-            fails.append(f"{where}: the key is not a leading word")
+            fails.append(f"{key}: the key is not a leading word")
         if not isinstance(node, dict):
-            fails.append(f"{where}: not a map")
+            fails.append(f"{key}: not a map")
             continue
-        fails += check_fields(where, node, schema["rule"], set(data), set(schema["roles"]), schema)
+        fails += check_fields(key, node, schema["rule"], ids, set(roles), schema)
+        for term in banned:
+            if re.search(rf"(?<![A-Za-z]){re.escape(term)}(?![A-Za-z])", text_of(node), re.I):
+                fails.append(f"{key}: uses the banned term {term!r}")
+    return fails
+
+
+def reads(role: str, scope: list) -> bool:
+    """A role reads what names it; the root also reads manager, the law roles also read root+manager."""
+    if role in scope:
+        return True
+    if role == "root" and "manager" in scope:
+        return True
+    if role in ("policy_writer", "policy_reviewer") and ({"root", "manager"} & set(scope)):
+        return True
+    return False
+
+
+def choice_line(choice: dict) -> str:
+    return f"{choice['move']} — {choice['gain']}；代价：{choice['cost']}"
+
+
+def render(role: str, corpus: dict, roles: dict, depth: int) -> str:
+    included = {key for key, node in corpus.items() if reads(role, node.get("_scope") or [])}
+    frontier = set(included)
+    for _ in range(depth):
+        nxt = set()
+        for key in frontier:
+            for dep in corpus[key].get("_depends_on") or []:
+                if dep not in included:
+                    nxt.add(dep)
+        included |= nxt
+        frontier = nxt
+
+    steps = sorted(
+        (key for key in corpus
+         if key in included and isinstance(corpus[key].get("_order"), int)
+         and role in (corpus[key].get("_scope") or [])),
+        key=lambda key: corpus[key]["_order"],
+    )
+    body = [key for key in corpus if key in included and "_order" not in corpus[key]]
+
+    out = [f"# 法，{role} 读到的样子\n", (roles[role].get("description") or "") + "\n"]
+    if steps:
+        out.append("\n## 步骤\n")
+        for index, key in enumerate(steps, 1):
+            node = corpus[key]
+            out.append(f"{index}. **{key}.** {choice_line(node['_choices'][0])}\n")
+    for key in body:
+        node = corpus[key]
+        deps = [dep for dep in node.get("_depends_on") or [] if dep in included]
+        refs = " " + " ".join("@" + dep for dep in deps) if deps else ""
+        out.append(f"\n**{key}.** {node['_when']} → {node['_goal']}{refs}\n")
+        for choice in node["_choices"]:
+            out.append(f"  - {choice_line(choice)}\n")
+    return "".join(out)
+
+
+def frontmatter(role: str, spec: dict) -> str:
+    if role == "root":
+        return ""
+    desc = str(spec.get("description") or "").replace('"', "'")
+    return "\n".join([
+        "---", f"name: {role}", f'description: "{desc}"',
+        f"tools: {spec['tools']}", f"thinking: {spec['thinking']}",
+        "model: inherit", "systemPromptMode: replace",
+        "inheritProjectContext: false", "inheritGlobalContext: false",
+        "inheritSkills: false", "---", "",
+    ])
+
+
+def main() -> int:
+    depth = int(sys.argv[sys.argv.index("--depth") + 1]) if "--depth" in sys.argv else 0
+    schema = load(SCHEMA)
+    roles = load(ROLES)
+    banned = (load(BANNED) or {}).get("banned") or []
+    corpus = load(CORPUS)
+    fails = validate(corpus, schema, roles, banned)
     if fails:
         print("\n".join(f"FAIL {f}" for f in fails))
         return 1
-    print(f"ok: {len(data)} rules")
+    for role, spec in roles.items():
+        text = frontmatter(role, spec) + render(role, corpus, roles, depth)
+        path = OUT / f"{role}.md"
+        path.parent.mkdir(exist_ok=True)
+        path.write_text(text, encoding="utf-8")
+    print(f"ok: {len(corpus)} rules, {len(roles)} views, depth {depth}")
     return 0
 
 

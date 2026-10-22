@@ -1,7 +1,11 @@
 #!/bin/sh
-# The law's check runs on the commit instead of on memory: a view that no longer matches its
-# source is refused here, before it can be read as the law. Enable once per clone:
-#   git config core.hooksPath .githooks
+# The law's tool runs on the commit instead of on memory: it validates the corpus and rewrites
+# the views, and a view that changed is refused here until it is committed with the change.
+# Enable once per clone:  git config core.hooksPath .githooks
 set -e
 cd "$(git rev-parse --show-toplevel)"
-exec python3 tools/policy.py --check
+python3 tools/schema.py
+if ! git diff --quiet -- agents/; then
+    echo "the views changed; commit them with the change" >&2
+    exit 1
+fi

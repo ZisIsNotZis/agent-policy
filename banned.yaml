@@ -1,0 +1,35 @@
+banned:
+  - plan
+  - backlog
+  - sprint
+  - epic
+  - phase
+  - checkpoint
+  - task
+  - ticket
+  - story
+  - subtask
+  - batch
+  - wave
+  - stage
+  - role tier
+  - agent type
+  - supervisor
+  - subagent
+  - executor
+  - task runner
+  - update
+  - summary
+  - status report
+  - proof
+  - citation
+  - approval step
+  - signoff
+  - mapping
+  - inventory
+  - policy
+  - prompt
+  - rules file
+  - policy node
+  - entry
+  - item
