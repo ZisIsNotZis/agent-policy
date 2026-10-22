@@ -14,6 +14,9 @@ The product is the law in `AGENTS.yaml`, rendered to `AGENTS.md` and to one agen
 - An identifier carries a name in snake_case; a number is a prefix only when order matters (`1_snake_case`); the name is globally unique.
 - The meta-rules are current: `problem_class`, `double_check`, `balance_default`, `timeout_clock`.
 - The balance slice is current: `ssot`, `kill`, `no_trash`, `contract_fields`, `verdicts`, `signal`, `gates_hold`, `go`, `result_not_inventory`, `block_timeout`; `law.py` renders the pull.
+- The helpful rules are current: `understand`, `no_blind_agreement` and `brainstorm` are balances; `trace_requirements` merged into `understand`.
+- The RDI case is `docs/review/rdi_case.md`; `intake` carries the case, expectation, rule, observation, evidence and class.
+- The `laws` section is migrated: 15 acts are balances; 351 acts remain, 114 decision candidates, in `docs/roadmap/balance_migration.md`.
 - The review contract is `docs/review/contract.md`: the nine content checks, the case metric, the SOP test and the balance test.
 - No document cites a ticket, an issue or a session.
 
@@ -23,7 +26,7 @@ The result: every decision rule is a balance; each role's case list scores 99% `
 
 ```
 1_foundation (done)
-2_migration: law:  helpful_rewrite -> rdi_chain -> balance_migration
+2_migration: law:  helpful_rewrite (done) -> rdi_chain (done) -> balance_migration (laws done; 351 acts)
              docs: case_lists (six files, one writer each)
 3_measure:   baseline_score
 4_gap:       gap_migration
@@ -35,17 +38,17 @@ The result: every decision rule is a balance; each role's case list scores 99% `
 Worksets:
 
 - `1_foundation` is done: the meta-rules and the ten-rule balance slice.
-- `2_migration` starts now: the law stream is one writer, in order; the six case lists are separate files, so the root can dispatch them in parallel.
+- `2_migration` starts now: the law stream is one writer, in order; the six case lists are separate files, so the root can dispatch them in parallel. The `balance_migration` has the `laws` section done; the 351 acts remain.
 - `3_measure` after `case_lists`; `4_gap` after `3_measure` and the law stream.
 - `5_rerun`, `6_result`, `7_cleanup` in order.
 
 ### balance_migration (the big change)
 
-Outcome: every remaining `act` becomes a balance: two ends, each with a cost in the seven units and a payer, the band where the role acts, and the pull that says which way to yield.
+Outcome: every remaining decision act is a balance: two ends, each with a cost in the seven units and a payer, the band where the role acts, and the pull that says which way to yield; every procedure stays a how, with the balance that chooses it named; the `laws` section is done.
 Deliverable: one commit per law section; the regenerated views; the word delta.
-How: group the acts by law section (laws, architecture, speech, inbox, records, spend, scheduling, dispatch, review, gates, degrees, writing, change, git, operations, practice, roles, precedence, intent, delivery, docs_shape, upkeep, resources, proof_process, communication, prices); one work package per section; each rule gets its own ends, not a generic "do it / skip it"; a rule that cannot be written as a balance is a design defect, not an exception.
-Acceptance: the balance test in `docs/review/contract.md`; `check.sh` green; a fresh review; no duplicate or fake end.
-Owner: policy_worker; the fresh review is the root's dispatch.
+How: the section table, the decision/procedure method and the section order are in `docs/roadmap/balance_migration.md`; the `laws` section is the model; a rule that cannot be written as a balance is a design defect, not an exception.
+Acceptance: the balance test in `docs/review/contract.md`; `check.sh` green; a fresh review; the case coverage.
+Owner: the root dispatches one package per section in a worktree; the policy_worker merges the law file; the fresh review is the root's.
 
 ### case_lists
 
