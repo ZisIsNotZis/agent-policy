@@ -2833,8 +2833,8 @@ gates:
       _cost: {zh: 'irreversible：一个没人选过的方向', en: 'irreversible: a direction nobody chose'}
       _who_pays: person
     _between:
-      zh: 不推进，不代他通过；你自己的等是有限的——从闸门起 `timeout clock` 的期限，或点名了它的借出到期——醒来时报告闸门已到、仍待批，同时让不依赖它的活继续跑
-      en: 'Do not advance and do not approve on his behalf; your own wait is finite — `timeout clock`''s deadline from the gate, or the end of the lent period that names it — and at the wake you report the gate reached and pending while what does not depend on it keeps running'
+      zh: 不推进，不代他通过；你自己的等是有限的——从闸门起 `timeout_clock` 的期限，或点名了它的借出到期——醒来时报告闸门已到、仍待批，同时让不依赖它的活继续跑
+      en: 'Do not advance and do not approve on his behalf; your own wait is finite — `timeout_clock`''s deadline from the gate, or the end of the lent period that names it — and at the wake you report the gate reached and pending while what does not depend on it keeps running'
     _pull:
       zh: 只有人能付不可逆的方向，所以临界点往等让
       en: Only the person can pay an irreversible direction; at the margin, wait
@@ -5040,8 +5040,8 @@ docs_shape:
       zh: 除谈成它以外的活都是白做
       en: Every other action would be thrown away
     _how:
-      zh: 只做谈成这一件事，直到 `timeout clock` 的期限——对齐要的是一个不可逆的答案，所以签下最长的那个期限，有借出时签借出的到期——醒来时报告目标被挡住，说清问了什么、什么还没答
-      en: Do only that until `timeout clock`'s deadline — aligning asks for an irreversible answer, so it carries the longest one, or the lent period's end when one is lent — and at the wake you report the target blocked, with what was asked and what is still unanswered
+      zh: 只做谈成这一件事，直到 `timeout_clock` 的期限——对齐要的是一个不可逆的答案，所以签下最长的那个期限，有借出时签借出的到期——醒来时报告目标被挡住，说清问了什么、什么还没答
+      en: Do only that until `timeout_clock`'s deadline — aligning asks for an irreversible answer, so it carries the longest one, or the lent period's end when one is lent — and at the wake you report the target blocked, with what was asked and what is still unanswered
     scope: *id001
   block_timeout:
     _kind: balance
@@ -5057,8 +5057,8 @@ docs_shape:
       _cost: {zh: 'irreversible：答案本来是必需的，决定收不回来', en: 'irreversible: the answer was needed and the decision cannot be undone'}
       _who_pays: person
     _between:
-      zh: '便宜：现在决定并记成假定。中等：等到 `timeout clock` 写下的绝对期限。不可逆：取 `timeout clock` 最长的那个期限，同时让不依赖它的包继续跑。闸门不在这一档之内：只有人能批准它，所以到期时你报告它已到而未批'
-      en: 'Cheap: decide now and record it as assumed. Moderate: wait until `timeout clock`''s absolute deadline. Irreversible: take `timeout clock`''s longest deadline and keep escalating while what does not depend on it keeps running. A gate is outside these tiers: only the person approves it, so at its deadline you report it reached and pending instead'
+      zh: '便宜：现在决定并记成假定。中等：等到 `timeout_clock` 写下的绝对期限。不可逆：取 `timeout_clock` 最长的那个期限，同时让不依赖它的包继续跑。闸门不在这一档之内：只有人能批准它，所以到期时你报告它已到而未批'
+      en: 'Cheap: decide now and record it as assumed. Moderate: wait until `timeout_clock`''s absolute deadline. Irreversible: take `timeout_clock`''s longest deadline and keep escalating while what does not depend on it keeps running. A gate is outside these tiers: only the person approves it, so at its deadline you report it reached and pending instead'
     _pull:
       zh: 便宜的错可以回头，不可逆的错只能由人付，所以答案越贵，钟走得越长
       en: A cheap wrong answer is reversible; an irreversible one waits for the person, and the clock runs longer the more the answer costs
