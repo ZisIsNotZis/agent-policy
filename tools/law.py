@@ -62,7 +62,7 @@ def prohibitions(text: str) -> int:
 
 
 def resolve(key: str, nodes: dict) -> list[str]:
-    """A rule that names what it depends on is rendered with that rule beside it, once."""
+    """The rules `key` names as dependencies, once each; every one of them is a row of its own."""
     seen = {key}
     out = []
     for dep in nodes.get(key, {}).get("_depends", []):
@@ -137,22 +137,47 @@ def sections():
 
 
 def render(role: str) -> str:
+    """Each rule is drawn once, as its own row; a dependency is named, and the row it names is its text."""
     flat = {k: v for b in sections().values() for k, v in b.items()}
-    drawn: set[str] = set()
+    plan = [(name, [(k, v) for k, v in body.items()
+                    if reads(role, v.get("scope", ["manager", "worker"]))])
+            for name, body in sections().items()]
+    plan = [(name, rows) for name, rows in plan if rows]
+    # Every rule this view draws is a row, so a dependency's text is already drawn: `drawn` holds
+    # each row key and its position, and the dependency line points at it instead of repeating it.
+    drawn: dict[str, int] = {}
+    for _, rows in plan:
+        for key, _ in rows:
+            drawn[key] = len(drawn)
     out = [f"# Law, as {role} reads it\n\n{ROLE_SPECS[role]['description']}\n"]
-    for name, body in sections().items():
-        rows = [(k, v) for k, v in body.items() if reads(role, v.get("scope", ["manager", "worker"]))]
-        rows = [(k, v) for k, v in rows]
-        if not rows:
-            continue
+    for name, rows in plan:
         out.append(f"\n## {TITLES.get(name, name)}\n")
         for key, node in rows:
             out.append(f"**{key.replace('_', ' ')}.** {rule_text(node).strip()}\n")
             for dep in resolve(key, flat):
                 if dep not in drawn:
-                    drawn.add(dep)
-                    out.append(f"  depends on **{dep.replace('_', ' ')}**: {rule_text(flat[dep]).strip()}\n")
+                    raise SystemExit(f"{key} depends on {dep}, which {role} does not read")
+                where = "above" if drawn[dep] < drawn[key] else "below"
+                out.append(f"  depends on **{dep.replace('_', ' ')}** (drawn {where})\n")
     return "\n".join(out)
+
+
+def dependency_failures(flat_all: dict) -> list[str]:
+    """A dependency exists, and every role that reads the rule naming it also reads the dependency.
+
+    render() relies on this: it points at the dependency's row, so a view can only be drawn when
+    the dependency is a row of that view.
+    """
+    out: list[str] = []
+    for key, node in flat_all.items():
+        for dep in node.get("_depends", []):
+            if dep not in flat_all:
+                out.append(f"{key} depends on {dep}, which does not exist")
+            else:
+                for role in ROLES:
+                    if reads(role, node.get("scope", [])) and not reads(role, flat_all[dep].get("scope", [])):
+                        out.append(f"{key} depends on {dep}, which {role} may not read")
+    return out
 
 
 def main() -> int:
@@ -197,6 +222,12 @@ def main() -> int:
     for w in banned:
         failures.append(f"banned word {w!r}")
 
+    # A view points at a dependency instead of repeating it, so a broken dependency stops the render.
+    dep_failures = dependency_failures(flat_all)
+    if dep_failures:
+        print("\n".join(f"FAIL {f}" for f in dep_failures))
+        return 1
+
     views = {r: render(r) for r in ROLES}
     targets = {r: RENDER_DIR / f"{r}.md" for r in ROLES}
 
@@ -210,15 +241,6 @@ def main() -> int:
     n = prohibitions(views["root"])
     if n > ceiling():
         failures.append(f"the root view states {n} prohibitions against a ceiling of {ceiling()}")
-
-    for key, node in flat_all.items():
-        for dep in node.get("_depends", []):
-            if dep not in flat_all:
-                failures.append(f"{key} depends on {dep}, which does not exist")
-            else:
-                for role in ROLES:
-                    if reads(role, node.get("scope", [])) and not reads(role, flat_all[dep].get("scope", [])):
-                        failures.append(f"{key} depends on {dep}, which {role} may not read")
 
     if failures:
         print("\n".join(f"FAIL {f}" for f in failures))
