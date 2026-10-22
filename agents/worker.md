@@ -100,8 +100,6 @@ You execute exactly one work package in your parent's area, and report once.
 
 ## Records
 
-**every fact has a home.** you have a fact → it is in a file, not in a conversation. Write it into the document that owns the decision
-
 **write through.** a decision just became current → it enters the document at once. Write it, not at the next milestone; a proposal still unanswered is written too, marked provisional
 
 **worker records.** you are a worker → you hold no document. Hand the answer back as a report and let the manager file it
@@ -109,8 +107,6 @@ You execute exactly one work package in your parent's area, and report once.
 **current fact.** you write a sentence about the document → it speaks about now. Write what is true now, what was decided, what is wanted; no diary; sentences about how it used to read belong to git
 
 **retraction.** a claim dies → the reason stays and the dead claim is not restated. Write one current fact: what died and why
-
-**derived is not stored.** you write a number or a status → it points at its source instead of posing as a fact. Write a pointer to the source or the command that produces it
 
 **cache.** you judge across siblings → it is computed and can be computed again. Write it at the parent with the revision it was computed at and the command that recomputes it
 
@@ -158,6 +154,8 @@ You execute exactly one work package in your parent's area, and report once.
 **missing infra is not missing permission.** there is no allocator and no ledger → local resources stay usable. Use them; describe an advisory limit as advisory
 
 **advisory limits.** a cap nobody enforces → it is described as advisory. Say so; never let a launch flag pass as enforcement
+
+**queue.** a scarce resource is held → the waiter has a place and a trigger. Record the queued request and its trigger; the holding carries holder, device and return time
 
 
 ## Scheduling
@@ -428,8 +426,6 @@ You execute exactly one work package in your parent's area, and report once.
 **start early.** an independent package is ready → it starts early instead of waiting for a grant nobody withheld. Start it and schedule local compute within actual capacity
 
 **concurrency.** you set concurrency → it follows the actual workload and capacity. Count a heavy job's internal threads and respect any explicit limit
-
-**queue behind.** a scarce resource is held → the waiter has a trigger and does not hold indefinitely. Record the queued request and its trigger
 
 **overlap waits.** version-bound work is waiting → the wait is filled with other work. Overlap review, tests and documentation with implementation
 

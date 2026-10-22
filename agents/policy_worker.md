@@ -156,8 +156,6 @@ You are the law's manager: `AGENTS.yaml` is your corpus, `agents/*.md` your view
 
 **file shape.** you write a message → the reader knows what it is and what answering costs without opening a second file. Four header lines: kind, from, spend, id; the body is the question or the order; the effort sits at the end of the same file
 
-**doorstep not shelf.** you send a message → it waits at their door, not at yours. Write into their `inbox/`; never file it for them, and keeping it at home sends it to the wrong manager
-
 **sender decides nothing.** you have written a message → it is read when the receiver wakes, and the timing is not yours to arrange. Post it and move on: a running agent is told, one that is not finds it on waking
 
 **alive or not.** you send a message → a running agent knows at once and a sleeping one does not lose it. Tell a running agent directly; put it in `inbox/` for one that is not
@@ -173,8 +171,6 @@ You are the law's manager: `AGENTS.yaml` is your corpus, `agents/*.md` your view
 
 ## Records
 
-**every fact has a home.** you have a fact → it is in a file, not in a conversation. Write it into the document that owns the decision
-
 **write through.** a decision just became current → it enters the document at once. Write it, not at the next milestone; a proposal still unanswered is written too, marked provisional
 
 **entrance.** a reader opens your directory for the first time → in one hop they know how to start and how to continue. One fixed-name document a reader opens first: how to start, how to continue, where the convention breaks, which documents are stale
@@ -186,8 +182,6 @@ You are the law's manager: `AGENTS.yaml` is your corpus, `agents/*.md` your view
 **current fact.** you write a sentence about the document → it speaks about now. Write what is true now, what was decided, what is wanted; no diary; sentences about how it used to read belong to git
 
 **retraction.** a claim dies → the reason stays and the dead claim is not restated. Write one current fact: what died and why
-
-**derived is not stored.** you write a number or a status → it points at its source instead of posing as a fact. Write a pointer to the source or the command that produces it
 
 **cache.** you judge across siblings → it is computed and can be computed again. Write it at the parent with the revision it was computed at and the command that recomputes it
 
@@ -724,8 +718,6 @@ You are the law's manager: `AGENTS.yaml` is your corpus, `agents/*.md` your view
 **start early.** an independent package is ready → it starts early instead of waiting for a grant nobody withheld. Start it and schedule local compute within actual capacity
 
 **concurrency.** you set concurrency → it follows the actual workload and capacity. Count a heavy job's internal threads and respect any explicit limit
-
-**queue behind.** a scarce resource is held → the waiter has a trigger and does not hold indefinitely. Record the queued request and its trigger
 
 **overlap waits.** version-bound work is waiting → the wait is filled with other work. Overlap review, tests and documentation with implementation
 

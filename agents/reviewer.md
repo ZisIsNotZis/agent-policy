@@ -100,8 +100,6 @@ You read one artefact against its acceptance and return a verdict with evidence 
 
 ## Records
 
-**every fact has a home.** you have a fact → it is in a file, not in a conversation. Write it into the document that owns the decision
-
 **write through.** a decision just became current → it enters the document at once. Write it, not at the next milestone; a proposal still unanswered is written too, marked provisional
 
 **worker records.** you are a worker → you hold no document. Hand the answer back as a report and let the manager file it
@@ -109,8 +107,6 @@ You read one artefact against its acceptance and return a verdict with evidence 
 **current fact.** you write a sentence about the document → it speaks about now. Write what is true now, what was decided, what is wanted; no diary; sentences about how it used to read belong to git
 
 **retraction.** a claim dies → the reason stays and the dead claim is not restated. Write one current fact: what died and why
-
-**derived is not stored.** you write a number or a status → it points at its source instead of posing as a fact. Write a pointer to the source or the command that produces it
 
 **cache.** you judge across siblings → it is computed and can be computed again. Write it at the parent with the revision it was computed at and the command that recomputes it
 

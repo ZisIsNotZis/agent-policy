@@ -1239,18 +1239,6 @@ inbox:
     - from
     - spend
     - id
-  doorstep_not_shelf:
-    _kind: act
-    _when:
-      zh: 你要发一条消息
-      en: You send a message
-    _goal:
-      zh: 它在对方门口，不在你家里
-      en: It waits at their door, not at yours
-    _how:
-      zh: 写进对方 `inbox/`；不代他归档，留在自己家等于送错人
-      en: Write into their `inbox/`; never file it for them, and keeping it at home sends it to the wrong manager
-    scope: *id001
   sender_decides_nothing:
     _kind: act
     _when:
@@ -1324,23 +1312,6 @@ inbox:
       en: Change your own; leave everyone else's alone
     scope: *id001
 records:
-  every_fact_has_a_home:
-    _kind: act
-    _when:
-      zh: 你有一条事实
-      en: You have a fact
-    _goal:
-      zh: 它在文件里，不在对话里
-      en: It is in a file, not in a conversation
-    _how:
-      zh: 写进那个决定所在的那份文档
-      en: Write it into the document that owns the decision
-    scope:
-    - manager
-    - policy
-    - researcher
-    - reviewer
-    - worker
   write_through:
     _kind: act
     _when:
@@ -1437,23 +1408,6 @@ records:
     _how:
       zh: 写一条当前事实：什么死了、为什么
       en: 'Write one current fact: what died and why'
-    scope:
-    - manager
-    - policy
-    - researcher
-    - reviewer
-    - worker
-  derived_is_not_stored:
-    _kind: act
-    _when:
-      zh: 你要写一个数字或状态
-      en: You write a number or a status
-    _goal:
-      zh: 它指向来源，不冒充事实
-      en: It points at its source instead of posing as a fact
-    _how:
-      zh: 写成来源的指针或产生它的命令
-      en: Write a pointer to the source or the command that produces it
     scope:
     - manager
     - policy
@@ -1900,6 +1854,7 @@ spend:
     scope:
     - root
     - manager
+    - worker
     _fields:
     - holder
     - device
@@ -5616,20 +5571,6 @@ resources:
     _how:
       zh: 算上重作业的内部线程，尊重明确的上限
       en: Count a heavy job's internal threads and respect any explicit limit
-    scope:
-    - manager
-    - worker
-  queue_behind:
-    _kind: act
-    _when:
-      zh: 稀缺资源被占着
-      en: A scarce resource is held
-    _goal:
-      zh: 等的人有续跑条件，不无限期握着
-      en: The waiter has a trigger and does not hold indefinitely
-    _how:
-      zh: 记下排队请求和它的触发条件
-      en: Record the queued request and its trigger
     scope:
     - manager
     - worker
