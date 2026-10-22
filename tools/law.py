@@ -1,14 +1,8 @@
 """Render the corpus into one view per kind of agent, and check it.
 
-AGENTS.yaml is the source. Every node declares one of four blocks; a role reads a union of them:
-
-    root    = root_only  + root_manager + manager_worker
-    manager = root_manager + manager_worker
-    worker  = manager_worker + worker_only
-
-There is no fifth block. A manager is an agent whose parent is a manager, and the root is a
-manager whose parent is the person, so every manager rule reaches the root by construction and
-every shared rule reaches both remaining kinds.
+AGENTS.yaml is the source. A rule lists in `scope` every role that reads it. A role reads the
+rules that name it; the root also reads manager rules, and the law worker reads root, manager and
+policy rules. Nothing else is inherited.
 
 A view is its role's `sop` first, then the rules that role reads: the ordered steps come before
 the reference, and every step names a file or a command that `--check` resolves in this tree.

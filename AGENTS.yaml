@@ -3426,11 +3426,11 @@ change:
       zh: 你要理解一个角色的视图
       en: You read a role's view
     _goal:
-      zh: 你知道它是哪几块的并集
+      zh: 你知道哪些规则进得去
       en: You know which union it is
     _how:
-      zh: 根读除 worker 外全部；管理者读 root+manager 与 manager+worker；执行者读 manager+worker 与 worker；法工读 root+manager 和自己的法规则
-      en: The root reads all but worker-only; a manager reads root+manager and manager+worker; a worker reads manager+worker and worker-only; the law worker reads root+manager and its own law rules
+      zh: 视图是该角色 scope 里点名它的全部规则；根另读 manager，法工另读 root、manager 和自己的法规则
+      en: A view is every rule whose scope names the role; the root also reads manager, and the law worker also reads root, manager and its own law rules
     scope:
     - manager
     - policy

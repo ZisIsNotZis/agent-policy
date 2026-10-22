@@ -469,7 +469,7 @@ You are the law's manager: `AGENTS.yaml` is your corpus, `agents/*.md` your view
 
 **coverage check.** you change the corpus → three things are checked by machine. Every rule declares a scope, every render matches, no rule reaches nobody
 
-**scope composition.** you read a role's view → you know which union it is. The root reads all but worker-only; a manager reads root+manager and manager+worker; a worker reads manager+worker and worker-only; the law worker reads root+manager and its own law rules
+**scope composition.** you read a role's view → you know which union it is. A view is every rule whose scope names the role; the root also reads manager, and the law worker also reads root, manager and its own law rules
 
 **write stricter.** you write a rule → it is stricter than the behaviour that satisfies it. Leave the slack to the reader, not to the actor it constrains
 

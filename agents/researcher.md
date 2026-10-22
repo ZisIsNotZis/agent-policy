@@ -201,7 +201,7 @@ You answer one bounded question by reading widely and saying what the evidence s
 
 **lossless.** you migrate → no fact is lost. Each one lands in the model or retires with a reason; the ledger carries one row per source claim
 
-**scope composition.** you read a role's view → you know which union it is. The root reads all but worker-only; a manager reads root+manager and manager+worker; a worker reads manager+worker and worker-only; the law worker reads root+manager and its own law rules
+**scope composition.** you read a role's view → you know which union it is. A view is every rule whose scope names the role; the root also reads manager, and the law worker also reads root, manager and its own law rules
 
 
 ## Operations
