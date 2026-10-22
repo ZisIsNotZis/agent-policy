@@ -28,7 +28,7 @@ role reads, each with its choices priced.
 
 | Role | What it is for | Kind |
 |---|---|---|
-| `root` | the one node whose parent is the person | manager |
+| `root_manager` | the manager whose parent is the person; pi reads its view through `AGENTS.md` | manager |
 | `manager` | holds a directory, a document and a roadmap, and dispatches | manager |
 | `worker` | executes one work package and reports once | worker |
 | `researcher` | answers one bounded question and writes nothing | worker |
@@ -40,8 +40,8 @@ A worker launches nothing; a manager dispatches the reviewer of a returned packa
 
 ## Read it
 
-`agents/root.md` is the view a root reads, because a root launched directly by pi loads no role file and
-that is the file it gets. Subagents never see it: each role file turns project context off.
+`AGENTS.md` is the view the root manager reads: a symlink to `agents/root_manager.md`, because pi reads
+`AGENTS.md` for the project context. Subagents never see it: each role file turns project context off.
 
 ## Install it
 

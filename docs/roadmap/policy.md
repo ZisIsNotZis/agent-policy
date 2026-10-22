@@ -7,7 +7,7 @@ The law is a derivation tree, written once, rendered into English views with a C
 Two kinds, not seven.
 
 - **manager** is a level: it plans, splits, dispatches, collects, dispatches the review, runs the combined check, and keeps its own directory, document and roadmap. There can be zero managers or many levels.
-- **root_manager** is the manager whose parent is the person. It does everything a manager does, plus the person-facing part: the target agreement, the degrees, the gates, the final report. The harness entry stays `root`, because pi launches that file directly; the role in this law is `root_manager`.
+- **root_manager** is the manager whose parent is the person. It does everything a manager does, plus the person-facing part: the target agreement, the degrees, the gates, the final report. pi reads `AGENTS.md`, a symlink to `agents/root_manager.md`; the role is `root_manager` everywhere else.
 - **worker** executes one work package and reports once. It does not plan: no roadmap, no split, no dispatch, no review dispatch. It does the work in the package.
 
 Worker specializations, same kind, different subject:
@@ -68,7 +68,7 @@ Worksets: `role_model` first; `tree_skeleton` and `bilingual` can run per rule t
 
 ## Decisions
 
-- `harness_name`: the role is `root_manager`; the pi agent file stays `root.md` because the harness launches it. The tool maps the file name to the role; there is no second name.
+- `harness_name`: the role is `root_manager`; pi reads `AGENTS.md`, a symlink to `agents/root_manager.md`. The tool writes the view and refreshes the symlink.
 - `law_scope`: no universal scope. Every rule, the laws included, carries the scope of its actor: `atomic` goes to the policy roles that write rules, `ssot` to the document maintainers, `falsifiable` to every role that produces evidence. The scope pass decides each; none is exempt for being a law.
 - `reviewer_criteria`: the reviewer's view carries the verification rules; the work rules it judges arrive through its SOP's `_depends_on`, not through `_scope`.
 - `old_english`: the old English half is used where the Chinese is unchanged; where the Chinese changed, the English is rewritten. Stale English is not copied.
