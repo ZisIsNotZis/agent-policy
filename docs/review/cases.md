@@ -1,3 +1,5 @@
+> Bound to the pre-schema law. The quotations below are history, not current facts; the current law is `AGENTS.yaml` and `docs/roadmap/policy.md`.
+
 # Cases
 
 The 99% is counted over cases, not over rules: the moments a role must decide something by design. A case is one moment, one axis and one verdict, and the row cites the sentence that settles it.

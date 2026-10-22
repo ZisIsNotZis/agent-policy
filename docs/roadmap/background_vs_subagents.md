@@ -1,3 +1,5 @@
+> Bound to the pre-schema law. The quotations below are history, not current facts; the current law is `AGENTS.yaml` and `docs/roadmap/policy.md`.
+
 # Background tasks vs subagents
 
 ## Verdict
