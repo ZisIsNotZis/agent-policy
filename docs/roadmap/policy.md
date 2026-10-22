@@ -7,7 +7,7 @@ The product is the law in `AGENTS.yaml`, rendered to `AGENTS.md` and to one agen
 - `AGENTS.yaml` is the only source: the rules, the six `role_specs`, the `lexicon.banned` list and the prohibition ceiling.
 - `AGENTS.md` is a symlink to `agents/root.md`; `.pi/agents/*.md` are symlinks to the other five views. A view is generated and never edited.
 - `sh tools/check.sh` refuses a stale view, a rule with no scope, a banned word, a prohibition count over the ceiling and a dispatcher field set that drifted from the law.
-- `tools/contract.py` checks a contract's identity and six fields, refuses the old field names, and prints its byte count before dispatch.
+- `tools/contract.py` reads a contract's field names out of `AGENTS.yaml` — the identity, the six floor lines, the lines above the floor and the nine of a review contract — and refuses a contract short of them, `stop: none`, a `stop:` that only restates the wall-clock, the old field names, and a payload over 16384 bytes.
 - The workspace consumes this repository at a pinned submodule, so the text has one home and is still at the level an agent reads.
 - The current commit holds current facts; process and history live in git.
 - A proposal is a fact with `assent: assumed`, an author and a source; it lives in this document's open questions, not in a separate area. `work/` does not exist.
@@ -124,4 +124,4 @@ The ten `act` forms of the balance slice died: their keys now carry balances, an
 - `sh tools/check.sh` — the pass line.
 - `agents/*.md` — the generated views.
 - `docs/review/contract.md` — the review criteria.
-- `python3 tools/contract.py --template` — the contract skeleton, generated from the field set.
+- `python3 tools/contract.py --template` — the contract skeleton, generated from the law's field names.
