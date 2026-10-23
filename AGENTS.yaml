@@ -5975,27 +5975,30 @@ the_world_changes:
         en: A fact about this machine is written, sent to another, or acted on — what is installed, what is running, which port listens, which model is cached, whether a device is free. Not when the read and the act are the same command.
         zh: 关于这台机器的事实被写下、发给别人或被据以行动时——装了什么、在跑什么、哪个端口在听、哪个模型已缓存、某块设备是否空闲。读与用是同一条命令时不算。
       _know:
-        en: 'On 2026-10-23 a message to flashdb said postgres was absent from the box; three reads of the host — `which psql`, `which pg_ctl`, and a look under `/usr/lib/postgresql` — and not one read of the port. A postgres had been listening on 5432 the whole time, inside container jolly_lamarr, postgres:16, 16.15, so one `ss -ltnp` or `docker ps` would have refuted the claim at the moment it was sent. The mechanism is that the reads did not cover the surface the claim was about: a host `which psql` says nothing about a container on 5432, so three true host reads still add up to a claim about the box that nobody read. A second hazard has its own cause and its own cure: a read carries the moment it was taken and the machine moves under it, so a read taken nine days ago and acted on today is a different claim. The rule costs one command before a message and one stamp beside the fact; without them the false claim travels to another agent and is defended there. The observation that would make the mechanism wrong: a `docker ps` and an `ss -ltnp` finding no postgres on 5432 — then the message was right and only the moment was missing. Where a fact is read and used inside one command the rule costs nothing and adds nothing, and that is where it does not apply.'
-        zh: '2026-10-23 发给 flashdb 的消息说这台机器上没有 postgres；三次读都在宿主上——`which psql`、`which pg_ctl`、以及 `/usr/lib/postgresql` 目录——一次也没读端口。而一个 postgres 一直在 5432 上监听，在容器 jolly_lamarr 里，镜像 postgres:16，版本 16.15；断言发出的那一刻，一条 `ss -ltnp` 或 `docker ps` 就能推翻它。机制是：那几次读没有覆盖断言所关于的那一层——宿主上的 `which psql` 对 5432 上的容器什么也没说，所以三次为真的宿主读，加起来仍然是一条没人读过的、关于整台机器的断言。第二个危害另有起因、另有解法：一次读带着它被取的那一刻，而机器在这之下会移动，所以九天前取的读、今天据以行动，已经是另一个断言。这条实践的代价是发出消息前的一条命令，以及事实旁边的一个时间戳；没有它们，那个错误断言会传到另一个 agent 那里，并在那里被辩护。会出现什么观察让这个机制错：一次 `docker ps` 与 `ss -ltnp` 在 5432 上找不到 postgres——那么那条消息是对的，缺的只是那一刻。读与用发生在同一条命令里时，这条实践既不付出也不增加什么，那正是它不适用之处。'
+        en: 'On 2026-10-23 a message to flashdb said postgres was absent from the box; three reads of the host — `which psql`, `which pg_ctl`, and a look under `/usr/lib/postgresql` — and not one read of the port. A postgres had been listening on 5432 the whole time, inside container jolly_lamarr, postgres:16, 16.15, so one `ss -ltnp` or `docker ps` would have refuted the claim at the moment it was sent. The mechanism is that the reads did not cover the surface the claim was about: a host `which psql` says nothing about a container on 5432, so three true host reads still add up to a claim about the box that nobody read. A second hazard has its own cause and its own cure: a read carries the moment it was taken and the machine moves under it, so a read taken two weeks ago and acted on today is a different claim. The rule costs the reads that cover the claim before a message and one stamp beside the fact; without them the false claim travels to another agent and is defended there. The observation that would make the mechanism wrong: a `docker ps` and an `ss -ltnp` finding no postgres on 5432 — then the message was right and only the moment was missing. Where a fact is read and used inside one command the rule costs nothing and adds nothing, and that is where it does not apply.'
+        zh: '2026-10-23 发给 flashdb 的消息说这台机器上没有 postgres；三次读都在宿主上——`which psql`、`which pg_ctl`、以及 `/usr/lib/postgresql` 目录——一次也没读端口。而一个 postgres 一直在 5432 上监听，在容器 jolly_lamarr 里，镜像 postgres:16，版本 16.15；断言发出的那一刻，一条 `ss -ltnp` 或 `docker ps` 就能推翻它。机制是：那几次读没有覆盖断言所关于的那一层——宿主上的 `which psql` 对 5432 上的容器什么也没说，所以三次为真的宿主读，加起来仍然是一条没人读过的、关于整台机器的断言。第二个危害另有起因、另有解法：一次读带着它被取的那一刻，而机器在这之下会移动，所以两周前取的读、今天据以行动，已经是另一个断言。这条实践的代价是发出消息前读断言所覆盖的那几层，以及事实旁边的一个时间戳；没有它们，那个错误断言会传到另一个 agent 那里，并在那里被辩护。会出现什么观察让这个机制错：一次 `docker ps` 与 `ss -ltnp` 在 5432 上找不到 postgres——那么那条消息是对的，缺的只是那一刻。读与用发生在同一条命令里时，这条实践既不付出也不增加什么，那正是它不适用之处。'
       _goal:
-        en: A statement about the machine is true at the moment it was read, carries that moment and the way it was read, and is re-read over the surface it covers before a message or a decision acts on it.
-        zh: 关于机器的陈述在被读到的那一刻为真，带着那一刻和读它的方式，并在某条消息或某个决定据以行动之前，按它覆盖的那一层重读。
+        en: A statement about the machine is true at the moment it was read, carries that moment and the way it was read, is re-read over the surface it covers before a message or a decision acts on it, and where it could not be re-read is dated and is never what a message or a decision rests on as current.
+        zh: 关于机器的陈述在被读到的那一刻为真，带着那一刻和读它的方式，在某条消息或某个决定据以行动之前按它覆盖的那一层重读；无法重读时带上日期，且绝不被当作「当前」据以发出消息或作出决定。
       _how:
         en: '1. Write the moment and the read beside the fact, from `date -u +%FT%TZ` and the command’s own output, so a same-day answer and a two-week-old one never look alike.
 
 2. Before a message or a decision acts on the fact, re-read the surface the claim covers, not the same read again: a host check is not a port read — `ss -ltnp`, `docker ps`, `npm ls -g`, `ollama list`, `nvidia-smi` — and write what it now says.
 
-3. Where the read cannot be run again — the box is not reachable, the device is gone — write it as read on a named day, `as read 2026-10-23`, never as true today; the dated form retires when a message or a decision would act on it: the read is re-taken then, and in a document the manager owns the read is re-taken and the sentence kept current, `living_fact.present_tense`.'
+3. Where the read cannot be run again — the box is not reachable, the device is gone — write it as read on a named day, `as read 2026-10-23`, never as true today; when a message or a decision would act on it the read is re-taken then, and where it still cannot be taken the claim is not sent or decided on as current — the gap is named as a gap. In a document the manager owns the read is re-taken and the sentence kept current.'
         zh: '1. 在事实旁边写下那一刻与那次读：取自 `date -u +%FT%TZ` 与该命令自身的输出，让当天得到的答案与两周前的答案永不相似。
 
 2. 某条消息或某个决定据以行动之前，重读断言所覆盖的那一层，而不是把同一次读再跑一遍：宿主上的检查不是端口上的读——`ss -ltnp`、`docker ps`、`npm ls -g`、`ollama list`、`nvidia-smi`——并写下它现在说的话。
 
-3. 那次读无法再跑时——机器连不上、设备已经不在——写成在某一天读过，`as read 2026-10-23`，绝不写成今天仍为真；带日期的写法在某条消息或某个决定将据以行动时失效：那一刻重读；在 manager 自己的文档里，重读并把句子保持在当下，`living_fact.present_tense`。'
+3. 那次读无法再跑时——机器连不上、设备已经不在——写成在某一天读过，`as read 2026-10-23`，绝不写成今天仍为真；某条消息或某个决定将据以行动时，那一刻重读；若仍然无法重读，这条断言就不作为「当前」发出或据以决定——缺口就写成缺口。在 manager 自己的文档里，重读并把句子保持在当下。'
       _who:
       - root_manager
       - manager
       - worker
       - researcher
+      _comment:
+        why: The claim is recorded without a version, though the message is remembered as naming 18.6; that 18.6 is flashdb ticket 82's measurement (2026-10-18), while the port that was listening read 16.15. A claim carrying 18.6 would be refuted by a version measured on another surface, so the version stays out until the message's own words are in hand.
+        recheck_when: The 2026-10-23 message to flashdb is recovered verbatim — then quote its exact version beside the port read showing 16.15.
     source_order:
       _when:
         en: Two sources conflict.
