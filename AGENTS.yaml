@@ -747,14 +747,17 @@ words_are_lossy:
         - manager
         self_contained:
           _when:
-            en: A question is written.
-            zh: 写出一个问题。
+            en: A question is written, including one written inside a project and carried up to the person.
+            zh: 写出一个问题，包括在项目里写好、再往上带到人面前的那一种。
+          _know:
+            en: 'Carried up to the person on 2026-10-23 was sys_gal''s “M3 用 S2 关门、S1 挪进 M4 行不行” in the project''s handles and nothing else in their words; they answered the form instead of the question — “How am I supposed to understand what does those numbers even mean, our new rule explicitly forbids this kind of naming.” The mechanism is that a question travels up unchanged from a project''s record and nothing on the way asks whether the person can point at each noun: `name_concretely` was satisfied, because `S2` is concrete inside the project''s own frame, and `vocabulary` fires on a word the person introduced, not on a handle a project invented. The rule costs one pass over the nouns before the question is sent; without it the person spends a turn rejecting the words and the answer is still owed. The observation that would make the mechanism wrong: the person answering that sentence without asking what the numbers are.'
+            zh: '2026-10-23 被带到人面前的是 sys_gal 的「M3 用 S2 关门、S1 挪进 M4 行不行」，只有项目自己的把手，没有一个字是他们的话；他们回答的是形式而不是问题——「How am I supposed to understand what does those numbers even mean, our new rule explicitly forbids this kind of naming」。机制是：问题从项目的记录里原样往上走，路上没有任何一步问「人能否指出每个名词」：`name_concretely` 是满足的，因为 `S2` 在项目自己的框架里是具体的；而 `vocabulary` 是在人自己引入的词上触发，不在项目造出来的把手上触发。这条规则在发出之前只花一遍对名词的核对；没有它，人花一个回合的注意力去否掉这些字，而答案仍然欠着。会让这个机制不成立的观察：人没有问那些数字是什么，就直接回答了那句话。'
           _goal:
-            en: The person can answer from the question alone, without leaving it to look anything up.
-            zh: 人只凭这个问题就能回答，不必离开它去查任何东西。
+            en: The person can answer from the question alone, without leaving it to look anything up, and every noun in it is one they can point at in their own words.
+            zh: 人只凭这个问题就能回答，不必离开它去查任何东西；而且其中的每个名词都是他们能用自己话指出的东西。
           _how:
-            en: The thing, where it is, and what each option changes travel inside the question.
-            zh: 那件事、它在哪里、每个选项改变什么，都随问题一起带着。
+            en: 1. Each noun is held against the words the person has used, and a handle that lives only inside a project is replaced by what it names. 2. Where a noun cannot be written in their words, the question goes back to the project to be asked there. 3. The thing, where it is, and what each option changes travel inside the question.
+            zh: 1. 每个名词都拿人用过的词去核，只在项目内部活着的把手换成它所指的那样东西。2. 名词写不进他们的话里时，这个问题退回项目，在项目里问。3. 那件事、它在哪里、每个选项改变什么，都随问题一起带着。
           _who:
           - root_manager
           - manager
@@ -2383,8 +2386,8 @@ agent_context_is_finite:
         en: A piece of work is in front of a layer.
         zh: 一层面前出现一件工作时。
       _goal:
-        en: The piece is held by the layer that can carry it at the least cost in round trips and rework.
-        zh: 这件工作由能以最少往返和返工代价承载它的那一层持有。
+        en: The piece is held by the layer that owns it, at the least cost in round trips and rework among the ways of getting it there.
+        zh: 这件工作由拥有它的那一层持有；在把它送过去的各种方式里，取往返与返工代价最小的那一种。
       _who:
       - manager
       - worker
@@ -2401,6 +2404,22 @@ agent_context_is_finite:
         _who:
         - manager
         - worker
+      their_tree:
+        _when:
+          en: A piece of work sits in a tree another holder owns — a project read to learn what it holds, a file in a directory this layer does not hold, a message written on that project's behalf. Not when this layer holds the tree.
+          zh: 一件工作落在另一个持有者拥有的树里——为了解它持有什么而读一个项目、写一个本层并不持有的目录里的文件、代那个项目撰写消息。本层拥有那棵树时不算。
+        _know:
+          en: 'On 2026-10-23 root_manager edited `agent-policy/AGENTS.yaml` three times and wrote the policy prose and the law''s reason itself, and in one hour read nine mail files in full, submodule pins and five law commits; the person named the cost twice — “you should let schema-worker do schema stuff, not you… you don''t reach your hand into area that''s non of your business” and “you already used 20% context within this 1h, that''s not acceptable… you are orchestrator, you don''t do job”. The mechanism is that the file was already open in its context while it answered a question and a dispatch costs a round trip, so the cost test put the piece in the hand that was reading; nothing separated “the file I am reading” from “the tree I may write”. The same mechanism carried a question: `to_human.asking.self_contained` was paid because root_manager wrote sys_gal''s question up to the person instead of dispatching it, and a dispatched question arrives with the project''s own plain-name duty intact. The workspace''s `portfolio.md` (the record of what a root decides without looking inside a project) says the root learns a project by asking it, not by reading it, so the order in which projects are asked costs nothing. The rule costs one question to the holder per piece; without it a fact has two hands on it, the layer above trades its shape for detail, and the person pays for both. The observation that would make the mechanism wrong: a root_manager that read a project''s tree to answer one question and still placed the work with that project, which wrote its own file.'
+          zh: '2026-10-23，root_manager 亲手改 `agent-policy/AGENTS.yaml` 三次，自己写了 policy 文字和法则的理由；还在一个钟头里把九个 mail 文件整篇读完，读了子模块 pin 和五次 law 提交；人两次点名了它的代价——「you should let schema-worker do schema stuff, not you… you don''t reach your hand into area that''s non of your business」，以及「you already used 20% context within this 1h, that''s not acceptable… you are orchestrator, you don''t do job」。机制是：它一边答问题，那个文件已经开在它的上下文里，而一次派发要一个往返，于是代价测试把这件工作放进了正在读的那只手里；没有任何一步把「我正在读的文件」与「我可以写的树」分开。同一个机制还带上去了一句话：`to_human.asking.self_contained` 之所以付了账，是因为 root_manager 亲手把 sys_gal 的问题写到人面前，而没有派发它；而派发出去的问题到达时，项目自己的平白命名义务还完好。工作区的 `portfolio.md`（那份记录着根节点不必看进项目内部就能决定什么的文件）里写着：根节点靠问项目来认识项目，不靠读它，所以问的先后不花任何代价。这条规则每件工作只花一次向持有者的提问；没有它，一个事实有两只手碰过，上面那层拿形状换了细节，而人两边都付了账。会让这个机制不成立的观察：一个 root_manager 读了一个项目的树来回答一个问题，仍然把工作交给了那个项目，而文件是项目自己写的。'
+        _goal:
+          en: The piece is done by the holder of the tree it lands in, so no fact has a second hand on it and this layer's context keeps the tree's shape rather than its detail.
+          zh: 这件事由它所落进的那棵树的持有者来做，于是没有任何事实被第二只手碰过，而本层的上下文留着树的形状，而不是它的细节。
+        _how:
+          en: '1. The holder is named from two reads at most — the entrance that says who holds the tree, a project''s own `AGENTS.md`, and the message the project filed to this layer. 2. The piece is dispatched to that holder as a package whose acceptance says what this layer must be able to decide when it returns; for the law''s writer it lands as one file in `inbox/`, never as an edit to `AGENTS.yaml`. 3. A file already open in this layer''s context is not a permission to write it, what lies deeper in the tree is asked of its holder rather than read except the line a contract is written from, the round-trip price does not enter the choice, and where no holder is named the person names one.'
+          zh: '1. 持有者从最多两次读里点出——说明谁拥有这棵树的入口（项目自己的 `AGENTS.md`），以及项目递给这一层的消息。2. 这件工作作为一个包派发给那个持有者，验收写明它回来后本层要能判断什么；对法则的写作者来说，它落成 `inbox/` 里的一个文件，绝不是对 `AGENTS.yaml` 的编辑。3. 文件已经开在本层上下文里，不是可以写它的许可；树里更深的东西问它的持有者，而不是去读（写契约所依据的那一行除外）；往返的代价不进入这个选择；没有持有者时，由人点一个。'
+        _who:
+        - root_manager
+        - manager
       package_shape:
         _when:
           en: A work package is cut.
@@ -4401,7 +4420,7 @@ models_are_stochastic:
         _how:
           en: '1. Read the slice and the full `AGENTS.yaml`.
 
-            2. For every node, judge `_when` (precise, may contain when-not), `_fact` (objective, not rendered), `_goal` (final ideal state, every criterion), `_how` (golden SOP: numbered steps, commands, files and folders), `_know` (actual project details; an impression, not an investigation; no 大道理; only with `_how`), `_who` (exact roles from `roles.yaml`; no role inflation).
+            2. For every node, judge `_when` (precise, may contain when-not), `_fact` (objective, not rendered), `_goal` (final ideal state, every criterion), `_how` (golden SOP: numbered steps, commands, files and folders), `_know` (the reason, and the read behind it where the reason rests on a fact about the world — the read exists and says what the sentence says; no 大道理; only with `_how`), `_who` (exact roles from `roles.yaml`; no role inflation).
 
             3. Apply `deletion_test`, `one_subject`, `replace_in_place` and `search_before_edit`.
 
@@ -4412,7 +4431,7 @@ models_are_stochastic:
             6. Check `en` and `zh` say the same thing.'
           zh: '1. 读切片和完整的 `AGENTS.yaml`。
 
-            2. 对每个节点判 `_when`（精确，可含 when-not）、`_fact`（客观，不渲染）、`_goal`（最终理想状态，所有判据）、`_how`（黄金 SOP：编号步骤、命令、文件和文件夹）、`_know`（具体项目细节；印象不是调查；不是大道理；只和 `_how` 一起）、`_who`（`roles.yaml` 里精确的角色；不膨胀）。
+            2. 对每个节点判 `_when`（精确，可含 when-not）、`_fact`（客观，不渲染）、`_goal`（最终理想状态，所有判据）、`_how`（黄金 SOP：编号步骤、命令、文件和文件夹）、`_know`（理由，以及理由依赖关于世界的事实时背后那次读——那次读存在，而且说的就是这句话说的；不是大道理；只和 `_how` 一起）、`_who`（`roles.yaml` 里精确的角色；不膨胀）。
 
             3. 应用 `deletion_test`、`one_subject`、`replace_in_place`、`search_before_edit`。
 
@@ -5246,14 +5265,14 @@ the_world_changes:
           en: The note reaches the hand that can change the practice.
           zh: note 到达能改做法的那只手。
         _how:
-          en: The note goes up one level at a time; each manager collects and forwards; Root only hands it to Policy Worker or Policy Reviewer; a worker does not contact Policy directly.
-          zh: note 一层一层往上；每层 manager 收集并转交；Root 只把它交给 Policy Worker 或 Policy Reviewer；worker 不直接找 Policy。
+          en: The note goes up one level at a time; each manager collects and forwards; root_manager only hands it to policy_worker or policy_reviewer, as one file in `inbox/` on that side; a worker does not contact policy directly.
+          zh: note 一层一层往上；每层 manager 收集并转交；root_manager 只把它交给 policy_worker 或 policy_reviewer，作为那一侧 `inbox/` 里的一个文件；worker 不直接找 policy。
         _who:
         - manager
         - root_manager
         _know:
-          en: Root does not collect; it routes.
-          zh: Root 不收集，只路由。
+          en: root_manager does not collect; it routes. Until 2026-10-23 there was no receiving side in the law's repository, so a hand-off could only be obeyed by editing the law — the defect that let a note's carrier and the law's writer be the same hand.
+          zh: root_manager 不收集，只路由。2026-10-23 之前，法则仓库里没有接收的那一侧，于是一次交接只能靠改法来完成——正是这个缺陷让一条 note 的运送者和法则的写作者成了同一只手。
       write_policy:
         _when:
           en: The signal reaches the law's writer.
@@ -5301,14 +5320,14 @@ the_world_changes:
             en: A rule is written into the tree.
             zh: 把一条规则写进树里时。
           _goal:
-            en: 'The rule’s final state is clear, its `_how` is one actionable SOP line, its `_know` is the reason where the rule rests on a fact a reader would not infer, and its `_who` is written once at the head or inherited.'
-            zh: '规则的最终状态清楚，`_how` 是一行可执行的 SOP，规则若依赖读者无法自己推得的事实，`_know` 就是那个理由；`_who` 在头部写一次或被继承。'
+            en: 'The rule’s final state is clear, its `_how` is one actionable SOP line, its `_know` is the reason where the rule rests on a fact a reader would not infer and carries the read behind it where the reason rests on a fact about the world, and its `_who` is written once at the head or inherited.'
+            zh: '规则的最终状态清楚，`_how` 是一行可执行的 SOP；规则若依赖读者无法自己推得的事实，`_know` 就是那个理由，理由依赖关于世界的事实时还带着背后那次读；`_who` 在头部写一次或被继承。'
           _how:
-            en: '1. Read the node’s parent and the roadmap’s current fact; hold the names, paths and roles. 2. Write `_fact`: the objective facts related to this node; omit it if there are none. 3. Write `_when`: the precise condition, including when-not where needed; not “all time”. 4. Write `_know`: the reason — what was chosen, why now, the price paid, and the observation that would make it wrong; write it where the rule rests on a fact a reader would not infer. 5. Write `_goal`: the final ideal state, with every criterion. 6. Write `_how`: one line, specific and actionable — files, commands or places — numbered where the act has more than one step; where the act has no file or command behind it, the tool counts it in its queue, and a deliberate exception is recorded in `_comment: {why, recheck_when}`. 7. Write `_who` only where the node’s readers differ from its parent’s; it is inherited otherwise. 8. Check: no `_know` without `_how`, no `_how` without `_goal`, no invented field; run `tools/policy.py`.'
-            zh: '1. 读节点的上一级和路线图当前的事实；把名字、路径、角色拿在脑子里。 2. 写 `_fact`：与这个节点相关的客观事实；没有就不写。 3. 写 `_when`：精确条件，需要时写 when-not；不写“all time”。 4. 写 `_know`：理由——选了什么、为何是现在、付了什么代价、出现什么观察会让它错；只在规则依赖读者无法自己推得的事实时才写。 5. 写 `_goal`：最终理想状态，所有判据都写上。 6. 写 `_how`：一行，具体可执行——文件、命令或位置——动作多于一步时编号；动作背后没有文件或命令时，工具把它计入队列，刻意的例外记进 `_comment: {why, recheck_when}`。 7. 只在节点的读者与其上一级不同时才写 `_who`；否则继承。 8. 检查：没有 `_how` 不写 `_know`，没有 `_goal` 不写 `_how`，不编字段；跑 `tools/policy.py`。'
+            en: '1. Read the node’s parent and the roadmap’s current fact; hold the names, paths and roles. 2. Write `_fact`: the objective facts related to this node; omit it if there are none. 3. Write `_when`: the precise condition, including when-not where needed; not “all time”. 4. Write `_know`: the reason — what was chosen, why now, the price paid, and the observation that would make it wrong — and where the reason rests on a fact about the world, the read that produced it beside the instance, with the file, the command and the number it showed; write it where the rule rests on a fact a reader would not infer. 5. Write `_goal`: the final ideal state, with every criterion. 6. Write `_how`: one line, specific and actionable — files, commands or places — numbered where the act has more than one step; where the act has no file or command behind it, the tool counts it in its queue, and a deliberate exception is recorded in `_comment: {why, recheck_when}`. 7. Write `_who` only where the node’s readers differ from its parent’s; it is inherited otherwise. 8. Check: no `_know` without `_how`, no `_how` without `_goal`, no invented field; run `tools/policy.py`.'
+            zh: '1. 读节点的上一级和路线图当前的事实；把名字、路径、角色拿在脑子里。 2. 写 `_fact`：与这个节点相关的客观事实；没有就不写。 3. 写 `_when`：精确条件，需要时写 when-not；不写“all time”。 4. 写 `_know`：理由——选了什么、为何是现在、付了什么代价、出现什么观察会让它错；理由若依赖一个关于世界的事实，就把产出它的那次读写在实例旁边，带上文件、命令与它显示的数字；只在规则依赖读者无法自己推得的事实时才写。 5. 写 `_goal`：最终理想状态，所有判据都写上。 6. 写 `_how`：一行，具体可执行——文件、命令或位置——动作多于一步时编号；动作背后没有文件或命令时，工具把它计入队列，刻意的例外记进 `_comment: {why, recheck_when}`。 7. 只在节点的读者与其上一级不同时才写 `_who`；否则继承。 8. 检查：没有 `_how` 不写 `_know`，没有 `_goal` 不写 `_how`，不编字段；跑 `tools/policy.py`。'
           _know:
-            en: 'The project is `agent-policy`; the law is `AGENTS.yaml`; the schema is `AGENTS.schema.yaml`; the roles are `roles.yaml`; the checker is `tools/policy.py`.'
-            zh: '项目是 `agent-policy`；法律是 `AGENTS.yaml`；schema 是 `AGENTS.schema.yaml`；角色在 `roles.yaml`；checker 是 `tools/policy.py`。'
+            en: 'The project is `agent-policy`; the law is `AGENTS.yaml`; the schema is `AGENTS.schema.yaml`; the roles are `roles.yaml`; the checker is `tools/policy.py`. A `_know` written from mechanism and refuted by the record: `output_cap._know` said a call cut at its cap “has been paid for in full” — false, billing is metered per produced token — and then that “its answer was unusable” — false, 7 of the 42 truncated draws still matched the reference and were counted. The 42 rows sat in the same tree, and two review rounds were spent on prose no reader of the rule ever sees. The observation that would make the mechanism wrong: a `_know` written from mechanism that the record, read afterwards, confirmed.'
+            zh: '项目是 `agent-policy`；法律是 `AGENTS.yaml`；schema 是 `AGENTS.schema.yaml`；角色在 `roles.yaml`；checker 是 `tools/policy.py`。一条从机制写出来、被记录推翻的 `_know`：`output_cap._know` 先说被裁到上限的调用「已经按全价付过」——假，计费按产出的 token 计；再说「它的答案不可用」——假，42 次截断里还有 7 次对上了参考并被计入。那 42 行就放在同一棵树里，而两轮评审花在了规则读者根本看不到的文字上。会让这个机制不成立的观察：一条从机制写出的 `_know`，事后读记录时被记录确认。'
           _who:
           - policy_reviewer
           - policy_worker
@@ -5339,15 +5358,16 @@ the_world_changes:
             en: A rule is written or changed.
             zh: 书写或改动一条规则时。
           _goal:
-            en: The rule carries the reason it exists, the reason points one level up, and the chain ends at a root fact.
-            zh: 规则带着它存在的理由，理由指向上一级，链终止于一条根事实。
+            en: The rule carries the reason it exists — the one `fields` step 4 lays out — the reason points one level up, and the chain ends at a root fact.
+            zh: 规则带着它存在的理由——`fields` 第 4 步列出的那一个——理由指向上一级，链终止于一条根事实。
           _how:
-            en: '1. Write `_know` as the reason: what was chosen, why now, the price paid, and the observation that would make it wrong. 2. Let the chain stop there — the parent carries the reason above it, and the roots (`words_are_lossy`, `tools_fail` and the rest) carry none. 3. Do not restate the `_goal`, write a moral, or run an investigation; those are not reasons.'
-            zh: '1. 把 `_know` 写成理由：选了什么、为何是现在、付了什么代价，以及出现什么观察会让它错。 2. 让链到此为止——上一级承载再往上的理由，根事实（`words_are_lossy`、`tools_fail` 等）不承载。 3. 不复述 `_goal`、不写大道理、不做调查；那些都不是理由。'
+            en: '1. Check that `_know` carries what `fields` step 4 lays out — the reason, and the read behind it where the reason rests on a fact about the world. 2. Let the chain stop there — the parent carries the reason above it, and the roots (`words_are_lossy`, `tools_fail` and the rest) carry none. 3. Do not restate the `_goal` and do not write a moral; the read behind a fact is not an investigation, and a fact nobody read is written as an untested mechanism with what would test it.'
+            zh: '1. 核对 `_know` 是否带着 `fields` 第 4 步列出的东西——理由，以及理由依赖关于世界的事实时背后那次读。2. 让链到此为止——上一级承载再往上的理由，根事实（`words_are_lossy`、`tools_fail` 等）不承载。3. 不复述 `_goal`，不写大道理；事实背后的那次读不是调查，没人读过的事实写成未经检验的机制，并写上什么能检验它。'
           _who:
           - policy_worker
           _depends_on:
           - root_first
+          - fields
       review_policy:
         _when:
           en: The practice change is written.
@@ -5420,11 +5440,11 @@ the_world_changes:
         en: No human is needed in this loop, and the class of the error is what travels.
         zh: 这个回路不需要人，传递的是错误的类别。
       _how:
-        en: Every node can err. The node notices it — a failure, self-realization, or the person’s correction — writes a compact note (context, error, cause, related), and sends it up one level. Each manager collects and forwards; Root only hands it to Policy Worker or Policy Reviewer. Policy Worker batches the notes, sees the root cause, and modifies the rule; the review verifies; the views regenerate; the next occurrence closes the loop.
-        zh: 每个节点都会错。节点先意识到——报错、自己发现、或人的纠正——写一条紧凑的 note（context、错误、原因、相关信息），往上一层送。每一层 manager 收集并转交；Root 只把它交给 Policy Worker 或 Policy Reviewer。Policy Worker 批量看 note，看根本原因，改规则；审查验证；视图重生成；下一次同类错误被接住，回路闭合。
+        en: Every node can err. The node notices it — a failure, self-realization, or the person’s correction — writes a compact note (context, error, cause, related), and sends it up one level. Each manager collects and forwards; root_manager only hands it to policy_worker or policy_reviewer. policy_worker batches the notes, sees the root cause, and modifies the rule; the review verifies; the views regenerate; the next occurrence closes the loop.
+        zh: 每个节点都会错。节点先意识到——报错、自己发现、或人的纠正——写一条紧凑的 note（context、错误、原因、相关信息），往上一层送。每一层 manager 收集并转交；root_manager 只把它交给 policy_worker 或 policy_reviewer。policy_worker 批量看 note，看根本原因，改规则；审查验证；视图重生成；下一次同类错误被接住，回路闭合。
       _know:
-        en: The class travels, not the incident; a worker cannot contact Policy directly; Root only routes; the fix is a rule change, rarely a new node.
-        zh: 走的是类别，不是事件；worker 不能直接找 Policy；Root 只路由；修的是规则，很少新增节点。
+        en: The class travels, not the incident; a worker cannot contact policy directly; root_manager only routes; the fix is a rule change, rarely a new node.
+        zh: 走的是类别，不是事件；worker 不能直接找 policy；root_manager 只路由；修的是规则，很少新增节点。
     _other_parents:
     - models_are_stochastic
     _depends_on: []
