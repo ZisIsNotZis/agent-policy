@@ -1,33 +1,34 @@
 #!/bin/sh
-# Link the role definitions where a child resolves them.
+# One link, one source: point the harness's agent directory at this checkout.
 #
-# A child launched with cwd inside a project resolves agents from that project and
-# from ~/.pi/agent/agents. The law lives in one checkout, so link it there instead
-# of copying it. Idempotent.
+# A child resolves agents from a project and from ~/.pi/agent/agents. The law lives
+# in one checkout, so the whole directory is a link to it instead of a copy of each
+# role file. A file with no frontmatter is skipped by the loader, which is how the
+# root_manager view stays an entrance and not an agent.
 #
-#     sh tools/install-agents.sh            install or refresh the links
-#     sh tools/install-agents.sh --check    fail if a link is missing or points elsewhere
+#     sh tools/install-agents.sh            install or refresh the link
+#     sh tools/install-agents.sh --check    fail if the link is missing or points elsewhere
 set -e
 root=$(cd "$(dirname "$0")/.." && pwd)
 target="$HOME/.pi/agent/agents"
-roles="manager worker researcher reviewer policy_writer policy_reviewer"
+want="$root/agents"
 
 if [ "$1" = "--check" ]; then
-    fail=0
-    for role in $roles; do
-        link="$target/$role.md"
-        want="$root/agents/$role.md"
-        if [ ! -L "$link" ] || [ "$(readlink -f "$link")" != "$(readlink -f "$want")" ]; then
-            echo "missing: $link -> $want"
-            fail=1
-        fi
-    done
-    [ "$fail" = 0 ] && echo "ok: $target"
-    exit "$fail"
+    if [ -L "$target" ] && [ "$(readlink -f "$target")" = "$(readlink -f "$want")" ]; then
+        echo "ok: $target -> $want"
+        exit 0
+    fi
+    echo "missing: $target -> $want"
+    exit 1
 fi
 
-mkdir -p "$target"
-for role in $roles; do
-    ln -sfn "$root/agents/$role.md" "$target/$role.md"
-done
-echo "ok: $target -> $root/agents"
+if [ -e "$target" ] && [ ! -L "$target" ]; then
+    if [ -f "$target/settings.json" ]; then
+        mv "$target/settings.json" "$HOME/.pi/agent/agents-settings.json"
+        echo "moved the stray settings file to ~/.pi/agent/agents-settings.json"
+    fi
+    rm -rf "$target"
+fi
+mkdir -p "$(dirname "$target")"
+ln -sfn "$want" "$target"
+echo "ok: $target -> $want"

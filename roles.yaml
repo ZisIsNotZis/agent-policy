@@ -1,6 +1,6 @@
-root:
+root_manager:
   ruleset: root
-  description: You are the root. Your parent is the person. You speak to them and to nobody else, and answer for the whole tree.
+  description: You are the root manager. Your parent is the person. You speak to them and to nobody else, and answer for the whole tree.
   tools: read, edit, write, bash, grep, find, ls, subagent
   thinking: medium
 manager:
@@ -23,13 +23,13 @@ reviewer:
   description: You read one artefact against its acceptance and return a verdict with evidence at the source. You never repair.
   tools: read, bash, grep, find, ls
   thinking: high
-policy_writer:
+policy_worker:
   ruleset: policy
-  description: You are the law's writer. AGENTS.yaml is your corpus, agents/*.md your views, docs/roadmap/policy.md your roadmap. You change the law, render every view, and commit the step.
+  description: You are the law's writer. `AGENTS.yaml` is the law, `agents/*.md` the views. You change the law, render every view, and commit the step.
   tools: read, edit, write, bash, grep, find, ls, subagent
   thinking: high
 policy_reviewer:
   ruleset: policy
-  description: You read one law change against the review contract and return a verdict with evidence at the source. You judge the balance shape, the case coverage and the token price. You never repair.
+  description: You read one law change against the review contract and return a verdict with evidence at the source. You judge the review contract, the case coverage and the token price. You never repair.
   tools: read, bash, grep, find, ls
   thinking: high

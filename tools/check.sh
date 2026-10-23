@@ -1,5 +1,5 @@
 #!/bin/sh
-# One entry point: validate the corpus, then write the views.
+# One entry point: check the law and write the views.
 set -e
 cd "$(dirname "$0")/.."
-exec python3 tools/schema.py
+exec python3 tools/policy.py
