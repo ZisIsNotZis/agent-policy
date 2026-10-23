@@ -4596,6 +4596,23 @@ resources_are_limited:
       _fact:
         en: Economy means one thing here — the person's waiting time; machine time and account money are not the person's waiting.
         zh: 在这里，经济只意味着一件事——人的等待时间；机器时间与账户里的钱都不是人的等待。
+    output_cap:
+      _when:
+        en: A metered call is given an output cap.
+        zh: 给一次计费的调用设定输出上限。
+      _know:
+        en: A call cut at its cap has been paid for in full and its answer is gone, so a tight cap wastes exactly the money it was meant to protect.
+        zh: 在上限处被截断的调用已经全额付过钱，而它的回答没了，所以过紧的上限浪费的正是它想省下的那笔钱。
+      _goal:
+        en: The cap is a safety valve against a runaway answer, never the place where a paid answer is cut short.
+        zh: 上限只是防止回答失控的保险阀，绝不是把付过钱的回答截断的地方。
+      _how:
+        en: The cap is set at ten times the longest output the call can legitimately produce, or at the model's own ceiling where that is lower, and it is written beside the call as ten times a named length rather than as a round number.
+        zh: 上限取该调用合法产出的最长长度的十倍；模型自身的上限更低时取模型上限。它写在调用旁边，写成“某个已命名长度的十倍”，而不是一个整数。
+      _who:
+      - root_manager
+      - manager
+      - worker
     cost_table:
       _when:
         en: A cost is written down.
