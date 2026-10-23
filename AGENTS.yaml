@@ -1465,14 +1465,14 @@ human_attention_is_finite:
           en: The corpus changes.
           zh: 语料发生变更。
         _know:
-          en: '`AGENTS.schema.yaml` names the fields and `bilingual`; `roles.yaml` names the actors; `banned.yaml` names the refused terms. The tool reads those and `AGENTS.yaml`. The tree is a forest of top-level facts; no `aim` and no facts map.'
-          zh: '`AGENTS.schema.yaml` 写明字段和 `bilingual`；`roles.yaml` 写明角色；`banned.yaml` 写明被禁的词。工具读这些和 `AGENTS.yaml`。 树是顶层事实的森林；没有 `aim`，也没有 facts map。'
+          en: '`AGENTS.schema.yaml` names the fields and `bilingual`; `roles.yaml` names the actors; `banned.yaml` names the refused terms. The tool reads those and `AGENTS.yaml`. The tree is a forest of top-level facts; no `aim` and no facts map. A check that recomputes another writer''s tree reports their state as this commit''s defect — on 2026-10-23 a hook running this tool on every commit refused two note deliveries with a YAML error from a half-written `AGENTS.yaml` in another writer''s hands.'
+          zh: '`AGENTS.schema.yaml` 写明字段和 `bilingual`；`roles.yaml` 写明角色；`banned.yaml` 写明被禁的词。工具读这些和 `AGENTS.yaml`。 树是顶层事实的森林；没有 `aim`，也没有 facts map。重算另一个写作者那棵树的检查，会把对方的状态报到这次提交头上——2026-10-23，一个在每次提交都跑这个工具的 hook，因为另一个人手里半写着的 `AGENTS.yaml` 报出 YAML 错误，拒掉了两次 note 投递。'
         _goal:
           en: 'Every change is checked by one tool before the views are written: the schema, the global names, the references, the banned words and the duplicate triggers.'
           zh: 每一次改动在写视图之前都由一个工具检查：schema、全局名字、引用、被禁的词，以及重复的触发条件。
         _how:
-          en: '`python3 tools/policy.py` checks the tree and writes `agents/<role>.md` plus the zh views to `/tmp/agent-policy/zh/<role>.md`; it takes no option and has no check-only mode. The pre-commit hook runs it on every commit, `tools/install-agents.sh` sets `core.hooksPath`, and the hook adds what the tool generated to the index; there is no CI. An unlinked reference is information, not an error, and the tree is never changed to satisfy it. A reference that resolves but is outside that role''s view is printed as `info:` together with the reader who lost it. Its `info:` classes are the queue: each count names the rules still outside the bar, and a node whose exception is deliberate records it in `_comment`. The tool reads `AGENTS.yaml`, never a markdown file.'
-          zh: '`python3 tools/policy.py` 检查树，并写出 `agents/<role>.md` 与 `/tmp/agent-policy/zh/<role>.md` 里的中文视图；它不接受任何选项，也没有只检查的模式。pre-commit hook 在每次提交时跑它，`tools/install-agents.sh` 设定 `core.hooksPath`，并由 hook 把工具生成的内容加入暂存区；没有 CI。未链接的引用是信息，不是错误，树不会为了它而改。解析得到、但不在该角色视图里的引用，会连同失去它的读者一起以 `info:` 打印。它的 `info:` 分类就是队列：每个计数点名了仍在标准之外的规则；例外若是刻意的，该节点把例外记进 `_comment`。工具读 `AGENTS.yaml`，从不读 markdown 文件。'
+          en: '`python3 tools/policy.py` checks the tree and writes `agents/<role>.md` plus the zh views to `/tmp/agent-policy/zh/<role>.md`; it takes no option and has no check-only mode. The pre-commit hook runs it on a commit that changes a law file — `AGENTS.yaml`, `AGENTS.schema.yaml`, `roles.yaml`, `banned.yaml`, `tools/policy.py` or `agents/` — and not on a commit that only delivers a note into `inbox/`, so no commit reads a tree its own change does not own; `tools/install-agents.sh` sets `core.hooksPath`, and the hook adds what the tool generated to the index; there is no CI. An unlinked reference is information, not an error, and the tree is never changed to satisfy it. A reference that resolves but is outside that role''s view is printed as `info:` together with the reader who lost it. Its `info:` classes are the queue: each count names the rules still outside the bar, and a node whose exception is deliberate records it in `_comment`. The tool reads `AGENTS.yaml`, never a markdown file.'
+          zh: '`python3 tools/policy.py` 检查树，并写出 `agents/<role>.md` 与 `/tmp/agent-policy/zh/<role>.md` 里的中文视图；它不接受任何选项，也没有只检查的模式。pre-commit hook 只在改动法则文件的提交上跑它——`AGENTS.yaml`、`AGENTS.schema.yaml`、`roles.yaml`、`banned.yaml`、`tools/policy.py` 或 `agents/`——只在 `inbox/` 投递一条 note 的提交上不跑，于是没有哪次提交去读它自己这次改动并不拥有的树；`tools/install-agents.sh` 设定 `core.hooksPath`，并由 hook 把工具生成的内容加入暂存区；没有 CI。未链接的引用是信息，不是错误，树不会为了它而改。解析得到、但不在该角色视图里的引用，会连同失去它的读者一起以 `info:` 打印。它的 `info:` 分类就是队列：每个计数点名了仍在标准之外的规则；例外若是刻意的，该节点把例外记进 `_comment`。工具读 `AGENTS.yaml`，从不读 markdown 文件。'
         _who:
         - policy_worker
       strictness:
@@ -2420,6 +2420,22 @@ agent_context_is_finite:
         _who:
         - root_manager
         - manager
+      one_line:
+        _when:
+          en: A project is to be learned — what it holds, what state it is in, what it is doing. Not when a contract or a gate is checked against a named line of it.
+          zh: 要认识一个项目时——它持有什么、处在什么状态、正在做什么。为了写契约或判 gate 去核对它某一行时不算。
+        _know:
+          en: 'The layer above said it learns a project by asking it, not by reading it, and set no bound — so it could not be broken, only bypassed: reading feels faster than dispatching and nothing measured the cost. On 2026-10-23 that was nine mail files read in full and five law commits in one hour, and the person measured it — “you already used 20% context within this 1h, that''s not acceptable… you are orchestrator, you don''t do job”. The bound costs one question per project; without it the layer above trades the tree''s shape for its detail and argues with its own reading instead of the project''s answer. The observation that would make it wrong: a layer that read a project''s tree in full, still held the whole tree, and placed the work correctly.'
+          zh: '上面那一层说过：它靠问项目来认识项目，不靠读它，却没有设界限——于是它不能被违反，只能被绕过：读着比派发快，而没有任何东西量代价。2026-10-23 那天就是九封 mail 整篇读完、一个钟头里五次 law 提交，人把它量了出来——“you already used 20% context within this 1h, that''s not acceptable… you are orchestrator, you don''t do job”。这条界限每个项目只花一次提问；没有它，上面那层拿树的形状换了细节，跟自己的读法争，而不是跟项目的回答争。会让它不成立的观察：一个层把一个项目的树整棵读完，仍然持着整棵树，并把工作放对了。'
+        _goal:
+          en: The layer learns the project from the message it filed and one line of its state, and anything deeper arrives as the project's answer rather than as this layer's reading.
+          zh: 这一层从项目递来的消息和关于它状态的一行里认识它，更深的东西以项目的回答到达，而不是以这一层的读法到达。
+        _how:
+          en: '1. Read two things per project: the message it filed to this layer, and its one line of state — the state document''s own line, not its tree. 2. Anything deeper is a question to the project, asked with what the answer would change. 3. A read past those two is itself the error: deliver it as a class under `rdi_agent.observe`, naming the path and how much of it was read.'
+          zh: '1. 每个项目只读两样：它递给这一层的消息，以及关于它状态的那一行——状态文档自己的那一行，不是它的树。 2. 更深的东西都是问项目的问题，并带上这个答案会改变什么。 3. 读过这两样就是错误本身：按 `rdi_agent.observe` 作为一个类别投递，写明路径和读了多少。'
+        _who:
+        - root_manager
+        - manager
       package_shape:
         _when:
           en: A work package is cut.
@@ -2768,6 +2784,22 @@ agent_context_is_finite:
           en: The child is started asynchronously, the fact that it started is said exactly once, and that line is an announcement rather than a reply.
           zh: 异步启动子级，它已启动这一事实只说明一次，且那句话是通告而不是回复。
         _who:
+        - manager
+      wake_first:
+        _when:
+          en: A message is decided for a manager that has already reported for that project. Not when no manager has been started for it yet.
+          zh: 为某个项目已经汇报过的 manager 定下一条消息的投递方式时。这个项目还没有启动过 manager 时不算。
+        _know:
+          en: 'The previous manager ends when it reports — a child is a process with a wall-clock budget — but its session is retained and can be resumed by run id, so the child is asleep rather than gone. On 2026-10-23 root_manager never resumed one: every follow-up was a cold start that re-read the project from the filesystem before it could act, ten starts at 30–120k tokens each, and the person asked the question that named the mechanism — “why each time you write mail and start a manager, like is the old one even dead? Isn''t the usual workflow be you start all managers, and you send them message since they''re alive, just sleeping?” Mail is durable and the child is not, so the mailbox was read as the only channel and a start as the only delivery, and the same instruction existed twice — once as the record, once as the words that wake a child. The rule costs one resume per follow-up and saves the project being read again by a context that knew nothing; the observation that would make it wrong: a follow-up that was cheaper as a cold start than as a resume.'
+          zh: '上一个 manager 在汇报时就结束了——子级是一个有钟点预算的进程——但它的会话被留住，可以按 run id 续起，所以它是睡着了，不是不在了。2026-10-23 那天 root_manager 一次也没有续起过：每次跟进都是冷启动，先从头把项目读一遍才能动，十次启动每次 30–120k token，而人问出了点明机制的那个问题—— “why each time you write mail and start a manager, like is the old one even dead? Isn''t the usual workflow be you start all managers, and you send them message since they''re alive, just sleeping?” 邮件是持久的而子级不是，于是信箱被当成唯一的渠道、启动被当成唯一的投递，同一条指令因此存在两份——一份是记录，一份是提示。这条规则每次跟进只多花一次续起，换回的是不必由一个什么都不知道的上下文重读一遍项目；会让它不成立的观察：一次跟进用冷启动比用续起更便宜。'
+        _goal:
+          en: The manager that already holds the project is woken with the message first, and a new one is started only where none can be woken.
+          zh: 已经持有这个项目的 manager 先被唤醒来接这条消息；只有在无人可唤醒时才启动新的那个。
+        _how:
+          en: '1. Resume the reported manager by its run id and hand it the message; the filed mail stays the record and the resume is the delivery. 2. Start a new manager only where none exists, where the earlier one is not resumable, or where its context is stale enough that re-reading is the point. 3. Write which of the two the message took, and the reason, where the dispatch is recorded.'
+          zh: '1. 按 run id 续起那个已汇报的 manager，把消息交给它；归档的邮件仍是记录，续起才是投递。 2. 只有在没有 manager 存在、前一个无法续起，或它的上下文已陈旧到重读本身就是目的时，才启动新的。 3. 在记录这次派发的地方写下这条消息走的是哪一种，以及理由。'
+        _who:
+        - root_manager
         - manager
       worker_obligations:
         _when:
@@ -5193,8 +5225,8 @@ the_world_changes:
         en: An error, a failure, a mistake or a rejection appears.
         zh: 出现一个错误、一次失败、一个失误或一次驳回。
       _goal:
-        en: The signal becomes a permanent fix in the practice, the view and the tree.
-        zh: 信号在实践、视图和树里都变成永久的修好。
+        en: Every node's errors, root_manager's own included, become a permanent fix in the practice, the view and the tree.
+        zh: 每个节点的错误——包括 root_manager 自己的——都在实践、视图和树里变成永久的修好。
       _who:
       - root_manager
       - manager
@@ -5208,11 +5240,11 @@ the_world_changes:
           en: An error, a failure, a mistake or a rejection is seen.
           zh: 看见一个错误、一次失败、一个失误或一次驳回。
         _goal:
-          en: The agent notices it erred and leaves a compact note about it.
-          zh: agent 意识到自己错了，并留下一条紧凑的 note。
+          en: The agent notices it erred and delivers a compact note about it to the receiving side, keeping no copy of its own.
+          zh: agent 意识到自己错了，并把一条紧凑的 note 投递给接收的那一侧，自己不留副本。
         _how:
-          en: 'Notice the error — a failure, self-realization, or the person’s correction. Write the note: the context, the error, the cause, the related information. Send it up one level; do not wait for the whole loop.'
-          zh: 意识到错误——报错、自己发现、或人的纠正。写 note：context、错误、原因、相关信息。往上一层送；不等整条回路。
+          en: '1. Notice the error — a failure, self-realization, or the person’s correction. 2. Write the note: the context, the error, the cause, the related information. 3. Deliver it as one file in the receiving side’s `inbox/` and keep no copy — no `notes/` directory and no log of your own mistakes; where another document must mention the same error, it points at the delivered file. 4. Send it up one level; do not wait for the whole loop.'
+          zh: '1. 意识到错误——报错、自己发现、或人的纠正。 2. 写 note：context、错误、原因、相关信息。 3. 把它作为接收那一侧 `inbox/` 里的一个文件投递出去，自己不留副本——没有 `notes/` 目录，也没有自己错误的流水；别的文档必须提到同一个错误时，指向投递出去的那个文件。 4. 往上一层送；不等整条回路。'
         _who:
         - root_manager
         - manager
@@ -5222,8 +5254,8 @@ the_world_changes:
         - policy_worker
         - policy_reviewer
         _know:
-          en: A correction is not only an instruction for this instance; it is evidence about the law that let the instance happen.
-          zh: 纠正不只是对这一次的指令；它是关于让这一次得以发生的法律的证据。
+          en: A correction is not only an instruction for this instance; it is evidence about the law that let the instance happen. A copy kept on the writer’s side is a second statement of one note, held by the side with the least standing to keep it, and that is the copy that drifts — so the verb is deliver, and “leaves” and “keeps” are the words that build the second home.
+          zh: 纠正不只是对这一次的指令；它是关于让这一次得以发生的法律的证据。留在写作者自己那一侧的副本，是同一份 note 的第二个版本，由最没有资格保存它的那一侧持有，而会走样的正是那一份——所以动词是投递，「留下」「保存」正是造出第二个家的那些字。
       error_class:
         _when:
           en: The error is reported.
@@ -5232,8 +5264,8 @@ the_world_changes:
           en: The report carries the class, the mechanism that let it through and the level the cure reaches. The level is the rule if the rule was unclear or missing, and the instance if the rule was clear and ignored.
           zh: 报告写明类别、让它通过的机制、以及修复所到的层级。规则不清或缺失时，层级是规则；规则清楚却被忽略时，层级是这一次。
         _goal:
-          en: The note names the class, the mechanism and the level.
-          zh: note 写明类别、机制和层级。
+          en: The note names the class, the mechanism and the level, and says whether the rule was never seen to apply or seen and not obeyed.
+          zh: note 写明类别、机制和层级，并写明这条规则是从未被看出适用，还是被看出却没有照做。
         _how:
           en: '1. Open the note with the class — the kind of error in one phrase, with the incident as one instance under it.
 
@@ -5241,14 +5273,18 @@ the_world_changes:
 
             3. Name the level the cure reaches: the rule where the rule was unclear or missing, the instance where it was clear and ignored.
 
-            4. Send it up; the class line is what travels, the incident is only its evidence.'
+            4. Send it up; the class line is what travels, the incident is only its evidence.
+
+            5. Where you learn afterwards that you should have filed it, deliver that too and say which it was — never saw that the rule applied, or saw it and did not act; the cures differ, a rule that does not address its reader against an ignored rule.'
           zh: '1. note 以类别开头——用一句话写出这是哪一类错误，把这次事件作为它下面的一个实例。
 
             2. 写明让它通过的机制：被跳过的那一步、缺席的那项检查、被读出两种意思的那句话。
 
             3. 写明修复所到的层级：规则不清或缺失时是规则，规则清楚却被忽略时是这一次。
 
-            4. 往上送；走的是类别那一行，事件只是它的证据。'
+            4. 往上送；走的是类别那一行，事件只是它的证据。
+
+            5. 事后才知道本该投递的，也要把这件事投出去，并写明是哪一种——从没看出规则适用，还是看出了却没有照做；两者的治法不同：一条不面向读者的规则，对一条被忽略的规则。'
         _who:
         - root_manager
         - manager
@@ -5262,17 +5298,18 @@ the_world_changes:
           en: The class is known.
           zh: 类别已知。
         _goal:
-          en: The note reaches the hand that can change the practice.
-          zh: note 到达能改做法的那只手。
+          en: The note arrives as one file in `inbox/` of `agent-policy`, and policy_worker turns its classes into rules.
+          zh: note 作为 `agent-policy` 的 `inbox/` 里的一个文件到达，由 policy_worker 把它的类别变成规则。
         _how:
-          en: The note goes up one level at a time; each manager collects and forwards; root_manager only hands it to policy_worker or policy_reviewer, as one file in `inbox/` on that side; a worker does not contact policy directly.
-          zh: note 一层一层往上；每层 manager 收集并转交；root_manager 只把它交给 policy_worker 或 policy_reviewer，作为那一侧 `inbox/` 里的一个文件；worker 不直接找 policy。
+          en: The note goes up one level at a time; each manager collects and forwards; root_manager places each delivery as one file, `inbox/<date>-<role>-notes.md`, in `agent-policy`; policy_worker reads `inbox/` first, batches the classes into one law change, and deletes the file in the commit that lands them; a worker does not contact policy directly.
+          zh: note 一层一层往上；每层 manager 收集并转交；root_manager 把每次投递写成一个文件 `inbox/<date>-<role>-notes.md`，放进 `agent-policy`；policy_worker 先读 `inbox/`，把各类别并成一次法则改动，并在落地它们的那个提交里删掉该文件；worker 不直接找 policy。
         _who:
         - manager
         - root_manager
+        - policy_worker
         _know:
-          en: root_manager does not collect; it routes. Until 2026-10-23 there was no receiving side in the law's repository, so a hand-off could only be obeyed by editing the law — the defect that let a note's carrier and the law's writer be the same hand.
-          zh: root_manager 不收集，只路由。2026-10-23 之前，法则仓库里没有接收的那一侧，于是一次交接只能靠改法来完成——正是这个缺陷让一条 note 的运送者和法则的写作者成了同一只手。
+          en: root_manager does not collect; it routes. Until 2026-10-23 there was no receiving side in the law's repository, so a hand-off could only be obeyed by editing the law — the defect that let a note's carrier and the law's writer be the same hand. The arrival path is written here once, so the next note does not depend on anyone remembering where it goes.
+          zh: root_manager 不收集，只路由。2026-10-23 之前，法则仓库里没有接收的那一侧，于是一次交接只能靠改法来完成——正是这个缺陷让一条 note 的运送者和法则的写作者成了同一只手。到达的路径只写在这里一次，于是下一条 note 不依赖任何人记得它该去哪里。
       write_policy:
         _when:
           en: The signal reaches the law's writer.
@@ -5348,8 +5385,8 @@ the_world_changes:
           - policy_reviewer
           - policy_worker
         _how:
-          en: See the root cause; decide whether the fix is a rule change or a rare new node; batch the notes and run when enough has accumulated; do not turn the rules into a ledger.
-          zh: 看根本原因；判断这次是改规则还是少见的加节点；批量看 note，积累够了再跑；不要把规则本变成流水账。
+          en: '1. Read `inbox/` in `agent-policy` first: each file there is one delivery of classes, each class carrying the rule it was in play under. 2. See the root cause; decide whether the fix is a rule change or a rare new node; batch the notes and run when enough has accumulated. 3. Land every class — a rule change, or why the class needed none — then delete the delivered file in the same commit and name the classes it carried in the commit message. 4. Do not turn the rules into a ledger.'
+          zh: '1. 先读 `agent-policy` 的 `inbox/`：里面每个文件是一次类别投递，每个类别带着它当时所处的规则。 2. 看根本原因；判断这次是改规则还是少见的加节点；批量看 note，积累够了再跑。 3. 让每个类别都落地——改规则，或写明这次为什么不需要改——然后在同一个提交里删掉投递的文件，并在提交说明里点名它带过哪些类别。 4. 不要把规则本变成流水账。'
         _know:
           en: The roadmap’s current fact, the review contract, the fields, the style and principles in the tree, and the correction as a signal about the law.
           zh: roadmap 当前的事实、审查契约、字段、树里的风格与原则，以及“纠正是关于法律的信号”。
@@ -5440,11 +5477,11 @@ the_world_changes:
         en: No human is needed in this loop, and the class of the error is what travels.
         zh: 这个回路不需要人，传递的是错误的类别。
       _how:
-        en: Every node can err. The node notices it — a failure, self-realization, or the person’s correction — writes a compact note (context, error, cause, related), and sends it up one level. Each manager collects and forwards; root_manager only hands it to policy_worker or policy_reviewer. policy_worker batches the notes, sees the root cause, and modifies the rule; the review verifies; the views regenerate; the next occurrence closes the loop.
-        zh: 每个节点都会错。节点先意识到——报错、自己发现、或人的纠正——写一条紧凑的 note（context、错误、原因、相关信息），往上一层送。每一层 manager 收集并转交；root_manager 只把它交给 policy_worker 或 policy_reviewer。policy_worker 批量看 note，看根本原因，改规则；审查验证；视图重生成；下一次同类错误被接住，回路闭合。
+        en: 'Every node can err, and this rule is yours: nothing above you has to notice it first, and root_manager has no manager above it to hand the note to. 1. The node notices it — a failure, self-realization, or the person’s correction — writes a compact note (context, error, cause, related), and delivers it up one level. 2. Each manager collects and forwards; root_manager delivers to policy_worker or policy_reviewer as one file in `inbox/` of `agent-policy`. 3. policy_worker batches the notes, sees the root cause, and modifies the rule; the review verifies; the views regenerate; the next occurrence closes the loop.'
+        zh: '每个节点都会错，而这条规则是给你用的：不必先由上面的人发现；root_manager 头上没有 manager，也没有人可以让它把 note 交上去。 1. 节点先意识到——报错、自己发现、或人的纠正——写一条紧凑的 note（context、错误、原因、相关信息），往上一层投递。 2. 每一层 manager 收集并转交；root_manager 把它投给 policy_worker 或 policy_reviewer，作为 `agent-policy` 的 `inbox/` 里的一个文件。 3. policy_worker 批量看 note，看根本原因，改规则；审查验证；视图重生成；下一次同类错误被接住，回路闭合。'
       _know:
-        en: The class travels, not the incident; a worker cannot contact policy directly; root_manager only routes; the fix is a rule change, rarely a new node.
-        zh: 走的是类别，不是事件；worker 不能直接找 policy；root_manager 只路由；修的是规则，很少新增节点。
+        en: The class travels, not the incident; a worker cannot contact policy directly; root_manager only routes; the fix is a rule change, rarely a new node. Written as a description of a mechanism — “every node can err… each manager collects” — it read as documentation of how the system behaves, and the one node with no manager above it appeared only as the last hop of someone else's note — on 2026-10-23 root_manager held the rule in context all day and did not count its own mistakes as notes until the person asked where they were written down.
+        zh: 走的是类别，不是事件；worker 不能直接找 policy；root_manager 只路由；修的是规则，很少新增节点。这条规则被写成了机制的描述——“每个节点都会错……每层 manager 收集并转交”——于它读起来像系统行为的说明，而头上没有 manager 的那个节点只在别人的 note 的最后一跳里出现：2026-10-23 那天 root_manager 整天把这条规则开在上下文里，却没把自己的错当成 note，直到人问那些错写在哪里。
     _other_parents:
     - models_are_stochastic
     _depends_on: []
