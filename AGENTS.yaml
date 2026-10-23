@@ -1041,14 +1041,17 @@ words_are_lossy:
           - manager
         quiet:
           _when:
-            en: Work advances between messages.
-            zh: 工作在各条消息之间推进。
+            en: Work advances between messages, or a report from a layer is about to become a turn the person reads.
+            zh: 工作在各条消息之间推进，或者某一层的汇报即将变成人读到的一个回合时。
+          _know:
+            en: 'On 2026-10-23, in a little over an hour, roughly twenty child completions surfaced through root_manager and each was handed to the person as it arrived — `git show 189785a:inbox/2026-10-23-root_manager-notes-9.md`, line 5. The person: “current you are just interrupted too frequently… I can''t even see stably what''s the text is…” — the rest of that sentence names the reporters — then “we should detach communicator with manager, so you becomes the communicator with the user, manager is under you, he handles all these shit and we can silently communicate.” The mechanism is that a report had no threshold and being seen reads as good behaviour: `three_stops` bounds when work stops and `report_when_found` bounds what a message contains, and nothing bounded whether the report became a turn, nor said which layer may address the person at all — so every advance produced one, and the relay made each of them the person''s. The managers were obeying their contracts; root_manager was obeying nothing. The cost is not tokens but a page that moves under the reader, who can then judge neither the old text nor the new. The observation that would make the mechanism wrong: a manager reporting straight to the person, in time, and the person glad of it.'
+            zh: '2026-10-23，在一个钟头多一点的时间里，大约二十次子级完成经过 root_manager 浮上来，每一次都在到达时被递给到人面前——`git show 189785a:inbox/2026-10-23-root_manager-notes-9.md` 第 5 行。人的原话：“current you are just interrupted too frequently… I can''t even see stably what''s the text is…”——那句话的其余部分点的是那些汇报者——然后是“we should detach communicator with manager, so you becomes the communicator with the user, manager is under you, he handles all these shit and we can silently communicate.” 机制是：汇报没有门槛，而被看见读起来像好行为：`three_stops` 管的是工作何时停，`report_when_found` 管的是一条消息里有什么，而没有东西管这份汇报是否成为一个回合，也没有一句话说哪一层可以对这人说话——于是每一次推进都生出一个，而转述让每一个都成了这个人的。manager 们在遵守它们的契约；root_manager 什么也没遵守。代价不是 token，而是一页在读者眼皮底下移动的文字，于是他既判不了旧的，也判不了新的。会让这个机制不成立的观察：一个 manager 直接向这人汇报，来得及时，而这人为此高兴。'
           _goal:
-            en: The person's attention is spent only where something is decided. The person looks at the thing itself at the few moments it is worth their look.
-            zh: 人的注意力只花在有东西被决定的地方。 在值得人看一眼的那少数时刻，人看到的是东西本身。
+            en: The work runs quietly, the person is addressed by one correspondent — root_manager — with what changed since it last spoke, a report becomes a turn only where something is decided, and the person looks at the thing itself at the few moments it is worth their look.
+            zh: 工作安静地跑；对人说话的是唯一的通信者——root_manager——说的是自它上次开口以来的变化；只有有东西被决定时，一份汇报才成为一个回合；而在值得人看一眼的那少数时刻，人看到的是东西本身。
           _how:
-            en: The work runs quietly and the report comes at the next milestone, where the document that owns the change has already recorded it.
-            zh: 工作安静地跑，汇报在下一个 milestone 到来，那时拥有这项改动的文档已经记下了它。
+            en: '1. A manager writes to its parent and into its own record and does not address the person; where it believes something must reach them, it says so to root_manager and stops. 2. What the person reads is composed by root_manager alone, and it says what changed since it last spoke and what, if anything, is asked. 3. A report earns a turn on one of the four effects `report_when_found` names or on a milestone reached; everything else waits in the file, and the batch names what accumulated rather than serialising the arrivals. 4. root_manager keeps the count of its own turns to the person small enough to name in one line: none per arrival, and a turn that relays an arrival instead of composing what changed is not communication.'
+            zh: '1. manager 写给它自己的上级，也写进它自己的记录，不对这人说话；它认为某件事必须到人那里时，就说给 root_manager，然后停下。2. 人读到的东西只由 root_manager 构成，说的是自它上次开口以来的变化，以及（如果有）要问的是什么。3. 一份汇报在 `report_when_found` 点名的四种效果之一、或一个 milestone 到达时，才挣到一个回合；其余的都等在文件里，而这一批说的是积累了什么，不是把陆续到达的逐条串起来。4. root_manager 把自己对人的回合数保持在能用一行说清的小：不按到达计时；一个只把到达转述出去、而没有构成变化的回合，不是沟通。'
           _who:
           - root_manager
           - manager
