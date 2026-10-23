@@ -3005,6 +3005,24 @@ agent_context_is_finite:
           zh: 只有在工作确实困难或已有两次尝试失败时才批准增加，且要指明难点在哪里，并连同其上限写入路线图。
         _who:
         - manager
+      package_not_role:
+        _when:
+          en: A wall clock or a cut-off is written into a dispatch.
+          zh: 把一个 wall clock 或截止点写进一次派发时。
+        _know:
+          en: 'A 25-minute clock was written into a manager''s dispatch on 2026-10-23 as “wall-clock 25 minutes for this advance, because the runtime kills a child at 30 and a killed child writes no report”, and the person asked where it came from — “why would a manager have a wall clock anyway, that''s not reasonable, if it''s e.g. a 25min workpackage, that''s fine, but it''s not, it''s a long running project, so it shall be kept alive, who designed that, or it''s some kind of default, or you just randomly decided?” The harness''s per-run kill is a fact about one dispatch and says nothing about how long a role may live, because a role lives across dispatches; written into the contract as the role''s limit it turned a tool''s safety valve into a management style, and it compounded with the cold start — a role with a package''s clock must be restarted for every package, and each restart re-read the project. The rule costs one cut-off line per dispatch; without it the clock decides when work ends instead of the work. The observation that would make it wrong: a role whose being kept resident cost more than waking it per package.'
+          zh: '2026-10-23，一个 25 分钟的钟被写进某个 manager 的派发里：“wall-clock 25 minutes for this advance, because the runtime kills a child at 30 and a killed child writes no report”，而人问它是哪来的——“why would a manager have a wall clock anyway, that''s not reasonable, if it''s e.g. a 25min workpackage, that''s fine, but it''s not, it''s a long running project, so it shall be kept alive, who designed that, or it''s some kind of default, or you just randomly decided?” harness 每次运行的那一刀是关于一次派发的事实，说不了一个角色能活多久，因为角色是跨派发活着的；把它当成角色的上限写进契约，就把一个工具的安全阀变成了管理风格，而且它和冷启动叠在一起——带工作包钟的角色每来一个包就得重启一次，每次重启都重读一遍项目。这条规则每次派发只多花一行截止点；没有它，决定工作何时结束的是钟而不是工作。会让它不成立的观察：一个角色常驻的成本比每个包都唤醒它更高。'
+        _goal:
+          en: The wall clock and its cut-off belong to the package, and a role carries no clock — it is woken for the next package rather than given a lifetime.
+          zh: wall clock 和它的截止点属于工作包；角色不带钟——它每来一个包就被唤醒，而不是被给一段寿命。
+        _how:
+          en: '1. Write the wall clock and the cut-off on the package — “land what exists at N” — so a package that stops early is still worth having. 2. Write no lifetime on a role: a manager holds its tree until the work is done, and is woken for the next package by its run id. 3. Where a manager must be started rather than woken, write the reason beside the dispatch.'
+          zh: '1. 把 wall clock 和截止点写在工作包上——“到 N 就把已有的落地”——于是早停的包仍然值得拥有。 2. 不给角色写寿命：manager 一直持着它的树直到工作完成，并且按 run id 被唤醒来接下一个包。 3. 必须启动新的 manager 而不是唤醒旧的时，把理由写在这次派发旁边。'
+        _who:
+        - root_manager
+        - manager
+        _depends_on:
+        - wake_first
       _fact:
         en: No caps at all let a never-succeeding package hold a slot with nobody calling stop, and one total duration cannot tell stuck from on-track.
         zh: 完全没有上限时，一个永远不会成功的工作包会在没人叫停的情况下占着槽位；而只设一个总时长，又分不清是卡住了还是进展正常。
