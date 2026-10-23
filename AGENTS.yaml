@@ -4601,18 +4601,20 @@ resources_are_limited:
         en: A metered call is given an output cap.
         zh: 给一次计费的调用设定输出上限。
       _know:
-        en: A call cut at its cap has been paid for in full and its answer is gone, so a tight cap wastes exactly the money it was meant to protect.
-        zh: 在上限处被截断的调用已经全额付过钱，而它的回答没了，所以过紧的上限浪费的正是它想省下的那笔钱。
+        en: A cap tight enough to cut an answer buys nothing with the money it spends — nomos's anchor batch (2664 calls, ¥2.1300, 2026-10-21) lost 42 answers (1.6%) to a 320 cap copied from the local model's limit; each of those calls was billed for the 320 tokens it produced and its answer was unusable, the person declined the ¥2.1 redraw on 2026-10-23, and the batch carries an "未测" cell. False if a call cut at its cap ever yields a usable answer.
+        zh: 紧到会把回答截断的上限，花掉的钱什么都没买到——nomos 的锚点批次（2664 次调用，¥2.1300，2026-10-21）有 42 条回答（1.6%）死在 320 的上限上，那个 320 是照搬本地模型的上限；这些调用按自己产出的 320 个 token 计费，回答却不可用，person 2026-10-23 决定不付 ¥2.1 重画，于是这批数据带着一格「未测」。若被上限截断的调用还能给出可用回答，这条即为假。
       _goal:
         en: The cap is a safety valve against a runaway answer, never the place where a paid answer is cut short.
         zh: 上限只是防止回答失控的保险阀，绝不是把付过钱的回答截断的地方。
       _how:
-        en: The cap is set at ten times the longest output the call can legitimately produce, or at the model's own ceiling where that is lower, and it is written beside the call as ten times a named length rather than as a round number.
-        zh: 上限取该调用合法产出的最长长度的十倍；模型自身的上限更低时取模型上限。它写在调用旁边，写成“某个已命名长度的十倍”，而不是一个整数。
+        en: The cap is set at ten times the longest output the call can legitimately produce, or at the model's own ceiling where that is lower, and it is written beside the call as ten times a named length rather than as a round number, enforced by the call's own limit field (`max_tokens` / `max_new_tokens`).
+        zh: 上限取该调用合法产出的最长长度的十倍；模型自身的上限更低时取模型上限。它写在调用旁边，写成“某个已命名长度的十倍”，而不是一个整数；执行它的是调用自己的上限字段（`max_tokens` / `max_new_tokens`）。
       _who:
       - root_manager
       - manager
       - worker
+      _depends_on:
+      - limits
     cost_table:
       _when:
         en: A cost is written down.
