@@ -2340,6 +2340,9 @@ agent_context_is_finite:
         _when:
           en: The roadmap is written.
           zh: 书写路线图时。
+        _know:
+          en: 'This project runs without a roadmap: done is the commits, the queue is the `info:` classes of `tools/policy.py`, and a decision is the `_know` of the rule it governs. A roadmap appears when two holders work at once, and it is state, not law — its change rate is per item, so it never belongs in `AGENTS.yaml`.'
+          zh: '这个项目不设路线图：完成的事在提交里，队列是 `tools/policy.py` 的 `info:` 分类，决定写在它所管辖那条规则的 `_know` 里。两个持有者同时开工时，路线图才出现；它是状态而非法律——它的变更以条目为单位，所以从不放进 `AGENTS.yaml`。'
         _goal:
           en: Precedence is explicit, what can run in parallel is evident, and every node's state is known from one ledger.
           zh: 先后关系是显式的，什么可以并行一目了然，每个节点的状态都从同一本账上读出。
@@ -2538,8 +2541,8 @@ agent_context_is_finite:
           en: Which layer owns a project is unclear.
           zh: 不清楚某个项目由哪一层拥有。
         _know:
-          en: Reconstructing it from code, transcript or memory yields an old shadow.
-          zh: 从代码、对话记录或记忆中重建它，得到的是一个旧的影子。
+          en: 'Reconstructing it from code, transcript or memory yields an old shadow. The harness stacks `AGENTS.md` from the working directory upward, so entering a subproject loads the entrance above it: a directory''s entrance is scope, not a second identity, and a role is reached by being dispatched as it rather than by entering a directory.'
+          zh: 从代码、对话记录或记忆中重建它，得到的是一个旧的影子。harness 会从工作目录向上叠加 `AGENTS.md`，所以进入一个子项目加载的是它上面那层入口：目录的入口是范围，不是第二个身份；角色靠被派发为它而到达，而不是靠进入某个目录。
         _goal:
           en: The owning layer is the one that says so, rather than a shadow rebuilt from code, transcript or memory.
           zh: 拥有它的层是那个自己说出这一点的层，而不是从代码、对话记录或记忆中重建出来的影子。
