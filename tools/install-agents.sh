@@ -14,12 +14,17 @@ target="$HOME/.pi/agent/agents"
 want="$root/agents"
 
 if [ "$1" = "--check" ]; then
-    if [ -L "$target" ] && [ "$(readlink -f "$target")" = "$(readlink -f "$want")" ]; then
-        echo "ok: $target -> $want"
-        exit 0
+    fail=0
+    if [ ! -L "$target" ] || [ "$(readlink -f "$target")" != "$(readlink -f "$want")" ]; then
+        echo "missing: $target -> $want"
+        fail=1
     fi
-    echo "missing: $target -> $want"
-    exit 1
+    if [ "$(git -C "$root" config core.hooksPath)" != ".githooks" ]; then
+        echo "missing: core.hooksPath is not .githooks"
+        fail=1
+    fi
+    [ "$fail" = 0 ] && echo "ok: $target -> $want, core.hooksPath = .githooks"
+    exit "$fail"
 fi
 
 if [ -e "$target" ] && [ ! -L "$target" ]; then
@@ -31,4 +36,5 @@ if [ -e "$target" ] && [ ! -L "$target" ]; then
 fi
 mkdir -p "$(dirname "$target")"
 ln -sfn "$want" "$target"
-echo "ok: $target -> $want"
+git -C "$root" config core.hooksPath .githooks
+echo "ok: $target -> $want, core.hooksPath = .githooks"

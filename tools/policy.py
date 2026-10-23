@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """One tool: check AGENTS.yaml, then write the role views.
 
-    python3 tools/policy.py [--depth N]
+    python3 tools/policy.py
 
 The tree is a forest of top-level fact nodes. A fact carries `_fact`; a goal or
 practice carries `_goal`. `_who` is inherited from the nearest ancestor that
@@ -80,8 +80,8 @@ def walk(nodes: list, index: dict, keys: dict, node: dict, path: list[str]):
         walk(nodes, index, keys, value, path + [key])
 
 
-def collect():
-    corpus = load(CORPUS)
+def collect(tree=None):
+    corpus = tree if tree is not None else load(CORPUS)
     nodes: list = []
     index: dict = {}
     keys: dict = {}
@@ -97,6 +97,10 @@ def resolve(ref: str, index: dict, keys: dict) -> str | None:
     return None
 
 
+def _head(value: str) -> str:
+    return value.strip().lower().rstrip(".。")
+
+
 def effective_who(index: dict, path: list[str]) -> list[str]:
     """The nearest ancestor's `_who`, or the node's own when it declares one."""
     for i in range(len(path), 0, -1):
@@ -107,12 +111,17 @@ def effective_who(index: dict, path: list[str]) -> list[str]:
 
 
 def banned_pattern(term: str) -> re.Pattern:
-    parts = [re.escape(p) for p in re.split(r"[-_ ]+", term.strip())]
-    body = r"[-_ ]".join(parts)
-    return re.compile(rf"(?<![A-Za-z]){body}(?:s|es)?(?![A-Za-z])", re.I)
+    words = re.split(r"[-_ ]+", term.strip())
+    if words[-1].endswith("y"):
+        words[-1] = words[-1][:-1]
+        suffix = "(?:y|ies|s|es)?"
+    else:
+        suffix = "(?:s|es)?"
+    body = r"[-_\s]+".join(re.escape(w) for w in words)
+    return re.compile(rf"(?<![A-Za-z]){body}{suffix}(?![A-Za-z])", re.I)
 
 
-def check(corpus: dict, spec: dict, roles: dict, banned: list[str]):
+def check(corpus: dict, spec: dict, roles: dict, banned: list[str], banned_zh: list[str] = ()):
     text = set(spec["text_fields"])
     list_fields = set(spec["list_fields"])
     comment = spec["comment_field"]
@@ -122,10 +131,11 @@ def check(corpus: dict, spec: dict, roles: dict, banned: list[str]):
     all_roles = set(roles)
     fails: list[str] = []
     infos: list[str] = []
-    _, nodes, index, keys = collect()
+    _, nodes, index, keys = collect(corpus)
     seen: dict[str, str] = {}
     triggers: dict[str, str] = {}
     patterns = [(term, banned_pattern(term)) for term in banned]
+    zh_patterns = [(term, re.compile(re.escape(term))) for term in banned_zh]
 
     # `_other_parents` must not form a cycle with the tree.
     def ancestors(path: list[str]):
@@ -155,6 +165,10 @@ def check(corpus: dict, spec: dict, roles: dict, banned: list[str]):
                 continue
             for lang in (("en", "zh") if bilingual else ("en",)):
                 body = text_of(value, lang, bilingual)
+                if lang == "zh":
+                    for term, pattern in zh_patterns:
+                        if pattern.search(body):
+                            fails.append(f"{full}.{field}.zh: banned {term!r}")
                 for term, pattern in patterns:
                     if pattern.search(body):
                         fails.append(f"{full}.{field}.{lang}: banned {term!r}")
@@ -173,12 +187,20 @@ def check(corpus: dict, spec: dict, roles: dict, banned: list[str]):
         if who and "_goal" not in node:
             fails.append(f"{full}._who: rendered node has no _goal")
         if "_when" in node:
-            trigger = text_of(node["_when"], "en", bilingual)
-            if trigger:
-                if trigger in triggers:
-                    fails.append(f"{full}._when: duplicate trigger {trigger!r} (also {triggers[trigger]})")
-                else:
-                    triggers[trigger] = full
+            for lang in (("en", "zh") if bilingual else ("en",)):
+                trigger = _head(text_of(node["_when"], lang, bilingual))
+                if trigger:
+                    tkey = (lang, trigger)
+                    if tkey in triggers:
+                        fails.append(f"{full}._when.{lang}: duplicate trigger {trigger!r} (also {triggers[tkey]})")
+                    else:
+                        triggers[tkey] = full
+        if True:
+            name = path[-1]
+            own = " ".join(_head(text_of(node[f], "en", bilingual)) for f in text if f in node)
+            words = [w for w in re.split(r"[^A-Za-z]+", name) if len(w) > 2]
+            if words and not any(w.lower() in own.lower() for w in words):
+                infos.append(f"{full} ({name}): the key never reappears in the node's own text")
         for field in list_fields - {"_who"}:
             if field in node:
                 refs = node[field]
@@ -189,6 +211,10 @@ def check(corpus: dict, spec: dict, roles: dict, banned: list[str]):
                     target = resolve(ref, index, keys)
                     if target is None:
                         infos.append(f"{full}.{field}: {ref!r} is not linked")
+                    elif field == "_depends_on":
+                        for role in effective_who(index, path):
+                            if role not in effective_who(index, target.split(".")):
+                                infos.append(f"{full}._depends_on ({role}: {ref}): a pointer is outside the reader's view")
                     elif field == "_other_parents" and target in set(ancestors(path)):
                         fails.append(f"{full}._other_parents: {ref!r} is its own ancestor")
         if comment in node:
@@ -281,7 +307,7 @@ def render(role: str, lang: str, depth: int, corpus: dict, roles: dict) -> str:
             return
         node = index[full]
         refs = " ".join("@" + r for r in (node.get("_depends_on") or []) if resolve(r, index, keys) in inc)
-        roots = " ".join("^" + r for r in (node.get("_other_parents") or []) if resolve(r, index, keys))
+        roots = " ".join("^" + r for r in (node.get("_other_parents") or []) if resolve(r, index, keys) in inc)
         refs = " ".join(part for part in (refs, roots) if part)
         label = full.split(".")[-1]
         if not extra and parent_of(full) is None and "." in full:
@@ -323,16 +349,17 @@ def frontmatter(role: str, spec: dict) -> str:
     ])
 
 
-def write_views(depth: int) -> None:
+def write_views() -> None:
     roles = load(ROLES)
+    corpus = load(CORPUS)
     for role, spec in roles.items():
         path = OUT / f"{role}.md"
         path.parent.mkdir(exist_ok=True)
-        path.write_text(frontmatter(role, spec) + render(role, "en", depth, load(CORPUS), roles),
+        path.write_text(frontmatter(role, spec) + render(role, "en", 0, corpus, roles),
                         encoding="utf-8")
         zh = OUT_ZH / f"{role}.md"
         zh.parent.mkdir(parents=True, exist_ok=True)
-        zh.write_text(frontmatter(role, spec).replace("inherit", "inherit") + render(role, "zh", depth, load(CORPUS), roles),
+        zh.write_text(frontmatter(role, spec) + render(role, "zh", 0, corpus, roles),
                       encoding="utf-8")
     for stale in OUT.glob("*.md"):
         if stale.stem not in roles:
@@ -347,20 +374,16 @@ def usage(code: int, message: str = "") -> int:
 
 
 def main() -> int:
-    args = sys.argv[1:]
-    depth = 0
-    if args:
-        if args[0] != "--depth" or len(args) > 2:
-            return usage(2, f"unknown option {args[0]!r}")
-        if len(args) != 2 or not re.fullmatch(r"\d+", args[1]):
-            return usage(2, "--depth needs a number")
-        depth = int(args[1])
+    if sys.argv[1:]:
+        return usage(2, f"unknown option {sys.argv[1]!r}")
     spec = load(SCHEMA)
     roles = load(ROLES)
-    banned = (load(BANNED) or {}).get("banned") or []
+    banned_spec = load(BANNED) or {}
+    banned = banned_spec.get("banned") or []
+    banned_zh = banned_spec.get("banned_zh") or []
     corpus = load(CORPUS)
 
-    fails, infos = check(corpus, spec, roles, banned)
+    fails, infos = check(corpus, spec, roles, banned, banned_zh)
     classes: dict[str, list[str]] = {}
     for line in infos:
         where, _, message = line.partition(": ")
@@ -375,7 +398,7 @@ def main() -> int:
         print("\n".join("FAIL " + line for line in fails))
         return 1
 
-    write_views(depth)
+    write_views()
     print(f"ok: {len(roles)} roles; zh views in {OUT_ZH}")
     return 0
 

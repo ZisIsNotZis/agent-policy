@@ -40,3 +40,15 @@ banned:
   - task runner
   - agent type
   - role tier
+
+# The same terms in Chinese. The zh half of a rule is a restatement, not a
+# translation of the English words, so a concept can survive there alone.
+banned_zh:
+  - 子代理
+  - 任务
+  - 计划
+  - 阶段
+  - 提示词
+  - 摘要
+  - 更新
+  - 路线图阶段
