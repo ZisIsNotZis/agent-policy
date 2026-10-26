@@ -1,0 +1,47 @@
+# A banned term is a word that pulls the work into another frame: the ceremony
+# around a unit of work, a route that does not exist, generic reporting, or the
+# meta-machinery around the law. Each term names something the law already has a
+# word for, and a rule in LAW.md says to use that word instead. One term per line;
+# `#` starts a comment; the zh half is a restatement, not a translation, so a term
+# can be banned there alone.
+[banned]
+backlog                 # a unit of work -> milestone, workpackage, roadmap item
+sprint
+epic
+phase
+stage
+wave
+checkpoint
+task
+subtask
+ticket
+plan                    # a route that does not exist -> roadmap, method
+status report           # generic reporting -> report, decision, gate
+summary
+update
+signoff
+approval step
+prompt                  # the meta-machinery around the law -> the law, the node, the evidence
+rules file
+policy node
+mapping
+inventory
+entry
+proof
+citation
+subagent                # the harness's own words -> child, manager, role
+supervisor
+executor
+task runner
+agent type
+role tier
+
+[banned_zh]
+子代理
+任务
+计划
+阶段
+提示词
+摘要
+更新
+路线图阶段

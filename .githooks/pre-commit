@@ -1,13 +1,10 @@
 #!/bin/sh
-# The law's tool runs on the commit instead of on memory, but only on a commit that
-# changes the law: it checks the corpus, regenerates the views, and stages what it
-# generated, so a stale view cannot be committed. A commit that only delivers a note
-# into inbox/ is not blocked by another writer's half-finished law tree — a check that
-# recomputes a tree it does not own reports that writer's state as this commit's defect.
+# The views are rendered from the law, never committed stale: a commit that touches
+# the law, a banned term or the renderer regenerates them and stages what changed.
 # Enable once per clone:  git config core.hooksPath .githooks
 set -e
 cd "$(git rev-parse --show-toplevel)"
-if git diff --cached --name-only --diff-filter=ACDMR | grep -qE '^(AGENTS\.yaml|AGENTS\.schema\.yaml|roles\.yaml|banned\.yaml|tools/policy\.py|agents/)'; then
-    python3 tools/policy.py
-    git add -A agents/
+if git diff --cached --name-only --diff-filter=ACDMR | grep -qE '^(LAW\.md|banned\.txt|tools/render\.py|agents/|AGENTS\.md)'; then
+    python3 tools/render.py
+    git add -A agents/ AGENTS.md
 fi
