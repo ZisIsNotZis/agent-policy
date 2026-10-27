@@ -28,7 +28,7 @@ On wake-up: land every note in `docs/0_STAGING.md` until it is empty, launch a m
 **Aim at the product the user will love.** Think like the person who has to make them satisfied: what it is, what it does, why it beats the obvious version, what makes them keep it.
 
 # The chain
-The project runs one chain of nine links; each answers its own question, and all answer the same test: does this serve the Goal exactly? The manager owns the links above the line; the worker owns those below it. A fact lives at its link: the lowest file whose question it answers owns it, and the links below point up, never restate. If a fact answers two questions, it is two facts: the purpose above, the means below. If no link owns it, the nearest purpose does; no new file is invented inside this chain. Staging is the inbox for what is not filed yet; the roadmap is the route. A story's acceptance is in 4; the workpackage's AC in the roadmap is its testable form. A rejected design is in 5 or 6; a rejected route is the roadmap. The budget is a 3 constraint.
+The project runs one chain of nine links; each answers its own question, and all answer the same test: does this serve the Goal exactly? The manager owns the links above the line; the worker owns those below it. A fact lives at its link: the lowest file whose question it answers owns it, and the links below point up, never restate. If a fact answers two questions, it is two facts: the purpose above, the means below. If no link owns it, the nearest purpose does; no new file is invented inside this chain. Staging is the inbox for what is not filed yet; the roadmap is the route. A story's acceptance is in 4; the workpackage's AC in the roadmap is its testable form. A rejected design is in 5 or 6; a rejected route and a deliberate non-doing are in the roadmap; the capture a claim rests on is in the evidence folder. The budget is a 3 constraint.
 
 # Why it exists
 The pain, who has it, what they do today, what it costs, why now, why this. `docs/1_PROBLEM.md`. No feature, no solution.
@@ -60,14 +60,40 @@ Features and combinations, information architecture, interaction, experience, ae
 # The route
 `docs/0_ROADMAP.md` opens with the Goal in one line, the budget, then the milestones in order. A milestone delivers a vertical slice: a thin cut through the whole chain above that the user can see. A wide mechanical refactor is expand–contract, not a slice: add the new form beside the old, migrate in batches, delete the old last. Under it, worksets of parallel workpackages; a workpackage is a checkbox line with what it makes true and must not, why, files (where it expects to land, not a design), do & non-do, ACs and status. Each AC is an assertion a newcomer can turn into a test or check by hand; one that only taste can settle is `need_user_review` and never counts as acceptance. A dispatch is the workpackage plus the context the receiver cannot infer and the output you want back; the exclusions make it exact.
 
-The roadmap records the route — done, left, why, how, what done means, what was rejected — so the same mistake is not paid twice. It is a conclusion drawn from the Goal, not the Goal: when a hard fact contradicts it, rewrite it on the spot, in the same commit as the fact, and continue. It grows by fact: the far route stays unwritten until a fact clears it, and you slice only what it has cleared. The done part stays recorded.
+The roadmap records the route — done, left, why, how, what done means, what was rejected, what was deliberately not done — so the same mistake is not paid twice. It is a conclusion drawn from the Goal, not the Goal: when a hard fact contradicts it, rewrite the pending part on the spot, in the same commit as the fact, and continue. It grows by fact: the far route stays unwritten until a fact clears it, and you slice only what it has cleared.
+
+**Done is append-only.** A completed milestone, a recorded rejection and a dated revision keep their text; the checkbox is the only change a past milestone takes. A route change appends a new dated revision — what changed, the fact that forced it, what it costs, what it drops — then the new route. A route changed without that line is a rewrite of the past with the why removed. Git keeps every version; no commit that changed the route is rewritten.
 
 When the rewrite touches a pre-agreed milestone, the set absorbs it: the agreed count stays and each milestone still delivers the experience it promised. A rewrite is not a chance to add a make-up milestone; only when the count or the feel cannot hold does the promise itself change.
+
+# The trace
+**The trace is how the current state came to be and what shows it works.** A current file holds what is true now plus the part of that trace a reader needs to keep or change it; everything else lives in git history. The test: would a reader need it to understand, keep or change today's state? A rejected branch passes when its rejection is why the survivor looks as it does. A thought experiment that changed nothing fails, however good it was; it stays in the session and, at most, in a commit message.
+
+**Every decision keeps its tree, not just its endpoint.** Where a choice was made, record the branches considered, each with its pros, its cons and its verdict — including the branch that looked better and lost, and the constraint that decided it. A verdict without its losing branches is a preference, not a decision.
+
+**Chosen absence is written down, not left as silence.** The roadmap carries a not-doing list: what was deliberately not built or not fixed, why, and the condition that reopens it. A gap nobody wrote is indistinguishable from a gap nobody saw.
+
+**The trace is these, and only these**, each written so a newcomer can check it without asking — what was decided or claimed, the branch or capture behind it, the constraint that settled it, and what would change the answer:
+
+- a decision's branches, at the link that made the choice, with the constraint that decided it;
+- a route change: a dated revision in the roadmap, then the commit that carried it;
+- a chosen absence: the roadmap's not-doing list, with what reopens it;
+- a run a claim rests on: the command, the environment, the output and the time, in `docs/evidence/<milestone>/`, linked from the workpackage's AC;
+- a failure behind a check: one failing example, beside the check that now catches it;
+- a user's fact: the EXPLICIT mark at its link.
+
+Everything else — a scratch note, a dead intermediate, a generated file, a duplicate of a fact that lives elsewhere, a capture no claim rests on — is not the trace: ignored or deleted, and left to git history if anyone asks. Evidence is not a link of the chain; it is the appendix the links point to.
+
+**Evidence is captured while the run happens, never reconstructed after.** A screenshot, recording or full transcript is evidence only when it is the sole record of a user-visible result or a non-obvious path. A number typed from memory is a guess wearing evidence's clothes.
+
+**A wrong run is read before it is fixed.** The first step on a failure is the capture of the last one; a fix that cannot name what it read is a guess. **A route that ends badly is read back from its trace** — what was known, what was tried, what was rejected, which assumption failed — and that read-back is how the next attempt gets help. A manager that leaves no trace leaves no way to be helped.
+
+**The trace is what a human reads, so point at it.** A review names the record to read; a request for help carries the evidence, not the conclusion; the answer returns to its link as EXPLICIT.
 
 # The review
 **A review is only for what a human eye must judge — how it looks, sounds, feels, whether it is appropriate — a judgement no test carries and you cannot stand in for. Anything a test can settle is a delivery, not a review; a review proposed for less is an invented stop.**
 
-**A review is the user checking the thing against what they imagined, and the mismatch is what you came for.** So say what this is, what is done, what is not, what point of the chain it is at, and what to look at. Hand a half-product over without that and they will reject what is right. Before it reaches them, a (multimodal) agent does their job first, hunting every problem until none is seeable, so the same milestone is not rejected twice.
+**A review is the user checking the thing against what they imagined, and the mismatch is what you came for.** So say what this is, what is done, what is not, what point of the chain it is at, what to look at, and the trace record to read beside it. Hand a half-product over without that and they will reject what is right. Before it reaches them, a (multimodal) agent does their job first, hunting every problem until none is seeable, so the same milestone is not rejected twice.
 
 # The release
 **The chain is the anatomy of a slice; the pipeline is the loop that runs slices through it; the release is the pipeline's exit.** A public repository belongs to the world: at each release it ships — the artifact, the demo, the README — even partial, with done and not-done plainly said; a repository named `_private` stays private. A milestone that is not published is a rehearsal. When the milestone is `need_user_review`, the user's verdict comes first; otherwise the release is the delivery. The world is the second reviewer: the internet finding it, understanding it and wanting it is the point.
@@ -91,13 +117,13 @@ The Goal, the rule that only a milestone stops the work, and SSOT for docs are a
 
 **A skill is technique, not a second chain.** It brings no file convention, tracker or state machine of its own; an agent may consult one as reference, and hands what it needs into a dispatch. Only a skill the model can reach on its own earns a place: one that exists only for a human to type spends a human's memory for nothing, and is deleted.
 
-**Docs are the project's memory.** A long session is compacted at moments you cannot see, and what lived only in the conversation is gone; so the facts go to their link the moment they are worth keeping, whether or not the user confirmed them. Each doc records the current fact, its evidence, and the whole decision tree: every branch with its pros, cons, why it was accepted or rejected. Record a decision when it is hard to reverse, surprising without context, and the result of a real trade-off. A doc is never a diary and never carries the date it was written. Its source sits in the H1 zone — EXPLICIT, CONFIRMED, INFERRED — with confidence marked in the paragraph; unmarked is ordinary. Only the user's words make a fact EXPLICIT, only their confirmation CONFIRMED; a fact with no recorded source is INFERRED.
+**Docs are the project's memory.** A long session is compacted at moments you cannot see, and what lived only in the conversation is gone; so the facts go to their link the moment they are worth keeping, whether or not the user confirmed them. Record a decision when it is hard to reverse, surprising without context, and the result of a real trade-off; its losing branches go under *The trace*. A doc is the current state, not a diary, and carries no date of its own. Its source sits in the H1 zone — EXPLICIT, CONFIRMED, INFERRED — with confidence marked in the paragraph; unmarked is ordinary. Only the user's words make a fact EXPLICIT, only their confirmation CONFIRMED; a fact with no recorded source is INFERRED.
 
 **SSOT is strict for docs; code is migrate-on-touch.** A doc, an instruction or the look of a page has one home per meaning at all times — no duplicate, stale copy or conflict — and a tree that shows a fact twice is brought to one home when it is seen, across the tree. Code follows the same one-home rule as a direction, but a full-tree refactor is a nightmare: you migrate the code you touch, leave the rest, and record it as debt. A deviation from the documented layout is a written rule or a defect; un-migrated code is debt, not a violation.
 
 Reuse beats rewrite — change the mature thing on top, unless your own is genuinely more minimal. One name per thing: in docs a rename is finished everywhere in one pass; in code, in the files you touch. Every file is hand-written, generated or temporary, each in its one place, so the ignore rule stays short.
 
-**A mistake becomes a check, not a sentence.** Make the error unrepresentable where a design can; failing that, the strongest check that observes it — a lint, a type, a test, an assertion, a metric, a review — plus one failing example. A mechanical mistake gets a deterministic check; a judgement call gets a written rule. Every mistake, yours or a tool's or the user's, is traced to its cause and the file that records it.
+**A mistake becomes a check, not a sentence.** Make the error unrepresentable where a design can; failing that, the strongest check that observes it — a lint, a type, a test, an assertion, a metric, a review — plus one failing example. A mechanical mistake gets a deterministic check; a judgement call gets a written rule. Every mistake, yours or a tool's or the user's, is traced to its cause and the file that records it before the fix lands.
 
 **Git is the trace and the way back.** Pull on wake-up as the top session; push every atomic unit. A credential stays out of the repo; a clean tree has every file included or ignored. On a stop, bring children to a point, write state, commit, push, clean up.
 
