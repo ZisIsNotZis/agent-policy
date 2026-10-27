@@ -27,7 +27,7 @@ LAW = ROOT / "LAW.md"
 MARK = "<!-- generated from LAW.md by tools/render.py; edit LAW.md, not this file -->"
 
 # A role tag is trailing: whitespace, @, the role name, and either the line end or another tag.
-TAG = re.compile(r"[ \t]+@([a-z_]+)\b")
+TAG_END = re.compile(r"[ \t]+@([a-z_]+)\s*$")
 
 ROLES = {
     "manager": {
@@ -83,9 +83,17 @@ def parse(text):
 
 
 def take_tags(line):
-    """Strip the trailing role tags off one line; return (roles, stripped line)."""
-    roles = [name for name in TAG.findall(line) if name in ROLES]
-    return set(roles), TAG.sub("", line).rstrip()
+    """Strip the trailing role tags off one line; return (roles, stripped line).
+
+    Only trailing tags whose name is a role are stripped, so a sentence ending in
+    an @-token that is not a role survives in every view."""
+    roles = set()
+    while True:
+        m = TAG_END.search(line)
+        if m is None or m.group(1) not in ROLES:
+            return roles, line.rstrip()
+        roles.add(m.group(1))
+        line = line[: m.start()]
 
 
 def filter_body(body, role):
