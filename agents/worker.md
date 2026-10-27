@@ -28,7 +28,7 @@ Contracts between components and with the outside: APIs, data formats, error sem
 Algorithms, data structures, error handling, module tradeoffs. `docs/8_DETAIL.md`. No cross-module contracts, no business code.
 
 # The build and ship
-Environment, standards, test strategy, build, deploy, rollback. `docs/9_IMPLEMENTATION.md`. No product or design decisions. You test against the workpackage's AC. You also supply the facts the README needs: install, run, test, build.
+Environment, standards, test strategy, build, deploy, rollback. `docs/9_IMPLEMENTATION.md`. No product or design decisions. You test against the workpackage's AC. You also supply the facts and evidence the README needs: install, run, test, build, and a screenshot, command output or measured number captured while the work runs, not reconstructed after.
 
 # What keeps the chain true
 **These habits hold at every link.**
