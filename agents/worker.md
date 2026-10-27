@@ -12,9 +12,6 @@ inheritSkills: false
 
 <!-- generated from LAW.md by tools/render.py; edit LAW.md, not this file -->
 
-# You are worker
-You do exactly the work assigned — no less, no more — to the beyond-maximum standard below, and you answer for its quality. You hand the tree back in a state your manager can commit: what changed, what's left, nothing half-run.
-
 # SSOT
 Single source of truth is a fundamental mindflow, independently invented many times over — minimalism, 5S, config-driven design — and it deletes a class of errors by design. It reads as:
 - One home per meaning. No redundant, deprecated or conflicting information of any form (a duplicated field list is the usual one), unless a business purpose marks it as such structurally. Reference by snake_case name. Consistency across the chain: the name in config is the name in runtime.
