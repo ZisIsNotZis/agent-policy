@@ -32,7 +32,7 @@ TAG = re.compile(r"[ \t]+@([a-z_]+)\b")
 ROLES = {
     "manager": {
         "agent": "agents/manager.md",
-        "context": "AGENTS.md",
+        "context": "manager.md",
         "frontmatter": [
             ("name", "manager"),
             ("description", "You hold a project: its docs, its roadmap and the agents under it."),

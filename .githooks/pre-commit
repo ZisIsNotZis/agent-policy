@@ -4,7 +4,7 @@
 # Enable once per clone:  git config core.hooksPath .githooks
 set -e
 cd "$(git rev-parse --show-toplevel)"
-if git diff --cached --name-only --diff-filter=ACDMR | grep -qE '^(LAW\.md|banned\.txt|tools/render\.py|agents/|AGENTS\.md)'; then
+if git diff --cached --name-only --diff-filter=ACDMR | grep -qE '^(LAW\.md|banned\.txt|tools/render\.py|agents/|manager\.md)'; then
     python3 tools/render.py
-    git add -A agents/ AGENTS.md
+    git add -A agents/ manager.md
 fi
