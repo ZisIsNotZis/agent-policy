@@ -7,7 +7,7 @@ advertise: true
 systemPromptMode: replace
 inheritProjectContext: false
 inheritGlobalContext: false
-inheritSkills: false
+inheritSkills: true
 ---
 
 <!-- generated from LAW.md by tools/render.py; edit LAW.md, not this file -->

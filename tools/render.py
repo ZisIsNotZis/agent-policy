@@ -42,7 +42,7 @@ ROLES = {
             ("systemPromptMode", "replace"),
             ("inheritProjectContext", "false"),
             ("inheritGlobalContext", "false"),
-            ("inheritSkills", "false"),
+            ("inheritSkills", "true"),
         ],
     },
     "worker": {
@@ -57,7 +57,7 @@ ROLES = {
             ("systemPromptMode", "replace"),
             ("inheritProjectContext", "false"),
             ("inheritGlobalContext", "false"),
-            ("inheritSkills", "false"),
+            ("inheritSkills", "true"),
         ],
     },
 }
