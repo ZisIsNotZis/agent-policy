@@ -21,7 +21,7 @@ sh tools/install-agents.sh
 sh tools/check.sh
 ```
 
-`install-agents.sh` 会把 `~/.pi/agent/agents` 链接到这份代码，把全局 `AGENTS.md` 链接到 `manager.md`，并启用仓库的 pre-commit 钩子。`check.sh` 在渲染结果过期时失败。
+`install-agents.sh` 会把 `~/.pi/agent/agents` 链接到这份代码，把全局 `AGENTS.md` 链接到 `manager.md`，并启用仓库的 pre-commit 钩子。两处都是链接，所以改一次法律就到达每个角色，不用重装。如果这两个路径上已经有真实文件，脚本会把它移到旁边（`~/.pi/agent/AGENTS.md.local`），不会删掉。装完可以用 `sh tools/install-agents.sh --check` 验证链接；`check.sh` 在渲染结果过期时失败。
 
 ## 现在能做什么
 
@@ -33,6 +33,8 @@ sh tools/check.sh
 - **没有运行时。** 这个仓库是法律和它周围的脚本，不是框架、服务或 CLI。
 
 ## 结构
+
+一份手写文件，一趟渲染，三个文件：先按角色标记解析法律，再把每个标记下的章节和段落收成视图；经理视图写两次——一次是角色定义，一次是 harness 的全局上下文文件。安装步骤只是把 harness 指过去，不往里拷任何东西，所以不存在会逐渐偏离的第二份副本。
 
 ```text
 LAW.md ──tools/render.py──> agents/manager.md  （角色定义）
@@ -53,7 +55,10 @@ LAW.md ──tools/render.py──> agents/manager.md  （角色定义）
 | `tools/render.py` | 从带角色标记的章节和段落渲染角色视图。 |
 | `tools/check.sh` | 磁盘上的视图与法律不一致时失败。 |
 | `tools/install-agents.sh` | 把视图链接进 harness，并启用钩子。 |
+| `.githooks/pre-commit` | 提交源文件时重新渲染并暂存视图。 |
 | `agents/`、`manager.md` | 生成的视图。不要手改。 |
+| `assets/logo.svg` | 本页顶部用的标记。 |
+| `README.zh-CN.md` | 本页的简体中文版。 |
 
 ## 开发
 
@@ -70,7 +75,13 @@ sh tools/check.sh
 git config core.hooksPath .githooks
 ```
 
-## 状态
+除了这个过期检查，没有别的测试套件：渲染器很小，而它唯一的失败方式——磁盘上的视图和法律不再一致——正好就是 `check.sh` 观察到的东西。
+
+## 贡献
+
+先读 `LAW.md`，改法律而不改生成的视图，开 PR 前跑 `sh tools/check.sh`。范围、检查项，以及一次改动需要带上什么，见 [CONTRIBUTING.md](CONTRIBUTING.md)。
+
+## 路线图
 
 **已实现**
 
@@ -79,17 +90,13 @@ git config core.hooksPath .githooks
 - 链接式安装和视图过期检查。
 - 这份法律正作为 [auto-dead-serious](https://github.com/ZisIsNotZis/auto-dead-serious) 的策略子模块使用。
 
-**计划**
+**未实现**
 
 没有公开路线图。项目碰到法律答不出的缺口时，法律就改；那个缺口就是下一步。带上具体情形和证据开 issue。
 
-## 未来
+### 未来
 
 项目换手时应该还能接上原来的线：一份读得懂的法律，一条路线，一个同时放着目标、评审和发布的地方。视图保持薄，法律保持小；每一次增加，都要让真实的交接更清楚，否则就不加。
-
-## 贡献
-
-先读 `LAW.md`。改动要小，每个事实只留一个家；改法律，不改生成的视图。开 PR 前跑 `sh tools/check.sh`。欢迎 issue 和 PR，请带上情形、证据，以及能判定它的检查。
 
 ## 许可证
 

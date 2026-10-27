@@ -21,7 +21,7 @@ sh tools/install-agents.sh
 sh tools/check.sh
 ```
 
-`install-agents.sh` links `~/.pi/agent/agents` at this checkout, links the global `AGENTS.md` at `manager.md`, and sets the repository's pre-commit hook. `check.sh` fails if a rendered view is stale.
+`install-agents.sh` links `~/.pi/agent/agents` at this checkout, links the global `AGENTS.md` at `manager.md`, and sets the repository's pre-commit hook. Both are links, so a law edit reaches every role without a reinstall. If either path already holds a real file, the script moves it aside (`~/.pi/agent/AGENTS.md.local`) instead of deleting it. `sh tools/install-agents.sh --check` verifies the links afterwards; `check.sh` fails if a rendered view is stale.
 
 ## What it can do now
 
@@ -33,6 +33,8 @@ sh tools/check.sh
 - **No runtime.** This repository is the law and the scripts around it, not a framework, service or CLI.
 
 ## Architecture
+
+One hand-written file, one pass over it, three files: the law is parsed for its role tags, each tag's sections and blocks are collected into a view, and the manager's view is written twice — once as an agent definition, once as the harness's global context file. The install step only points the harness at those files; nothing is copied into it, so there is no second copy to drift.
 
 ```text
 LAW.md ──tools/render.py──> agents/manager.md  (agent definition)
@@ -53,7 +55,10 @@ LAW.md ──tools/render.py──> agents/manager.md  (agent definition)
 | `tools/render.py` | Renders role views from tagged sections and blocks. |
 | `tools/check.sh` | Fails if a view on disk differs from the law. |
 | `tools/install-agents.sh` | Links the views into the harness and enables the hook. |
+| `.githooks/pre-commit` | Re-renders and stages the views when a source file is committed. |
 | `agents/`, `manager.md` | Generated views. Do not edit. |
+| `assets/logo.svg` | The mark used at the top of this file. |
+| `README.zh-CN.md` | This page in Simplified Chinese. |
 
 ## Develop
 
@@ -70,7 +75,13 @@ The pre-commit hook does the same when a relevant file is staged. Enable it once
 git config core.hooksPath .githooks
 ```
 
-## Status
+There is no test suite beside the stale-view check: the renderer is small, and its one failure mode — a view that no longer matches the law — is exactly what `check.sh` observes.
+
+## Contributing
+
+Read `LAW.md` first, edit the law rather than a generated view, and run `sh tools/check.sh` before opening a pull request. See [CONTRIBUTING.md](CONTRIBUTING.md) for scope, the checks and what a change needs to carry.
+
+## Roadmap
 
 **Implemented**
 
@@ -83,13 +94,9 @@ git config core.hooksPath .githooks
 
 No public roadmap is recorded. The law changes when a project hits a gap it cannot answer; that gap is the next change. Open an issue with the case and the evidence.
 
-## Future vision
+### Future vision
 
 A project should be able to change hands without losing the thread: one readable law, one route, one place where the Goal, the review and the release live. The views stay thin, the law stays small, and every addition must earn its place by making a real hand-off clearer.
-
-## Contributing
-
-Read `LAW.md` first. Keep the change small, keep one home for each fact, and edit the law rather than a generated view. Run `sh tools/check.sh` before opening a pull request. Issues and pull requests are welcome; include the case, the evidence and the check that settles it.
 
 ## License
 
