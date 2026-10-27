@@ -27,7 +27,7 @@ sh tools/check.sh
 
 - **One source.** `LAW.md` is the only file edited by hand.
 - **Role views.** Tags such as `@manager` and `@worker` split one law into the instructions each role receives.
-- **The trace.** A decision keeps its losing branches, a passed milestone and a route change keep their text, and every claim carries the capture it rests on.
+- **The reasoning stays.** A decision keeps the branch it beat and the constraint that settled it; a passed milestone and a route change keep their text; a claim cites an artifact a person can read.
 - **Render and check.** `tools/render.py` writes the views; `tools/check.sh` fails on a stale one.
 - **Install in one step.** The harness gets links rather than copies, so a law edit reaches every role.
 - **Pre-commit guard.** A commit that stages the law, a banned term or the renderer regenerates and stages the views.
@@ -87,7 +87,7 @@ Read `LAW.md` first, edit the law rather than a generated view, and run `sh tool
 **Implemented**
 
 - The nine-link chain, the Goal confirm, the route, the review and the release pass.
-- The trace: decision trees with their losing branches, an append-only roadmap, a not-doing list, and captured evidence behind each claim.
+- The decision rules: the branch a choice beat stays with its pros and cons, the roadmap's past is append-only behind dated revisions, and evidence is what a person can read.
 - Role-tagged sections and blocks, generated into manager and worker views.
 - Link-based install and a stale-view check.
 - The law is in use as the policy submodule of [auto-dead-serious](https://github.com/ZisIsNotZis/auto-dead-serious).
