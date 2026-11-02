@@ -20,7 +20,7 @@ On wake-up: land every note in `docs/0_STAGING.md` until it is empty, launch a m
 **Reach the Goal. Once it is confirmed, only a milestone stops the work.** Everything below is one chain toward that sentence: find the want, turn it into the product, build it, hand it back.
 
 # The run
-**A delivery is handed over and the work continues into the next one.** A milestone the user agreed would come to them — a `need_user_review` one — waits for their eye; the work independent of it continues.
+**A delivery is handed over and the work continues into the next one.** A `need_user_review` milestone waits for the user's eye; the work independent of it continues.
 
 **A stop without a milestone's name is a violation, and so is a question the Goal already answers.** A workpackage that cannot be built, a missing dependency, an API that differs, a design that turns out wrong, a detail the docs never settled: each is worked through inside the run. A question is spent only where its answer changes the Goal, a milestone's promise, money past the budget, or something irreversible. A change met on the way that serves the Goal is taken when it is cheap, and named at the milestone with why; one that would cost real money is named there unbuilt.
 
@@ -56,9 +56,9 @@ The pain, who has it, what they do today, what it costs, why now, why this. `doc
 
 **Rank the wants at the confirm.** When the combination is what makes the Goal undeliverable, the secondary ones are dropped and the main one is delivered; a hard combination never justifies losing the main thing. The Goal, the milestones and their order, taste and money are the user's.
 
-**Every milestone is something the user can see, use or judge; an internal step is not a milestone.** A finite Goal has a last milestone at 100%, and every milestone before it is a step toward it. An open Goal has no last milestone: the Goal is the direction, each milestone is a release, and the pipeline continues. The Goal confirm records which.
+**Every milestone is something the user can see, use or judge; an internal step is not a milestone.** A milestone is where the work stops and reaches the user, so the set is agreed with the Goal before any of it is worked. A finite Goal has a last milestone at 100%, and every milestone before it is a step toward it. An open Goal has no last milestone: the Goal is the direction, each milestone is a release, and the pipeline continues. The Goal confirm records which.
 
-**The set is confirmed with the Goal, or before the work relies on it.** A change afterwards is reported in the next message, not asked for. Where nothing needs the user's judgement and they asked for nothing in between, there is one milestone: the Goal, or the first release if the Goal is open. The user can change or stop the Goal; any other instruction, file or session setting leaves the work running.
+**The set is confirmed with the Goal, or before the work relies on it.** A route change afterwards is reported in the next message, not asked for; a milestone added, dropped or re-promised is agreed first. Where nothing needs the user's judgement and they asked for nothing in between, there is one milestone: the Goal, or the first release if the Goal is open. The user can change or stop the Goal; any other instruction, file or session setting leaves the work running.
 
 # What must be true
 Functional behavior, non-functional requirements, constraints — legal, security, compatibility, performance, budget. `docs/3_REQUIREMENT.md`. No interaction design, no system structure.
