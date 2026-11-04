@@ -1,21 +1,25 @@
 #!/usr/bin/env python3
 """Render the role views from LAW.md.
 
-LAW.md is the law: one hand-written markdown file, edited by hand. A role reads a
-view, never the law itself. Two tags do the split:
+LAW.md is the law: one hand-written source. A heading carries its role tags
+(`@manager`, `@submanager`, `@worker`); a view is the shared sections plus the
+role's sections.
 
-    "# Heading @manager"       the whole section belongs to those roles; no tag: every role
-    "- item ... @worker"       the block (this line plus its indented children) belongs to those roles
+    "# Heading @manager @submanager"   the whole section, children included, belongs to those roles
+    "# Heading"                        no tags: inherit the nearest tagged ancestor heading
 
-Tags never appear in a view. A view is written to two places:
+A heading with no tags takes its parent heading's role set, and that inherits up
+the chain. A chain with no tag anywhere belongs to no role: it is source and
+compiler material, and no view includes it. So content for every role needs
+`@manager @submanager @worker` on its heading.
 
-    agents/<role>.md   an agent definition: frontmatter, then the body
-    AGENTS.md          the manager body alone, no frontmatter: the default agent's context file
+Tags never appear in a view. Three roles, three targets:
 
-`~/.pi/agent/agents` is a symlink to `agents/`, so a view is installed by being written here.
+    manager.md             the root manager body alone, no frontmatter: the default agent's context
+    agents/submanager.md   a sub-manager definition: frontmatter, then the body
+    agents/worker.md       a worker definition: frontmatter, then the body
 
     python3 tools/render.py            render every view
-    python3 tools/render.py --check    fail if a view on disk differs from what the law renders
 """
 
 import re
@@ -26,16 +30,25 @@ ROOT = Path(__file__).resolve().parent.parent
 LAW = ROOT / "LAW.md"
 MARK = "<!-- generated from LAW.md by tools/render.py; edit LAW.md, not this file -->"
 
-# A role tag is trailing: whitespace, @, the role name, and either the line end or another tag.
+# Views the law no longer defines; removed on a render so no stale role survives.
+OBSOLETE = ["agents/manager.md"]
+
+# A role tag is trailing: whitespace, @, the role name.
 TAG_END = re.compile(r"[ \t]+@([a-z_]+)\s*$")
+HEADING = re.compile(r"(#{1,6})[ \t]")
 
 ROLES = {
     "manager": {
-        "agent": "agents/manager.md",
-        "context": "manager.md",
+        "agent": None,
+        "context": "AGENTS.md",
+        "frontmatter": [],
+    },
+    "submanager": {
+        "agent": "agents/submanager.md",
+        "context": None,
         "frontmatter": [
-            ("name", "manager"),
-            ("description", "You hold a project: its docs, its roadmap and the agents under it."),
+            ("name", "submanager"),
+            ("description", "You run one subproject under a parent Manager. You own its docs, its Roadmap, and the agents under it."),
             ("tools", "read, edit, write, bash, grep, find, ls, subagent"),
             ("thinking", "medium"),
             ("advertise", "true"),
@@ -50,7 +63,7 @@ ROLES = {
         "context": None,
         "frontmatter": [
             ("name", "worker"),
-            ("description", "You execute exactly one workpackage in your manager's area, and report once."),
+            ("description", "You execute exactly one work package in your manager's area, and report once."),
             ("tools", "read, edit, write, bash, grep, find, ls"),
             ("thinking", "low"),
             ("advertise", "true"),
@@ -63,30 +76,11 @@ ROLES = {
 }
 
 
-def parse(text):
-    """Return [(heading line or None, [body lines])] split on level-1 headings outside fences."""
-    sections = []
-    current = None
-    fenced = False
-    for line in text.splitlines():
-        if line.lstrip().startswith("```"):
-            fenced = not fenced
-        if not fenced and line.startswith("# "):
-            current = (line, [])
-            sections.append(current)
-        else:
-            if current is None:
-                current = (None, [])
-                sections.append(current)
-            current[1].append(line)
-    return sections
-
-
 def take_tags(line):
     """Strip the trailing role tags off one line; return (roles, stripped line).
 
     Only trailing tags whose name is a role are stripped, so a sentence ending in
-    an @-token that is not a role survives in every view."""
+    an @-token that is not a role survives intact."""
     roles = set()
     while True:
         m = TAG_END.search(line)
@@ -96,49 +90,61 @@ def take_tags(line):
         line = line[: m.start()]
 
 
-def filter_body(body, role):
-    """Keep one role's blocks: a tagged line and its indented children follow that line's fate."""
-    kept = []
-    drop_indent = None
-    for line in body:
-        if not line.strip():
-            kept.append("")
-            continue
-        indent = len(line) - len(line.lstrip(" \t"))
-        if drop_indent is not None and indent > drop_indent:
-            continue
-        drop_indent = None
-        roles, stripped = take_tags(line)
-        if roles and role not in roles:
-            drop_indent = indent
-            continue
-        kept.append(stripped)
-    while kept and not kept[-1].strip():
-        kept.pop()
-    while kept and not kept[0].strip():
-        kept.pop(0)
+def parse(text):
+    """Return [(heading or None, level, effective roles, [body lines])].
+
+    Splits on headings outside fences and resolves each heading's role set: the
+    heading's own tags, else the nearest ancestor heading's set, else no role at
+    all. Text before the first heading has no heading and no role."""
+    sections = []
+    current = None
+    stack = []  # [(level, roles)] for the open headings
+    fenced = False
+    for line in text.splitlines():
+        if line.lstrip().startswith("```"):
+            fenced = not fenced
+        m = None if fenced else HEADING.match(line)
+        if m is not None:
+            level = len(m.group(1))
+            while stack and stack[-1][0] >= level:
+                stack.pop()
+            roles, heading = take_tags(line)
+            if not roles and stack:
+                roles = stack[-1][1]
+            stack.append((level, set(roles)))
+            current = (heading, level, set(roles), [])
+            sections.append(current)
+        else:
+            if current is None:
+                current = (None, 0, set(), [])
+                sections.append(current)
+            current[3].append(line)
+    return sections
+
+
+def tidy(lines):
+    """Trim blank edges and collapse runs of blank lines."""
     out = []
-    for line in kept:
-        if not line.strip() and out and not out[-1].strip():
+    for line in lines:
+        if not line.strip() and (not out or not out[-1].strip()):
             continue
         out.append(line)
+    while out and not out[-1].strip():
+        out.pop()
     return out
 
 
 def render_body(role):
     body = []
-    for heading, lines in parse(LAW.read_text(encoding="utf-8")):
-        roles = set()
-        if heading is not None:
-            roles, heading = take_tags(heading)
-        if roles and role not in roles:
+    for heading, _level, roles, lines in parse(LAW.read_text(encoding="utf-8")):
+        if role not in roles:
             continue
         if heading is not None:
             if body:
                 body.append("")
             body.append(heading)
-        body.extend(filter_body(lines, role))
-    return "\n".join(body).strip() + "\n"
+        body.extend(tidy(lines))
+    return "\n".join(tidy(body)).strip() + "\n"
 
 
 def frontmatter(spec):
@@ -150,7 +156,6 @@ def frontmatter(spec):
 
 
 def main(argv):
-    check = "--check" in argv
     stale = []
     for role, spec in ROLES.items():
         for target, head in ((spec["agent"], frontmatter(spec["frontmatter"])), (spec["context"], "")):
@@ -162,15 +167,12 @@ def main(argv):
             if old == text:
                 continue
             stale.append(target)
-            if not check:
-                path.parent.mkdir(parents=True, exist_ok=True)
-                path.write_text(text, encoding="utf-8")
-    if check:
-        if stale:
-            print("stale: " + ", ".join(stale))
-            return 1
-        print("ok: views match the law")
-        return 0
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(text, encoding="utf-8")
+    for rel in OBSOLETE:
+        path = ROOT / rel
+        if path.exists():
+            path.unlink()
     if stale:
         print("wrote: " + ", ".join(stale))
     else:
