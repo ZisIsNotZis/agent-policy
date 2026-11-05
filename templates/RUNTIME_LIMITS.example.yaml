@@ -1,0 +1,21 @@
+# Example deployment configuration. This file is a schema/example, not an
+# enforced limit until the harness/runtime reads and enforces these values.
+# Choose values appropriate to the deployment; LAW intentionally sets no
+# universal numeric caps.
+limits:
+  max_hierarchy_depth: null          # integer; null = not configured
+  max_child_agents_per_manager: null # integer; fan-out ceiling
+  max_concurrent_agents: null        # integer
+  max_concurrent_processes: null     # integer
+  max_spend_per_scope: null          # number + currency in deployment config
+  max_spend_per_run: null            # number + currency in deployment config
+  max_execution_seconds: null        # integer; per run/task
+  max_retry_attempts: null           # integer; per failure/approach
+  max_investigation_seconds: null    # integer; reassessment horizon, not auto-stop
+
+# Enforcement requirements:
+# - The runtime, not an LLM instruction alone, must enforce hard ceilings.
+# - Null values are unconfigured, not unlimited permission.
+# - Until limits are configured, Managers must use conservative bounded
+#   operation, avoid unbounded concurrency/retries, and disclose the gap.
+# - Do not evade limits through nested agents, alternate identities, or relaunches.

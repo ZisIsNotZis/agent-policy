@@ -31,7 +31,7 @@ A practical heuristic:
 - Reopen a rejected branch when its original rejection reason changes or new evidence makes it competitive.
 - Stop or redirect when additional exploration is unlikely to change a decision or improve the result enough to justify its cost.
 
-A time box is a reassessment point, not an automatic stop and not a reason to ask the user to decide. Choose a horizon based on uncertainty, consequence, reversibility, investigation cost, and cost of delay. Schedule a non-blocking reassessment using an asynchronous timer process or another verified mechanism; a written deadline or shell `timeout` alone is insufficient. At the horizon, decide whether to act, change approach, narrow the question, or justify another bounded investigation. Continue useful parallel work. Do not impose arbitrary quotas on the number of ideas or experiments without understanding the problem, and do not let research or brainstorming continue indefinitely without reassessment.
+A time box is a reassessment point, not an automatic stop and not a reason to ask the user to decide. Choose a horizon based on uncertainty, consequence, reversibility, investigation cost, and cost of delay. Schedule a non-blocking reassessment through a verified runtime event, scheduler, or heartbeat mechanism; a written deadline or shell `timeout` alone is insufficient. At the horizon, decide whether to act, change approach, narrow the question, or justify another bounded investigation. Continue useful parallel work. Do not impose arbitrary quotas on the number of ideas or experiments without understanding the problem, and do not let research or brainstorming continue indefinitely without reassessment.
 
 ## Reconsider the direction when
 
@@ -46,7 +46,7 @@ When this happens, step back to the problem framing and alternatives. Do not mer
 
 ## Protect focused thinking
 
-For open-ended work, deliberately allocate sufficient focused attention to understand the problem, explore genuinely different approaches, challenge assumptions, and develop a strong direction before converging. Do not rush into execution simply to show activity. Avoid filling all available capacity with unrelated execution, status messages, or premature coordination. Keep necessary communication, but batch low-value interruptions where practical. Protect this thinking time with a decision horizon and asynchronous timer/reassessment mechanism so focus does not become indefinite rumination. This is a focus principle, not a rigid calendar rule.
+For open-ended work, deliberately allocate sufficient focused attention to understand the problem, explore genuinely different approaches, challenge assumptions, and develop a strong direction before converging. Do not rush into execution simply to show activity. Avoid filling all available capacity with unrelated execution, status messages, or premature coordination. Keep necessary communication, but batch low-value interruptions where practical. Protect this thinking time with a decision horizon and runtime-supported non-blocking reassessment so focus does not become indefinite rumination. This is a focus principle, not a rigid calendar rule.
 
 ## Record the useful result
 

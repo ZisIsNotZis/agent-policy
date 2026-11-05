@@ -43,7 +43,7 @@ Run the cheapest useful check early, then broader checks as appropriate. Do not 
 
 Review the diff against the intended outcome, acceptance criteria, interfaces, and likely failure modes. Look for regressions, unhandled edge cases, unsafe assumptions, unnecessary scope, and tests that do not actually discriminate between correct and incorrect behavior.
 
-Use an independent reviewer when impact, novelty, uncertainty, or cross-component risk warrants it. Ask the reviewer to find material problems, not simply approve the implementation.
+For consequential, novel, uncertain, or cross-component changes, obtain independent verification from an agent who did not produce the artifact, or an equivalent independent check. Give the verifier the Goal and acceptance conditions, not just the producer's conclusion. Prefer reproducible mechanical evidence where suitable. The Manager remains accountable for resolving findings and deciding whether the overall outcome is achieved. Do not add a second agent to every trivial low-risk change.
 
 ## Debugging
 

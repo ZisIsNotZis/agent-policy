@@ -9,7 +9,17 @@ description: Use when creating or restructuring project documentation, deciding 
 
 Preserve the smallest reliable body of information that lets people and agents understand current truth, make consistent decisions, continue work, and avoid repeating expensive mistakes.
 
-## Choose documents for the project
+## Standard scope records
+
+Use the supplied templates as the default minimum record set, adapting optional fields to the project without changing their purposes:
+- `GOAL.md`: intended outcome, constraints, scope, deliverables, acceptance conditions.
+- `PLAN.md`: approach, owners, work packages, dependencies, decisions, resource envelope, reassessment points.
+- `STATE.md`: current observed state, evidence, work status, blockers, pending user input, next actions, and a concise user-facing summary.
+- `HANDOFF.md`: assignment, owner, CWD, explicit write scope, interfaces, deliverable, acceptance conditions, evidence, and remaining work.
+
+Each Manager maintains these records in its managed scope. The root Manager publishes a concise status in `STATE.md` for the Communicator to read. The Communicator may read that published status only; it does not browse other project records or independently investigate status.
+
+## Choose additional documents for the project
 
 Do not force every project into one template. Select documents according to the work:
 - software/product work may need Goal, use cases, product decisions, architecture, and roadmap;

@@ -1,16 +1,28 @@
 #!/usr/bin/env python3
-"""Render the role views from LAW.md.
+"""Build and optionally install the global Pi agent policy bundle.
 
-    python3 tools/render.py            render every view
+    python3 tools/render.py                 build a release in ./build/
+    python3 tools/render.py --install       build, then install into ~/.agents/
+    python3 tools/render.py --out dist      build into ./dist/
+    python3 tools/render.py --install --install-dir ~/.agents
+
+The build directory mirrors the deployable ~/.agents/ layout. Source policy,
+compiler code, tests, evals, and migration documentation are not shipped.
 """
 
+import argparse
 import re
+import shutil
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 LAW = ROOT / "LAW.md"
 MARK = "<!-- generated from LAW.md by tools/render.py; edit LAW.md, not this file -->"
+DEFAULT_BUILD = ROOT / "build"
+DEFAULT_INSTALL = Path.home() / ".agents"
+SKILLS_SOURCE = ROOT / "agent-policy-skills"
+TEMPLATES_SOURCE = ROOT / "templates"
 
 # Views the law no longer defines; removed on a render so no stale role survives.
 OBSOLETE = []
@@ -137,28 +149,93 @@ def frontmatter(spec):
     return "\n".join(lines) + "\n\n"
 
 
-def main(argv):
-    stale = []
+def parse_args(argv):
+    parser = argparse.ArgumentParser(description="Build and install the Pi global agent policy bundle.")
+    parser.add_argument("--out", type=Path, default=DEFAULT_BUILD,
+                        help="release build directory (default: ./build)")
+    parser.add_argument("--install", action="store_true",
+                        help="install the completed build into ~/.agents after validation")
+    parser.add_argument("--install-dir", type=Path, default=DEFAULT_INSTALL,
+                        help="installation directory (default: ~/.agents)")
+    return parser.parse_args(argv)
+
+
+def safe_build_path(path):
+    resolved = path.expanduser().resolve()
+    root = ROOT.resolve()
+    if resolved == root or resolved in root.parents:
+        raise ValueError(f"refusing to use source tree or its parent as build output: {resolved}")
+    return resolved
+
+
+def copy_runtime_assets(build_dir):
+    """Copy every deployable companion directory, retaining relative layout."""
+    if not SKILLS_SOURCE.is_dir():
+        raise FileNotFoundError(f"skills source directory not found: {SKILLS_SOURCE}")
+    if not TEMPLATES_SOURCE.is_dir():
+        raise FileNotFoundError(f"templates source directory not found: {TEMPLATES_SOURCE}")
+    shutil.copytree(SKILLS_SOURCE, build_dir / "skills")
+    shutil.copytree(TEMPLATES_SOURCE, build_dir / "templates")
+
+
+def build_release(build_dir):
+    if not LAW.is_file():
+        raise FileNotFoundError(f"LAW source not found: {LAW}")
+
+    # A release is reproducible: remove stale generated files from the previous build.
+    if build_dir.exists():
+        if build_dir.is_symlink():
+            raise ValueError(f"refusing to clear symlink build directory: {build_dir}")
+        shutil.rmtree(build_dir)
+    build_dir.mkdir(parents=True)
+
+    written = []
     for role, spec in ROLES.items():
-        for target, head in ((spec["agent"], frontmatter(spec["frontmatter"])), (spec["context"], "")):
-            if target is None:
-                continue
-            path = ROOT / target
-            text = head + MARK + "\n\n" + render_body(role)
-            old = path.read_text(encoding="utf-8") if path.exists() else None
-            if old == text:
-                continue
-            stale.append(target)
-            path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(text, encoding="utf-8")
-    for rel in OBSOLETE:
-        path = ROOT / rel
-        if path.exists():
-            path.unlink()
-    if stale:
-        print("wrote: " + ", ".join(stale))
-    else:
-        print("unchanged: views already match the law")
+        target = spec["context"] or spec["agent"]
+        if target is None:
+            continue
+        path = build_dir / target
+        content = frontmatter(spec["frontmatter"]) if spec["frontmatter"] else ""
+        content += MARK + "\n\n" + render_body(role)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(content, encoding="utf-8")
+        written.append(target)
+
+    copy_runtime_assets(build_dir)
+    return written
+
+
+def install_release(build_dir, install_dir):
+    """Merge the release into ~/.agents without deleting unrelated user files."""
+    destination = install_dir.expanduser().resolve()
+    if destination == Path.home().resolve() or destination == Path.home().resolve().parent:
+        raise ValueError(f"refusing unsafe installation destination: {destination}")
+    destination.mkdir(parents=True, exist_ok=True)
+    # Copy contents, not the build directory itself, so paths land directly under ~/.agents.
+    for child in build_dir.iterdir():
+        target = destination / child.name
+        if child.is_dir():
+            shutil.copytree(child, target, dirs_exist_ok=True)
+        else:
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(child, target)
+    return destination
+
+
+def main(argv):
+    args = parse_args(argv)
+    try:
+        build_dir = safe_build_path(args.out)
+        written = build_release(build_dir)
+        print(f"built release: {build_dir}")
+        print("generated: " + ", ".join(written))
+        print("included: skills/, templates/")
+        if args.install:
+            destination = install_release(build_dir, args.install_dir)
+            print(f"installed release contents to: {destination}")
+    except (OSError, ValueError) as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 1
     return 0
 
 
