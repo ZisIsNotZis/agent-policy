@@ -41,7 +41,7 @@ Confirm that:
 
 ## Stop conditions
 
-Pause or revise the migration if the mapping is incomplete, validation fails, an unexpected dependency appears, or the cost/risk exceeds the approved envelope. Preserve the current recoverable state and report evidence and options.
+Pause or revise the migration if the mapping is incomplete, validation fails, an unexpected dependency appears, or the cost/risk exceeds the available resource limits or the value of continuing. Preserve the current recoverable state and report evidence and options.
 
 ## Deliverable
 

@@ -19,6 +19,12 @@ Do not force every project into one template. Select documents according to the 
 
 Prefer a small number of clear, useful documents over a large taxonomy. Each document should have a distinct purpose and an obvious owner.
 
+## Mirror the ownership hierarchy
+
+Documentation ownership follows the Manager hierarchy. Each Manager maintains authoritative records for its assigned scope. Parent records contain the parent Goal, constraints, cross-workstream decisions, shared resources, ownership, overall state, and links to child records. Child Manager records contain their assigned outcome, local design, decisions, experiments, findings, exact resource locations, progress, and next actions. Worker records preserve only the package-specific context and evidence needed for execution and handoff.
+
+Do not copy whole child records into parent documents. Summarize what the parent needs and link to the authoritative child source. Propagate discoveries upward when they affect parent scope, and propagate parent decisions downward when they affect child assignments.
+
 ## Establish SSOT
 
 For every important class of information, identify one authoritative home. Other documents should link to it or provide clearly labeled summaries, not competing copies.
@@ -33,6 +39,9 @@ A practical SSOT check:
 SSOT does not mean one giant file. It means one authoritative source per important fact or decision.
 
 ## What to record
+
+Preserve information when losing it could cause a future agent to repeat work, make a wrong decision, misunderstand an assignment, or ask for information already established. Exact paths, URLs, share locations, access methods, and environment details are often essential execution context; do not replace them with vague descriptions such as "the shared folder".
+
 
 Prioritize information that affects future decisions, handoffs, reproducibility, or repeated work:
 - current Goal, constraints, and priorities;
@@ -61,6 +70,9 @@ Documentation is shared memory, not infallible truth. When docs, code, tests, ru
 Do not blindly prefer documentation over implementation or implementation over documentation.
 
 ## Keep it maintainable
+
+Keep an obvious authoritative project entry point. Ensure each relevant scope has enough documentation for a new agent to orient itself without reconstructing the entire conversation. Before substantial work, inspect existing records and source locations; before handoff or context loss, reconcile important new facts, decisions, and actual state.
+
 
 Use names and directory structure that make contents discoverable. Add an index only when names and layout are insufficient. Split documents when doing so improves navigation or ownership, not merely to satisfy a line-count rule. Keep current state prominent; move obsolete detail to history only when it has continuing value.
 

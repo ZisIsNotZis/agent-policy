@@ -1,24 +1,6 @@
 #!/usr/bin/env python3
 """Render the role views from LAW.md.
 
-LAW.md is the law: one hand-written source. A heading carries its role tags
-(`@manager`, `@submanager`, `@worker`); a view is the shared sections plus the
-role's sections.
-
-    "# Heading @manager @submanager"   the whole section, children included, belongs to those roles
-    "# Heading"                        no tags: inherit the nearest tagged ancestor heading
-
-A heading with no tags takes its parent heading's role set, and that inherits up
-the chain. A chain with no tag anywhere belongs to no role: it is source and
-compiler material, and no view includes it. So content for every role needs
-`@manager @submanager @worker` on its heading.
-
-Tags never appear in a view. Three roles, three targets:
-
-    manager.md             the root manager body alone, no frontmatter: the default agent's context
-    agents/submanager.md   a sub-manager definition: frontmatter, then the body
-    agents/worker.md       a worker definition: frontmatter, then the body
-
     python3 tools/render.py            render every view
 """
 
@@ -31,24 +13,24 @@ LAW = ROOT / "LAW.md"
 MARK = "<!-- generated from LAW.md by tools/render.py; edit LAW.md, not this file -->"
 
 # Views the law no longer defines; removed on a render so no stale role survives.
-OBSOLETE = ["agents/manager.md"]
+OBSOLETE = []
 
 # A role tag is trailing: whitespace, @, the role name.
 TAG_END = re.compile(r"[ \t]+@([a-z_]+)\s*$")
 HEADING = re.compile(r"(#{1,6})[ \t]")
 
 ROLES = {
-    "manager": {
+    "communicator": {
         "agent": None,
         "context": "AGENTS.md",
         "frontmatter": [],
     },
-    "submanager": {
-        "agent": "agents/submanager.md",
+    "manager": {
+        "agent": "agents/manager.md",
         "context": None,
         "frontmatter": [
-            ("name", "submanager"),
-            ("description", "You run one subproject under a parent Manager. You own its docs, its Roadmap, and the agents under it."),
+            ("name", "manager"),
+            ("description", "Manager responsible for the scope explicitly assigned."),
             ("tools", "read, edit, write, bash, grep, find, ls, subagent"),
             ("thinking", "medium"),
             ("advertise", "true"),

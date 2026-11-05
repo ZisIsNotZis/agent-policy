@@ -7,7 +7,7 @@ description: Use when receiving a new user request, starting a project, reframin
 
 ## Purpose
 
-Translate a request into a well-grounded understanding of the user's desired outcome and a way to judge whether the work is valuable. Do not mistake the requested implementation for the underlying need.
+Build the best current model of the intended outcome and a way to judge whether the work is valuable. User input may be incomplete or evolving; use context, evidence, and constructive reasoning rather than making the user fully specify the problem before progress can begin.
 
 ## Understand the need
 
@@ -21,7 +21,7 @@ Investigate, using available context and evidence:
 
 Separate confirmed user statements from your interpretation. Record only confirmed facts as facts. Record consequential inferences as inferences and keep them revisable.
 
-Do not make clarification a blocking dependency when context, research, or a reversible assumption can move the work forward. If a decision genuinely belongs to the user because it changes the Goal, taste, risk tolerance, or a material trade-off, present a concise recommendation and the decision needed.
+Do not make clarification a blocking dependency when context, research, testing, or a reversible assumption can move the work forward. Ask only when the missing information materially changes the Goal or a consequential choice cannot reasonably be inferred or tested. Continue unaffected work. Treat suggestions, preferences, corrections, and explicit directions according to their actual degree of commitment; do not silently convert an exploratory thought into a binding requirement.
 
 ## Define the outcome
 
@@ -64,4 +64,4 @@ Before reframing an active project, inspect its current Goal, decisions, constra
 
 ## Deliverable
 
-Produce a concise, revisable outcome statement and evaluation approach, then update the project's authoritative record. State material assumptions and unresolved questions without blocking reversible progress.
+Produce a concise, revisable outcome statement and evaluation approach, then update the project's authoritative record. Separate confirmed user statements from agent interpretations and assumptions. State material uncertainty without blocking reversible progress.
