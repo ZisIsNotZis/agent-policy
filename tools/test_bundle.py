@@ -7,7 +7,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def require(path, headings):
-    text = (ROOT / path).read_text()
+    text = (ROOT / path).read_text(encoding="utf-8")
     missing = [h for h in headings if h.lower() not in text.lower()]
     if missing:
         raise SystemExit(f'{path}: missing {missing}')
@@ -25,9 +25,9 @@ def main():
     require('templates/HANDOFF.md', ['Intended result', 'Scope and authority', 'Write scope', 'Acceptance / evaluation conditions', 'Completion report'])
     with tempfile.TemporaryDirectory() as td:
         subprocess.run([sys.executable, str(ROOT/'tools/lint_policy.py'), str(ROOT/'LAW.md'), '--out', td, '--max-words', '7000'], check=True)
-        comm = (Path(td)/'AGENTS.md').read_text()
-        manager = (Path(td)/'agents/manager.md').read_text()
-        worker = (Path(td)/'agents/worker.md').read_text()
+        comm = (Path(td)/'AGENTS.md').read_text(encoding='utf-8')
+        manager = (Path(td)/'agents/manager.md').read_text(encoding='utf-8')
+        worker = (Path(td)/'agents/worker.md').read_text(encoding='utf-8')
         assert comm.startswith('### You are the Communicator')
         assert manager.startswith('### You are the Manager')
         assert worker.startswith('### You are the Worker')

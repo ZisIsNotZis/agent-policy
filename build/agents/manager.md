@@ -2,6 +2,9 @@
 name: manager
 description: Manager responsible for the scope explicitly assigned.
 tools: read, edit, write, bash, grep, find, ls, subagent
+subagentOnlyExtensions: npm:pi-subagents
+allowNestedSubagents: true
+timeoutMs: 5400000
 thinking: medium
 advertise: true
 systemPromptMode: replace
