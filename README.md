@@ -6,99 +6,89 @@ English | [简体中文](README.zh-CN.md)
 
 <h1 align="center">agent-policy</h1>
 
-<p align="center"><strong>The working law for projects run by agents.</strong></p>
+<p align="center"><strong>The working law for projects run by autonomous agents.</strong></p>
 
-One hand-written `LAW.md` becomes every role's instructions: the manager who owns the Goal, route, review and release, and the worker who owns architecture, contracts, detail and shipping. The point is not more process. It is one home for the route, so a project can change hands without losing what it is doing or why.
+One hand-written `LAW.md` defines how the Communicator, recursive Managers, and Workers own outcomes, delegate, learn, verify, and communicate. The user can drop in at any time, but the project must not depend on the user staying present. The aim is not more process or more messages: it is durable ownership, excellent outcomes, quiet operation, and reliable handoffs.
 
 ## Quick start
 
-Requires Python 3 and a POSIX shell. The install step targets the pi agent harness.
+Requires Python 3. The renderer builds role views for Pi. Its generic install default is `~/.agents/`; use the Pi-specific install target shown below for Pi global agents.
 
 ```sh
 git clone https://github.com/ZisIsNotZis/agent-policy.git
 cd agent-policy
-sh tools/install-agents.sh
-sh tools/check.sh
+python3 tools/render.py
+python3 tools/render.py --install --install-dir ~/.pi/agent
 ```
 
-`install-agents.sh` links `~/.pi/agent/agents` at this checkout, links the global `AGENTS.md` at `manager.md`, and sets the repository's pre-commit hook. Both are links, so a law edit reaches every role without a reinstall. If either path already holds a real file, the script moves it aside (`~/.pi/agent/AGENTS.md.local`) instead of deleting it. `sh tools/install-agents.sh --check` verifies the links afterwards; `check.sh` fails if a rendered view is stale.
+Use `--out PATH` to choose a build directory, or `--install-dir PATH` to choose the installation directory. The install command above targets Pi's global agent directory. For compatibility, bare `--install` still defaults to `~/.agents/`; choose `~/.pi/agent` explicitly when installing into Pi. Installation merges generated files; it does not remove unrelated files. Review the generated role views before installing them into an existing agent environment.
 
-## What it can do now
+For recursive Pi delegation, configure and verify the `pi-subagents` extension, its finite depth guard, and a longer finite execution timeout as described in [runtime/PI_SUBAGENTS_CONFIGURATION.md](runtime/PI_SUBAGENTS_CONFIGURATION.md). The policy cannot load or authorize a harness extension on its own.
 
-- **One source.** `LAW.md` is the only file edited by hand.
-- **Role views.** Tags such as `@manager` and `@worker` split one law into the instructions each role receives.
-- **The reasoning stays.** A decision keeps the branch it beat and the constraint that settled it; a passed milestone and a route change keep their text; a claim cites an artifact a person can read.
-- **Render and check.** `tools/render.py` writes the views; `tools/check.sh` fails on a stale one.
-- **Install in one step.** The harness gets links rather than copies, so a law edit reaches every role.
-- **Pre-commit guard.** A commit that stages the law, a banned term or the renderer regenerates and stages the views.
-- **No runtime.** This repository is the law and the scripts around it, not a framework, service or CLI.
+## What it does
+
+- **One source of truth.** `LAW.md` is the hand-written governing policy.
+- **Three role views.** The Communicator is the only user-facing interface; Managers recursively own scopes; Workers own bounded work packages.
+- **Autonomous continuity.** A sufficiently clear Goal is enough to start. User participation is optional; every genuine wait has a timeout and a safe default.
+- **Quiet communication.** No routine check-ins or progress narration. Only material, useful final messages reach the relevant parent or user.
+- **Recursive escalation and learning.** Parents filter premature escalations; every level improves both its outputs and its own working method from errors, warnings, checks, reviews, and feedback.
+- **Quality and verification.** Completion is judged against outcomes and evidence, not activity or plausible-looking artifacts.
+- **Skills and templates.** Detailed playbooks and standard records keep the core law focused.
 
 ## Architecture
 
-One hand-written file, one pass over it, three files: the law is parsed for its role tags, each tag's sections and blocks are collected into a view, and the manager's view is written twice — once as an agent definition, once as the harness's global context file. The install step only points the harness at those files; nothing is copied into it, so there is no second copy to drift.
-
 ```text
-LAW.md ──tools/render.py──> agents/manager.md  (agent definition)
-                         └> manager.md         (global context)
-                                      │
-                         tools/install-agents.sh
-                                      ▼
-                         ~/.pi/agent/agents -> agents/
-                         ~/.pi/agent/AGENTS.md -> manager.md
+                         User
+                           │
+                    Communicator
+                 (poll on user return;
+                  rare urgent wake-up)
+                           │
+                     Root Manager
+                     (tree root)
+                     /         \
+              Manager         Worker
+              /    \
+          Manager  Worker
+             │
+           Worker
 ```
 
-`LAW.md` is hand-written. Everything under `agents/` and `manager.md` is generated and marked as such; edit the law, not the views. `banned.txt` holds terms that pull writing into the wrong frame.
+Each tree is independently rooted at a user-selected scope and receives an explicit Goal through its Communicator. A tree may own one integrated outcome or several distinct outcomes under a shared theme. A child Manager's CWD need not be nested under its parent's CWD; managed scope and authority define ownership. Separate trees are independent.
 
-| Path | Role |
+## Repository map
+
+| Path | Purpose |
 | --- | --- |
-| `LAW.md` | The law: one chain from the pain to the release. |
-| `banned.txt` | Words the law replaces with its own terms. |
-| `tools/render.py` | Renders role views from tagged sections and blocks. |
-| `tools/check.sh` | Fails if a view on disk differs from the law. |
-| `tools/install-agents.sh` | Links the views into the harness and enables the hook. |
-| `.githooks/pre-commit` | Re-renders and stages the views when a source file is committed. |
-| `agents/`, `manager.md` | Generated views. Do not edit. |
-| `assets/logo.svg` | The mark used at the top of this file. |
-| `README.zh-CN.md` | This page in Simplified Chinese. |
+| `LAW.md` | Authoritative behavioral policy and role-tagged source. |
+| `agent-policy-skills/` | On-demand procedural playbooks. |
+| `templates/` | Goal, plan, state, handoff, intent, user-model, and decision-packet records. |
+| `tools/render.py` | Builds role-specific instructions and installs the completed build. |
+| `tools/lint_policy.py` | Reference role-tag parser/linter. |
+| `tools/test_bundle.py` | Structural bundle checks. |
+| `evals/` | Behavioral scenarios for testing the deployed agents. |
+| `runtime/` | Harness integration contracts and Pi subagent configuration guidance. |
+| `MIGRATION_NOTES.md` | Versioned rationale and migration history. |
+| `build/` | Generated installation output; do not hand-edit. |
+| `rendered/` | Reference rendered views; regenerate from `LAW.md`. |
+| `assets/logo.svg` | README mark. |
+| `README.zh-CN.md` | Simplified Chinese version of this README. |
 
-## Develop
+## Develop and validate
 
-Edit `LAW.md`, then render:
+Edit `LAW.md` and any relevant skill/template, then render and validate:
 
 ```sh
 python3 tools/render.py
-sh tools/check.sh
+python3 tools/lint_policy.py LAW.md --out /tmp/agent-policy-lint
+python3 tools/test_bundle.py
 ```
 
-The pre-commit hook does the same when a relevant file is staged. Enable it once per clone with:
-
-```sh
-git config core.hooksPath .githooks
-```
-
-There is no test suite beside the stale-view check: the renderer is small, and its one failure mode — a view that no longer matches the law — is exactly what `check.sh` observes.
+The production renderer is responsible for the actual role views. The linter is a reference check, not a substitute for inspecting the rendered instructions or testing them in Pi. Runtime capabilities—including nested subagent launch, finite execution timeouts, asynchronous recovery, and event delivery—must be verified in the actual harness.
 
 ## Contributing
 
-Read `LAW.md` first, edit the law rather than a generated view, and run `sh tools/check.sh` before opening a pull request. See [CONTRIBUTING.md](CONTRIBUTING.md) for scope, the checks and what a change needs to carry.
-
-## Roadmap
-
-**Implemented**
-
-- The nine-link chain, the Goal confirm, the route, the review and the release pass.
-- The decision rules: the branch a choice beat stays with its pros and cons, the roadmap's past is append-only behind dated revisions, and evidence is what a person can read.
-- Role-tagged sections and blocks, generated into manager and worker views.
-- Link-based install and a stale-view check.
-- The law is in use as the policy submodule of [auto-dead-serious](https://github.com/ZisIsNotZis/auto-dead-serious).
-
-**Planned**
-
-No public roadmap is recorded. The law changes when a project hits a gap it cannot answer; that gap is the next change. Open an issue with the case and the evidence.
-
-### Future vision
-
-A project should be able to change hands without losing the thread: one readable law, one route, one place where the Goal, the review and the release live. The views stay thin, the law stays small, and every addition must earn its place by making a real hand-off clearer.
+Change the governing law rather than editing generated views. Add a behavioral scenario when a change addresses a recurring failure mode. Update the Simplified Chinese README when the English README changes. Run the checks above and test consequential behavior in the target harness before claiming it is enforced.
 
 ## License
 

@@ -45,7 +45,7 @@ Group small related operations into coherent packages. Do not create one agent p
 
 **Create a child Manager** when the assigned scope is a coherent workstream or subsystem that needs its own decomposition, multiple owners, dependency coordination, design decisions, and integration. A child Manager owns that scope recursively, using the same Manager principles as its parent.
 
-Do not create a management layer merely to relay a single simple task. Do not impose an arbitrary universal depth in policy. Respect any configured runtime depth ceiling; within it, add depth only when it creates real ownership and coordination value.
+Do not create a management layer merely to relay a single simple task. There is no arbitrary universal depth ceiling: add recursive management layers whenever the scope genuinely needs independent decomposition, coordination, and integration, and the runtime supports it.
 
 The parent Manager remains accountable for the parent outcome and cross-child integration. A child Manager remains accountable for its subtree. A Worker remains accountable for its package.
 
@@ -105,8 +105,6 @@ Maintain the current plan in the project's authoritative planning record. Avoid 
 A current, understandable ownership and execution model: outcomes, owners, role choices, boundaries, dependencies, decision rights, resources, evaluation, integration, and next actions—at a level of detail appropriate to the uncertainty.
 
 
-## Bound resources and control concurrency
+## Coordinate shared mutable resources
 
-Inspect the configured runtime limits before spawning agents or starting costly work. Respect ceilings for hierarchy depth, fan-out, concurrent agents/processes, spend/usage, execution time, and retries where configured. Do not treat an unset limit as unlimited permission. If enforcement is missing, impose conservative local bounds, avoid unbounded parallelism and retries, and report the gap. Never evade limits by nesting or relaunching equivalent work.
-
-Before parallelizing, identify shared mutable files and resources. Give each Worker an explicit write scope. Use isolated worktrees/branches/copies when appropriate; otherwise assign shared-file ownership or serialize conflicting changes. CWD alone does not establish write ownership.
+Before parallelizing, identify shared mutable files and resources. Give each Worker an explicit write scope. Use isolated worktrees/branches/copies when appropriate; otherwise assign shared-file ownership or serialize conflicting changes. CWD alone does not establish write ownership. Respect actual platform and authorization limits, but do not invent arbitrary depth, fan-out, concurrency, or retry quotas.

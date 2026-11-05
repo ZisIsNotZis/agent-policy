@@ -20,13 +20,12 @@
 | Decision | Rationale / evidence | Owner | Date | Affected work |
 |---|---|---|---|---|
 
-## Resource envelope
+## Actual operating constraints
 
-- Configured limits source: `<runtime/config path or unavailable>`
-- Agent/process concurrency: `<configured limit and current usage>`
-- Spend/usage budget: `<configured limit and current usage, if metered>`
-- Execution/retry limits: `<configured values>`
-- Local conservative bounds when runtime limits are absent: `<explicit bounds>`
+- Platform/access/authorization constraints: `<actual constraints or none known>`
+- Execution timeout or deadline: `<configured value and source, if applicable>`
+- Metered/paid resource constraints: `<actual configured limits, if applicable>`
+- Constraints encountered and adaptation: `<evidence and response>`
 
 ## Dependencies and risks
 

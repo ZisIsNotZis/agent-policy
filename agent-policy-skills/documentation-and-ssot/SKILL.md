@@ -13,7 +13,7 @@ Preserve the smallest reliable body of information that lets people and agents u
 
 Use the supplied templates as the default minimum record set, adapting optional fields to the project without changing their purposes:
 - `GOAL.md`: intended outcome, constraints, scope, deliverables, acceptance conditions.
-- `PLAN.md`: approach, owners, work packages, dependencies, decisions, resource envelope, reassessment points.
+- `PLAN.md`: approach, owners, work packages, dependencies, decisions, actual operating constraints, reassessment points.
 - `STATE.md`: current observed state, evidence, work status, blockers, pending user input, next actions, and a concise user-facing summary.
 - `HANDOFF.md`: assignment, owner, CWD, explicit write scope, interfaces, deliverable, acceptance conditions, evidence, and remaining work.
 

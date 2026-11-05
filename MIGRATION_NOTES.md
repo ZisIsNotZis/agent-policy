@@ -117,3 +117,17 @@ The Communicator view is intentionally much smaller and excludes project researc
 - Added authoritative root-owned `USER_MODEL.md`, Communicator-owned raw evidence, scoped preference rules, prediction calibration, and structured decision packets.
 - Added `user-model-and-questions` and `portfolio-management` skills, plus `INTENT.md`, `USER_MODEL.md`, and `DECISION_PACKET.md` templates. `STATE.md` now has a proposed fixed-schema summary header; mechanical aggregation remains a runtime optimization, not something LAW pretends to implement.
 - Deferred leases/fencing, mechanical rollups, subtree cancellation mechanics, and capability enforcement to runtime work.
+
+
+## v10 — autonomous continuity, quiet communication, and recursive learning
+
+- Made the LAW's governing behavioral principles explicitly higher than local `AGENTS.md`, project prompts, skills, and task instructions, while preserving actual system, safety, legal, platform, and runtime constraints.
+- Made user participation strictly optional once a sufficiently intelligible Goal exists; every genuine wait for user input now requires a finite expiry and safe default.
+- Replaced the Communicator's event-driven default with user-return polling. Only exceptional, genuinely time-sensitive notifications may wake it; it can emit, defer, batch, or suppress them. A timed review milestone includes an expiry/default and does not freeze unrelated work.
+- Added quiet-output discipline: tools for action and coordination, internal reasoning for thinking, concise final parent handoffs, and no routine progress narration. A message reaching the Communicator is not itself a reason to notify the user.
+- Added recursive escalation filtering: each agent must investigate and act within scope; parents return premature escalations with concrete next steps and only genuine authority/capability blockers move upward.
+- Added recursive constructive learning for both produced artifacts/agents and the agent's own methods, driven by compiler/runtime warnings and errors, checks, reviews, peer feedback, and user corrections.
+- Removed arbitrary hierarchy-depth, fan-out, concurrency, and retry ceilings as LAW requirements. Real platform/authorization limits still apply; responsible resource use remains a judgment duty rather than an austerity quota.
+- Added missing YAML frontmatter to `portfolio-management` and `user-model-and-questions` skills.
+- Added Pi subagent configuration directly to the generated Manager definition: the `npm:pi-subagents` child-session provider, nested-subagent permission, and a finite two-hour `timeoutMs`. Added deployment guidance for the extension’s separate finite depth guard; the documented default is two levels, so `PI_SUBAGENT_MAX_DEPTH` must be raised before Pi starts. The extension does not document unlimited depth.
+- Reworked the English README and added a synchronized Simplified Chinese README, plus a small SVG mark. Documentation describes only files and commands present in this bundle.

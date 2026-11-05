@@ -39,20 +39,15 @@ CWD alone is not a write lock. The runtime/project workflow should support one o
 
 The Git index, generated indexes, lockfiles, shared configuration, and shared libraries are mutable shared resources when multiple agents can touch them.
 
-## 4. Resource enforcement
+## 4. Actual platform constraints and execution duration
 
-Expose configured limits to Managers and enforce hard ceilings outside the model where possible:
+The runtime must expose and enforce genuine platform, authorization, contractual, or explicitly configured limits that apply to a process. Do not introduce arbitrary hierarchy-depth, fan-out, concurrency, or retry ceilings as a policy default. The organization may grow to whatever recursive depth and parallelism the Goal and available harness capabilities justify.
 
-- maximum hierarchy depth;
-- maximum child agents per Manager (fan-out);
-- maximum concurrent agents and processes;
-- spend/usage budgets per run and/or scope;
-- maximum execution duration;
-- retry ceilings.
+The current Pi `pi-subagents` extension itself imposes a finite nested-depth guard (documented default: two levels). This is a harness limitation, not a LAW rule. Configure a high finite `PI_SUBAGENT_MAX_DEPTH` and avoid stricter per-agent depth settings; if the required tree exceeds that value, the runtime must be extended. See `PI_SUBAGENTS_CONFIGURATION.md`.
 
-Track actual consumption and reject launches/operations that exceed hard ceilings. Nested delegation and relaunches must count toward the same relevant budget. Null/unconfigured values must be represented as unknown, never as unlimited permission.
+For Pi deployments, configure a finite execution timeout long enough for legitimate delegated work; do not leave a short default that routinely kills Managers while their children continue, and do not assume an unlimited timeout is safe. The current extension supports `timeoutMs` in milliseconds; see `PI_SUBAGENTS_CONFIGURATION.md`.
 
-The runtime should also expose a safe local operating mode when limits are unconfigured: bounded concurrency, no unbounded retry loops, and no unapproved spend.
+When a real platform limit is encountered, report the exact limit and affected operation, adapt the method, and continue unaffected work. A limit is not permission to abandon the Goal or to invent a broader restriction than the platform actually imposes.
 
 ## 5. Asynchronous process and event contract
 

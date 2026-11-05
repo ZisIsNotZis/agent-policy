@@ -1,103 +1,95 @@
 [English](README.md) | 简体中文
 
 <p align="center">
-  <img src="assets/logo.svg" width="88" height="88" alt="agent-policy logo">
+  <img src="assets/logo.svg" width="88" height="88" alt="agent-policy 标志">
 </p>
 
 <h1 align="center">agent-policy</h1>
 
-<p align="center"><strong>给由智能体推进的项目的一份工作法。</strong></p>
+<p align="center"><strong>由自主智能体运行项目的工作法则。</strong></p>
 
-一份手写的 `LAW.md`，会成为每个角色的指令：经理拥有目标、路线、评审与发布，工人拥有架构、契约、细节与交付。重点不是增加流程，而是让路线只有一个家——项目换手时，不会丢掉它在做什么，也不会丢掉为什么。
+一份手工维护的 `LAW.md`，定义 Communicator、递归 Manager 与 Worker 如何承担结果、委派工作、持续学习、验证质量并进行沟通。用户可以随时回来参与，但项目不能依赖用户一直在线。目标不是增加流程或消息，而是建立持续的责任归属、优秀的成果、安静的运行方式和可靠的交接。
 
 ## 快速开始
 
-需要 Python 3 和 POSIX shell。安装步骤面向 pi agent harness。
+需要 Python 3。渲染器面向 Pi 全局 Agent 环境，默认将生成的角色指令安装到 `~/.agents/`。
 
 ```sh
 git clone https://github.com/ZisIsNotZis/agent-policy.git
 cd agent-policy
-sh tools/install-agents.sh
-sh tools/check.sh
+python3 tools/render.py
+python3 tools/render.py --install --install-dir ~/.pi/agent
 ```
 
-`install-agents.sh` 会把 `~/.pi/agent/agents` 链接到这份代码，把全局 `AGENTS.md` 链接到 `manager.md`，并启用仓库的 pre-commit 钩子。两处都是链接，所以改一次法律就到达每个角色，不用重装。如果这两个路径上已经有真实文件，脚本会把它移到旁边（`~/.pi/agent/AGENTS.md.local`），不会删掉。装完可以用 `sh tools/install-agents.sh --check` 验证链接；`check.sh` 在渲染结果过期时失败。
+使用 `--out PATH` 指定构建目录，或使用 `--install-dir PATH` 指定安装目录。上面的安装命令面向 Pi 的全局 Agent 目录。为保持兼容，单独使用 `--install` 时仍默认安装到 `~/.agents/`；安装到 Pi 时请明确指定 `~/.pi/agent`。安装会合并生成文件，不会删除目标目录中的无关文件。安装到现有 Agent 环境前，请先检查生成的角色指令。
 
-## 现在能做什么
+如需 Pi 递归委派，请按照 [runtime/PI_SUBAGENTS_CONFIGURATION.md](runtime/PI_SUBAGENTS_CONFIGURATION.md) 配置并验证 `pi-subagents` 扩展、有限深度保护及更长但仍有限的执行超时。策略文本本身无法加载扩展或授予运行时权限。
 
-- **一个来源。** 只有 `LAW.md` 需要手写。
-- **角色视图。** `@manager`、`@worker` 这类标记把同一份法律拆成每个角色实际收到的指令。
-- **渲染与检查。** `tools/render.py` 写出视图；`tools/check.sh` 在视图过期时失败。
-- **一步安装。** harness 拿到的是链接而不是副本，所以改一次法律，每个角色都会看到。
-- **提交前守卫。** 提交法律、禁用词或渲染器时，钩子会重新渲染并暂存视图。
-- **没有运行时。** 这个仓库是法律和它周围的脚本，不是框架、服务或 CLI。
+## 功能
 
-## 结构
+- **单一事实来源。** `LAW.md` 是手工维护的最高层组织行为策略。
+- **三个角色视图。** Communicator 是唯一面向用户的接口；Manager 递归管理各自范围；Worker 负责边界明确的工作包。
+- **自主持续推进。** 只要目标已有足够清晰的轮廓即可开始。用户参与完全可选；每次真正等待用户输入都必须有超时和安全默认动作。
+- **安静沟通。** 不进行例行打扰或过程播报。只有对相应上级或用户真正有用的最终消息才向外发送。
+- **递归升级与学习。** 上级过滤过早升级的问题；每一层都从错误、警告、检查、评审和反馈中改进成果，也改进自己的工作方式。
+- **质量与验证。** 根据目标和证据判断是否完成，而不是根据活动量或看似合理的产物。
+- **技能与模板。** 通过按需加载的操作手册和标准记录，让核心法则保持聚焦。
 
-一份手写文件，一趟渲染，三个文件：先按角色标记解析法律，再把每个标记下的章节和段落收成视图；经理视图写两次——一次是角色定义，一次是 harness 的全局上下文文件。安装步骤只是把 harness 指过去，不往里拷任何东西，所以不存在会逐渐偏离的第二份副本。
+## 架构
 
 ```text
-LAW.md ──tools/render.py──> agents/manager.md  （角色定义）
-                         └> manager.md         （全局上下文）
-                                      │
-                         tools/install-agents.sh
-                                      ▼
-                         ~/.pi/agent/agents -> agents/
-                         ~/.pi/agent/AGENTS.md -> manager.md
+                         用户
+                          │
+                    Communicator
+               （用户回来时轮询；
+                 仅紧急情况主动唤醒）
+                          │
+                     根 Manager
+                      （树根）
+                     /       \
+                 Manager    Worker
+                 /    \
+             Manager  Worker
+                │
+              Worker
 ```
 
-`LAW.md` 是手写的。`agents/` 和 `manager.md` 下的内容都是生成的，并带有生成标记；要改就改法律，不要改视图。`banned.txt` 收集会把写作带偏的词。
+每棵树都从用户选定的范围独立建立，并由用户通过 Communicator 明确提供目标。一个管理树可以负责一个需要整合的结果，也可以负责多个共享主题的独立结果。子 Manager 的工作目录不必位于父 Manager 的目录之下；真正定义所有权的是管理范围与权限。不同树彼此独立。
 
-| 路径 | 作用 |
+## 仓库结构
+
+| 路径 | 用途 |
 | --- | --- |
-| `LAW.md` | 法律：从痛点到发布的同一条链。 |
-| `banned.txt` | 法律用自己的词替换掉的词。 |
-| `tools/render.py` | 从带角色标记的章节和段落渲染角色视图。 |
-| `tools/check.sh` | 磁盘上的视图与法律不一致时失败。 |
-| `tools/install-agents.sh` | 把视图链接进 harness，并启用钩子。 |
-| `.githooks/pre-commit` | 提交源文件时重新渲染并暂存视图。 |
-| `agents/`、`manager.md` | 生成的视图。不要手改。 |
-| `assets/logo.svg` | 本页顶部用的标记。 |
-| `README.zh-CN.md` | 本页的简体中文版。 |
+| `LAW.md` | 权威行为策略及带角色标签的源文件。 |
+| `agent-policy-skills/` | 按需加载的操作手册。 |
+| `templates/` | Goal、Plan、State、Handoff、Intent、User Model 和 Decision Packet 模板。 |
+| `tools/render.py` | 生成角色指令并安装完整构建结果。 |
+| `tools/lint_policy.py` | 角色标签解析与参考检查工具。 |
+| `tools/test_bundle.py` | Bundle 结构检查。 |
+| `evals/` | 用于测试已部署 Agent 行为的场景。 |
+| `runtime/` | Harness 集成契约及 Pi 子 Agent 配置说明。 |
+| `MIGRATION_NOTES.md` | 版本变更原因与迁移历史。 |
+| `build/` | 生成的安装文件；不要手工编辑。 |
+| `rendered/` | 参考角色视图；应从 `LAW.md` 重新生成。 |
+| `assets/logo.svg` | README 标志。 |
+| `README.md` | 英文版说明。 |
 
-## 开发
+## 开发与验证
 
-修改 `LAW.md`，然后渲染：
+编辑 `LAW.md` 以及相关技能或模板，然后运行渲染和验证：
 
 ```sh
 python3 tools/render.py
-sh tools/check.sh
+python3 tools/lint_policy.py LAW.md --out /tmp/agent-policy-lint
+python3 tools/test_bundle.py
 ```
 
-提交相关内容时，pre-commit 钩子会做同样的事。每个克隆启用一次：
-
-```sh
-git config core.hooksPath .githooks
-```
-
-除了这个过期检查，没有别的测试套件：渲染器很小，而它唯一的失败方式——磁盘上的视图和法律不再一致——正好就是 `check.sh` 观察到的东西。
+生产渲染器负责生成实际角色视图。Linter 只是参考检查，不能代替检查最终指令或在 Pi 中测试。递归子 Agent 启动、有限执行超时、异步恢复和事件投递等运行时能力，都必须在实际 Harness 中验证。
 
 ## 贡献
 
-先读 `LAW.md`，改法律而不改生成的视图，开 PR 前跑 `sh tools/check.sh`。范围、检查项，以及一次改动需要带上什么，见 [CONTRIBUTING.md](CONTRIBUTING.md)。
-
-## 路线图
-
-**已实现**
-
-- 九环链、目标确认、路线、评审和每次发布都会跑的收尾步骤。
-- 按角色标记的章节和段落，渲染成经理与工人视图。
-- 链接式安装和视图过期检查。
-- 这份法律正作为 [auto-dead-serious](https://github.com/ZisIsNotZis/auto-dead-serious) 的策略子模块使用。
-
-**未实现**
-
-没有公开路线图。项目碰到法律答不出的缺口时，法律就改；那个缺口就是下一步。带上具体情形和证据开 issue。
-
-### 未来
-
-项目换手时应该还能接上原来的线：一份读得懂的法律，一条路线，一个同时放着目标、评审和发布的地方。视图保持薄，法律保持小；每一次增加，都要让真实的交接更清楚，否则就不加。
+应修改源法则，而不是手工编辑生成视图。若改动解决了反复出现的行为问题，应增加对应的行为场景测试。英文 README 更新时，也应同步更新简体中文版。完成上述检查，并在目标 Harness 中测试重要行为后，才能声称该行为已得到实际执行保障。
 
 ## 许可证
 
-MIT，见 [LICENSE](LICENSE)。
+MIT。请参阅 [LICENSE](LICENSE)。

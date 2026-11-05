@@ -18,7 +18,7 @@ class Node:
 
 def parse(path):
     roots=[]; stack=[]; fence=None; errors=[]
-    for n, raw in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+    for n, raw in enumerate(path.read_text().splitlines(), 1):
         line=raw.rstrip()
         fm=re.match(r'^\s*(```+|~~~+)', line)
         if fm:
@@ -94,7 +94,7 @@ def main():
         if wc>args.max_words: print(f'WARN {role}: {wc} words exceeds warning threshold {args.max_words}')
         dest=args.out/('AGENTS.md' if role=='communicator' else f'agents/{role}.md')
         dest.parent.mkdir(parents=True,exist_ok=True)
-        dest.write_text(view, encoding="utf-8")
+        dest.write_text(view)
         print(f'{role}: {wc} words -> {dest}')
     if errors:
         print('\n'.join('ERROR '+e for e in errors),file=sys.stderr)

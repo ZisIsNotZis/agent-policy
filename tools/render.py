@@ -44,16 +44,11 @@ ROLES = {
             ("name", "manager"),
             ("description", "Manager responsible for the scope explicitly assigned."),
             ("tools", "read, edit, write, bash, grep, find, ls, subagent"),
-            # `subagent` is an extension tool: naming it in `tools` is a strict
-            # allowlist entry and does NOT load the extension. Without the
-            # provider below, every nested launch dies with "requested
-            # unavailable child tools: subagent", which silently reduces the
-            # Manager to a single-threaded agent that cannot delegate.
+            # The tool allowlist alone does not load the provider in child sessions.
             ("subagentOnlyExtensions", "npm:pi-subagents"),
             ("allowNestedSubagents", "true"),
-            # Scope work outlives a 30-minute default; a killed Manager orphans
-            # its long runs and loses the window. Still finite on purpose.
-            ("timeoutMs", "5400000"),
+            # Two hours is a finite default for scopes that exceed Pi's 30-minute default.
+            ("timeoutMs", "7200000"),
             ("thinking", "medium"),
             ("advertise", "true"),
             ("systemPromptMode", "replace"),
@@ -69,6 +64,8 @@ ROLES = {
             ("name", "worker"),
             ("description", "You execute exactly one work package in your manager's area, and report once."),
             ("tools", "read, edit, write, bash, grep, find, ls"),
+            # Workers may also own long-running bounded packages; keep a finite deadline.
+            ("timeoutMs", "7200000"),
             ("thinking", "low"),
             ("advertise", "true"),
             ("systemPromptMode", "replace"),

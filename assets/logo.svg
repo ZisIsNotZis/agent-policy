@@ -1,6 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-labelledby="title">
-  <title id="title">agent-policy</title>
-  <rect width="96" height="96" rx="20" fill="#111827"/>
-  <text x="48" y="69" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif"
-        font-size="62" fill="#f8fafc">§</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-labelledby="title"><title id="title">agent-policy mark</title><rect x="4" y="4" width="88" height="88" rx="22" fill="#172033"/><g fill="none" stroke="#9DD7C5" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M48 25v18M25 67V55h46v12M48 43 25 55m23-12 23 12"/><path d="M48 18a7 7 0 1 0 0 14 7 7 0 0 0 0-14ZM25 65a7 7 0 1 0 0 14 7 7 0 0 0 0-14Zm46 0a7 7 0 1 0 0 14 7 7 0 0 0 0-14Z"/></g></svg>

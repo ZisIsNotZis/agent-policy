@@ -35,9 +35,9 @@
 
 - `<links and exact paths>`
 
-## Resource and execution boundaries
+## Actual constraints and execution horizon
 
-- `<applicable limits, concurrency constraints, deadline/reassessment>`
+- `<real platform/access constraints, configured timeout/deadline, and reassessment point; do not invent quotas>`
 
 ## Completion report
 
