@@ -23,7 +23,7 @@ python3 tools/render.py --install --install-dir ~/.pi/agent
 
 使用 `--out PATH` 指定构建目录，或使用 `--install-dir PATH` 指定安装目录。上面的安装命令面向 Pi 的全局 Agent 目录。为保持兼容，单独使用 `--install` 时仍默认安装到 `~/.agents/`；安装到 Pi 时请明确指定 `~/.pi/agent`。安装会合并生成文件，不会删除目标目录中的无关文件。安装到现有 Agent 环境前，请先检查生成的角色指令。
 
-如需 Pi 递归委派，请按照 [runtime/PI_SUBAGENTS_CONFIGURATION.md](runtime/PI_SUBAGENTS_CONFIGURATION.md) 配置并验证 `pi-subagents` 扩展、有限深度保护及更长但仍有限的执行超时。策略文本本身无法加载扩展或授予运行时权限。
+如需 Pi 递归委派，请按照 [runtime/PI_SUBAGENTS_CONFIGURATION.md](runtime/PI_SUBAGENTS_CONFIGURATION.md) 配置并验证 `pi-subagents` 扩展及其运行时深度保护。Manager 和 Worker 定义不设置任意执行期限。策略文本本身无法加载扩展或授予运行时权限。
 
 ## 功能
 
@@ -31,7 +31,8 @@ python3 tools/render.py --install --install-dir ~/.pi/agent
 - **三个角色视图。** Communicator 是唯一面向用户的接口；Manager 递归管理各自范围；Worker 负责边界明确的工作包。
 - **自主持续推进。** 只要目标已有足够清晰的轮廓即可开始。用户参与完全可选；每次真正等待用户输入都必须有超时和安全默认动作。
 - **安静沟通。** 不进行例行打扰或过程播报。只有对相应上级或用户真正有用的最终消息才向外发送。
-- **递归升级与学习。** 上级过滤过早升级的问题；每一层都从错误、警告、检查、评审和反馈中改进成果，也改进自己的工作方式。
+- **目标忠实与抽象分层。** 每一层都保护用户真正要求的能力，防止执行漂移成代理任务。Manager 向上翻译成结果层面的语言；实现细节留在负责该细节的层级。
+- **递归升级与学习。** 上级过滤过早升级的问题；每一层都诊断根因，并改进成果、自身指令、委派方式、检查机制和工作方法。
 - **质量与验证。** 根据目标和证据判断是否完成，而不是根据活动量或看似合理的产物。
 - **技能与模板。** 通过按需加载的操作手册和标准记录，让核心法则保持聚焦。
 
@@ -84,7 +85,7 @@ python3 tools/lint_policy.py LAW.md --out /tmp/agent-policy-lint
 python3 tools/test_bundle.py
 ```
 
-生产渲染器负责生成实际角色视图。Linter 只是参考检查，不能代替检查最终指令或在 Pi 中测试。递归子 Agent 启动、有限执行超时、异步恢复和事件投递等运行时能力，都必须在实际 Harness 中验证。
+生产渲染器负责生成实际角色视图。Linter 只是参考检查，不能代替检查最终指令或在 Pi 中测试。递归子 Agent 启动、无任意子 Agent 执行期限、异步恢复和事件投递等运行时能力，都必须在实际 Harness 中验证。
 
 ## 贡献
 

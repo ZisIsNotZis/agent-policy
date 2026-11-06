@@ -11,19 +11,12 @@ The Manager's ability to delegate recursively depends on the Pi subagent extensi
     # subagent", silently reducing the Manager to a single-threaded agent.
     ("subagentOnlyExtensions", "npm:pi-subagents"),
     ("allowNestedSubagents", "true"),
-    ("timeoutMs", "7200000"),  # 2 hours; finite, not unlimited
 )
 ```
 
-The generated Manager definition includes `timeoutMs = 7200000` (two hours) as a finite starting point. In current `pi-subagents`, `timeoutMs` is a positive integer in milliseconds. A global default can also be set in `~/.pi/agent/extensions/subagent/config.json`:
+Do **not** put `timeoutMs` in Manager or Worker frontmatter when the runtime supports an unbounded run, and do not set a global child-run deadline merely for administrative convenience. If a finite timeout is mandatory in the actual runtime, it MUST be at least seven days (`604800000` ms); a shorter hard limit that can terminate legitimate work is PANIC. Work ends when the responsibility is complete, explicitly stopped by its authority, or genuinely unable to proceed—not when an arbitrary session timer expires. Audit call sites and global configuration for accidental deadlines. A bounded parent wait is not a deadline that kills the child: a wait can expire while the durable child continues running.
 
-```json
-{
-  "timeoutMs": 7200000
-}
-```
-
-The extension documents a 30-minute default for applicable foreground and plain single-agent async runs. The global setting replaces that default when no call-level timeout applies; a selected agent's own `timeoutMs` frontmatter can take precedence. Set the Manager definition's `timeoutMs` too if it declares its own shorter default. This is a run deadline, not a guarantee that the model can answer: Pi's separate `httpIdleTimeoutMs` defaults to five minutes and may also need adjustment for unusually slow local model responses. Keep all timeouts finite, but long enough for legitimate work and recovery/checkpointing.
+Do not confuse the Communicator's response-wait timeout while servicing an active user turn with a Manager or project execution deadline. Nor should provider idle timeouts, process supervision, or infrastructure failure be described as a policy-sanctioned work limit. If the runtime cannot keep a Manager alive or recover its work, treat that as a mandatory-invariant failure (PANIC)—not a reason to rush, truncate responsibility, or manufacture a handoff. Never interrupt or relaunch an active Manager merely to change its timeout; establish actual process state and preserve its work first.
 
 ### Recursive depth compatibility
 
@@ -44,7 +37,7 @@ After changing configuration, verify all of the following in the actual harness:
 3. A Manager can launch a child Manager, and that child can launch its own child when its assignment requires it.
 4. Child launch receives the intended role, assignment, CWD, and scope.
 5. A nested launch succeeds beyond the extension's default two-level depth, and a further nested launch succeeds up to the configured finite depth.
-6. A long-running delegated task survives beyond the former 30-minute default when the configured finite timeout permits it.
+6. A long-running delegated task continues without an arbitrary child deadline; separately verify that bounded parent waits do not terminate the durable child.
 7. Parent and child can inspect durable run state/output and recover after interruption.
 
 These generated fields and environment settings configure the harness; LAW defines the organizational requirement. A policy statement cannot load an extension, grant a tool, or change a process timeout by itself.

@@ -23,7 +23,7 @@ python3 tools/render.py --install --install-dir ~/.pi/agent
 
 Use `--out PATH` to choose a build directory, or `--install-dir PATH` to choose the installation directory. The install command above targets Pi's global agent directory. For compatibility, bare `--install` still defaults to `~/.agents/`; choose `~/.pi/agent` explicitly when installing into Pi. Installation merges generated files; it does not remove unrelated files. Review the generated role views before installing them into an existing agent environment.
 
-For recursive Pi delegation, configure and verify the `pi-subagents` extension, its finite depth guard, and a longer finite execution timeout as described in [runtime/PI_SUBAGENTS_CONFIGURATION.md](runtime/PI_SUBAGENTS_CONFIGURATION.md). The policy cannot load or authorize a harness extension on its own.
+For recursive Pi delegation, configure and verify the `pi-subagents` extension and its runtime depth guard as described in [runtime/PI_SUBAGENTS_CONFIGURATION.md](runtime/PI_SUBAGENTS_CONFIGURATION.md). Manager and Worker definitions do not impose arbitrary execution deadlines. If the actual runtime requires a finite timeout, it must be at least seven days; any shorter incompatible hard limit is PANIC. Operations expected to exceed 60 seconds must be asynchronous and keep the agent responsive. The policy cannot load or authorize a harness extension or enforce runtime behavior on its own.
 
 ## What it does
 
@@ -31,7 +31,8 @@ For recursive Pi delegation, configure and verify the `pi-subagents` extension, 
 - **Three role views.** The Communicator is the only user-facing interface; Managers recursively own scopes; Workers own bounded work packages.
 - **Autonomous continuity.** A sufficiently clear Goal is enough to start. User participation is optional; every genuine wait has a timeout and a safe default.
 - **Quiet communication.** No routine check-ins or progress narration. Only material, useful final messages reach the relevant parent or user.
-- **Recursive escalation and learning.** Parents filter premature escalations; every level improves both its outputs and its own working method from errors, warnings, checks, reviews, and feedback.
+- **Goal fidelity and abstraction.** Every level protects the actual requested capability from proxy-task drift. Managers translate evidence into outcome-level language upward; implementation detail stays with the level that owns it.
+- **Recursive escalation and learning.** Workers translate findings before reporting to outcome-owning Managers. Root-cause learning closes with a verified safeguard; `0_STAGING.md` is a temporary, due-dated queue whose processed entries are consumed and deleted.
 - **Quality and verification.** Completion is judged against outcomes and evidence, not activity or plausible-looking artifacts.
 - **Skills and templates.** Detailed playbooks and standard records keep the core law focused.
 
@@ -61,8 +62,8 @@ Each tree is independently rooted at a user-selected scope and receives an expli
 | Path | Purpose |
 | --- | --- |
 | `LAW.md` | Authoritative behavioral policy and role-tagged source. |
-| `agent-policy-skills/` | On-demand procedural playbooks. |
-| `templates/` | Goal, plan, state, handoff, intent, user-model, and decision-packet records. |
+| `agent-policy-skills/` | On-demand procedural playbooks, including root-cause learning. |
+| `templates/` | Goal, plan, state, handoff, intent, user-model, decision-packet, and temporary staging records. |
 | `tools/render.py` | Builds role-specific instructions and installs the completed build. |
 | `tools/lint_policy.py` | Reference role-tag parser/linter. |
 | `tools/test_bundle.py` | Structural bundle checks. |
@@ -84,7 +85,7 @@ python3 tools/lint_policy.py LAW.md --out /tmp/agent-policy-lint
 python3 tools/test_bundle.py
 ```
 
-The production renderer is responsible for the actual role views. The linter is a reference check, not a substitute for inspecting the rendered instructions or testing them in Pi. Runtime capabilities—including nested subagent launch, finite execution timeouts, asynchronous recovery, and event delivery—must be verified in the actual harness.
+The production renderer is responsible for the actual role views. The linter is a reference check, not a substitute for inspecting the rendered instructions or testing them in Pi. Runtime capabilities—including nested subagent launch, absence of arbitrary child deadlines, asynchronous recovery, and event delivery—must be verified in the actual harness.
 
 ## Contributing
 

@@ -26,6 +26,9 @@ def main():
     require('templates/PLAN.md', ['Work packages', 'Dependencies and risks', 'Actual operating constraints', 'Next actions'])
     require('templates/STATE.md', ['User-facing summary', 'Verified facts', 'Inferences and assumptions', 'Blockers and risks', 'Pending user input'])
     require('templates/HANDOFF.md', ['Intended result', 'Scope and authority', 'Write scope', 'Acceptance / evaluation conditions', 'Completion report'])
+    require('templates/STAGING.md', ['Situation', 'Expected behavior', 'Responsible layer', 'Owner', 'Next action', 'Verification', 'Due point'])
+    require('agent-policy-skills/root-cause-and-learning/SKILL.md', ['Reconstruct before correcting', 'Verify learning', 'Process and consume every entry'])
+    require('evals/role-and-runtime-scenarios.md', ['A5 — Operation may exceed 60 seconds', 'A6 — Runtime cannot preserve responsiveness or async execution', 'A7 — Runtime imposes a short execution timeout', 'L3 — Processed staging entry remains in queue', 'T1 — Worker sends raw technical diagnostics to Manager'])
     with tempfile.TemporaryDirectory() as td:
         subprocess.run([sys.executable, str(ROOT/'tools/lint_policy.py'), str(ROOT/'LAW.md'), '--out', td, '--max-words', '8000'], check=True)
         comm = (Path(td)/'AGENTS.md').read_text()
@@ -54,16 +57,28 @@ def main():
         assert 'write scope' in worker
         assert 'independent verification' in manager
         assert 'principal' in manager and 'escalation path' in manager
-        manager_def = (ROOT/'build/agents/manager.md').read_text()
+        release = Path(td)/'release'
+        subprocess.run([sys.executable, str(ROOT/'tools/render.py'), '--out', str(release)], check=True, stdout=subprocess.DEVNULL)
+        manager_def = (release/'agents/manager.md').read_text()
+        assert manager_def.startswith('---\nname: manager\n')
         assert 'subagentOnlyExtensions: npm:pi-subagents' in manager_def
         assert 'allowNestedSubagents: true' in manager_def
-        assert 'timeoutMs: 7200000' in manager_def
-        worker_def = (ROOT/'build/agents/worker.md').read_text()
-        assert 'timeoutMs: 7200000' in worker_def
+        assert 'timeoutMs:' not in manager_def
+        worker_def = (release/'agents/worker.md').read_text()
+        assert worker_def.startswith('---\nname: worker\n')
+        assert 'timeoutMs:' not in worker_def
         assert 'USER_MODEL' in manager or 'user model' in manager.lower()
         assert 'multi-outcome' in manager
         assert 'Asynchronous execution and durable completion' in manager and worker
-    print('PASS: v10 bundle structural tests')
+        assert 'MUST execute asynchronously' in manager and worker
+        assert '60 seconds' in manager and worker
+        assert 'PANIC immediately' in manager and worker
+        assert 'Do not inspect or reason through raw implementation diagnostics' in manager
+        assert 'seven calendar days' in manager
+        assert 'PANIC' in comm and 'do not suppress' in comm
+        assert 'translates its findings' in worker
+        assert 'root-cause-and-learning' in manager and worker
+    print('PASS: v12 bundle structural tests')
 
 if __name__ == '__main__':
     main()

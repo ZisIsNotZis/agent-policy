@@ -129,5 +129,29 @@ The Communicator view is intentionally much smaller and excludes project researc
 - Added recursive constructive learning for both produced artifacts/agents and the agent's own methods, driven by compiler/runtime warnings and errors, checks, reviews, peer feedback, and user corrections.
 - Removed arbitrary hierarchy-depth, fan-out, concurrency, and retry ceilings as LAW requirements. Real platform/authorization limits still apply; responsible resource use remains a judgment duty rather than an austerity quota.
 - Added missing YAML frontmatter to `portfolio-management` and `user-model-and-questions` skills.
-- Added Pi subagent configuration directly to the generated Manager definition: the `npm:pi-subagents` child-session provider, nested-subagent permission, and a finite two-hour `timeoutMs`. Added deployment guidance for the extension’s separate finite depth guard; the documented default is two levels, so `PI_SUBAGENT_MAX_DEPTH` must be raised before Pi starts. The extension does not document unlimited depth.
+- Added Pi subagent configuration directly to the generated Manager definition: the `npm:pi-subagents` child-session provider, nested-subagent permission, and a finite two-hour `timeoutMs`. Added deployment guidance for the extension’s separate finite depth guard; the documented default is two levels, so `PI_SUBAGENT_MAX_DEPTH` must be raised before Pi starts. The extension does not document unlimited depth. The v10 two-hour child timeout was removed in v11; see the v11 entry below for the current no-arbitrary-deadline rule.
 - Reworked the English README and added a synchronized Simplified Chinese README, plus a small SVG mark. Documentation describes only files and commands present in this bundle.
+
+
+## v11 — Goal fidelity, abstraction boundaries, recursive learning, and no arbitrary child deadline
+
+- Added an explicit Goal-fidelity discipline: a technically successful proxy task is not success when it does not demonstrate the requested capability or use an explicitly required engine/platform. Managers must challenge method drift before more effort is spent.
+- Added a compact Goal anchor as a living aid to judgment, not a rigid pre-execution specification.
+- Made abstraction boundaries explicit: upward reports are translated into the parent's outcome language; internal IDs, thresholds, raw metrics, and implementation inventories remain in durable records unless needed for a decision.
+- Tightened Communicator silence: no reassurance or "no action needed" filler. A lower-level report is not automatically a user notification.
+- Strengthened recursive improvement: diagnose the earliest failed safeguard, update the responsible layer, add a regression scenario for the corrected invariant, and verify changed behavior. Parents must also learn from their own faulty framing, assignments, reviews, and acceptance criteria.
+- Removed the two-hour `timeoutMs` defaults from both Manager and Worker generated definitions. Runtime guidance now distinguishes a bounded parent wait from a child-killing execution deadline and forbids arbitrary execution deadlines as a project-management policy.
+- Added behavioral scenarios for requested-capability drift, upward abstraction, quiet handling of internal findings, recursive system-level learning, and opaque identifiers/plan worship.
+- Updated both README languages to describe the revised policy and runtime configuration accurately.
+
+
+## v12 — translated technical boundary, strict async, and consumed RSI staging
+
+- **Worker-to-Manager firewall:** Workers retain technical ownership and translate why/how/result, Goal implications, uncertainty, and next action before reporting. Managers do not decode raw diagnostics or debug; they request a clearer translated report or independent qualified Worker review.
+- **Strict async threshold:** any operation expected to exceed 60 seconds, or whose duration could reasonably exceed 60 seconds, must run asynchronously while the agent remains responsive to coordination messages.
+- **Infrastructure PANIC:** inability to satisfy mandatory async, responsiveness, durable recovery, or message-path requirements is surfaced immediately and propagated to the user. No silent synchronous fallback.
+- **Preserve active Managers:** never kill/relaunch an active Manager just to change timeout/configuration. If a finite runtime execution timeout is mandatory, it must be at least seven days; this is distinct from a user-decision wait timeout.
+- **Actionable RSI:** added `root-cause-and-learning` skill and `templates/STAGING.md` (instantiated in each scope as `0_STAGING.md`). Staging entries are newcomer-readable, owned, actionable, due no later than the next milestone review, and must be processed, verified, moved to a durable home, then deleted. Critical invariant failures bypass ordinary staging.
+- Added behavioral scenarios for technical translation, strict async, PANIC propagation, timeout preservation, root-cause learning, and staging consumption.
+
+Markdown specifies these requirements but cannot itself make a harness asynchronous, keep a process alive, deliver messages, or enforce a timeout. The runtime must be tested; any discovered incompatibility with the mandatory rules is PANIC, not a reason to claim the requirement is operational.

@@ -47,8 +47,6 @@ ROLES = {
             # The tool allowlist alone does not load the provider in child sessions.
             ("subagentOnlyExtensions", "npm:pi-subagents"),
             ("allowNestedSubagents", "true"),
-            # Two hours is a finite default for scopes that exceed Pi's 30-minute default.
-            ("timeoutMs", "7200000"),
             ("thinking", "medium"),
             ("advertise", "true"),
             ("systemPromptMode", "replace"),
@@ -64,8 +62,6 @@ ROLES = {
             ("name", "worker"),
             ("description", "You execute exactly one work package in your manager's area, and report once."),
             ("tools", "read, edit, write, bash, grep, find, ls"),
-            # Workers may also own long-running bounded packages; keep a finite deadline.
-            ("timeoutMs", "7200000"),
             ("thinking", "low"),
             ("advertise", "true"),
             ("systemPromptMode", "replace"),

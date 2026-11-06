@@ -14,6 +14,7 @@ These are optional, on-demand procedural playbooks referenced by `LAW.md`. Load 
 | `safe-migration` | Broad refactors, schema changes, and structural/data migrations |
 | `user-model-and-questions` | User evidence, scoped preferences, clarification, and timed decision packets |
 | `portfolio-management` | Multiple distinct outcomes under one shared theme or objective |
+| `root-cause-and-learning` | Reconstructing failures, correcting the responsible layer, verifying safeguards, and consuming deferred staging items |
 
 `LAW.md` defines durable invariants and role boundaries. Runtime configuration and enforcement belong to the harness/deployment. Skills provide task-specific procedures; project records describe the current project.
 
@@ -22,3 +23,7 @@ These are optional, on-demand procedural playbooks referenced by `LAW.md`. Load 
 
 - `user-model-and-questions/SKILL.md`: evidence ownership, scoped preferences, calibration, decision packets, and attention-aware questions.
 - `portfolio-management/SKILL.md`: single-outcome versus multi-outcome trees, sibling boundaries, parent rollups, and shared-theme coordination.
+
+## Added v12 skill
+
+- `root-cause-and-learning/SKILL.md`: a closed-loop RSI procedure and strict processing/consumption rules for the temporary `0_STAGING.md` queue.

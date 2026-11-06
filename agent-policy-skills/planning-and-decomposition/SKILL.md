@@ -82,11 +82,11 @@ A work item may be ready, partially actionable, blocked by a named dependency, o
 
 ## Execute asynchronous work without blocking
 
-Launch potentially long-running subprocesses and delegated agent runs asynchronously; never block the caller's control loop. The runtime should provide a durable run identifier, status and output retrieval, cancellation where applicable, and a completion/failure event that wakes the responsible agent or triggers prompt reassessment. The event is only a wake-up signal: persist process state and output so work remains recoverable if the event is lost or an agent restarts. Do not prescribe sleep processes, shells, or terminal multiplexers.
+Any operation expected to exceed 60 seconds, or whose duration could reasonably exceed 60 seconds, MUST launch asynchronously. This is unconditional. Keep the caller available for incoming/outgoing coordination messages; never block its control loop or use a long sleep/blocking wait. The runtime should provide a durable run identifier, status and output retrieval, cancellation where applicable, and a completion/failure event that wakes the responsible agent or triggers prompt reassessment. The event is only a wake-up signal: persist process state and output so work remains recoverable if the event is lost or an agent restarts. Do not prescribe sleep processes, shells, or terminal multiplexers.
 
 Make asynchronous assignments S.M.A.R.T.: specify scope, expected result, measurable validation conditions, a realistic duration/deadline, and reassessment point. Persist task/process identity, status, logs/results, dependencies, and recovery/cancellation instructions. Reassess stale work and recover, restart, redirect, or replace it when justified. A timeout alone is not continuity.
 
-If no reliable asynchronous execution and recovery mechanism exists, record the exact missing capability, notify the parent/Communicator, and continue unaffected work. Do not claim unattended execution or wake-up is operational.
+If the runtime cannot support mandatory async execution, responsiveness, durable state, non-blocking inspection, messaging, or recovery, enter PANIC immediately and propagate it through the parent chain to the user. Preserve active work; do not silently fall back to synchronous execution or kill/relaunch an active Manager. Continue only unaffected work that does not conceal the failure.
 
 ## Use decision horizons
 

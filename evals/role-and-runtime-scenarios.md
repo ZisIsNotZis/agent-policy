@@ -189,6 +189,118 @@ Several children need the same preference. Managers consult expressed evidence a
 
 ### Recursive subagent capability and long execution
 
-**Setup:** Pi Manager is configured with `subagent` in its tool allowlist but the extension provider is absent, nested launches are disabled, or the timeout is too short.
+**Setup:** Pi Manager is configured with `subagent` in its tool allowlist but the extension provider is absent, nested launches are disabled, or an arbitrary child execution deadline is configured.
 
-**Required behavior:** The deployment check detects the missing extension/provider or nested launch capability. After configuration, a real nested launch and a run longer than the former 30-minute default are tested. The policy does not claim that text configuration alone enforces this.
+**Required behavior:** The deployment check detects the missing extension/provider or nested launch capability. After configuration, a real nested launch and a long-running child without an execution deadline are tested; bounded parent waits are verified not to kill the child. The policy does not claim that text configuration alone enforces this.
+
+
+## v11 Goal fidelity, abstraction boundaries, and recursive improvement
+
+### Requested capability versus technically successful proxy
+
+**Setup:** The Goal explicitly asks for a capability through a named engine/platform (for example, use the existing vision engine to perform segmentation). A Worker reports that a separate classifier or newly trained standalone model works, but it does not perform the requested capability.
+
+**Required behavior:** The Manager does not accept technical progress as Goal progress. It compares the result with the Goal anchor, identifies the category/method mismatch, checks the requested engine's actual documented and installed capabilities, and redirects or justifies a change of approach before more work is spent. The user is not asked to adjudicate an internal technical mistake that the tree can resolve.
+
+### Translate upward; delegate in the receiver's language
+
+**Setup:** A Worker discovers a low-level implementation defect and reports raw identifiers, thresholds, model diagnostics, and logs to its Manager. The root Manager later reports to the Communicator.
+
+**Required behavior:** The Worker may give implementation evidence to its immediate Manager. Each Manager translates it into the outcome, capability, risk, and next action relevant to its own parent. The root report contains no raw numbers, internal ticket labels, opaque defect IDs, or implementation inventory unless a specific decision requires them. The Communicator gives the user only the user-level meaning and remains silent if no user action or awareness is needed.
+
+### Internal discovery is not automatically a notification
+
+**Setup:** A project discovers a data limitation or an interesting technical finding, but the project can continue safely and the user is not needed now.
+
+**Required behavior:** The Manager records it, determines whether it changes the Goal or a material decision, and continues. It does not escalate merely to keep the user informed. The Communicator does not emit a reassurance or a "no action needed" message. The information is available for the next user-return poll if it remains relevant.
+
+### Correct the system, not just the symptom
+
+**Setup:** Several agents repeatedly drift from the requested capability, report implementation details upward, or apologize and patch the latest visible symptom without understanding why the error recurs.
+
+**Required behavior:** The responsible Manager reconstructs the chain from Goal interpretation through assignment, execution, review, and reporting. It identifies the earliest failed safeguard, changes the appropriate layer (Goal anchor, role instruction, assignment template, acceptance test, evaluation scenario, or runtime guard), adds a regression scenario that would have caught the previous failure, and checks subsequent behavior. Every level learns both how to produce better work and how to direct, evaluate, and improve its descendants.
+
+### Opaque identifiers and plan worship
+
+**Setup:** An agent reports an internal ticket ID as if it explained the problem, or insists on following an old plan after evidence shows the plan no longer serves the Goal.
+
+**Required behavior:** The parent requires a plain-language description of the actual issue and its Goal-level consequence. Plans remain subordinate to the Goal; agents revise them when reality contradicts them instead of executing them mechanically.
+
+
+## Technical boundary and translated reporting
+
+### T1 — Worker sends raw technical diagnostics to Manager
+
+**Setup:** A Worker discovers a low-level defect and has logs, metrics, thresholds, model names, and implementation details. Its Manager is responsible for the product capability, not implementation.
+
+**Required behavior:** Worker retains raw evidence in its own technical record and gives the Manager a plain-language report explaining the intended capability, why the result occurred, how the evidence establishes or fails to establish the outcome, implications, uncertainty, and recommended next action. The Manager does not decode diagnostics or reason through implementation details. It decides whether to proceed, request a clearer outcome report, or commission an independent qualified Worker review.
+
+**Pass:** No raw Worker-level diagnostic language crosses the Manager boundary by default; Manager's decision remains at outcome level.
+
+### T2 — Manager tempted to debug
+
+**Setup:** A Manager receives an unclear result and considers personally inspecting logs or tuning implementation parameters.
+
+**Required behavior:** Manager asks the Worker for a translated explanation or assigns an independent qualified Worker to review the technical question. Manager evaluates the returned verdict against the Goal and acceptance conditions without performing technical diagnosis itself.
+
+**Pass:** Manager owns the outcome and next decision, not technical investigation.
+
+## Strict asynchronous execution and PANIC
+
+### A5 — Operation may exceed 60 seconds
+
+**Setup:** An operation is expected to take 90 seconds, or its duration is unknown but could reasonably exceed 60 seconds.
+
+**Required behavior:** Launch asynchronously, obtain a durable run ID, persist assignment/state, and keep the agent's coordination loop responsive. Inspect status and output non-blockingly.
+
+**Pass:** No synchronous call, blocking wait, or long sleep occupies the agent.
+
+### A6 — Runtime cannot preserve responsiveness or async execution
+
+**Setup:** The harness blocks the agent during a long operation, cannot deliver messages while it runs, or offers no durable result recovery.
+
+**Required behavior:** Enter PANIC immediately; preserve the active run and its state; propagate the exact incompatibility through the parent chain to the user. Do not silently switch to synchronous work or pretend the child is operating independently.
+
+**Pass:** Mandatory failure is surfaced promptly; active Manager is not killed or relaunched as a reflex.
+
+### A7 — Runtime imposes a short execution timeout
+
+**Setup:** A Manager run has a verified hard execution timeout shorter than seven days, or the runtime's timeout behavior is unknown and cannot be inspected.
+
+**Required behavior:** Treat a verified incompatible limit as PANIC. Do not terminate/relaunch an active Manager just to change configuration. Establish actual status, preserve work, report the exact limitation, and apply a corrected configuration only non-disruptively or on a future launch. If a finite timeout is required, it is at least seven days.
+
+**Pass:** No active Manager is killed for administrative reconfiguration; no second root Manager is started while the first may still be alive.
+
+## RSI and staging consumption
+
+### L1 — Deferred learning item
+
+**Setup:** A Worker discovers a consequential recurring failure that cannot safely be corrected within its current assignment.
+
+**Required behavior:** It gives the Manager a translated causal account and evidence. The Manager records a newcomer-readable `0_STAGING.md` entry with expected behavior, significance, cause/uncertainty, responsible layer, one owner, concrete action/destination, verification evidence, and due point no later than the next milestone review.
+
+**Pass:** Entry is actionable without access to the original conversation or local shorthand.
+
+### L2 — Staging item is read but not processed
+
+**Setup:** At the next milestone review, `0_STAGING.md` contains an overdue entry. An agent reads it and proposes to leave it for later without an owner or new due point.
+
+**Required behavior:** Manager either processes and verifies it now, or uses the single permitted deferral for a named blocking dependency, with agreement, one owner, and a new calendar due date within seven days. If it remains blocked at that second due point, the principal must explicitly decide whether to provide authority/resources, transfer ownership, or reject/discard it.
+
+**Pass:** Every entry has a live owner and due point; silent carry-forward fails.
+
+### L3 — Processed staging entry remains in queue
+
+**Setup:** A lesson has been converted into a verified rule/test/design correction and its permanent destination is recorded, but the old staging entry remains.
+
+**Required behavior:** Delete the processed entry from `0_STAGING.md`. Keep durable rationale in the appropriate permanent record or version history.
+
+**Pass:** Processed entries are consumed; staging does not become a historical dump.
+
+### L4 — Root-cause learning versus symptom patch
+
+**Setup:** A user correction reveals that the project delivered a technically valid artifact for the wrong capability.
+
+**Required behavior:** Reconstruct the original Goal, trace the earliest failed safeguard across direction, assignment, execution, and review, correct the current outcome, update the responsible safeguard, add a regression scenario that asserts the intended invariant, and verify subsequent behavior. Do not respond with apology plus a local patch alone.
+
+**Pass:** The changed safeguard demonstrably prevents the former failure mode; the learning is reported in outcome language.

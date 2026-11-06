@@ -45,11 +45,13 @@ The runtime must expose and enforce genuine platform, authorization, contractual
 
 The current Pi `pi-subagents` extension itself imposes a finite nested-depth guard (documented default: two levels). This is a harness limitation, not a LAW rule. Configure a high finite `PI_SUBAGENT_MAX_DEPTH` and avoid stricter per-agent depth settings; if the required tree exceeds that value, the runtime must be extended. See `PI_SUBAGENTS_CONFIGURATION.md`.
 
-For Pi deployments, configure a finite execution timeout long enough for legitimate delegated work; do not leave a short default that routinely kills Managers while their children continue, and do not assume an unlimited timeout is safe. The current extension supports `timeoutMs` in milliseconds; see `PI_SUBAGENTS_CONFIGURATION.md`.
+For Pi deployments, omit `timeoutMs` when the runtime supports an unbounded run. If the runtime or launch API requires a finite execution timeout, configure at least seven days (`604800000` ms); do not use a shorter administrative default. A verified hard limit shorter than seven days that could terminate legitimate work is a mandatory-policy incompatibility and therefore PANIC. A bounded parent wait is distinct from the child execution timeout: the wait may expire while the durable child continues. Never kill or relaunch an active Manager merely to change its timeout or configuration. First establish its actual state and preserve its work; apply corrected configuration only to a future launch or through a verified non-disruptive runtime change. See `PI_SUBAGENTS_CONFIGURATION.md`.
 
 When a real platform limit is encountered, report the exact limit and affected operation, adapt the method, and continue unaffected work. A limit is not permission to abandon the Goal or to invent a broader restriction than the platform actually imposes.
 
 ## 5. Asynchronous process and event contract
+
+Any operation expected to exceed 60 seconds, or whose duration could reasonably exceed 60 seconds, must launch asynchronously. The caller must remain available to receive and send coordination messages. Blocking waits are prohibited for these operations. If the runtime cannot provide this, or cannot provide durable state and non-blocking status/output retrieval, the organization must enter PANIC immediately; it must not silently degrade to synchronous execution.
 
 Required operations:
 
@@ -61,7 +63,7 @@ Required operations:
 6. Persist process state and output independently of the event delivery path.
 7. Recover in-flight runs after an agent/runtime restart and avoid accidental duplicate launches.
 
-Completion events may be duplicated, delayed, or lost. The receiver must be able to query authoritative process state and output. Event acknowledgement/retry semantics should prevent silent loss where the platform supports it.
+Completion events may be duplicated, delayed, or lost. The receiver must be able to query authoritative process state and output. Event acknowledgement/retry semantics should prevent silent loss where the platform supports it. If message delivery, child responsiveness, result retrieval, or recovery fails in a way that prevents the mandatory organization from operating, enter PANIC and propagate it immediately to the user. Preserve active runs; do not kill/relaunch an active Manager as a reflexive repair.
 
 ## 6. Published status interface
 
